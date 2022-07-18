@@ -42,19 +42,21 @@ RUN ln -s /usr/bin/clang-11 /usr/bin/clang \
     && ln -s /usr/bin/clang-format-11 /usr/bin/clang-format \
     && ln -s /usr/bin/lldb-11 /usr/bin/lldb \
     && echo 'miku    ALL=(ALL:ALL) ALL' >> /etc/sudoers \
-    && touch /root/run.sh \
-    && echo '/usr/sbin/sshd -D &' >> /root/run.sh \
+    && echo '/usr/sbin/sshd -D &' > /root/run.sh \
     && chmod 110 /root/run.sh
 USER miku
 RUN git config --global pull.rebase false \
     && git config --global user.name kaspersigi \
     && git config --global user.email kaspersigi@gmail.com \
-    && ssh-keyscan 106.52.13.193 >> $HOME/.ssh/known_hosts \
-    && echo '' >> $HOME/.ssh/authorized_keys \
+    # && ssh-keyscan 106.52.13.193 > $HOME/.ssh/known_hosts \
+    # && ssh -T git@github.com
+    && ssh-keyscan github.com > $HOME/.ssh/known_hosts \
+    && echo '' > $HOME/.ssh/authorized_keys \
     # && ssh-keygen -f $HOME/.ssh/id_rsa -t rsa -N '' \
     && mkdir $HOME/linux \
     && cd $HOME \
-    && git clone git@106.52.13.193:/home/git/learn.git
+    # && git clone git@106.52.13.193:/home/git/learn.git
+    && git clone git@github.com:kaspersigi/learn.git
 USER root
 WORKDIR /root
 ENTRYPOINT /root/run.sh && su miku
