@@ -1,0 +1,6 @@
+12-26 19:09:35.380  1144  1622 I storaged: storaged: Start
+12-26 19:09:35.461  1447  1447 I chatty  : uid=1000 system_server expire 186 lines
+12-26 19:09:35.463  1447  1632 I chatty  : uid=1000 system_server expire 3 lines
+12-26 19:09:35.496  1447  1645 I chatty  : uid=1000 system_server expire 3 lines
+12-26 19:09:35.497  1447  1646 I chatty  : uid=1000 system_server expire 1 line
+12-26 19:09:35.507  1447  1550 I chatty  : uid=1000(system) android.bg expire 13 lines

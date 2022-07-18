@@ -1,0 +1,34 @@
+###########################################
+#Makefile for my C programs
+###########################################
+
+TRG = main
+OBJ = main.o
+SRC = main.c
+CC = /usr/bin/clang
+CXX = /usr/bin/clang++
+FORMAT = /usr/bin/clang-format
+C_FLAGS = -std=c18 -Wall -Wno-unused
+CXX_FLAGS = -std=c++20 -Wall -Wno-unused
+DEBUG = -g -O0
+RELEASE = -static -O3
+LINK_FLAGS = -no-pie
+LIBS = -lpthread
+CLANGXX_FLAGS = -stdlib=libc++
+CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+
+.PHONY : all
+$(TRG) : $(OBJ) threadpool.o
+	$(CC) $(OBJ) threadpool.o -o $(TRG) $(LIBS)
+	rm -v $(OBJ)
+	rm -v threadpool.o
+$(OBJ) : $(SRC)
+	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
+threadpool.o : threadpool.c threadpool.h
+	$(CC) threadpool.c -c $(C_FLAGS) $(DEBUG)
+format :
+	$(FORMAT) main.c -style=file -i
+	$(FORMAT) threadpool.c -style=file -i
+	$(FORMAT) threadpool.h -style=file -i
+clean :
+	rm -v $(TRG)
