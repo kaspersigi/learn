@@ -25,27 +25,27 @@ SECTION mbr vstart=0x7c00 align=16              ;定义主引导扇区
     xor bx, bx                                  ;约定将读取的扇区加载到[ds:bx]即[ds:0x0000]中
     mov cx, [cs:loading_size]
 
-    loading:
+    .loading:
     call read_hard_disk_0                       ;过程调用
     add bx, 512
     inc si
-    loop loading
+    loop .loading
 
     ;开始处理段重定位表
     mov cx, 0x03                                ;需要重定位的表项个数
     mov bx, 0x06                                ;重定位表基址
 
-    realloc:                                    ;对用户程序进行重定位
+    .realloc:                                    ;对用户程序进行重定位
     mov dx, [bx+0x02]                           ;取得第一个段重定位表项的高16位
     mov ax, [bx]                                ;取得第一个段重定位表项的低16位
     call calc_segment_base
     mov [bx], ax                                ;回填用户程序各段的基址
     add bx, 4                                   ;下一个重定位项
-    loop realloc
+    loop .realloc
 
-    jmp road1
+    jmp .road1
 ;-------------------------------------------------------------------------------
-    road1:
+    .road1:
     mov ax, [0x0e]
     mov ss, ax
     mov sp, 1024
@@ -59,7 +59,7 @@ SECTION mbr vstart=0x7c00 align=16              ;定义主引导扇区
     jmp far [es:0x04]
     hlt
 ;-------------------------------------------------------------------------------
-    road2:
+    .road2:
     mov ax, [0x0e]
     mov ss, ax
     mov sp, 1024

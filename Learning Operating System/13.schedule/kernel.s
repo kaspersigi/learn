@@ -63,6 +63,9 @@ SECTION text vstart=0 align=16                  ;定义代码段
     ;对门进行测试
     call far [salt_2+256]                       ;通过门显示信息(偏移量将被忽略)
 
+    mov ebx, message3
+    call far [salt_4+256]                       ;通过门显示信息
+
     ;为内核任务创建任务控制块TCB
     mov ecx, 0x46
     call kernel_routine_seg_sel:allocate_memory
@@ -96,8 +99,10 @@ SECTION text vstart=0 align=16                  ;定义代码段
     ;下面的指令为当前正在执行的0特权级任务“程序管理器”后补手续（TSS）。
     ltr cx
 
-    mov ebx, message2
-    call kernel_routine_seg_sel:show
+    ; mov ebx, message2
+    ; call kernel_routine_seg_sel:show
+    mov ebx, message4
+    call kernel_routine_seg_sel:print
 
     ;创建用户任务TCB
     mov ecx, 0x46                               ;设计tcb大小为70字节
@@ -491,17 +496,125 @@ SECTION routine vstart=0 align=16               ;定义例程段
         mov ecx, 512
         xor esi, esi
 
-        print:
+        .put_string:
         mov dl, [ebx+esi]
         cmp dl, 0
-        jz print_end
+        jz .put_string_end
         mov [es:esi*2], dl
         mov byte [es:esi*2+1], 0x07
         inc esi
-        loop print
-        print_end:
+        loop .put_string
+        .put_string_end:
         pop es
         retf
+;-------------------------------------------------------------------------------
+    ;字符串显示例程
+    print:                                      ;显示0终止的字符串并移动光标
+                                                ;输入：DS:EBX=串地址
+        push ecx
+        .getc:
+        mov cl, [ebx]
+        or cl, cl
+        jz .exit
+        call put_char
+        inc ebx
+        jmp .getc
+
+        .exit:
+        pop ecx
+        retf                                    ;段间返回
+;-------------------------------------------------------------------------------
+    put_char:                                   ;在当前光标处显示一个字符,并推进光标。仅用于段内调用
+                                                ;输入：CL=字符ASCII码
+        pushad
+
+        ;以下取当前光标位置
+        mov dx, 0x3d4
+        mov al, 0x0e
+        out dx, al
+        inc dx                                  ;0x3d5
+        in al, dx                               ;高字
+        mov ah, al
+
+        dec dx                                  ;0x3d4
+        mov al, 0x0f
+        out dx, al
+        inc dx                                  ;0x3d5
+        in al, dx                               ;低字
+        mov bx, ax                              ;BX=代表光标位置的16位数
+
+        cmp cl, 0x0d                            ;回车符？
+        jnz .put_0a
+        mov ax, bx
+        mov bl, 80
+        div bl
+        mul bl
+        mov bx, ax
+        jmp .set_cursor
+
+        .put_0a:
+        cmp cl, 0x0a                            ;换行符？
+        jnz .put_other
+        add bx, 80
+        jmp .roll_screen
+
+        .put_other:                             ;正常显示字符
+        push es
+        mov eax, video_data_seg_sel             ;0xb8000段的选择子
+        mov es, eax
+        shl bx,1
+        mov [es:bx], cl
+        pop es
+
+        ;以下将光标位置推进一个字符
+        shr bx, 1
+        inc bx
+
+        .roll_screen:
+        cmp bx, 2000                            ;光标超出屏幕？滚屏
+        jl .set_cursor
+
+        push bx                                 ;为了修改原书程序的逻辑问题，新增
+        push ds
+        push es
+        mov eax, video_data_seg_sel
+        mov ds, eax
+        mov es, eax
+        cld
+        mov esi, 0xa0                           ;小心！32位模式下movsb/w/d
+        mov edi, 0x00                           ;使用的是esi/edi/ecx
+        mov ecx, 1920
+        rep movsw
+        mov bx, 3840                            ;清除屏幕最底一行
+        mov ecx, 80                             ;32位程序应该使用ECX
+
+        .cls:
+        mov word[es:bx], 0x0720
+        add bx, 2
+        loop .cls
+
+        pop es
+        pop ds
+
+        pop bx
+        sub bx, 80
+
+        .set_cursor:
+        mov dx, 0x3d4
+        mov al, 0x0e
+        out dx, al
+        inc dx                                  ;0x3d5
+        mov al, bh
+        out dx, al
+        dec dx                                  ;0x3d4
+        mov al, 0x0f
+        out dx, al
+        inc dx                                  ;0x3d5
+        mov al, bl
+        out dx, al
+
+        popad
+        ret
 ;-------------------------------------------------------------------------------
     read_hard_disk_0:                           ;从硬盘读取一个逻辑扇区
                                                 ;EAX=逻辑扇区号
@@ -711,6 +824,8 @@ SECTION routine vstart=0 align=16               ;定义例程段
 SECTION data vstart=0 align=16                  ;定义数据段
     message1:           db 'kernel is running......', 0
     message2:           db 'kernel task is running......', 0
+    message3:           db 'kernel is running......', 0x0d, 0x0a, 0
+    message4:           db 'kernel task is running......', 0x0d, 0x0a, 0
     pgdt:
     gdt_size:           dw 0x0000
     gdt_base:           dd 0x00000000
@@ -737,14 +852,19 @@ SECTION data vstart=0 align=16                  ;定义数据段
                                 dd show
                                 dw kernel_routine_seg_sel
 
-    salt_4:                     db "@init_task_switch"
+    salt_4:                     db "@print"
     times 256-($-salt_4)        db 0
+                                dd print
+                                dw kernel_routine_seg_sel
+
+    salt_5:                     db "@init_task_switch"
+    times 256-($-salt_5)        db 0
                                 dd init_task_switch
                                 dw kernel_routine_seg_sel
 
     salt_end:
     salt_length                 equ salt_end-salt_begin
-    salt_items                  equ 4
+    salt_items                  equ 5
     salt_item_length            equ salt_length/salt_items
 
 SECTION stack vstart=0 align=16                 ;定义堆栈段
