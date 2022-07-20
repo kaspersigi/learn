@@ -18,11 +18,7 @@ SECTION head vstart=0 align=16                  ;定义用户程序头部段
     salt_begin:                                 ;(0x28
     return:                 db '@return'        ;(0x28
     times 256-($-return)    db 0
-    clear:                  db '@clear'         ;(0x128
-    times 256-($-clear)     db 0
-    show:                   db '@show'          ;(0x228
-    times 256-($-show)      db 0
-    print:                  db '@print'         ;(0x328
+    print:                  db '@print'         ;(0x128
     times 256-($-print)     db 0
     salt_end:
 ;-------------------------------------------------------------------------------
@@ -33,6 +29,9 @@ SECTION text vstart=0 align=16                  ;定义引导程序代码段
     start:
     mov ax, [gs:0x14]
     mov ds, ax
+
+    mov ebx, message1
+    call far [gs:print]
 
     ;显示处理器品牌信息
     mov eax, 0x80000002
@@ -56,19 +55,23 @@ SECTION text vstart=0 align=16                  ;定义引导程序代码段
     mov [cpu_brand+0x28], ecx
     mov [cpu_brand+0x2c], edx
 
-    ; call far [gs:clear]
-
     mov ebx, cpu_brand
-    ; call far [gs:show]
+    call far [gs:print]
+
+    mov ebx, crlf
+    call far [gs:print]
+
+    mov ebx, message2
     call far [gs:print]
 
     call far [gs:return]
     text_end:
 
 SECTION data vstart=0 align=16                  ;定义用户程序数据段
-    message1:           db 'program is running......', 0
-    message2:           db 'program is running......', 0x0d, 0x0a, 0
-    cpu_brand: times 52 db 0, 0x0d, 0x0a, 0
+    message1:           db 'program is running......', 0x0d, 0x0a, 0
+    message2:           db 'program is over......', 0x0d, 0x0a, 0
+    crlf:               db 0x0d, 0x0a, 0
+    cpu_brand: times 52 db 0
     data_end:
 
 SECTION stack vstart=0 align=16                 ;定义用户程序堆栈段

@@ -38,10 +38,8 @@ SECTION text vstart=0 align=16                  ;定义代码段
     mov ax, mem_data_seg_sel                    ;初始化内存数据段
     mov fs, ax
 
-    call kernel_routine_seg_sel:clear
-
-    mov ebx, message1
-    call kernel_routine_seg_sel:show
+    mov ebx, message2
+    call kernel_routine_seg_sel:print
 
     ;以下开始安装为整个系统服务的调用门。特权级之间的控制转移必须使用门
     mov edi, salt_begin                         ;C-SALT表的起始位置
@@ -61,10 +59,8 @@ SECTION text vstart=0 align=16                  ;定义代码段
     loop .b0
 
     ;对门进行测试
+    mov ebx, message1
     call far [salt_2+256]                       ;通过门显示信息(偏移量将被忽略)
-
-    mov ebx, message3
-    call far [salt_4+256]                       ;通过门显示信息
 
     ;为内核任务创建任务控制块TCB
     mov ecx, 0x46
@@ -99,10 +95,8 @@ SECTION text vstart=0 align=16                  ;定义代码段
     ;下面的指令为当前正在执行的0特权级任务“程序管理器”后补手续（TSS）。
     ltr cx
 
-    ; mov ebx, message2
-    ; call kernel_routine_seg_sel:show
-    mov ebx, message4
-    call kernel_routine_seg_sel:print
+    mov ebx, message3
+    call far [salt_2+256]                       ;通过门显示信息(偏移量将被忽略)
 
     ;创建用户任务TCB
     mov ecx, 0x46                               ;设计tcb大小为70字节
@@ -132,6 +126,9 @@ SECTION text vstart=0 align=16                  ;定义代码段
     return:
     mov ax, kernel_data_seg_sel
     mov ds, ax
+
+    mov ebx, message4
+    call far [salt_2+256]                       ;通过门显示信息(偏移量将被忽略)
 
     hlt
 ;-------------------------------------------------------------------------------
@@ -468,46 +465,6 @@ SECTION text vstart=0 align=16                  ;定义代码段
 
 SECTION routine vstart=0 align=16               ;定义例程段
 ;-------------------------------------------------------------------------------
-    ;将屏幕清空
-    clear:
-        push es
-        mov ax, video_data_seg_sel
-        mov es, ax
-        mov al, 80
-        mov bl, 24
-        mul bl
-        xor ecx, ecx
-        mov cx, ax
-        xor ax, ax
-        xor ebx, ebx
-        show_null:
-        mov [es:ebx*2], ax
-        inc ebx
-        loop show_null
-        pop es
-        retf
-;-------------------------------------------------------------------------------
-    ;显示string信息
-    show:
-        push es
-        mov ax, video_data_seg_sel
-        mov es, ax
-
-        mov ecx, 512
-        xor esi, esi
-
-        .put_string:
-        mov dl, [ebx+esi]
-        cmp dl, 0
-        jz .put_string_end
-        mov [es:esi*2], dl
-        mov byte [es:esi*2+1], 0x07
-        inc esi
-        loop .put_string
-        .put_string_end:
-        pop es
-        retf
-;-------------------------------------------------------------------------------
     ;字符串显示例程
     print:                                      ;显示0终止的字符串并移动光标
                                                 ;输入：DS:EBX=串地址
@@ -822,10 +779,11 @@ SECTION routine vstart=0 align=16               ;定义例程段
 ;-------------------------------------------------------------------------------
 
 SECTION data vstart=0 align=16                  ;定义数据段
-    message1:           db 'kernel is running......', 0
-    message2:           db 'kernel task is running......', 0
-    message3:           db 'kernel is running......', 0x0d, 0x0a, 0
-    message4:           db 'kernel task is running......', 0x0d, 0x0a, 0
+    message1:           db 'testing call gate......', 0x0d, 0x0a, 0
+    message2:           db 'kernel is running......', 0x0d, 0x0a, 0
+    message3:           db 'kernel task is running......', 0x0d, 0x0a, 0
+    message4:           db 'return kernel task......', 0x0d, 0x0a, 0
+
     pgdt:
     gdt_size:           dw 0x0000
     gdt_base:           dd 0x00000000
@@ -842,29 +800,19 @@ SECTION data vstart=0 align=16                  ;定义数据段
                                 dd return
                                 dw kernel_text_seg_sel
 
-    salt_2:                     db "@clear"
+    salt_2:                     db "@print"
     times 256-($-salt_2)        db 0
-                                dd clear
-                                dw kernel_routine_seg_sel
-
-    salt_3:                     db "@show"
-    times 256-($-salt_3)        db 0
-                                dd show
-                                dw kernel_routine_seg_sel
-
-    salt_4:                     db "@print"
-    times 256-($-salt_4)        db 0
                                 dd print
                                 dw kernel_routine_seg_sel
 
-    salt_5:                     db "@init_task_switch"
-    times 256-($-salt_5)        db 0
+    salt_3:                     db "@init_task_switch"
+    times 256-($-salt_3)        db 0
                                 dd init_task_switch
                                 dw kernel_routine_seg_sel
 
     salt_end:
     salt_length                 equ salt_end-salt_begin
-    salt_items                  equ 5
+    salt_items                  equ 3
     salt_item_length            equ salt_length/salt_items
 
 SECTION stack vstart=0 align=16                 ;定义堆栈段
