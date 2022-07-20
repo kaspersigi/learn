@@ -21,7 +21,7 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 .PHONY : all
 all :
 	cd 0.template && make
-	# cd 1.gas && make
+	cd 1.gas && make
 	cd 2.floppy && make
 	cd 3.userapp && make
 	cd 4.interrupt && make
@@ -37,7 +37,7 @@ all :
 
 clean :
 	cd 0.template && make clean
-	# cd 1.gas && make clean
+	cd 1.gas && make clean
 	cd 2.floppy && make clean
 	cd 3.userapp && make clean
 	cd 4.interrupt && make clean

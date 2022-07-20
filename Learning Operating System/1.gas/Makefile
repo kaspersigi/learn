@@ -14,10 +14,12 @@ AS_FLAGS = --32
 .PHONY : all
 $(TRG) : $(EXEC)
 	$(DUMP) $(OBJ) -O binary $(TRG)
-	rm -v $(EXEC) $(OBJ)
+	rm -v $(OBJ)
 $(EXEC) : $(OBJ)
 	$(LD) $(OBJ) -o $(EXEC)
 $(OBJ) : $(SRC)
-	$(AS) $(SRC) -o $(OBJ) $(AS_FLAGS)
+	# $(AS) $(SRC) -o $(OBJ) $(AS_FLAGS)
+	$(AS) $(SRC) -o $(OBJ)
 clean :
 	rm -v $(TRG)
+	rm -v $(EXEC)
