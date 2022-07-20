@@ -54,3 +54,6 @@ clean :
 	cd Learning\ Rust && make clean
 	cd Learning\ Socket && make clean
 	cd Learning\ STL && make clean
+
+bak :
+	git archive --format=tar.gz --output ../learn.tar.gz master
