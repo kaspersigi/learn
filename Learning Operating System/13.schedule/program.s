@@ -20,6 +20,8 @@ SECTION head vstart=0 align=16                  ;定义用户程序头部段
     times 256-($-return)    db 0
     print:                  db '@print'         ;(0x128
     times 256-($-print)     db 0
+    init_task_switch:       db '@init_task_switch'  ;(0x228
+    times 256-($-init_task_switch)  db 0
     salt_end:
 ;-------------------------------------------------------------------------------
     head_end:

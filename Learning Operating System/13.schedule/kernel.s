@@ -110,6 +110,8 @@ SECTION text vstart=0 align=16                  ;定义代码段
     ;过程调用压入eip 4B
     call load_relocate_program
 
+    .do_switch:
+
     ltr [fs:ecx+0x18]                           ;加载任务状态段
     lldt [fs:ecx+0x10]                          ;加载LDT
 
@@ -355,7 +357,7 @@ SECTION text vstart=0 align=16                  ;定义代码段
         mov [es:esi+0x14], ecx                  ;登记TSS基地址到TCB
 
         ;登记基本的TSS表格内容
-        ;其中最重要的是CS，EIP，IO许可位映射区，三个特权级堆栈
+        ;其中最重要的是CS，EIP，IO许可位映射区，三个特权级堆栈，LDT段选择子
         mov word [es:ecx+0], 0                  ;反向链=0
 
         mov edx, [es:esi+0x24]                  ;登记0特权级堆栈初始ESP
