@@ -33,7 +33,7 @@ all :
 	cd 10.api && make
 	cd 11.tcb && make
 	cd 12.cpl && make
-	cd 13.schedule && make
+	cd 13.hw_schedule && make
 
 clean :
 	cd 0.template && make clean
@@ -49,4 +49,4 @@ clean :
 	cd 10.api && make clean
 	cd 11.tcb && make clean
 	cd 12.cpl && make clean
-	cd 13.schedule && make clean
+	cd 13.hw_schedule && make clean

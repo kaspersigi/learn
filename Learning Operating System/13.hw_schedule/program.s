@@ -70,8 +70,8 @@ SECTION text vstart=0 align=16                  ;定义引导程序代码段
     text_end:
 
 SECTION data vstart=0 align=16                  ;定义用户程序数据段
-    message1:           db 'program is running......', 0x0d, 0x0a, 0
-    message2:           db 'program is over......', 0x0d, 0x0a, 0
+    message1:           db 'program task is running......', 0x0d, 0x0a, 0
+    message2:           db 'program task is over......', 0x0d, 0x0a, 0
     crlf:               db 0x0d, 0x0a, 0
     cpu_brand: times 52 db 0
     data_end:
