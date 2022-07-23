@@ -60,7 +60,7 @@ SECTION text vstart=0 align=16                  ;定义代码段
 
     ;对门进行测试
     mov ebx, message1
-    call far [salt_2+256]                       ;通过门显示信息(偏移量将被忽略)
+    call far [salt_1+256]                       ;通过门显示信息(偏移量将被忽略)
 
     ;为内核任务创建任务控制块TCB
     mov ecx, 0x46
@@ -96,7 +96,7 @@ SECTION text vstart=0 align=16                  ;定义代码段
     ltr cx
 
     mov ebx, message3
-    call far [salt_2+256]                       ;通过门显示信息(偏移量将被忽略)
+    call far [salt_1+256]                       ;通过门显示信息(偏移量将被忽略)
 
     ;创建用户任务TCB
     mov ecx, 0x46                               ;设计tcb大小为70字节
@@ -111,26 +111,13 @@ SECTION text vstart=0 align=16                  ;定义代码段
     call load_relocate_program
 
     .do_switch:
+    ;主动切换到其它任务，给它们运行的机会
+    call kernel_routine_seg_sel:initiate_task_switch
 
-    ltr [fs:ecx+0x18]                           ;加载任务状态段
-    lldt [fs:ecx+0x10]                          ;加载LDT
-
-    mov gs, [fs:ecx+0x44]                       ;切换到用户程序头部段
-
-    ;假装从调用门返回
-    push dword [gs:0x1c]
-    push dword [gs:0x20]
-    push dword [gs:0x0c]
-    push dword [gs:0x08]
-
-    retf
-
-    return:
-    mov ax, kernel_data_seg_sel
-    mov ds, ax
+    call kernel_routine_seg_sel:do_task_clean
 
     mov ebx, message4
-    call far [salt_2+256]                       ;通过门显示信息(偏移量将被忽略)
+    call far [salt_1+256]                       ;通过门显示信息(偏移量将被忽略)
 
     hlt
 ;-------------------------------------------------------------------------------
@@ -777,7 +764,104 @@ SECTION routine vstart=0 align=16               ;定义例程段
 
         retf
 ;-------------------------------------------------------------------------------
-    init_task_switch:
+    initiate_task_switch:                       ;主动发起任务切换
+        pushad
+        push ds
+        push es
+
+        mov eax, kernel_data_seg_sel
+        mov es,eax
+
+        mov eax, mem_data_seg_sel
+        mov ds, eax
+
+        mov eax, [es:tcb_chain]
+
+        ;搜索状态为忙（当前任务）的节点
+        .b0:
+        cmp word [eax+0x04], 0xffff
+        cmove esi, eax                          ;找到忙的节点，ESI=节点的线性地址
+        jz .b1
+        mov eax, [eax]
+        jmp .b0
+
+        ;从当前节点继续搜索就绪任务的节点
+        .b1:
+        mov ebx, [eax]
+        or ebx, ebx
+        jz .b2                                  ;到链表尾部也未发现就绪节点，从头找
+        cmp word [ebx+0x04], 0x0000
+        cmove edi, ebx                          ;已找到就绪节点，EDI=节点的线性地址
+        jz .b3
+        mov eax, ebx
+        jmp .b1
+
+        .b2:
+        mov ebx, [es:tcb_chain]                 ;EBX=链表首节点线性地址
+        .b20:
+        cmp word [ebx+0x04], 0x0000
+        cmove edi, ebx                          ;已找到就绪节点，EDI=节点的线性地址
+        jz .b3
+        mov ebx, [ebx]
+        or ebx, ebx
+        jz .return                              ;链表中已经不存在空闲任务，返回
+        jmp .b20
+
+        ;就绪任务的节点已经找到，准备切换到该任务
+        .b3:
+        not word [esi+0x04]                     ;将忙状态的节点改为就绪状态的节点
+        not word [edi+0x04]                     ;将就绪状态的节点改为忙状态的节点
+        jmp far [edi+0x14]                      ;任务切换
+
+        .return:
+        pop es
+        pop ds
+        popad
+
+        retf
+;-------------------------------------------------------------------------------
+    terminate_current_task:                     ;终止当前任务
+                                                ;注意，执行此例程时，当前任务仍在运中。此例程其实也是当前任务的一部分
+        mov eax, kernel_data_seg_sel
+        mov es,eax
+
+        mov eax, mem_data_seg_sel
+        mov ds, eax
+
+        mov eax, [es:tcb_chain]
+                                                ;EAX=首节点的线性地址
+        ;搜索状态为忙（当前任务）的节点
+        .s0:
+        cmp word [eax+0x04], 0xffff
+        jz .s1                                  ;找到忙的节点，EAX=节点的线性地址
+        mov eax, [eax]
+        jmp .s0
+
+        ;将状态为忙的节点改成终止状态
+        .s1:
+        mov word [eax+0x04], 0x3333
+
+        ;搜索就绪状态的任务
+        mov ebx, [es:tcb_chain]                 ;EBX=链表首节点线性地址
+        .s2:
+        cmp word [ebx+0x04], 0x0000
+        jz .s3                                  ;已找到就绪节点，EBX=节点的线性地址
+        mov ebx, [ebx]
+        jmp .s2
+
+        ;就绪任务的节点已经找到，准备切换到该任务
+        .s3:
+        not word [ebx+0x04]                     ;将就绪状态的节点改为忙状态的节点
+        jmp far [ebx+0x14]                      ;任务切换
+
+;-------------------------------------------------------------------------------
+    do_task_clean:                              ;清理已经终止的任务并回收资源
+
+        ;搜索TCB链表，找到状态为终止的节点
+        ;将节点从链表中拆除
+        ;回收任务占用的各种资源（可以从它的TCB中找到）
+
+        retf
 ;-------------------------------------------------------------------------------
 
 SECTION data vstart=0 align=16                  ;定义数据段
@@ -797,24 +881,19 @@ SECTION data vstart=0 align=16                  ;定义数据段
                                                 ;整个tcb_chain存放在4G内存空间的段中
     ;符号地址检索表
     salt_begin:
-    salt_1:                     db "@return"
+    salt_1:                     db "@print"
     times 256-($-salt_1)        db 0
-                                dd return
-                                dw kernel_text_seg_sel
-
-    salt_2:                     db "@print"
-    times 256-($-salt_2)        db 0
                                 dd print
                                 dw kernel_routine_seg_sel
 
-    salt_3:                     db "@init_task_switch"
-    times 256-($-salt_3)        db 0
-                                dd init_task_switch
+    salt_2:                     db "@init_task_switch"
+    times 256-($-salt_2)        db 0
+                                dd initiate_task_switch
                                 dw kernel_routine_seg_sel
 
     salt_end:
     salt_length                 equ salt_end-salt_begin
-    salt_items                  equ 3
+    salt_items                  equ 2
     salt_item_length            equ salt_length/salt_items
 
 SECTION stack vstart=0 align=16                 ;定义堆栈段

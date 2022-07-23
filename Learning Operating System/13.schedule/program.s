@@ -16,11 +16,9 @@ SECTION head vstart=0 align=16                  ;定义用户程序头部段
                                                 ;(0x24
     ;符号地址检索表
     salt_begin:                                 ;(0x28
-    return:                 db '@return'        ;(0x28
-    times 256-($-return)    db 0
-    print:                  db '@print'         ;(0x128
+    print:                  db '@print'         ;(0x28
     times 256-($-print)     db 0
-    init_task_switch:       db '@init_task_switch'  ;(0x228
+    init_task_switch:       db '@init_task_switch'  ;(0x128
     times 256-($-init_task_switch)  db 0
     salt_end:
 ;-------------------------------------------------------------------------------
@@ -66,7 +64,7 @@ SECTION text vstart=0 align=16                  ;定义引导程序代码段
     mov ebx, message2
     call far [gs:print]
 
-    call far [gs:return]
+    call far [gs:init_task_switch]
     text_end:
 
 SECTION data vstart=0 align=16                  ;定义用户程序数据段
