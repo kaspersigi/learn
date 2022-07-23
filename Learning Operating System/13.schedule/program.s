@@ -27,7 +27,9 @@ SECTION head vstart=0 align=16                  ;定义用户程序头部段
 SECTION text vstart=0 align=16                  ;定义引导程序代码段
     bits 32
     start:
-    mov ax, [gs:0x14]
+    mov ax, ds
+    mov gs, ax
+    mov ax, [0x14]
     mov ds, ax
 
     mov ebx, message1
