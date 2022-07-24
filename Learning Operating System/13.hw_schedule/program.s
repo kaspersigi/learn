@@ -12,14 +12,16 @@ SECTION head vstart=0 align=16                  ;定义用户程序头部段
     stack_segment       dd section.stack.start  ;堆栈段距程序首地址偏移地址(0x1c
     stack_length        dd stack_end            ;程序堆栈段长度(0x20
 ;-------------------------------------------------------------------------------
-    salt_length:            dd (salt_end-salt_begin)/256
-                                                ;(0x24
+    salt_length:                            dd (salt_end-salt_begin)/256
+                                                                    ;(0x24
     ;符号地址检索表
-    salt_begin:                                 ;(0x28
-    print:                  db '@print'         ;(0x28
-    times 256-($-print)     db 0
-    init_task_switch:       db '@init_task_switch'  ;(0x128
-    times 256-($-init_task_switch)  db 0
+    salt_begin:                                                     ;(0x28
+    print:                                  db '@print'             ;(0x28
+    times 256-($-print)                     db 0
+    init_task_switch:                       db '@init_task_switch'  ;(0x128
+    times 256-($-init_task_switch)          db 0
+    terminate_current_task:                 db '@terminate_current_task'    ;(0x228
+    times 256-($-terminate_current_task)    db 0
     salt_end:
 ;-------------------------------------------------------------------------------
     head_end:
@@ -32,7 +34,14 @@ SECTION text vstart=0 align=16                  ;定义引导程序代码段
     mov ax, [0x14]
     mov ds, ax
 
-    mov ebx, message1
+    mov ebx, message_1
+    call far [gs:print]
+
+    mov ax, cs                                  ;取CS段选择子
+    and al, 0000_0011B                          ;取cpl
+    or al, 0x30                                 ;0字符0x30，由于cpl只有0，1，2，3相当于加法
+    mov [cpl], al
+    mov ebx, message_0
     call far [gs:print]
 
     ;显示处理器品牌信息
@@ -57,23 +66,36 @@ SECTION text vstart=0 align=16                  ;定义引导程序代码段
     mov [cpu_brand+0x28], ecx
     mov [cpu_brand+0x2c], edx
 
-    mov ebx, cpu_brand
+    mov ebx, message_5
     call far [gs:print]
 
     mov ebx, crlf
     call far [gs:print]
 
-    mov ebx, message2
+    mov ebx, message_2
     call far [gs:print]
 
     call far [gs:init_task_switch]
+
+    mov ebx, message_3
+    call far [gs:print]
+
+    mov ebx, message_4
+    call far [gs:print]
+    call far [gs:terminate_current_task]
     text_end:
 
 SECTION data vstart=0 align=16                  ;定义用户程序数据段
-    message1:           db 'program task is running......', 0x0d, 0x0a, 0
-    message2:           db 'program task is over......', 0x0d, 0x0a, 0
-    crlf:               db 0x0d, 0x0a, 0
+    message_0:          db '[User Task]: I am run at CPL=',
+    cpl:                db 0
+                        db '.....', 0x0d, 0x0a, 0
+    message_1:          db '[User Task]: program task is running......', 0x0d, 0x0a, 0
+    message_2:          db '[User Task]: program task is switching......', 0x0d, 0x0a, 0
+    message_3:          db '[User Task]: program task is running again......', 0x0d, 0x0a, 0
+    message_4:          db '[User Task]: program task is exiting......', 0x0d, 0x0a, 0
+    message_5:          db '[User Task]: '
     cpu_brand: times 52 db 0
+    crlf:               db 0x0d, 0x0a, 0
     data_end:
 
 SECTION stack vstart=0 align=16                 ;定义用户程序堆栈段

@@ -38,7 +38,7 @@ SECTION text vstart=0 align=16                  ;定义代码段
     mov ax, mem_data_seg_sel                    ;初始化内存数据段
     mov fs, ax
 
-    mov ebx, message2
+    mov ebx, message_1
     call kernel_routine_seg_sel:print
 
     ;以下开始安装为整个系统服务的调用门。特权级之间的控制转移必须使用门
@@ -59,7 +59,7 @@ SECTION text vstart=0 align=16                  ;定义代码段
     loop .b0
 
     ;对门进行测试
-    mov ebx, message1
+    mov ebx, message_2
     call far [salt_1+256]                       ;通过门显示信息(偏移量将被忽略)
 
     ;为内核任务创建任务控制块TCB
@@ -95,8 +95,15 @@ SECTION text vstart=0 align=16                  ;定义代码段
     ;下面的指令为当前正在执行的0特权级任务“程序管理器”后补手续（TSS）。
     ltr cx
 
-    mov ebx, message3
-    call far [salt_1+256]                       ;通过门显示信息(偏移量将被忽略)
+    mov ebx, message_3
+    call kernel_routine_seg_sel:print
+
+    mov ax, cs                                  ;取CS段选择子
+    and al, 0000_0011B                          ;取cpl
+    or al, 0x30                                 ;0字符0x30，由于cpl只有0，1，2，3相当于加法
+    mov [cpl], al
+    mov ebx, message_0
+    call kernel_routine_seg_sel:print
 
     ;创建用户任务TCB
     mov ecx, 0x46                               ;设计tcb大小为70字节
@@ -114,11 +121,21 @@ SECTION text vstart=0 align=16                  ;定义代码段
     ;主动切换到其它任务，给它们运行的机会
     call kernel_routine_seg_sel:initiate_task_switch
 
+    mov ebx, message_4
+    call kernel_routine_seg_sel:print
+
+    ;清理已经终止的任务，并回收它们占用的资源
     call kernel_routine_seg_sel:do_task_clean
 
-    mov ebx, message4
-    call far [salt_1+256]                       ;通过门显示信息(偏移量将被忽略)
+    mov eax, [tcb_chain]
+    .find_ready:
+    cmp word [es:eax+0x04], 0x0000              ;还有处于就绪状态的任务？
+    jz .do_switch                               ;有，继续执行任务切换
+    mov eax, [es:eax]
+    or eax, eax                                 ;还有用户任务吗？
+    jnz .find_ready                             ;一直搜索到链表尾部
 
+    ;已经没有可以切换的任务，停机
     hlt
 ;-------------------------------------------------------------------------------
     load_relocate_program:                      ;加载并重定位用户程序
@@ -811,9 +828,10 @@ SECTION routine vstart=0 align=16               ;定义例程段
         .b3:
         not word [esi+0x04]                     ;将忙状态的节点改为就绪状态的节点
         not word [edi+0x04]                     ;将就绪状态的节点改为忙状态的节点
-        jmp far [edi+0x14]                      ;任务切换
+        jmp far [edi+0x14]                      ;通过jmp far进行硬件任务切换
+                                                ;取得内存中的6个字节，现在低4字节是tss基地址（其实是什么无所谓，不做要求），高2字节是tss段选择子。cpu识别到选择子是tss段选择子后，忽略基地址，并执行任务切换
 
-        .return:
+        .return:                                ;切换任务后从这里继续执行
         pop es
         pop ds
         popad
@@ -852,8 +870,7 @@ SECTION routine vstart=0 align=16               ;定义例程段
         ;就绪任务的节点已经找到，准备切换到该任务
         .s3:
         not word [ebx+0x04]                     ;将就绪状态的节点改为忙状态的节点
-        jmp far [ebx+0x14]                      ;通过jmp far进行硬件任务切换
-                                                ;取得内存中的6个字节，现在低4字节是tss基地址（其实是什么无所谓，不做要求），高2字节是tss段选择子。cpu识别到选择子是tss段选择子后，忽略基地址，并执行任务切换
+        jmp far [ebx+0x14]                      ;任务切换
 ;-------------------------------------------------------------------------------
     do_task_clean:                              ;清理已经终止的任务并回收资源
 
@@ -865,10 +882,13 @@ SECTION routine vstart=0 align=16               ;定义例程段
 ;-------------------------------------------------------------------------------
 
 SECTION data vstart=0 align=16                  ;定义数据段
-    message1:           db 'testing call gate......', 0x0d, 0x0a, 0
-    message2:           db 'kernel is running......', 0x0d, 0x0a, 0
-    message3:           db 'kernel task is running......', 0x0d, 0x0a, 0
-    message4:           db 'return kernel task......', 0x0d, 0x0a, 0
+    message_0:          db '[Kernel Task]: I am run at CPL=',
+    cpl:                db 0
+                        db '.....', 0x0d, 0x0a, 0
+    message_1:          db '[Kernel]: Kernel is running......', 0x0d, 0x0a, 0
+    message_2:          db '[Kernel]: Testing call gate......', 0x0d, 0x0a, 0
+    message_3:          db '[Kernel Task]: Kernel task is running......', 0x0d, 0x0a, 0
+    message_4:          db '[Kernel Task]: return kernel task......', 0x0d, 0x0a, 0
 
     pgdt:
     gdt_size:           dw 0x0000
@@ -891,9 +911,14 @@ SECTION data vstart=0 align=16                  ;定义数据段
                                 dd initiate_task_switch
                                 dw kernel_routine_seg_sel
 
+    salt_3:                     db "@terminate_current_task"
+    times 256-($-salt_3)        db 0
+                                dd terminate_current_task
+                                dw kernel_routine_seg_sel
+
     salt_end:
     salt_length                 equ salt_end-salt_begin
-    salt_items                  equ 2
+    salt_items                  equ 3
     salt_item_length            equ salt_length/salt_items
 
 SECTION stack vstart=0 align=16                 ;定义堆栈段
