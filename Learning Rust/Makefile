@@ -20,10 +20,10 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd 0.template && make
+	cd 00.template && make
 
 format :
-	cd 0.template && make format
+	cd 00.template && make format
 
 clean :
-	cd 0.template && make clean
+	cd 00.template && make clean

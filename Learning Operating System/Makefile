@@ -20,33 +20,35 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd 0.template && make
-	cd 1.gas && make
-	cd 2.floppy && make
-	cd 3.userapp && make
-	cd 4.interrupt && make
-	cd 5.bios && make
-	cd 6.protected && make
-	cd 7.sort && make
-	cd 8.kernel && make
-	cd 9.boot && make
+	cd 00.template && make
+	cd 01.gas && make
+	cd 02.floppy && make
+	cd 03.userapp && make
+	cd 04.interrupt && make
+	cd 05.bios && make
+	cd 06.protected && make
+	cd 07.sort && make
+	cd 08.kernel && make
+	cd 09.boot && make
 	cd 10.api && make
 	cd 11.tcb && make
 	cd 12.cpl && make
-	cd 13.hw_schedule && make
+	cd 13.collaborative_task_switch && make
+	cd 14.preemptive_task_switch && make
 
 clean :
-	cd 0.template && make clean
-	cd 1.gas && make clean
-	cd 2.floppy && make clean
-	cd 3.userapp && make clean
-	cd 4.interrupt && make clean
-	cd 5.bios && make clean
-	cd 6.protected && make clean
-	cd 7.sort && make clean
-	cd 8.kernel && make clean
-	cd 9.boot && make clean
+	cd 00.template && make clean
+	cd 01.gas && make clean
+	cd 02.floppy && make clean
+	cd 03.userapp && make clean
+	cd 04.interrupt && make clean
+	cd 05.bios && make clean
+	cd 06.protected && make clean
+	cd 07.sort && make clean
+	cd 08.kernel && make clean
+	cd 09.boot && make clean
 	cd 10.api && make clean
 	cd 11.tcb && make clean
 	cd 12.cpl && make clean
-	cd 13.hw_schedule && make clean
+	cd 13.collaborative_task_switch && make clean
+	cd 14.preemptive_task_switch && make clean

@@ -20,16 +20,16 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd 0.template && make
-	cd 1.hton && make
-	cd 2.inet_pton && make
-	cd 3.socket && make
-	cd 4.listen && make
-	cd 5.accept && make
-	cd 6.connect && make
-	cd 7.recv && make
-	cd 8.send && make
-	cd 9.server && make
+	cd 00.template && make
+	cd 01.hton && make
+	cd 02.inet_pton && make
+	cd 03.socket && make
+	cd 04.listen && make
+	cd 05.accept && make
+	cd 06.connect && make
+	cd 07.recv && make
+	cd 08.send && make
+	cd 09.server && make
 	cd 10.client && make
 	cd 11.threadpool && make
 	cd 12.select && make
@@ -44,16 +44,16 @@ all :
 	cd 21.myhttpd && make
 
 format :
-	cd 0.template && make format
-	cd 1.hton && make format
-	cd 2.inet_pton && make format
-	cd 3.socket && make format
-	cd 4.listen && make format
-	cd 5.accept && make format
-	cd 6.connect && make format
-	cd 7.recv && make format
-	cd 8.send && make format
-	cd 9.server && make format
+	cd 00.template && make format
+	cd 01.hton && make format
+	cd 02.inet_pton && make format
+	cd 03.socket && make format
+	cd 04.listen && make format
+	cd 05.accept && make format
+	cd 06.connect && make format
+	cd 07.recv && make format
+	cd 08.send && make format
+	cd 09.server && make format
 	cd 10.client && make format
 	cd 11.threadpool && make format
 	cd 12.select && make format
@@ -68,16 +68,16 @@ format :
 	cd 21.myhttpd && make format
 
 clean :
-	cd 0.template && make clean
-	cd 1.hton && make clean
-	cd 2.inet_pton && make clean
-	cd 3.socket && make clean
-	cd 4.listen && make clean
-	cd 5.accept && make clean
-	cd 6.connect && make clean
-	cd 7.recv && make clean
-	cd 8.send && make clean
-	cd 9.server && make clean
+	cd 00.template && make clean
+	cd 01.hton && make clean
+	cd 02.inet_pton && make clean
+	cd 03.socket && make clean
+	cd 04.listen && make clean
+	cd 05.accept && make clean
+	cd 06.connect && make clean
+	cd 07.recv && make clean
+	cd 08.send && make clean
+	cd 09.server && make clean
 	cd 10.client && make clean
 	cd 11.threadpool && make clean
 	cd 12.select && make clean

@@ -20,40 +20,43 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd 0.template && make
-	cd 1.macro && make
-	cd 2.regex && make
-	cd 3.constructor && make
-	cd 4.deconstructor && make
-	cd 5.interface && make
-	cd 6.interface_template && make
-	cd 7.smart_pointer && make
-	cd 8.const && make
-	cd 9.function_template && make
+	cd 00.template && make
+	cd 01.macro && make
+	cd 02.regex && make
+	cd 03.constructor && make
+	cd 04.deconstructor && make
+	cd 05.interface && make
+	cd 06.interface_template && make
+	cd 07.smart_pointer && make
+	cd 08.const && make
+	cd 09.function_template && make
 	cd 10.class_template && make
+	cd 11.threadpool && make
 
 format :
-	cd 0.template && make format
-	cd 1.macro && make format
-	cd 2.regex && make format
-	cd 3.constructor && make format
-	cd 4.deconstructor && make format
-	cd 5.interface && make format
-	cd 6.interface_template && make format
-	cd 7.smart_pointer && make format
-	cd 8.const && make format
-	cd 9.function_template && make format
+	cd 00.template && make format
+	cd 01.macro && make format
+	cd 02.regex && make format
+	cd 03.constructor && make format
+	cd 04.deconstructor && make format
+	cd 05.interface && make format
+	cd 06.interface_template && make format
+	cd 07.smart_pointer && make format
+	cd 08.const && make format
+	cd 09.function_template && make format
 	cd 10.class_template && make format
+	cd 11.threadpool && make format
 
 clean :
-	cd 0.template && make clean
-	cd 1.macro && make clean
-	cd 2.regex && make clean
-	cd 3.constructor && make clean
-	cd 4.deconstructor && make clean
-	cd 5.interface && make clean
-	cd 6.interface_template && make clean
-	cd 7.smart_pointer && make clean
-	cd 8.const && make clean
-	cd 9.function_template && make clean
+	cd 00.template && make clean
+	cd 01.macro && make clean
+	cd 02.regex && make clean
+	cd 03.constructor && make clean
+	cd 04.deconstructor && make clean
+	cd 05.interface && make clean
+	cd 06.interface_template && make clean
+	cd 07.smart_pointer && make clean
+	cd 08.const && make clean
+	cd 09.function_template && make clean
 	cd 10.class_template && make clean
+	cd 11.threadpool && make clean

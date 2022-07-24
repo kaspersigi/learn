@@ -20,22 +20,22 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd 0.template && make
-	cd 1.strategy && make
-	cd 2.observer && make
-	cd 3.decorator && make
-	cd 4.factory && make
+	cd 00.template && make
+	cd 01.strategy && make
+	cd 02.observer && make
+	cd 03.decorator && make
+	cd 04.factory && make
 
 format :
-	cd 0.template && make format
-	cd 1.strategy && make format
-	cd 2.observer && make format
-	cd 3.decorator && make format
-	cd 4.factory && make format
+	cd 00.template && make format
+	cd 01.strategy && make format
+	cd 02.observer && make format
+	cd 03.decorator && make format
+	cd 04.factory && make format
 
 clean :
-	cd 0.template && make clean
-	cd 1.strategy && make clean
-	cd 2.observer && make clean
-	cd 3.decorator && make clean
-	cd 4.factory && make clean
+	cd 00.template && make clean
+	cd 01.strategy && make clean
+	cd 02.observer && make clean
+	cd 03.decorator && make clean
+	cd 04.factory && make clean

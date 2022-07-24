@@ -20,8 +20,6 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd C\ Threadpool && make
-	cd C++\ Threadpool && make
 	cd Learning\ C && make
 	cd Learning\ C++ && make
 	cd Learning\ Design\ Pattern && make
@@ -32,8 +30,6 @@ all :
 	cd Learning\ STL && make
 
 format :
-	cd C\ Threadpool && make format
-	cd C++\ Threadpool && make format
 	cd Learning\ C && make format
 	cd Learning\ C++ && make format
 	cd Learning\ Design\ Pattern && make format
@@ -44,8 +40,6 @@ format :
 	cd Learning\ STL && make format
 
 clean :
-	cd C\ Threadpool && make clean
-	cd C++\ Threadpool && make clean
 	cd Learning\ C && make clean
 	cd Learning\ C++ && make clean
 	cd Learning\ Design\ Pattern && make clean

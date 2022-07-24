@@ -129,9 +129,9 @@ SECTION text vstart=0 align=16                  ;定义代码段
 
     mov eax, [tcb_chain]
     .find_ready:
-    cmp word [es:eax+0x04], 0x0000              ;还有处于就绪状态的任务？
+    cmp word [fs:eax+0x04], 0x0000              ;还有处于就绪状态的任务？
     jz .do_switch                               ;有，继续执行任务切换
-    mov eax, [es:eax]
+    mov eax, [fs:eax]
     or eax, eax                                 ;还有用户任务吗？
     jnz .find_ready                             ;一直搜索到链表尾部
 

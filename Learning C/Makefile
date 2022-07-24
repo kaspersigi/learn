@@ -20,16 +20,16 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd 0.template && make
-	cd 1.macro && make
-	cd 2.static_library && make
-	cd 3.dynamic_library && make
-	cd 4.dlsym && make
-	cd 5.open && make
-	cd 6.write && make
-	cd 7.read && make
-	cd 8.fopen && make
-	cd 9.line_buffer && make
+	cd 00.template && make
+	cd 01.macro && make
+	cd 02.static_library && make
+	cd 03.dynamic_library && make
+	cd 04.dlsym && make
+	cd 05.open && make
+	cd 06.write && make
+	cd 07.read && make
+	cd 08.fopen && make
+	cd 09.line_buffer && make
 	cd 10.all_buffer && make
 	cd 11.mkdir && make
 	cd 12.opendir && make
@@ -69,18 +69,19 @@ all :
 	cd 46.multi_producer_multi_consumer_cond && make
 	cd 47.perror && make
 	cd 48.union && make
+	cd 49.threadpool && make
 
 format :
-	cd 0.template && make format
-	cd 1.macro && make format
-	cd 2.static_library && make format
-	cd 3.dynamic_library && make format
-	cd 4.dlsym && make format
-	cd 5.open && make format
-	cd 6.write && make format
-	cd 7.read && make format
-	cd 8.fopen && make format
-	cd 9.line_buffer && make format
+	cd 00.template && make format
+	cd 01.macro && make format
+	cd 02.static_library && make format
+	cd 03.dynamic_library && make format
+	cd 04.dlsym && make format
+	cd 05.open && make format
+	cd 06.write && make format
+	cd 07.read && make format
+	cd 08.fopen && make format
+	cd 09.line_buffer && make format
 	cd 10.all_buffer && make format
 	cd 11.mkdir && make format
 	cd 12.opendir && make format
@@ -120,18 +121,19 @@ format :
 	cd 46.multi_producer_multi_consumer_cond && make format
 	cd 47.perror && make format
 	cd 48.union && make format
+	cd 49.threadpool && make format
 
 clean :
-	cd 0.template && make clean
-	cd 1.macro && make clean
-	cd 2.static_library && make clean
-	cd 3.dynamic_library && make clean
-	cd 4.dlsym && make clean
-	cd 5.open && make clean
-	cd 6.write && make clean
-	cd 7.read && make clean
-	cd 8.fopen && make clean
-	cd 9.line_buffer && make clean
+	cd 00.template && make clean
+	cd 01.macro && make clean
+	cd 02.static_library && make clean
+	cd 03.dynamic_library && make clean
+	cd 04.dlsym && make clean
+	cd 05.open && make clean
+	cd 06.write && make clean
+	cd 07.read && make clean
+	cd 08.fopen && make clean
+	cd 09.line_buffer && make clean
 	cd 10.all_buffer && make clean
 	cd 11.mkdir && make clean
 	cd 12.opendir && make clean
@@ -171,3 +173,4 @@ clean :
 	cd 46.multi_producer_multi_consumer_cond && make clean
 	cd 47.perror && make clean
 	cd 48.union && make clean
+	cd 49.threadpool && make clean

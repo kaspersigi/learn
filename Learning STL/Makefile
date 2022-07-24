@@ -20,16 +20,16 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd 0.template && make
-	cd 1.array && make
-	cd 2.vector && make
-	cd 3.deque && make
-	cd 4.list && make
-	cd 5.forward_list && make
-	cd 6.set && make
-	cd 7.multiset && make
-	cd 8.map && make
-	cd 9.multimap && make
+	cd 00.template && make
+	cd 01.array && make
+	cd 02.vector && make
+	cd 03.deque && make
+	cd 04.list && make
+	cd 05.forward_list && make
+	cd 06.set && make
+	cd 07.multiset && make
+	cd 08.map && make
+	cd 09.multimap && make
 	cd 10.unordered_set && make
 	cd 11.unordered_multiset && make
 	cd 12.unordered_map && make
@@ -52,16 +52,16 @@ all :
 	cd 29.equal && make
 
 format :
-	cd 0.template && make format
-	cd 1.array && make format
-	cd 2.vector && make format
-	cd 3.deque && make format
-	cd 4.list && make format
-	cd 5.forward_list && make format
-	cd 6.set && make format
-	cd 7.multiset && make format
-	cd 8.map && make format
-	cd 9.multimap && make format
+	cd 00.template && make format
+	cd 01.array && make format
+	cd 02.vector && make format
+	cd 03.deque && make format
+	cd 04.list && make format
+	cd 05.forward_list && make format
+	cd 06.set && make format
+	cd 07.multiset && make format
+	cd 08.map && make format
+	cd 09.multimap && make format
 	cd 10.unordered_set && make format
 	cd 11.unordered_multiset && make format
 	cd 12.unordered_map && make format
@@ -84,16 +84,16 @@ format :
 	cd 29.equal && make format
 
 clean :
-	cd 0.template && make clean
-	cd 1.array && make clean
-	cd 2.vector && make clean
-	cd 3.deque && make clean
-	cd 4.list && make clean
-	cd 5.forward_list && make clean
-	cd 6.set && make clean
-	cd 7.multiset && make clean
-	cd 8.map && make clean
-	cd 9.multimap && make clean
+	cd 00.template && make clean
+	cd 01.array && make clean
+	cd 02.vector && make clean
+	cd 03.deque && make clean
+	cd 04.list && make clean
+	cd 05.forward_list && make clean
+	cd 06.set && make clean
+	cd 07.multiset && make clean
+	cd 08.map && make clean
+	cd 09.multimap && make clean
 	cd 10.unordered_set && make clean
 	cd 11.unordered_multiset && make clean
 	cd 12.unordered_map && make clean

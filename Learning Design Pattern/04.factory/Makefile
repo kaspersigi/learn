@@ -5,7 +5,6 @@
 TRG = main
 OBJ = main.o
 SRC = main.cc
-VPATH = /home/miku/learn/C++\ Threadpool
 CC = /usr/bin/clang
 CXX = /usr/bin/clang++
 FORMAT = /usr/bin/clang-format
@@ -20,13 +19,19 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd 0.template && make
-	cd 1.threadpool && make
+	cd 01.simple_factory && make
+	cd 02.static_factory && make
+	cd 03.factory_method && make
+	# cd 04.abstract_factory && make
 
 format :
-	cd 0.template && make format
-	cd 1.threadpool && make format
+	cd 01.simple_factory && make format
+	cd 02.static_factory && make format
+	cd 03.factory_method && make format
+	# cd 4.abstract_factory && make format
 
 clean :
-	cd 0.template && make clean
-	cd 1.threadpool && make clean
+	cd 01.simple_factory && make clean
+	cd 02.static_factory && make clean
+	cd 03.factory_method && make clean
+	# cd 04.abstract_factory && make clean
