@@ -22,21 +22,21 @@ all : WeatherStation
 WeatherStation : WeatherStation.o subjects.o observers.o
 	$(CXX) WeatherStation.o ./observers/CurrentConditionsDisplay.o ./observers/ForecastDisplay.o ./observers/HeatIndexDisplay.o ./observers/StatisticsDisplay.o  ./subjects/WeatherData.o -o WeatherStation $(CLANGXX_LINK_FLAGS)
 	rm -v WeatherStation.o
-	cd subjects && make clean
-	cd observers && make clean
+	$(MAKE) -C subjects clean
+	$(MAKE) -C observers clean
 WeatherStation.o : WeatherStation.cc WeatherStation.h
 	$(CXX) WeatherStation.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 observers.o :
-	cd observers && make
+	$(MAKE) -C observers
 subjects.o :
-	cd subjects && make
+	$(MAKE) -C subjects
 format :
 	$(FORMAT) WeatherStation.cc -style=file -i
 	$(FORMAT) WeatherStation.h -style=file -i
 	$(FORMAT) interface/DisplayElement.h -style=file -i
 	$(FORMAT) interface/Observer.h -style=file -i
 	$(FORMAT) interface/Subject.h -style=file -i
-	cd subjects && make format
-	cd observers && make format
+	$(MAKE) -C subjects format
+	$(MAKE) -C observers format
 clean :
 	rm -v WeatherStation

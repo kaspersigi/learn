@@ -20,43 +20,43 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd 00.template && make
-	cd 01.macro && make
-	cd 02.regex && make
-	cd 03.constructor && make
-	cd 04.deconstructor && make
-	cd 05.interface && make
-	cd 06.interface_template && make
-	cd 07.smart_pointer && make
-	cd 08.const && make
-	cd 09.function_template && make
-	cd 10.class_template && make
-	cd 11.threadpool && make
+	$(MAKE) -C 00.template
+	$(MAKE) -C 01.macro
+	$(MAKE) -C 02.regex
+	$(MAKE) -C 03.constructor
+	$(MAKE) -C 04.deconstructor
+	$(MAKE) -C 05.interface
+	$(MAKE) -C 06.interface_template
+	$(MAKE) -C 07.smart_pointer
+	$(MAKE) -C 08.const
+	$(MAKE) -C 09.function_template
+	$(MAKE) -C 10.class_template
+	$(MAKE) -C 11.threadpool
 
 format :
-	cd 00.template && make format
-	cd 01.macro && make format
-	cd 02.regex && make format
-	cd 03.constructor && make format
-	cd 04.deconstructor && make format
-	cd 05.interface && make format
-	cd 06.interface_template && make format
-	cd 07.smart_pointer && make format
-	cd 08.const && make format
-	cd 09.function_template && make format
-	cd 10.class_template && make format
-	cd 11.threadpool && make format
+	$(MAKE) -C 00.template format
+	$(MAKE) -C 01.macro format
+	$(MAKE) -C 02.regex format
+	$(MAKE) -C 03.constructor format
+	$(MAKE) -C 04.deconstructor format
+	$(MAKE) -C 05.interface format
+	$(MAKE) -C 06.interface_template format
+	$(MAKE) -C 07.smart_pointer format
+	$(MAKE) -C 08.const format
+	$(MAKE) -C 09.function_template format
+	$(MAKE) -C 10.class_template format
+	$(MAKE) -C 11.threadpool format
 
 clean :
-	cd 00.template && make clean
-	cd 01.macro && make clean
-	cd 02.regex && make clean
-	cd 03.constructor && make clean
-	cd 04.deconstructor && make clean
-	cd 05.interface && make clean
-	cd 06.interface_template && make clean
-	cd 07.smart_pointer && make clean
-	cd 08.const && make clean
-	cd 09.function_template && make clean
-	cd 10.class_template && make clean
-	cd 11.threadpool && make clean
+	$(MAKE) -C 00.template clean
+	$(MAKE) -C 01.macro clean
+	$(MAKE) -C 02.regex clean
+	$(MAKE) -C 03.constructor clean
+	$(MAKE) -C 04.deconstructor clean
+	$(MAKE) -C 05.interface clean
+	$(MAKE) -C 06.interface_template clean
+	$(MAKE) -C 07.smart_pointer clean
+	$(MAKE) -C 08.const clean
+	$(MAKE) -C 09.function_template clean
+	$(MAKE) -C 10.class_template clean
+	$(MAKE) -C 11.threadpool clean

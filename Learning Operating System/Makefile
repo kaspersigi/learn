@@ -20,35 +20,35 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd 00.template && make
-	cd 01.gas && make
-	cd 02.floppy && make
-	cd 03.userapp && make
-	cd 04.interrupt && make
-	cd 05.bios && make
-	cd 06.protected && make
-	cd 07.sort && make
-	cd 08.kernel && make
-	cd 09.boot && make
-	cd 10.api && make
-	cd 11.tcb && make
-	cd 12.cpl && make
-	cd 13.collaborative_task_switch && make
-	cd 14.preemptive_task_switch && make
+	$(MAKE) -C 00.template
+	$(MAKE) -C 01.gas
+	$(MAKE) -C 02.floppy
+	$(MAKE) -C 03.userapp
+	$(MAKE) -C 04.interrupt
+	$(MAKE) -C 05.bios
+	$(MAKE) -C 06.protected
+	$(MAKE) -C 07.sort
+	$(MAKE) -C 08.kernel
+	$(MAKE) -C 09.boot
+	$(MAKE) -C 10.api
+	$(MAKE) -C 11.tcb
+	$(MAKE) -C 12.cpl
+	$(MAKE) -C 13.collaborative_task_switch
+	$(MAKE) -C 14.preemptive_task_switch
 
 clean :
-	cd 00.template && make clean
-	cd 01.gas && make clean
-	cd 02.floppy && make clean
-	cd 03.userapp && make clean
-	cd 04.interrupt && make clean
-	cd 05.bios && make clean
-	cd 06.protected && make clean
-	cd 07.sort && make clean
-	cd 08.kernel && make clean
-	cd 09.boot && make clean
-	cd 10.api && make clean
-	cd 11.tcb && make clean
-	cd 12.cpl && make clean
-	cd 13.collaborative_task_switch && make clean
-	cd 14.preemptive_task_switch && make clean
+	$(MAKE) -C 00.template clean
+	$(MAKE) -C 01.gas clean
+	$(MAKE) -C 02.floppy clean
+	$(MAKE) -C 03.userapp clean
+	$(MAKE) -C 04.interrupt clean
+	$(MAKE) -C 05.bios clean
+	$(MAKE) -C 06.protected clean
+	$(MAKE) -C 07.sort clean
+	$(MAKE) -C 08.kernel clean
+	$(MAKE) -C 09.boot clean
+	$(MAKE) -C 10.api clean
+	$(MAKE) -C 11.tcb clean
+	$(MAKE) -C 12.cpl clean
+	$(MAKE) -C 13.collaborative_task_switch clean
+	$(MAKE) -C 14.preemptive_task_switch clean

@@ -20,34 +20,34 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd 00.template && make
-	cd 01.两数之和 && make
-	cd 02.两数相加 && make
-	cd 03.无重复字符的最长子串 && make
-	cd 04.寻找两个正序数组的中位数 && make
-	cd 05.最长回文子串 && make
-	cd 06.Z字形变换 && make
-	cd 07.整数反转 && make
-	cd 08.字符串转换整数\(atoi\) && make
+	$(MAKE) -C 00.template
+	$(MAKE) -C 01.两数之和
+	$(MAKE) -C 02.两数相加
+	$(MAKE) -C 03.无重复字符的最长子串
+	$(MAKE) -C 04.寻找两个正序数组的中位数
+	$(MAKE) -C 05.最长回文子串
+	$(MAKE) -C 06.Z字形变换
+	$(MAKE) -C 07.整数反转
+	$(MAKE) -C 08.字符串转换整数\(atoi\)
 
 format :
-	cd 00.template && make format
-	cd 01.两数之和 && make format
-	cd 02.两数相加 && make format
-	cd 03.无重复字符的最长子串 && make format
-	cd 04.寻找两个正序数组的中位数 && make format
-	cd 05.最长回文子串 && make format
-	cd 06.Z字形变换 && make format
-	cd 07.整数反转 && make format
-	cd 08.字符串转换整数\(atoi\) && make format
+	$(MAKE) -C 00.template format
+	$(MAKE) -C 01.两数之和 format
+	$(MAKE) -C 02.两数相加 format
+	$(MAKE) -C 03.无重复字符的最长子串 format
+	$(MAKE) -C 04.寻找两个正序数组的中位数 format
+	$(MAKE) -C 05.最长回文子串 format
+	$(MAKE) -C 06.Z字形变换 format
+	$(MAKE) -C 07.整数反转 format
+	$(MAKE) -C 08.字符串转换整数\(atoi\) format
 
 clean :
-	cd 00.template && make clean
-	cd 01.两数之和 && make clean
-	cd 02.两数相加 && make clean
-	cd 03.无重复字符的最长子串 && make clean
-	cd 04.寻找两个正序数组的中位数 && make clean
-	cd 05.最长回文子串 && make clean
-	cd 06.Z字形变换 && make clean
-	cd 07.整数反转 && make clean
-	cd 08.字符串转换整数\(atoi\) && make clean
+	$(MAKE) -C 00.template clean
+	$(MAKE) -C 01.两数之和 clean
+	$(MAKE) -C 02.两数相加 clean
+	$(MAKE) -C 03.无重复字符的最长子串 clean
+	$(MAKE) -C 04.寻找两个正序数组的中位数 clean
+	$(MAKE) -C 05.最长回文子串 clean
+	$(MAKE) -C 06.Z字形变换 clean
+	$(MAKE) -C 07.整数反转 clean
+	$(MAKE) -C 08.字符串转换整数\(atoi\) clean

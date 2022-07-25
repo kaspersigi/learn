@@ -20,157 +20,157 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd 00.template && make
-	cd 01.macro && make
-	cd 02.static_library && make
-	cd 03.dynamic_library && make
-	cd 04.dlsym && make
-	cd 05.open && make
-	cd 06.write && make
-	cd 07.read && make
-	cd 08.fopen && make
-	cd 09.line_buffer && make
-	cd 10.all_buffer && make
-	cd 11.mkdir && make
-	cd 12.opendir && make
-	cd 13.readdir && make
-	cd 14.fork && make
-	cd 15.vfork && make
-	cd 16.pipe && make
-	cd 17.mkfifo && make
-	cd 18.kill && make
-	cd 19.raise && make
-	cd 20.alarm && make
-	cd 21.pause && make
-	cd 22.signal && make
-	cd 23.shmget && make
-	cd 24.ftok && make
-	cd 25.shmat && make
-	cd 26.shmctl && make
-	cd 27.msgget && make
-	cd 28.msgsnd && make
-	cd 29.msgrcv && make
-	cd 30.semget && make
-	cd 31.semop && make
-	cd 32.one_producer_one_consumer_sem && make
-	cd 33.multi_producer_multi_consumer_sem && make
-	cd 34.pthread_create && make
-	cd 35.pthread_exit && make
-	cd 36.pthread_join && make
-	cd 37.pthread_detach && make
-	cd 38.pthread_cancel && make
-	cd 39.pthread_kill && make
-	cd 40.sigaction && make
-	cd 41.pthread_cleanup && make
-	cd 42.pthread_mutex && make
-	cd 43.pthread_rwlock && make
-	cd 44.pthread_cond && make
-	cd 45.one_producer_one_consumer_cond && make
-	cd 46.multi_producer_multi_consumer_cond && make
-	cd 47.perror && make
-	cd 48.union && make
-	cd 49.threadpool && make
+	$(MAKE) -C 00.template
+	$(MAKE) -C 01.macro
+	$(MAKE) -C 02.static_library
+	$(MAKE) -C 03.dynamic_library
+	$(MAKE) -C 04.dlsym
+	$(MAKE) -C 05.open
+	$(MAKE) -C 06.write
+	$(MAKE) -C 07.read
+	$(MAKE) -C 08.fopen
+	$(MAKE) -C 09.line_buffer
+	$(MAKE) -C 10.all_buffer
+	$(MAKE) -C 11.mkdir
+	$(MAKE) -C 12.opendir
+	$(MAKE) -C 13.readdir
+	$(MAKE) -C 14.fork
+	$(MAKE) -C 15.vfork
+	$(MAKE) -C 16.pipe
+	$(MAKE) -C 17.mkfifo
+	$(MAKE) -C 18.kill
+	$(MAKE) -C 19.raise
+	$(MAKE) -C 20.alarm
+	$(MAKE) -C 21.pause
+	$(MAKE) -C 22.signal
+	$(MAKE) -C 23.shmget
+	$(MAKE) -C 24.ftok
+	$(MAKE) -C 25.shmat
+	$(MAKE) -C 26.shmctl
+	$(MAKE) -C 27.msgget
+	$(MAKE) -C 28.msgsnd
+	$(MAKE) -C 29.msgrcv
+	$(MAKE) -C 30.semget
+	$(MAKE) -C 31.semop
+	$(MAKE) -C 32.one_producer_one_consumer_sem
+	$(MAKE) -C 33.multi_producer_multi_consumer_sem
+	$(MAKE) -C 34.pthread_create
+	$(MAKE) -C 35.pthread_exit
+	$(MAKE) -C 36.pthread_join
+	$(MAKE) -C 37.pthread_detach
+	$(MAKE) -C 38.pthread_cancel
+	$(MAKE) -C 39.pthread_kill
+	$(MAKE) -C 40.sigaction
+	$(MAKE) -C 41.pthread_cleanup
+	$(MAKE) -C 42.pthread_mutex
+	$(MAKE) -C 43.pthread_rwlock
+	$(MAKE) -C 44.pthread_cond
+	$(MAKE) -C 45.one_producer_one_consumer_cond
+	$(MAKE) -C 46.multi_producer_multi_consumer_cond
+	$(MAKE) -C 47.perror
+	$(MAKE) -C 48.union
+	$(MAKE) -C 49.threadpool
 
 format :
-	cd 00.template && make format
-	cd 01.macro && make format
-	cd 02.static_library && make format
-	cd 03.dynamic_library && make format
-	cd 04.dlsym && make format
-	cd 05.open && make format
-	cd 06.write && make format
-	cd 07.read && make format
-	cd 08.fopen && make format
-	cd 09.line_buffer && make format
-	cd 10.all_buffer && make format
-	cd 11.mkdir && make format
-	cd 12.opendir && make format
-	cd 13.readdir && make format
-	cd 14.fork && make format
-	cd 15.vfork && make format
-	cd 16.pipe && make format
-	cd 17.mkfifo && make format
-	cd 18.kill && make format
-	cd 19.raise && make format
-	cd 20.alarm && make format
-	cd 21.pause && make format
-	cd 22.signal && make format
-	cd 23.shmget && make format
-	cd 24.ftok && make format
-	cd 25.shmat && make format
-	cd 26.shmctl && make format
-	cd 27.msgget && make format
-	cd 28.msgsnd && make format
-	cd 29.msgrcv && make format
-	cd 30.semget && make format
-	cd 31.semop && make format
-	cd 32.one_producer_one_consumer_sem && make format
-	cd 33.multi_producer_multi_consumer_sem && make format
-	cd 34.pthread_create && make format
-	cd 35.pthread_exit && make format
-	cd 36.pthread_join && make format
-	cd 37.pthread_detach && make format
-	cd 38.pthread_cancel && make format
-	cd 39.pthread_kill && make format
-	cd 40.sigaction && make format
-	cd 41.pthread_cleanup && make format
-	cd 42.pthread_mutex && make format
-	cd 43.pthread_rwlock && make format
-	cd 44.pthread_cond && make format
-	cd 45.one_producer_one_consumer_cond && make format
-	cd 46.multi_producer_multi_consumer_cond && make format
-	cd 47.perror && make format
-	cd 48.union && make format
-	cd 49.threadpool && make format
+	$(MAKE) -C 00.template format
+	$(MAKE) -C 01.macro format
+	$(MAKE) -C 02.static_library format
+	$(MAKE) -C 03.dynamic_library format
+	$(MAKE) -C 04.dlsym format
+	$(MAKE) -C 05.open format
+	$(MAKE) -C 06.write format
+	$(MAKE) -C 07.read format
+	$(MAKE) -C 08.fopen format
+	$(MAKE) -C 09.line_buffer format
+	$(MAKE) -C 10.all_buffer format
+	$(MAKE) -C 11.mkdir format
+	$(MAKE) -C 12.opendir format
+	$(MAKE) -C 13.readdir format
+	$(MAKE) -C 14.fork format
+	$(MAKE) -C 15.vfork format
+	$(MAKE) -C 16.pipe format
+	$(MAKE) -C 17.mkfifo format
+	$(MAKE) -C 18.kill format
+	$(MAKE) -C 19.raise format
+	$(MAKE) -C 20.alarm format
+	$(MAKE) -C 21.pause format
+	$(MAKE) -C 22.signal format
+	$(MAKE) -C 23.shmget format
+	$(MAKE) -C 24.ftok format
+	$(MAKE) -C 25.shmat format
+	$(MAKE) -C 26.shmctl format
+	$(MAKE) -C 27.msgget format
+	$(MAKE) -C 28.msgsnd format
+	$(MAKE) -C 29.msgrcv format
+	$(MAKE) -C 30.semget format
+	$(MAKE) -C 31.semop format
+	$(MAKE) -C 32.one_producer_one_consumer_sem format
+	$(MAKE) -C 33.multi_producer_multi_consumer_sem format
+	$(MAKE) -C 34.pthread_create format
+	$(MAKE) -C 35.pthread_exit format
+	$(MAKE) -C 36.pthread_join format
+	$(MAKE) -C 37.pthread_detach format
+	$(MAKE) -C 38.pthread_cancel format
+	$(MAKE) -C 39.pthread_kill format
+	$(MAKE) -C 40.sigaction format
+	$(MAKE) -C 41.pthread_cleanup format
+	$(MAKE) -C 42.pthread_mutex format
+	$(MAKE) -C 43.pthread_rwlock format
+	$(MAKE) -C 44.pthread_cond format
+	$(MAKE) -C 45.one_producer_one_consumer_cond format
+	$(MAKE) -C 46.multi_producer_multi_consumer_cond format
+	$(MAKE) -C 47.perror format
+	$(MAKE) -C 48.union format
+	$(MAKE) -C 49.threadpool format
 
 clean :
-	cd 00.template && make clean
-	cd 01.macro && make clean
-	cd 02.static_library && make clean
-	cd 03.dynamic_library && make clean
-	cd 04.dlsym && make clean
-	cd 05.open && make clean
-	cd 06.write && make clean
-	cd 07.read && make clean
-	cd 08.fopen && make clean
-	cd 09.line_buffer && make clean
-	cd 10.all_buffer && make clean
-	cd 11.mkdir && make clean
-	cd 12.opendir && make clean
-	cd 13.readdir && make clean
-	cd 14.fork && make clean
-	cd 15.vfork && make clean
-	cd 16.pipe && make clean
-	cd 17.mkfifo && make clean
-	cd 18.kill && make clean
-	cd 19.raise && make clean
-	cd 20.alarm && make clean
-	cd 21.pause && make clean
-	cd 22.signal && make clean
-	cd 23.shmget && make clean
-	cd 24.ftok && make clean
-	cd 25.shmat && make clean
-	cd 26.shmctl && make clean
-	cd 27.msgget && make clean
-	cd 28.msgsnd && make clean
-	cd 29.msgrcv && make clean
-	cd 30.semget && make clean
-	cd 31.semop && make clean
-	cd 32.one_producer_one_consumer_sem && make clean
-	cd 33.multi_producer_multi_consumer_sem && make clean
-	cd 34.pthread_create && make clean
-	cd 35.pthread_exit && make clean
-	cd 36.pthread_join && make clean
-	cd 37.pthread_detach && make clean
-	cd 38.pthread_cancel && make clean
-	cd 39.pthread_kill && make clean
-	cd 40.sigaction && make clean
-	cd 41.pthread_cleanup && make clean
-	cd 42.pthread_mutex && make clean
-	cd 43.pthread_rwlock && make clean
-	cd 44.pthread_cond && make clean
-	cd 45.one_producer_one_consumer_cond && make clean
-	cd 46.multi_producer_multi_consumer_cond && make clean
-	cd 47.perror && make clean
-	cd 48.union && make clean
-	cd 49.threadpool && make clean
+	$(MAKE) -C 00.template clean
+	$(MAKE) -C 01.macro clean
+	$(MAKE) -C 02.static_library clean
+	$(MAKE) -C 03.dynamic_library clean
+	$(MAKE) -C 04.dlsym clean
+	$(MAKE) -C 05.open clean
+	$(MAKE) -C 06.write clean
+	$(MAKE) -C 07.read clean
+	$(MAKE) -C 08.fopen clean
+	$(MAKE) -C 09.line_buffer clean
+	$(MAKE) -C 10.all_buffer clean
+	$(MAKE) -C 11.mkdir clean
+	$(MAKE) -C 12.opendir clean
+	$(MAKE) -C 13.readdir clean
+	$(MAKE) -C 14.fork clean
+	$(MAKE) -C 15.vfork clean
+	$(MAKE) -C 16.pipe clean
+	$(MAKE) -C 17.mkfifo clean
+	$(MAKE) -C 18.kill clean
+	$(MAKE) -C 19.raise clean
+	$(MAKE) -C 20.alarm clean
+	$(MAKE) -C 21.pause clean
+	$(MAKE) -C 22.signal clean
+	$(MAKE) -C 23.shmget clean
+	$(MAKE) -C 24.ftok clean
+	$(MAKE) -C 25.shmat clean
+	$(MAKE) -C 26.shmctl clean
+	$(MAKE) -C 27.msgget clean
+	$(MAKE) -C 28.msgsnd clean
+	$(MAKE) -C 29.msgrcv clean
+	$(MAKE) -C 30.semget clean
+	$(MAKE) -C 31.semop clean
+	$(MAKE) -C 32.one_producer_one_consumer_sem clean
+	$(MAKE) -C 33.multi_producer_multi_consumer_sem clean
+	$(MAKE) -C 34.pthread_create clean
+	$(MAKE) -C 35.pthread_exit clean
+	$(MAKE) -C 36.pthread_join clean
+	$(MAKE) -C 37.pthread_detach clean
+	$(MAKE) -C 38.pthread_cancel clean
+	$(MAKE) -C 39.pthread_kill clean
+	$(MAKE) -C 40.sigaction clean
+	$(MAKE) -C 41.pthread_cleanup clean
+	$(MAKE) -C 42.pthread_mutex clean
+	$(MAKE) -C 43.pthread_rwlock clean
+	$(MAKE) -C 44.pthread_cond clean
+	$(MAKE) -C 45.one_producer_one_consumer_cond clean
+	$(MAKE) -C 46.multi_producer_multi_consumer_cond clean
+	$(MAKE) -C 47.perror clean
+	$(MAKE) -C 48.union clean
+	$(MAKE) -C 49.threadpool clean

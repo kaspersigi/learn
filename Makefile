@@ -20,34 +20,34 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd Learning\ C && make
-	cd Learning\ C++ && make
-	cd Learning\ Design\ Pattern && make
-	cd Learning\ Leetcode && make
-	cd Learning\ Operating\ System && make
-	cd Learning\ Rust && make
-	cd Learning\ Socket && make
-	cd Learning\ STL && make
+	$(MAKE) -C Learning\ C
+	$(MAKE) -C Learning\ C++
+	$(MAKE) -C Learning\ Design\ Pattern
+	$(MAKE) -C Learning\ Leetcode
+	$(MAKE) -C Learning\ Operating\ System
+	$(MAKE) -C Learning\ Rust
+	$(MAKE) -C Learning\ Socket
+	$(MAKE) -C Learning\ STL
 
 format :
-	cd Learning\ C && make format
-	cd Learning\ C++ && make format
-	cd Learning\ Design\ Pattern && make format
-	cd Learning\ Leetcode && make format
-	# cd Learning\ Operating\ System && make format
-	cd Learning\ Rust && make format
-	cd Learning\ Socket && make format
-	cd Learning\ STL && make format
+	$(MAKE) -C Learning\ C format
+	$(MAKE) -C Learning\ C++ format
+	$(MAKE) -C Learning\ Design\ Pattern format
+	$(MAKE) -C Learning\ Leetcode format
+	# $(MAKE) -C Learning\ Operating\ System format
+	$(MAKE) -C Learning\ Rust format
+	$(MAKE) -C Learning\ Socket format
+	$(MAKE) -C Learning\ STL format
 
 clean :
-	cd Learning\ C && make clean
-	cd Learning\ C++ && make clean
-	cd Learning\ Design\ Pattern && make clean
-	cd Learning\ Leetcode && make clean
-	cd Learning\ Operating\ System && make clean
-	cd Learning\ Rust && make clean
-	cd Learning\ Socket && make clean
-	cd Learning\ STL && make clean
+	$(MAKE) -C Learning\ C clean
+	$(MAKE) -C Learning\ C++ clean
+	$(MAKE) -C Learning\ Design\ Pattern clean
+	$(MAKE) -C Learning\ Leetcode clean
+	$(MAKE) -C Learning\ Operating\ System clean
+	$(MAKE) -C Learning\ Rust clean
+	$(MAKE) -C Learning\ Socket clean
+	$(MAKE) -C Learning\ STL clean
 
 bak :
 	git archive --format=tar.gz --output ../learn.tar.gz master

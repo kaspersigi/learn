@@ -22,22 +22,22 @@ all : Starbuzz
 Starbuzz : Starbuzz.o interface.o components.o decorators.o
 	$(CXX) Starbuzz.o ./interface/Beverage.o ./components/DarkRoast.o ./components/Decaf.o ./components/Espresso.o ./components/HouseBlend.o ./decorators/Milk.o ./decorators/Mocha.o ./decorators/Soy.o ./decorators/Whip.o -o Starbuzz $(CLANGXX_LINK_FLAGS)
 	rm -v Starbuzz.o
-	cd interface && make clean
-	cd components && make clean
-	cd decorators && make clean
+	$(MAKE) -C interface clean
+	$(MAKE) -C components clean
+	$(MAKE) -C decorators clean
 Starbuzz.o : Starbuzz.cc Starbuzz.h
 	$(CXX) Starbuzz.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 interface.o :
-	cd interface && make
+	$(MAKE) -C interface
 components.o :
-	cd components && make
+	$(MAKE) -C components
 decorators.o :
-	cd decorators && make
+	$(MAKE) -C decorators
 format :
 	$(FORMAT) Starbuzz.cc -style=file -i
 	$(FORMAT) Starbuzz.h -style=file -i
-	cd interface && make format
-	cd components && make format
-	cd decorators && make format
+	$(MAKE) -C interface format
+	$(MAKE) -C components format
+	$(MAKE) -C decorators format
 clean :
 	rm -v Starbuzz

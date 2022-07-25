@@ -19,19 +19,19 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all :
-	cd 01.simple_factory && make
-	cd 02.static_factory && make
-	cd 03.factory_method && make
-	# cd 04.abstract_factory && make
+	$(MAKE) -C 01.simple_factory
+	$(MAKE) -C 02.static_factory
+	$(MAKE) -C 03.factory_method
+	# $(MAKE) -C 04.abstract_factory
 
 format :
-	cd 01.simple_factory && make format
-	cd 02.static_factory && make format
-	cd 03.factory_method && make format
-	# cd 4.abstract_factory && make format
+	$(MAKE) -C 01.simple_factory format
+	$(MAKE) -C 02.static_factory format
+	$(MAKE) -C 03.factory_method format
+	# $(MAKE) -C 4.abstract_factory format
 
 clean :
-	cd 01.simple_factory && make clean
-	cd 02.static_factory && make clean
-	cd 03.factory_method && make clean
-	# cd 04.abstract_factory && make clean
+	$(MAKE) -C 01.simple_factory clean
+	$(MAKE) -C 02.static_factory clean
+	$(MAKE) -C 03.factory_method clean
+	# $(MAKE) -C 04.abstract_factory clean
