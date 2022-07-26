@@ -7,16 +7,14 @@ floppy:
     mov byte [0x03], 0x07
     mov byte [0x04], 'm'
     mov byte [0x05], 0x07
-    mov byte [0x06], ' '
-    mov byte [0x07], 0x07
 
     ;写2000个空格
     mov bx, 0x06
     mov cx, 2000
-    cls:
+    .cls:
     mov word[bx], 0x0720
     add bx, 2
-    loop cls
+    loop .cls
 
     jmp $
     times 510-($-$$) db 0

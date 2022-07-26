@@ -1,9 +1,9 @@
 ###########################################
 #Makefile for my assembler programs
 ###########################################
-
-TRG = main.bin
+TRG = all
 EXEC = main
+BIN = main.bin
 OBJ = main.o
 SRC = main.s
 AS = /usr/bin/as
@@ -13,13 +13,12 @@ AS_FLAGS = --32
 
 .PHONY : all
 $(TRG) : $(EXEC)
-	$(DUMP) $(OBJ) -O binary $(TRG)
+	$(DUMP) $(OBJ) -O binary $(BIN)
 	rm -v $(OBJ)
+	rm -v $(BIN)
 $(EXEC) : $(OBJ)
 	$(LD) $(OBJ) -o $(EXEC)
 $(OBJ) : $(SRC)
 	$(AS) $(SRC) -o $(OBJ) $(AS_FLAGS)
-	# $(AS) $(SRC) -o $(OBJ)
 clean :
-	rm -v $(TRG)
 	rm -v $(EXEC)

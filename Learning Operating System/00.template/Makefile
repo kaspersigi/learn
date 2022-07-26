@@ -3,7 +3,7 @@
 ###########################################
 
 TRG = all
-OBJ = floppy.bin
+OBJ = main.bin
 AS = nasm
 
 .PHONY : all
@@ -11,9 +11,9 @@ $(TRG) : $(OBJ) boot.img
 	rm -v $(OBJ)
 boot.img :
 	dd if=/dev/zero of=boot.img count=1 bs=1440k conv=sync
-floppy.bin : floppy.s boot.img
-	$(AS) -f bin floppy.s -o floppy.bin
-	dd if=floppy.bin of=boot.img count=1 bs=1440k conv=sync
+main.bin : main.s boot.img
+	$(AS) -f bin main.s -o main.bin
+	dd if=main.bin of=boot.img count=1 bs=1440k conv=sync
 clean :
 	rm -v boot.img
 qemu :

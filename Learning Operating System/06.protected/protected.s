@@ -72,10 +72,10 @@ SECTION mbr vstart=0x7c00 align=16              ;定义主引导扇区
     ;写2000个空格
     mov cx, 2000
     mov bx, 0x1e
-    cls:
+    .cls:
     mov word[bx], 0x0720
     add bx, 2
-    loop cls
+    loop .cls
 
     gohalt:
     hlt                                         ;已经禁止中断，将不会被唤醒

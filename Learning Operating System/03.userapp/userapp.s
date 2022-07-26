@@ -53,10 +53,10 @@ SECTION text vstart=0 align=16                  ;定义代码段
     exit:
     ;写2000个空格
     mov cx, 2000
-    cls:
+    .cls:
     mov word[es:si], 0x0720
     add si, 2
-    loop cls
+    loop .cls
 
     pop di
     pop ds

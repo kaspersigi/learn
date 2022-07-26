@@ -1,19 +1,26 @@
 ###########################################
 #Makefile for my assembler programs
 ###########################################
-
 TRG = all
-OBJ = floppy.bin
-AS = nasm
+EXEC = main
+BIN = main.bin
+OBJ = main.o
+SRC = main.s
+AS = /usr/bin/as
+LD = /usr/bin/ld
+DUMP = /usr/bin/objcopy
+AS_FLAGS = --32
 
 .PHONY : all
-$(TRG) : $(OBJ) boot.img
-	rm -v $(OBJ)
+$(TRG) : $(BIN) boot.img
+	rm -v $(BIN)
 boot.img :
 	dd if=/dev/zero of=boot.img count=1 bs=1440k conv=sync
-floppy.bin : floppy.s boot.img
-	$(AS) -f bin floppy.s -o floppy.bin
-	dd if=floppy.bin of=boot.img count=1 bs=1440k conv=sync
+$(BIN) : main.s boot.img
+	$(AS) $(SRC) -o $(OBJ)
+	$(DUMP) $(OBJ) -O binary $(BIN)
+	rm -v $(OBJ)
+	dd if=main.bin of=boot.img count=1 bs=1440k conv=sync
 clean :
 	rm -v boot.img
 qemu :

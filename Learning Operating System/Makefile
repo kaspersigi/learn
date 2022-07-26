@@ -21,8 +21,8 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 .PHONY : all
 all :
 	$(MAKE) -C 00.template
-	$(MAKE) -C 01.gas
-	$(MAKE) -C 02.floppy
+	$(MAKE) -C 01.cpuid
+	$(MAKE) -C 02.asm
 	$(MAKE) -C 03.userapp
 	$(MAKE) -C 04.interrupt
 	$(MAKE) -C 05.bios
@@ -38,8 +38,8 @@ all :
 
 clean :
 	$(MAKE) -C 00.template clean
-	$(MAKE) -C 01.gas clean
-	$(MAKE) -C 02.floppy clean
+	$(MAKE) -C 01.cpuid clean
+	$(MAKE) -C 02.asm clean
 	$(MAKE) -C 03.userapp clean
 	$(MAKE) -C 04.interrupt clean
 	$(MAKE) -C 05.bios clean
