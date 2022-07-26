@@ -94,7 +94,7 @@ SECTION data vstart=0 align=16                  ;定义用户程序数据段
     message_3:          db '[User Task]: program task is running again......', 0x0d, 0x0a, 0
     message_4:          db '[User Task]: program task is exiting......', 0x0d, 0x0a, 0
     message_5:          db '[User Task]: '
-    cpu_brand: times 52 db 0
+    cpu_brand: times 48 db 0
     crlf:               db 0x0d, 0x0a, 0
     data_end:
 
