@@ -19,6 +19,6 @@ $(TRG) : $(EXEC)
 $(EXEC) : $(OBJ)
 	$(LD) $(OBJ) -o $(EXEC)
 $(OBJ) : $(SRC)
-	$(AS) $(SRC) -o $(OBJ) $(AS_FLAGS)
+	$(AS) $(SRC) -o $(OBJ)
 clean :
 	rm -v $(EXEC)
