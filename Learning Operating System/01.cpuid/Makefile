@@ -8,14 +8,10 @@ OBJ = main.o
 SRC = main.s
 AS = /usr/bin/as
 LD = /usr/bin/ld
-DUMP = /usr/bin/objcopy
-AS_FLAGS = --32
 
 .PHONY : all
 $(TRG) : $(EXEC)
-	$(DUMP) $(OBJ) -O binary $(BIN)
 	rm -v $(OBJ)
-	rm -v $(BIN)
 $(EXEC) : $(OBJ)
 	$(LD) $(OBJ) -o $(EXEC)
 $(OBJ) : $(SRC)

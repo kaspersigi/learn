@@ -16,7 +16,7 @@ boot.img :
 	dd if=/dev/zero of=boot.img count=1 bs=1440k conv=sync
 $(BIN) : main.s boot.img
 	$(AS) $(SRC) -o $(OBJ)
-	$(LD) $(OBJ) -Ttext 0x0 -s --oformat binary -o $(BIN)
+	$(LD) $(OBJ) -Ttext 0x7c00 -s --oformat binary -o $(BIN)
 	rm -v $(OBJ)
 	dd if=main.bin of=boot.img count=1 bs=1440k conv=sync
 clean :

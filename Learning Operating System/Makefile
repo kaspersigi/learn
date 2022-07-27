@@ -23,32 +23,34 @@ all :
 	$(MAKE) -C 00.template
 	$(MAKE) -C 01.cpuid
 	$(MAKE) -C 02.asm
-	$(MAKE) -C 03.userapp
-	$(MAKE) -C 04.interrupt
-	$(MAKE) -C 05.bios
-	$(MAKE) -C 06.protected
-	$(MAKE) -C 07.sort
-	$(MAKE) -C 08.kernel
-	$(MAKE) -C 09.boot
-	$(MAKE) -C 10.api
-	$(MAKE) -C 11.tcb
-	$(MAKE) -C 12.cpl
-	$(MAKE) -C 13.collaborative_task_switch
-	$(MAKE) -C 14.preemptive_task_switch
+	$(MAKE) -C 03.protected
+	$(MAKE) -C 04.userapp
+	$(MAKE) -C 05.interrupt
+	$(MAKE) -C 06.bios
+	$(MAKE) -C 07.protected
+	$(MAKE) -C 08.sort
+	$(MAKE) -C 09.kernel
+	$(MAKE) -C 10.boot
+	$(MAKE) -C 11.api
+	$(MAKE) -C 12.tcb
+	$(MAKE) -C 13.cpl
+	$(MAKE) -C 14.collaborative_task_switch
+	$(MAKE) -C 15.preemptive_task_switch
 
 clean :
 	$(MAKE) -C 00.template clean
 	$(MAKE) -C 01.cpuid clean
 	$(MAKE) -C 02.asm clean
-	$(MAKE) -C 03.userapp clean
-	$(MAKE) -C 04.interrupt clean
-	$(MAKE) -C 05.bios clean
-	$(MAKE) -C 06.protected clean
-	$(MAKE) -C 07.sort clean
-	$(MAKE) -C 08.kernel clean
-	$(MAKE) -C 09.boot clean
-	$(MAKE) -C 10.api clean
-	$(MAKE) -C 11.tcb clean
-	$(MAKE) -C 12.cpl clean
-	$(MAKE) -C 13.collaborative_task_switch clean
-	$(MAKE) -C 14.preemptive_task_switch clean
+	$(MAKE) -C 03.protected clean
+	$(MAKE) -C 04.userapp clean
+	$(MAKE) -C 05.interrupt clean
+	$(MAKE) -C 06.bios clean
+	$(MAKE) -C 07.protected clean
+	$(MAKE) -C 08.sort clean
+	$(MAKE) -C 09.kernel clean
+	$(MAKE) -C 10.boot clean
+	$(MAKE) -C 11.api clean
+	$(MAKE) -C 12.tcb clean
+	$(MAKE) -C 13.cpl clean
+	$(MAKE) -C 14.collaborative_task_switch clean
+	$(MAKE) -C 15.preemptive_task_switch clean
