@@ -50,13 +50,25 @@ _start:
     ljmp $0B0000000000010000, $(print-start) # 加载代码段选择子(索引0x02)
 .code32
     print:
-    # 以下在屏幕上显示"Protect mode OK."
     movw $0B0000000000001000, %cx # 加载数据段选择子(索引0x01)
     movw %cx, %ds
+
+    # 以下在屏幕上显示"Protect mode OK."
+    movw $(buffer_end-buffer), %cx
+    movw $(buffer-start), %bx
+
+    # 保护模式下无法调用bios中断
+    # .putc:
+    # movb $0x0e, %ah
+    # movb %cs:(%bx), %al
+    # int $0x10
+    # inc %bx
+    # loop .putc
 
     hlt
 buffer:
     .asciz "protected mode OK!"
+buffer_end:
 gdt_size:
     .word 0x0000
 gdt_base:
