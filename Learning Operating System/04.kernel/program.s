@@ -5,9 +5,9 @@ _start:
 .code16
     start:
     # 初始化堆栈段及堆栈段指针
-    movw $0x07e0, %ax
+    movw $0x7e0, %ax
     movw %ax, %ss
-    movw $0x0200, %sp
+    movw $0x200, %sp
 
     # 计算GDT所在的逻辑段地址
     movw %cs:(gdt_base), %ax # 低16位
