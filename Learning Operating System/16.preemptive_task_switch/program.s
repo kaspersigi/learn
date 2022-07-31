@@ -75,14 +75,21 @@ SECTION text vstart=0 align=16                  ;定义引导程序代码段
     mov ebx, message_2
     call far [gs:print]
 
-    call far [gs:init_task_switch]
+    ; call far [gs:init_task_switch]
 
-    mov ebx, message_3
-    call far [gs:print]
+    ; mov ebx, message_3
+    ; call far [gs:print]
 
-    mov ebx, message_4
+    ; mov ebx, message_4
+    ; call far [gs:print]
+    ; call far [gs:terminate_current_task]
+
+    .do_print:
+    mov ebx, message_6
     call far [gs:print]
-    call far [gs:terminate_current_task]
+    jmp .do_print
+
+    call far [gs:terminate_current_task]        ;退出，并将控制权返回到核心
     text_end:
 
 SECTION data vstart=0 align=16                  ;定义用户程序数据段
@@ -96,6 +103,7 @@ SECTION data vstart=0 align=16                  ;定义用户程序数据段
     message_5:          db '[User Task]: '
     cpu_brand: times 48 db 0
     crlf:               db 0x0d, 0x0a, 0
+    message_6:          db '[User Task]: ,,,,,,,,,,,,,,,,,,,,,,,',0x0d,0x0a,0
     data_end:
 
 SECTION stack vstart=0 align=16                 ;定义用户程序堆栈段

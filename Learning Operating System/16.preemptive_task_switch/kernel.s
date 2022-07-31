@@ -7,6 +7,7 @@
     kernel_routine_seg_sel  equ 0000000001000_000B  ;内核例程段选择子#8
     kernel_data_seg_sel     equ 0000000001001_000B  ;内核数据段选择子#9
     kernel_stack_seg_sel    equ 0000000001010_000B  ;内核堆栈段选择子#10
+    idt_linear_address      equ 0x20000             ;中断描述符表的线性地址
 SECTION head vstart=0 align=16                  ;定义内核程序头部段
     program_length:     dd program_end          ;程序总长度
     ;段重定位表
@@ -38,8 +39,95 @@ SECTION text vstart=0 align=16                  ;定义代码段
     mov ax, mem_data_seg_sel                    ;初始化内存数据段
     mov fs, ax
 
-    mov ebx, message_1
-    call kernel_routine_seg_sel:print
+    ; mov ebx, message_1
+    ; call kernel_routine_seg_sel:print
+
+    ;创建中断描述符表IDT
+    ;注意！在此期间，不得开放中断，也不得调用print例程！
+
+    ;前20个向量是处理器异常使用的
+    ;general_exception_handler通用异常处理过程
+    mov eax, general_exception_handler          ;门代码在段内偏移地址
+    mov bx, kernel_routine_seg_sel              ;门代码所在段的选择子
+    mov cx, 0x8e00                              ;32位中断门，0特权级
+    call kernel_routine_seg_sel:make_gate_descriptor
+
+    ;安装前20个异常中断处理过程
+    .idt0:
+    mov [fs:ebx+esi*8], eax
+    mov [fs:ebx+esi*8+4], edx
+    inc esi
+    cmp esi,19
+    jle .idt0
+
+    mov ebx, idt_linear_address                 ;中断描述符表的线性地址
+    xor esi, esi
+
+    ;安装后236个异常中断处理过程
+    ;general_interrupt_handler通用中断处理过程
+    mov eax, general_interrupt_handler          ;门代码在段内偏移地址
+    mov bx, kernel_routine_seg_sel              ;门代码所在段的选择子
+    mov cx, 0x8e00                              ;32位中断门，0特权级
+    call kernel_routine_seg_sel:make_gate_descriptor
+
+    mov ebx, idt_linear_address                 ;中断描述符表的线性地址
+    .idt1:
+    mov [fs:ebx+esi*8], eax
+    mov [fs:ebx+esi*8+4], edx
+    inc esi
+    cmp esi, 255                                ;安装普通的中断处理过程
+    jle .idt1
+
+    ;设置实时时钟中断处理过程
+    mov eax, rtm_0x70_interrupt_handle          ;门代码在段内偏移地址
+    mov bx, kernel_routine_seg_sel              ;门代码所在段的选择子
+    mov cx, 0x8e00                              ;32位中断门，0特权级
+    call kernel_routine_seg_sel:make_gate_descriptor
+
+    mov ebx, idt_linear_address                 ;中断描述符表的线性地址
+    mov [fs:ebx+0x70*8], eax
+    mov [fs:ebx+0x70*8+4], edx
+
+    ;准备开放中断
+    mov word [pidt], 256*8-1                    ;IDT的界限
+    mov dword [pidt+2], idt_linear_address
+    lidt [pidt]                                 ;加载中断描述符表寄存器IDTR
+
+    ;设置8259A中断控制器
+    mov al, 0x11
+    out 0x20, al                                ;ICW1：边沿触发/级联方式
+    mov al, 0x20
+    out 0x21, al                                ;ICW2:起始中断向量
+    mov al, 0x04
+    out 0x21, al                                ;ICW3:从片级联到IR2
+    mov al, 0x01
+    out 0x21, al                                ;ICW4:非总线缓冲，全嵌套，正常EOI
+
+    ; mov al, 0x11
+    ; out 0xa0, al                                ;ICW1：边沿触发/级联方式
+    ; mov al, 0x70
+    ; out 0xa1, al                                ;ICW2:起始中断向量
+    ; mov al, 0x04
+    ; out 0xa1, al                                ;ICW3:从片级联到IR2
+    ; mov al, 0x01
+    ; out 0xa1, al                                ;ICW4:非总线缓冲，全嵌套，正常EOI
+
+    ;设置和时钟中断相关的硬件
+    mov al, 0x0b                                ;RTC寄存器B
+    or al, 0x80                                 ;阻断NMI
+    out 0x70, al
+    mov al, 0x12                                ;设置寄存器B，禁止周期性中断，开放更
+    out 0x71, al                                ;新结束后中断，BCD码，24小时制
+
+    in al, 0xa1                                 ;读8259从片的IMR寄存器
+    and al, 0xfe                                ;清除bit 0(此位连接RTC)
+    out 0xa1, al                                ;写回此寄存器
+
+    mov al, 0x0c
+    out 0x70, al
+    in al, 0x71                                 ;读RTC寄存器C，复位未决的中断状态
+
+    sti                                         ;开放硬件中断
 
     ;以下开始安装为整个系统服务的调用门。特权级之间的控制转移必须使用门
     mov edi, salt_begin                         ;C-SALT表的起始位置
@@ -63,6 +151,7 @@ SECTION text vstart=0 align=16                  ;定义代码段
     call far [salt_1+256]                       ;通过门显示信息(偏移量将被忽略)
 
     ;为内核任务创建任务控制块TCB
+    cli
     mov ecx, 0x46
     call kernel_routine_seg_sel:allocate_memory
     call append_to_tcb_link                     ;将此TCB添加到TCB链中
@@ -94,17 +183,22 @@ SECTION text vstart=0 align=16                  ;定义代码段
     ;任务寄存器TR中的内容是任务存在的标志，该内容也决定了当前任务是谁。
     ;下面的指令为当前正在执行的0特权级任务“程序管理器”后补手续（TSS）。
     ltr cx
+    sti
 
     mov ebx, message_3
     call kernel_routine_seg_sel:print
 
+    cli
     mov ax, cs                                  ;取CS段选择子
     and al, 0000_0011B                          ;取cpl
     or al, 0x30                                 ;0字符0x30，由于cpl只有0，1，2，3相当于加法
     mov [cpl], al
+    sti
+
     mov ebx, message_0
     call kernel_routine_seg_sel:print
 
+    cli
     ;创建用户任务TCB
     mov ecx, 0x46                               ;设计tcb大小为70字节
     call kernel_routine_seg_sel:allocate_memory ;为tcb分配内存
@@ -116,6 +210,7 @@ SECTION text vstart=0 align=16                  ;定义代码段
     push ecx                                    ;压栈保存新tcb线性基地址
     ;过程调用压入eip 4B
     call load_relocate_program
+    sti
 
     .do_switch:
     ;主动切换到其它任务，给它们运行的机会
@@ -127,16 +222,18 @@ SECTION text vstart=0 align=16                  ;定义代码段
     ;清理已经终止的任务，并回收它们占用的资源
     call kernel_routine_seg_sel:do_task_clean
 
-    mov eax, [tcb_chain]
-    .find_ready:
-    cmp word [fs:eax+0x04], 0x0000              ;还有处于就绪状态的任务？
-    jz .do_switch                               ;有，继续执行任务切换
-    mov eax, [fs:eax]
-    or eax, eax                                 ;还有用户任务吗？
-    jnz .find_ready                             ;一直搜索到链表尾部
+    ; mov eax, [tcb_chain]
+    ; .find_ready:
+    ; cmp word [fs:eax+0x04], 0x0000              ;还有处于就绪状态的任务？
+    ; jz .do_switch                               ;有，继续执行任务切换
+    ; mov eax, [fs:eax]
+    ; or eax, eax                                 ;还有用户任务吗？
+    ; jnz .find_ready                             ;一直搜索到链表尾部
 
     ;已经没有可以切换的任务，停机
     hlt
+
+    jmp .do_switch
 ;-------------------------------------------------------------------------------
     load_relocate_program:                      ;加载并重定位用户程序
                                                 ;输入:PUSH 逻辑扇区号
@@ -475,6 +572,7 @@ SECTION routine vstart=0 align=16               ;定义例程段
     print:                                      ;显示0终止的字符串并移动光标
                                                 ;输入：DS:EBX=串地址
         push ecx
+        cli
         .getc:
         mov cl, [ebx]
         or cl, cl
@@ -484,6 +582,7 @@ SECTION routine vstart=0 align=16               ;定义例程段
         jmp .getc
 
         .exit:
+        sti
         pop ecx
         retf                                    ;段间返回
 ;-------------------------------------------------------------------------------
@@ -578,6 +677,41 @@ SECTION routine vstart=0 align=16               ;定义例程段
 
         popad
         ret
+;-------------------------------------------------------------------------------
+    general_exception_handler:                  ;通用的异常处理过程
+        mov ebx, excep_msg
+        call kernel_routine_seg_sel:print
+
+        hlt
+;-------------------------------------------------------------------------------
+    general_interrupt_handler:                  ;通用的中断处理过程
+        push eax
+
+        mov al, 0x20                            ;中断结束命令EOI
+        out 0xa0, al                            ;向8259A从片发送
+        out 0x20, al                            ;向8259A主片发送
+
+        pop eax
+
+        iretd
+;-------------------------------------------------------------------------------
+    rtm_0x70_interrupt_handle:                  ;实时时钟中断处理过程
+        pushad
+
+        mov al, 0x20                            ;中断结束命令EOI
+        out 0xa0, al                            ;向8259A从片发送
+        out 0x20, al                            ;向8259A主片发送
+
+        mov al, 0x0c                            ;寄存器C的索引。且开放NMI
+        out 0x70, al
+        in al, 0x71                             ;读一下RTC的寄存器C，否则只发生一次中断
+                                                ;此处不考虑闹钟和周期性中断的情况
+        ;请求任务调度
+        call kernel_routine_seg_sel:initiate_task_switch
+
+        popad
+
+        iretd
 ;-------------------------------------------------------------------------------
     read_hard_disk_0:                           ;从硬盘读取一个逻辑扇区
                                                 ;EAX=逻辑扇区号
@@ -793,6 +927,8 @@ SECTION routine vstart=0 align=16               ;定义例程段
         mov ds, eax
 
         mov eax, [es:tcb_chain]
+        cmp eax, 0;
+        jz .return
 
         ;搜索状态为忙（当前任务）的节点
         .b0:
@@ -889,10 +1025,13 @@ SECTION data vstart=0 align=16                  ;定义数据段
     message_2:          db '[Kernel]: Testing call gate......', 0x0d, 0x0a, 0
     message_3:          db '[Kernel Task]: Kernel task is running......', 0x0d, 0x0a, 0
     message_4:          db '[Kernel Task]: return kernel task......', 0x0d, 0x0a, 0
+    excep_msg:          db '[interrupt]: ********Exception encounted********', 0x0d, 0x0a, 0
 
     pgdt:
     gdt_size:           dw 0x0000
     gdt_base:           dd 0x00000000
+    pidt                dw 0x0000
+                        dd 0x00000000
     kernel_buffer: times 2048   db 0            ;kernel用的缓冲区
     ram_alloc:                  dd 0x00100000   ;下次分配内存时的起始地址
     pointer_backup:             dd 0            ;内核用来临时保存栈指针的位置
