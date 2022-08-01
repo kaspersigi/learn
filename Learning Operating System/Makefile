@@ -37,6 +37,7 @@ all :
 	$(MAKE) -C 14.cpl
 	$(MAKE) -C 15.collaborative_task_switch
 	$(MAKE) -C 16.preemptive_task_switch
+	$(MAKE) -C 17.paging
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -56,3 +57,4 @@ clean :
 	$(MAKE) -C 14.cpl clean
 	$(MAKE) -C 15.collaborative_task_switch clean
 	$(MAKE) -C 16.preemptive_task_switch clean
+	$(MAKE) -C 17.paging clean
