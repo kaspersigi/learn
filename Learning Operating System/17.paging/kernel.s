@@ -41,6 +41,49 @@ SECTION text vstart=0 align=16                  ;定义代码段
     mov ebx, message_1
     call kernel_routine_seg_sel:print
 
+    ;准备打开分页机制
+
+    ;创建系统内核的页目录表PDT
+    ;页目录表清零
+    mov ecx, 1024                               ;1024个目录项
+    mov ebx, [kernel_pdb]                       ;页目录的物理地址
+    xor esi, esi
+
+    .b1:
+    mov dword [fs:ebx+esi], 0x00000000          ;页目录表项清零
+    add esi,4
+    loop .b1
+
+    ;在页目录内创建指向页目录自己的目录项
+    mov dword [fs:ebx+4092], 0x00020003
+
+    ;在页目录内创建与线性地址0x00000000对应的目录项
+    mov dword [fs:ebx+0], 0x00021003            ;写入目录项（页表的物理地址和属性）
+
+    ;创建与上面那个目录项相对应的页表，初始化页表项
+    mov ebx, 0x00021000                         ;页表的物理地址
+    xor eax, eax                                ;起始页的物理地址
+    xor esi, esi
+
+    .b2:
+    mov edx, eax
+    or edx, 0x00000003
+    mov [fs:ebx+esi*4], edx                     ;登记页的物理地址
+    add eax, 0x1000                             ;下一个相邻页的物理地址
+    inc esi
+    cmp esi, 256                                ;仅低端1MB内存对应的页才是有效的
+    jl .b2
+
+    .b3:                                        ;其余的页表项置为无效
+    mov dword [fs:ebx+esi*4],0x00000000
+    inc esi
+    cmp esi, 1024
+    jl .b3
+
+    ;令CR3寄存器指向页目录，并正式开启页功能
+    mov eax, 0x00020000                         ;PCD=PWT=0
+    ; mov cr3, eax
+
     ;以下开始安装为整个系统服务的调用门。特权级之间的控制转移必须使用门
     mov edi, salt_begin                         ;C-SALT表的起始位置
     mov ecx, salt_items                         ;C-SALT表的条目数量
@@ -893,6 +936,8 @@ SECTION data vstart=0 align=16                  ;定义数据段
     pgdt:
     gdt_size:           dw 0x0000
     gdt_base:           dd 0x00000000
+    ;内核页目录表基址
+    kernel_pdb:         dd 0x00020000
     kernel_buffer: times 2048   db 0            ;kernel用的缓冲区
     ram_alloc:                  dd 0x00100000   ;下次分配内存时的起始地址
     pointer_backup:             dd 0            ;内核用来临时保存栈指针的位置
