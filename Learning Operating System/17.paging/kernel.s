@@ -82,7 +82,11 @@ SECTION text vstart=0 align=16                  ;定义代码段
 
     ;令CR3寄存器指向页目录，并正式开启页功能
     mov eax, 0x00020000                         ;PCD=PWT=0
-    ; mov cr3, eax
+    mov cr3, eax
+
+    mov eax, cr0
+    or eax, 0x80000000
+    mov cr0, eax                                ;开启分页机制
 
     ;以下开始安装为整个系统服务的调用门。特权级之间的控制转移必须使用门
     mov edi, salt_begin                         ;C-SALT表的起始位置
