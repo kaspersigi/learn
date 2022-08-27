@@ -71,6 +71,8 @@ all :
 	$(MAKE) -C 48.union
 	$(MAKE) -C 49.threadpool
 	# $(MAKE) -C 50.driver
+	$(MAKE) -C 51.asm
+	# $(MAKE) -C 52.android_c
 
 format :
 	$(MAKE) -C 00.template format
@@ -124,6 +126,8 @@ format :
 	$(MAKE) -C 48.union format
 	$(MAKE) -C 49.threadpool format
 	$(MAKE) -C 50.driver format
+	$(MAKE) -C 51.asm format
+	# $(MAKE) -C 52.android_c format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -177,3 +181,5 @@ clean :
 	$(MAKE) -C 48.union clean
 	$(MAKE) -C 49.threadpool clean
 	# $(MAKE) -C 50.driver clean
+	$(MAKE) -C 51.asm clean
+	# $(MAKE) -C 52.android_c clean
