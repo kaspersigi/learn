@@ -9,8 +9,9 @@ SRC = main.c
 NDK = ~/linux/android-ndk-r25
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/linux-x86_64
 TARGET = aarch64-linux-android
-API = 32
+API = 33
 CC = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang
+CXX = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang++
 AR = $(TOOLCHAIN)/bin/llvm-ar
 RANLIB = $(TOOLCHAIN)/bin/llvm-ranlib
 
@@ -22,7 +23,7 @@ RELEASE = -static -O3
 LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+CLANGXX_LINK_FLAGS = -static -lc++ -nostdlib++
 
 .PHONY : all
 $(TRG) : $(OBJ)
