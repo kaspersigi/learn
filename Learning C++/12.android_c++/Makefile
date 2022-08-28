@@ -23,11 +23,12 @@ RELEASE = -static -O3
 LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -static -lc++ -nostdlib++
+CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 $(TRG) : $(OBJ)
-	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS)
+	# vivo自带libc++_shared.so，不需要-static，htc、huawei都需要
+	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS) -static
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
 	$(CXX) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
