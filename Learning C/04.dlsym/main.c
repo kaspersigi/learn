@@ -11,5 +11,7 @@ int main(int argc, char* argv[])
     FUNC func = (FUNC)dlsym(handle, "func");
     int ret = func(1);
     printf("ret = %d\n", ret);
+    dlclose(handle);
+
     return 0;
 }

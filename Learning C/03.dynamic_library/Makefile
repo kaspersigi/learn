@@ -24,10 +24,10 @@ $(TRG) : $(OBJ) libfunc.so
 $(OBJ) : $(SRC)
 	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
 libfunc.so : func.o
-	$(CC) func.o -o libfunc.so -shared -fPIC
+	$(CC) func.o -o libfunc.so -shared
 	rm -v func.o
 func.o : func.c func.h
-	$(CC) func.c -c $(C_FLAGS) $(DEBUG)
+	$(CC) func.c -c $(C_FLAGS) $(DEBUG) -fPIC
 format :
 	$(FORMAT) main.c -style=file -i
 	$(FORMAT) func.c -style=file -i
