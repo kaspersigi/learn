@@ -35,7 +35,8 @@ RUN apt install sudo -y \
     && apt install wget -y \
     && apt install curl -y \
     && apt install vim -y \
-    && apt install openssh-server -y
+    && apt install openssh-server -y \
+    && apt install bsdmainutils -y
 RUN ln -s /usr/bin/clang-11 /usr/bin/clang \
     && ln -s /usr/bin/clang-11 /usr/bin/cc \
     && ln -s /usr/bin/clang++-11 /usr/bin/clang++ \
