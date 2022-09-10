@@ -18,7 +18,7 @@ boot.bin : boot.s boot.img
 	dd if=boot.bin of=boot.img count=1 bs=1440k conv=sync
 head.bin : head.s boot.img
 	$(AS) head.s -o head.o
-	$(LD) head.o -Ttext 0x00 -s --oformat binary -o head.bin
+	$(LD) head.o -o head.bin -T head.lds
 	rm -v head.o
 	dd if=head.bin of=boot.img count=2880k bs=512 conv=notrunc seek=1
 kernel.bin : kernel.s boot.img

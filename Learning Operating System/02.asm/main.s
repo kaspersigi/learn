@@ -1,5 +1,5 @@
 .section .text
-.align 4
+.align 16
 .global _start
 _start:
 .code16

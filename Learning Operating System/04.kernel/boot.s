@@ -3,7 +3,7 @@
 .equ head_sector_size,  0x00000004 # 常数，引导程序的总扇区个数
 
 .section .text
-.align 4
+.align 16
 .global _start
 _start:
 .code16
