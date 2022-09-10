@@ -14,7 +14,8 @@ $(TRG) : $(EXEC)
 	rm -v $(OBJ)
 $(EXEC) : $(OBJ)
 	# $(LD) $(OBJ) -o $(EXEC)
-	$(LD) $(OBJ) -o $(EXEC) -m elf_i386
+	# $(LD) $(OBJ) -o $(EXEC) -m elf_i386
+	$(LD) $(OBJ) -o $(EXEC) -T main.lds
 $(OBJ) : $(SRC)
 	# $(AS) $(SRC) -o $(OBJ)
 	$(AS) $(SRC) -o $(OBJ) --32
