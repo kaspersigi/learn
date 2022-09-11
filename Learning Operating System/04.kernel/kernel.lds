@@ -5,5 +5,6 @@ ENTRY(_start)
 SECTIONS
 {
     . = 0;
+    .data ALIGN(0x10) : {*(.head) *(.data) *(.stack)}
     .text ALIGN(0x10) : {*(.text)}
 }

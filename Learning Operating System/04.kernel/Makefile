@@ -22,13 +22,13 @@ head.bin : head.s boot.img
 	rm -v head.o
 	dd if=head.bin of=boot.img count=2880k bs=512 conv=notrunc seek=1
 kernel.bin : kernel.s boot.img
-	$(AS) kernel.s -o kernel.o
-	$(LD) kernel.o -Ttext 0x00 -s --oformat binary -o kernel.bin
+	$(AS) kernel.s -o kernel.o --32
+	$(LD) kernel.o -o kernel.bin -T kernel.lds
 	rm -v kernel.o
 	dd if=kernel.bin of=boot.img count=2880k bs=512 conv=notrunc seek=4
 program.bin : program.s boot.img
-	$(AS) program.s -o program.o
-	$(LD) program.o -Ttext 0x00 -s --oformat binary -o program.bin
+	$(AS) program.s -o program.o --32
+	$(LD) program.o -o program.bin -T program.lds
 	rm -v program.o
 	dd if=program.bin of=boot.img count=2880k bs=512 conv=notrunc seek=100
 clean :

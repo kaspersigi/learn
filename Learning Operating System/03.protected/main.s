@@ -10,8 +10,8 @@ _start:
     movw $0x0200, %sp
 
     # 计算GDT所在的逻辑段地址
-    movw %cs:(gdt_base), %ax # 低16位
-    movw %cs:(gdt_base+0x02), %dx # 高16位
+    movw %cs:(gdt_base+0x7c00), %ax # 低16位
+    movw %cs:(gdt_base+0x7c00+0x02), %dx # 高16位
 
     movw $16, %bx
     divw %bx
@@ -31,8 +31,8 @@ _start:
     movl $0x00409800, 0x14(%bx)
 
     # 初始化描述符表寄存器GDTR
-    movw $23, %cs:(gdt_size)
-    lgdt %cs:(gdt_size) # 描述符表的界限（总字节数减一）
+    movw $23, %cs:(gdt_size+0x7c00)
+    lgdt %cs:(gdt_size+0x7c00) # 描述符表的界限（总字节数减一）
 
     inb $0x92, %al # 南桥芯片内的端口
     orb $0B00000010, %al # 打开A20
@@ -47,7 +47,7 @@ _start:
     movl %eax, %cr0
 
     # 代码段选择子 00000000000_10_000B
-    ljmp $0B0000000000010000, $(print-start) # 加载代码段选择子(索引0x02)
+    ljmp $0B0000000000010000, $(print) # 加载代码段选择子(索引0x02)
 .code32
     print:
     movw $0B0000000000001000, %cx # 加载数据段选择子(索引0x01)
