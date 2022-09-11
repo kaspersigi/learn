@@ -17,7 +17,7 @@ boot.bin : boot.s boot.img
 	rm -v boot.o
 	dd if=boot.bin of=boot.img count=1 bs=1440k conv=sync
 head.bin : head.s boot.img
-	$(AS) head.s -o head.o
+	$(AS) head.s -o head.o --32
 	$(LD) head.o -o head.bin -T head.lds
 	rm -v head.o
 	dd if=head.bin of=boot.img count=2880k bs=512 conv=notrunc seek=1

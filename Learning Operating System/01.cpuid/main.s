@@ -1,11 +1,11 @@
 .section .data
-.align 16
+.align 4
 buffer:
     .fill 48
     .ascii "\r\n"
 
 .section .text
-.align 16
+.align 4
 .global _start
 _start:
 .code32

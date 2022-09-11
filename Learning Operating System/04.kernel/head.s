@@ -4,7 +4,7 @@
 
 # 定义引导程序头部段
 .section .head
-.align 16
+.align 4
     program_length: .int    program_end # 程序总长度
     text_entry:     .short  _start      # 代码段入口段内偏移地址
     # 段重定位表
@@ -15,20 +15,21 @@
     realloc_tbl_end:
 
 .section .data
-.align 16
+.align 4
 _data_start:
     .asciz "section data"
 
 .section .stack
-.align 16
+.align 4
 _stack_start:
     .asciz "section stack"
 
 
 .section .text
-.align 16
+.align 4
 .global _start
 _start:
 .code16
     .asciz "section text"
+    movw $250, %ax
     program_end:
