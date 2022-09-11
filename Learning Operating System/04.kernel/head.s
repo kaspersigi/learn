@@ -24,7 +24,6 @@ _data_start:
 _stack_start:
     .asciz "section stack"
 
-
 .section .text
 .align 4
 .global _start
