@@ -13,7 +13,7 @@ boot.img :
 	dd if=/dev/zero of=boot.img count=1 bs=1440k conv=sync
 boot.bin : boot.s boot.img
 	$(AS) boot.s -o boot.o --32
-	$(LD) boot.o -Ttext 0x7c00 -s --oformat binary -o boot.bin
+	$(LD) boot.o -o boot.bin -T head.lds
 	rm -v boot.o
 	dd if=boot.bin of=boot.img count=1 bs=1440k conv=sync
 head.bin : head.s boot.img
