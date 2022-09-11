@@ -19,15 +19,24 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all :
+all : 00 01 02 03 04 05 06 07 08
+00 :
 	$(MAKE) -C 00.template
+01 :
 	$(MAKE) -C 01.两数之和
+02 :
 	$(MAKE) -C 02.两数相加
+03 :
 	$(MAKE) -C 03.无重复字符的最长子串
+04 :
 	$(MAKE) -C 04.寻找两个正序数组的中位数
+05 :
 	$(MAKE) -C 05.最长回文子串
+06 :
 	$(MAKE) -C 06.Z字形变换
+07 :
 	$(MAKE) -C 07.整数反转
+08 :
 	$(MAKE) -C 08.字符串转换整数\(atoi\)
 
 format :

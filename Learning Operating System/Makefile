@@ -19,24 +19,42 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all :
+all : 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17
+00 :
 	$(MAKE) -C 00.template
+01 :
 	$(MAKE) -C 01.cpuid
+02 :
 	$(MAKE) -C 02.asm
+03 :
 	$(MAKE) -C 03.protected
+04 :
 	$(MAKE) -C 04.kernel
+05 :
 	$(MAKE) -C 05.userapp
+06 :
 	$(MAKE) -C 06.interrupt
+07 :
 	$(MAKE) -C 07.bios
+08 :
 	$(MAKE) -C 08.protected
+09 :
 	$(MAKE) -C 09.sort
+10 :
 	$(MAKE) -C 10.kernel
+11 :
 	$(MAKE) -C 11.boot
+12 :
 	$(MAKE) -C 12.api
+13 :
 	$(MAKE) -C 13.tcb
+14 :
 	$(MAKE) -C 14.cpl
+15 :
 	$(MAKE) -C 15.collaborative_task_switch
+16 :
 	$(MAKE) -C 16.preemptive_task_switch
+17 :
 	$(MAKE) -C 17.paging
 
 clean :

@@ -19,60 +19,113 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all :
+all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm
+template :
 	$(MAKE) -C 00.template
+macro :
 	$(MAKE) -C 01.macro
+static_library :
 	$(MAKE) -C 02.static_library
+dynamic_library :
 	$(MAKE) -C 03.dynamic_library
+dlsym :
 	$(MAKE) -C 04.dlsym
+open :
 	$(MAKE) -C 05.open
+write :
 	$(MAKE) -C 06.write
+read :
 	$(MAKE) -C 07.read
+fopen :
 	$(MAKE) -C 08.fopen
+line_buffer :
 	$(MAKE) -C 09.line_buffer
+all_buffer :
 	$(MAKE) -C 10.all_buffer
+mkdir :
 	$(MAKE) -C 11.mkdir
+opendir :
 	$(MAKE) -C 12.opendir
+readdir :
 	$(MAKE) -C 13.readdir
+fork :
 	$(MAKE) -C 14.fork
+vfork :
 	$(MAKE) -C 15.vfork
+pipe :
 	$(MAKE) -C 16.pipe
+mkfifo :
 	$(MAKE) -C 17.mkfifo
+kill :
 	$(MAKE) -C 18.kill
+raise :
 	$(MAKE) -C 19.raise
+alarm :
 	$(MAKE) -C 20.alarm
+pause :
 	$(MAKE) -C 21.pause
+signal :
 	$(MAKE) -C 22.signal
+shmget :
 	$(MAKE) -C 23.shmget
+ftok :
 	$(MAKE) -C 24.ftok
+shmat :
 	$(MAKE) -C 25.shmat
+shmctl :
 	$(MAKE) -C 26.shmctl
+msgget :
 	$(MAKE) -C 27.msgget
+msgsnd :
 	$(MAKE) -C 28.msgsnd
+msgrcv :
 	$(MAKE) -C 29.msgrcv
+semget :
 	$(MAKE) -C 30.semget
+semop :
 	$(MAKE) -C 31.semop
+one_producer_one_consumer_sem :
 	$(MAKE) -C 32.one_producer_one_consumer_sem
+multi_producer_multi_consumer_sem :
 	$(MAKE) -C 33.multi_producer_multi_consumer_sem
+pthread_create :
 	$(MAKE) -C 34.pthread_create
+pthread_exit :
 	$(MAKE) -C 35.pthread_exit
+pthread_join :
 	$(MAKE) -C 36.pthread_join
+pthread_detach :
 	$(MAKE) -C 37.pthread_detach
+pthread_cancel :
 	$(MAKE) -C 38.pthread_cancel
+pthread_kill :
 	$(MAKE) -C 39.pthread_kill
+sigaction :
 	$(MAKE) -C 40.sigaction
+pthread_cleanup :
 	$(MAKE) -C 41.pthread_cleanup
+pthread_mutex :
 	$(MAKE) -C 42.pthread_mutex
+pthread_rwlock :
 	$(MAKE) -C 43.pthread_rwlock
+pthread_cond :
 	$(MAKE) -C 44.pthread_cond
+one_producer_one_consumer_cond :
 	$(MAKE) -C 45.one_producer_one_consumer_cond
+multi_producer_multi_consumer_cond :
 	$(MAKE) -C 46.multi_producer_multi_consumer_cond
+perror :
 	$(MAKE) -C 47.perror
+union :
 	$(MAKE) -C 48.union
+threadpool :
 	$(MAKE) -C 49.threadpool
-	# $(MAKE) -C 50.driver
+driver :
+	$(MAKE) -C 50.driver
+asm :
 	$(MAKE) -C 51.asm
-	# $(MAKE) -C 52.android_c
+android_c :
+	$(MAKE) -C 52.android_c
 
 format :
 	$(MAKE) -C 00.template format

@@ -19,11 +19,16 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all :
+all : template strategy observer decorator factory
+template :
 	$(MAKE) -C 00.template
+strategy :
 	$(MAKE) -C 01.strategy
+observer :
 	$(MAKE) -C 02.observer
+decorator :
 	$(MAKE) -C 03.decorator
+factory :
 	$(MAKE) -C 04.factory
 
 format :

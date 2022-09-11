@@ -19,28 +19,50 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all :
+all : template hton inet_pton socket listen accept connect recv send server client threadpool select multithread poll epoll level_triggered edge_triggered edge_triggered_nonblock multithread_epoll threadpool_epoll myhttpd
+template :
 	$(MAKE) -C 00.template
+hton :
 	$(MAKE) -C 01.hton
+inet_pton :
 	$(MAKE) -C 02.inet_pton
+socket :
 	$(MAKE) -C 03.socket
+listen :
 	$(MAKE) -C 04.listen
+accept :
 	$(MAKE) -C 05.accept
+connect :
 	$(MAKE) -C 06.connect
+recv :
 	$(MAKE) -C 07.recv
+send :
 	$(MAKE) -C 08.send
+server :
 	$(MAKE) -C 09.server
+client :
 	$(MAKE) -C 10.client
+threadpool :
 	$(MAKE) -C 11.threadpool
+select :
 	$(MAKE) -C 12.select
+multithread :
 	$(MAKE) -C 13.multithread
+poll :
 	$(MAKE) -C 14.poll
+epoll :
 	$(MAKE) -C 15.epoll
+level_triggered :
 	$(MAKE) -C 16.level_triggered
+edge_triggered :
 	$(MAKE) -C 17.edge_triggered
+edge_triggered_nonblock :
 	$(MAKE) -C 18.edge_triggered_nonblock
+multithread_epoll :
 	$(MAKE) -C 19.multithread_epoll
+threadpool_epoll :
 	$(MAKE) -C 20.threadpool_epoll
+myhttpd :
 	$(MAKE) -C 21.myhttpd
 
 format :

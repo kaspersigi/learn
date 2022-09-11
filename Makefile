@@ -19,14 +19,22 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all :
+all : c c++ design_pattern leetcode operating_system rust socket stl
+c :
 	$(MAKE) -C Learning\ C
+c++ :
 	$(MAKE) -C Learning\ C++
+design_pattern :
 	$(MAKE) -C Learning\ Design\ Pattern
+leetcode :
 	$(MAKE) -C Learning\ Leetcode
+operating_system :
 	$(MAKE) -C Learning\ Operating\ System
+rust :
 	$(MAKE) -C Learning\ Rust
+socket :
 	$(MAKE) -C Learning\ Socket
+stl :
 	$(MAKE) -C Learning\ STL
 
 format :

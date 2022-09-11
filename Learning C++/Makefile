@@ -19,20 +19,33 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all :
+all : template macro regex constructor deconstructor interface interface_template smart_pointer const function_template class_template threadpool
+template :
 	$(MAKE) -C 00.template
+macro :
 	$(MAKE) -C 01.macro
+regex :
 	$(MAKE) -C 02.regex
+constructor :
 	$(MAKE) -C 03.constructor
+deconstructor :
 	$(MAKE) -C 04.deconstructor
+interface :
 	$(MAKE) -C 05.interface
+interface_template :
 	$(MAKE) -C 06.interface_template
+smart_pointer :
 	$(MAKE) -C 07.smart_pointer
+const :
 	$(MAKE) -C 08.const
+function_template :
 	$(MAKE) -C 09.function_template
+class_template :
 	$(MAKE) -C 10.class_template
+threadpool :
 	$(MAKE) -C 11.threadpool
-	# $(MAKE) -C 12.android_c++
+android_c++ :
+	$(MAKE) -C 12.android_c++
 
 format :
 	$(MAKE) -C 00.template format

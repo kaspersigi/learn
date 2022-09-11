@@ -18,11 +18,15 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all :
+all : simple_factory static_factory factory_method
+simple_factory :
 	$(MAKE) -C 01.simple_factory
+static_factory :
 	$(MAKE) -C 02.static_factory
+factory_method :
 	$(MAKE) -C 03.factory_method
-	# $(MAKE) -C 04.abstract_factory
+abstract_factory :
+	$(MAKE) -C 04.abstract_factory
 
 format :
 	$(MAKE) -C 01.simple_factory format

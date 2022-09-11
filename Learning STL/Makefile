@@ -19,36 +19,66 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all :
+all : template array vector deque list forward_list set multiset map multimap unordered_set unordered_multiset unordered_map unordered_multimap stack queue priority_queue thread count count_if find find_if copy_if remove_if transform bind lambda function_object minmax_element equal
+template :
 	$(MAKE) -C 00.template
+array :
 	$(MAKE) -C 01.array
+vector :
 	$(MAKE) -C 02.vector
+deque :
 	$(MAKE) -C 03.deque
+list :
 	$(MAKE) -C 04.list
+forward_list :
 	$(MAKE) -C 05.forward_list
+set :
 	$(MAKE) -C 06.set
+multiset :
 	$(MAKE) -C 07.multiset
+map :
 	$(MAKE) -C 08.map
+multimap :
 	$(MAKE) -C 09.multimap
+unordered_set :
 	$(MAKE) -C 10.unordered_set
+unordered_multiset :
 	$(MAKE) -C 11.unordered_multiset
+unordered_map :
 	$(MAKE) -C 12.unordered_map
+unordered_multimap :
 	$(MAKE) -C 13.unordered_multimap
+stack :
 	$(MAKE) -C 14.stack
+queue :
 	$(MAKE) -C 15.queue
+priority_queue :
 	$(MAKE) -C 16.priority_queue
+thread :
 	$(MAKE) -C 17.thread
+count :
 	$(MAKE) -C 18.count
+count_if :
 	$(MAKE) -C 19.count_if
+find :
 	$(MAKE) -C 20.find
+find_if :
 	$(MAKE) -C 21.find_if
+copy_if :
 	$(MAKE) -C 22.copy_if
+remove_if :
 	$(MAKE) -C 23.remove_if
+transform :
 	$(MAKE) -C 24.transform
+bind :
 	$(MAKE) -C 25.bind
+lambda :
 	$(MAKE) -C 26.lambda
+function_object :
 	$(MAKE) -C 27.function_object
+minmax_element :
 	$(MAKE) -C 28.minmax_element
+equal :
 	$(MAKE) -C 29.equal
 
 format :
