@@ -59,15 +59,27 @@ auto main(int argc, char* argv[]) -> int
     std::for_each(nums.cbegin(), nums.cend(), [](auto e) { std::cout << e << " "; });
     std::cout << std::endl;
 
+    std::cout << "---------------------------" << std::endl;
+
+    std::cout << nums.size() << std::endl;
+    std::cout << nums.capacity() << std::endl;
+    std::cout << nums.max_size() << std::endl;
+
+    std::cout << "---------------------------" << std::endl;
+
     nums.clear();
     std::cout << nums.size() << std::endl;
     std::cout << nums.capacity() << std::endl;
     std::cout << nums.max_size() << std::endl;
 
+    std::cout << "---------------------------" << std::endl;
+
     nums.shrink_to_fit();
     std::cout << nums.size() << std::endl;
     std::cout << nums.capacity() << std::endl;
     std::cout << nums.max_size() << std::endl;
+
+    std::vector<int>().swap(nums); //此处的效果和shrink_to_fit()相同，释放内存
 
     nums.push_back(1);
     std::cout << nums.size() << std::endl;

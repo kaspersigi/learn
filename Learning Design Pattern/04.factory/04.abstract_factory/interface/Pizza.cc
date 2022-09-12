@@ -1,13 +1,10 @@
 #include "Pizza.h"
 #include <algorithm>
 
-void Pizza::prepare() const
+Pizza::~Pizza()
 {
-    std::cout << "Preparing " << _name << std::endl;
-    std::cout << "Tossing dough..." << std::endl;
-    std::cout << "Adding sauce..." << std::endl;
-    std::cout << "Adding toppings: " << std::endl;
-    std::for_each(_toppings.cbegin(), _toppings.cend(), [&](auto e) { std::cout << "   " << e << std::endl; });
+    std::for_each(_veggies.begin(), _veggies.end(), [](auto e) { delete e; });
+    std::vector<Veggies*>().swap(_veggies);
 }
 
 void Pizza::Pizza::bake() const
@@ -27,14 +24,29 @@ void Pizza::box() const
 
 std::string Pizza::getName() const { return _name; }
 
+void Pizza::setName(std::string name) { _name = name; }
+
 std::string Pizza::toShow() const
 {
     std::string value;
     value += "---- " + _name + " ----" + "\n";
-    value += _dough + "\n";
-    value += _sauce + "\n";
+    if (_dough.get())
+        value += _dough->toShow() + "\n";
 
-    std::for_each(_toppings.cbegin(), _toppings.cend(), [&](auto e) { value += e + "\n"; });
+    if (_sauce.get())
+        value += _sauce->toShow() + "\n";
+
+    if (_cheese.get())
+        value += _cheese->toShow() + "\n";
+
+    if (_clam.get())
+        value += _clam->toShow() + "\n";
+
+    if (_pepperoni.get())
+        value += _pepperoni->toShow() + "\n";
+
+    if (!_veggies.empty())
+        std::for_each(_veggies.cbegin(), _veggies.cend(), [&](auto e) { value += e->toShow() + "\n"; });
 
     return value;
 }

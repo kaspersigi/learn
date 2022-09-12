@@ -24,5 +24,6 @@ auto main(int argc, char* argv[]) -> int
     model->performFly();
     model->setFlyBehavior(new FlyRocketPowered());
     model->performFly();
+
     return 0;
 }

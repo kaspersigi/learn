@@ -4,12 +4,12 @@
 #include <memory>
 #include <vector>
 
-class Dough;
-class Sauce;
-class Veggies;
-class Cheese;
-class Pepperoni;
-class Clams;
+#include "Cheese.h"
+#include "Clams.h"
+#include "Dough.h"
+#include "Pepperoni.h"
+#include "Sauce.h"
+#include "Veggies.h"
 
 class Pizza {
 public:
@@ -23,12 +23,12 @@ protected:
     Pizza& operator=(Pizza&&) = delete;
 
 protected:
-    std::shared_ptr<Dough> _dough;
-    std::shared_ptr<Sauce> _sauce;
-    std::vector<Veggies*> _veggies;
-    std::shared_ptr<Cheese> _cheese;
-    std::shared_ptr<Pepperoni> _pepperoni;
-    std::shared_ptr<Clams> _clam;
+    mutable std::shared_ptr<Cheese> _cheese;
+    mutable std::shared_ptr<Clams> _clam;
+    mutable std::shared_ptr<Dough> _dough;
+    mutable std::shared_ptr<Pepperoni> _pepperoni;
+    mutable std::shared_ptr<Sauce> _sauce;
+    mutable std::vector<Veggies*> _veggies;
 
 private:
     std::string _name;
