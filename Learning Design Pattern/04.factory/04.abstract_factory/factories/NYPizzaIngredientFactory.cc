@@ -1,13 +1,13 @@
 #include "NYPizzaIngredientFactory.h"
-#include "../cheese/ReggianoCheese.h"
-#include "../clams/FreshClams.h"
-#include "../dough/ThinCrustDough.h"
-#include "../pepperoni/SlicedPepperoni.h"
-#include "../sauce/MarinaraSauce.h"
-#include "../veggies/Garlic.h"
-#include "../veggies/Mushroom.h"
-#include "../veggies/Onion.h"
-#include "../veggies/RedPepper.h"
+#include "../ingredients/cheese/ReggianoCheese.h"
+#include "../ingredients/clams/FreshClams.h"
+#include "../ingredients/dough/ThinCrustDough.h"
+#include "../ingredients/pepperoni/SlicedPepperoni.h"
+#include "../ingredients/sauce/MarinaraSauce.h"
+#include "../ingredients/veggies/Garlic.h"
+#include "../ingredients/veggies/Mushroom.h"
+#include "../ingredients/veggies/Onion.h"
+#include "../ingredients/veggies/RedPepper.h"
 
 Cheese* NYPizzaIngredientFactory::createCheese() const { return new ReggianoCheese(); }
 

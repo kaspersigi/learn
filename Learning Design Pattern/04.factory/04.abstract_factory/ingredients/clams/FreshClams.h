@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../interface/Clams.h"
+#include "../../interface/Clams.h"
 #include <string>
 
 class FreshClams : public Clams {

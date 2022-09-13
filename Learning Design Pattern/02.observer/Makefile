@@ -20,7 +20,7 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 .PHONY : all
 all : WeatherStation
 WeatherStation : WeatherStation.o subjects.o observers.o
-	$(CXX) WeatherStation.o ./observers/CurrentConditionsDisplay.o ./observers/ForecastDisplay.o ./observers/HeatIndexDisplay.o ./observers/StatisticsDisplay.o  ./subjects/WeatherData.o -o WeatherStation $(CLANGXX_LINK_FLAGS)
+	$(CXX) WeatherStation.o subjects/*.o observers/*.o -o WeatherStation $(CLANGXX_LINK_FLAGS)
 	rm -v WeatherStation.o
 	$(MAKE) -C subjects clean
 	$(MAKE) -C observers clean

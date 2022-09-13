@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../interface/Sauce.h"
+#include "../../interface/Sauce.h"
 #include <string>
 
 class PlumTomatoSauce : public Sauce {

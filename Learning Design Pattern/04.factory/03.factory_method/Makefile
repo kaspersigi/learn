@@ -20,7 +20,7 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 .PHONY : all
 all : Pizzafm
 Pizzafm : Pizzafm.o interface.o factories.o pizzas.o
-	$(CXX) Pizzafm.o interface/Pizza.o interface/PizzaStore.o factories/ChicagoPizzaStore.o factories/NYPizzaStore.o pizzas/ChicagoStyleCheesePizza.o pizzas/ChicagoStyleClamPizza.o pizzas/ChicagoStylePepperoniPizza.o pizzas/ChicagoStyleVeggiePizza.o pizzas/NYStyleCheesePizza.o pizzas/NYStyleClamPizza.o pizzas/NYStylePepperoniPizza.o pizzas/NYStyleVeggiePizza.o -o Pizzafm $(CLANGXX_LINK_FLAGS)
+	$(CXX) Pizzafm.o interface/*.o factories/*.o pizzas/*.o -o Pizzafm $(CLANGXX_LINK_FLAGS)
 	rm -v Pizzafm.o
 	$(MAKE) -C interface clean
 	$(MAKE) -C factories clean

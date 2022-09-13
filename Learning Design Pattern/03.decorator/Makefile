@@ -20,7 +20,7 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 .PHONY : all
 all : Starbuzz
 Starbuzz : Starbuzz.o interface.o components.o decorators.o
-	$(CXX) Starbuzz.o ./interface/Beverage.o ./components/DarkRoast.o ./components/Decaf.o ./components/Espresso.o ./components/HouseBlend.o ./decorators/Milk.o ./decorators/Mocha.o ./decorators/Soy.o ./decorators/Whip.o -o Starbuzz $(CLANGXX_LINK_FLAGS)
+	$(CXX) Starbuzz.o interface/*.o components/*.o decorators/*.o -o Starbuzz $(CLANGXX_LINK_FLAGS)
 	rm -v Starbuzz.o
 	$(MAKE) -C interface clean
 	$(MAKE) -C components clean

@@ -1,12 +1,12 @@
 #include "ChicagoPizzaIngredientFactory.h"
-#include "../cheese/MozzarellaCheese.h"
-#include "../clams/FrozenClams.h"
-#include "../dough/ThickCrustDough.h"
-#include "../pepperoni/SlicedPepperoni.h"
-#include "../sauce/PlumTomatoSauce.h"
-#include "../veggies/BlackOlives.h"
-#include "../veggies/Eggplant.h"
-#include "../veggies/Spinach.h"
+#include "../ingredients/cheese/MozzarellaCheese.h"
+#include "../ingredients/clams/FrozenClams.h"
+#include "../ingredients/dough/ThickCrustDough.h"
+#include "../ingredients/pepperoni/SlicedPepperoni.h"
+#include "../ingredients/sauce/PlumTomatoSauce.h"
+#include "../ingredients/veggies/BlackOlives.h"
+#include "../ingredients/veggies/Eggplant.h"
+#include "../ingredients/veggies/Spinach.h"
 
 Cheese* ChicagoPizzaIngredientFactory::createCheese() const { return new MozzarellaCheese(); }
 

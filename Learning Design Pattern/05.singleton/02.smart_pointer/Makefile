@@ -20,7 +20,7 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 .PHONY : all
 all : Chocolate
 Chocolate : Chocolate.o singleton.o
-	$(CXX) Chocolate.o singleton/ChocolateBoiler.o -o Chocolate $(CLANGXX_LINK_FLAGS)
+	$(CXX) Chocolate.o singleton/*.o -o Chocolate $(CLANGXX_LINK_FLAGS)
 	rm -v Chocolate.o
 	$(MAKE) -C singleton clean
 Chocolate.o : Chocolate.cc Chocolate.h

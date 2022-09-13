@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../interface/Pepperoni.h"
+#include "../../interface/Pepperoni.h"
 #include <string>
 
 class SlicedPepperoni : public Pepperoni {

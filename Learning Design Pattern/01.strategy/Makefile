@@ -20,7 +20,7 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 .PHONY : all
 all : DuckSimulator
 DuckSimulator : DuckSimulator.o interface.o Ducks.o FlyBehaviors.o QuackBehaviors.o
-	$(CXX) DuckSimulator.o ./interface/Duck.o ./ducks/DecoyDuck.o ./ducks/MallardDuck.o ./ducks/ModelDuck.o ./ducks/RedHeadDuck.o ./ducks/RubberDuck.o ./flyBehaviors/FlyNoWay.o ./flyBehaviors/FlyRocketPowered.o ./flyBehaviors/FlyWithWings.o ./quackBehaviors/FakeQuack.o ./quackBehaviors/MuteQuack.o ./quackBehaviors/Quack.o ./quackBehaviors/Squeak.o -o DuckSimulator $(CLANGXX_LINK_FLAGS)
+	$(CXX) DuckSimulator.o interface/*.o Ducks/*.o FlyBehaviors/*.o QuackBehaviors/*.o -o DuckSimulator $(CLANGXX_LINK_FLAGS)
 	rm -v DuckSimulator.o
 	$(MAKE) -C interface clean
 	$(MAKE) -C ducks clean

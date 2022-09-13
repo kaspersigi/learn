@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../interface/Dough.h"
+#include "../../interface/Dough.h"
 #include <string>
 
 class ThickCrustDough : public Dough {

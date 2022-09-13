@@ -18,18 +18,12 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : Chocolate
-Chocolate : Chocolate.o singleton.o
-	$(CXX) Chocolate.o singleton/*.o -o Chocolate $(CLANGXX_LINK_FLAGS)
-	rm -v Chocolate.o
-	$(MAKE) -C singleton clean
-Chocolate.o : Chocolate.cc Chocolate.h
-	$(CXX) Chocolate.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
-singleton.o :
-	$(MAKE) -C singleton
+all : simple_command
+simple_command :
+	$(MAKE) -C 01.simple_command
+
 format :
-	$(FORMAT) Chocolate.cc -style=file -i
-	$(FORMAT) Chocolate.h -style=file -i
-	$(MAKE) -C singleton format
+	$(MAKE) -C 01.simple_command format
+
 clean :
-	rm -v Chocolate
+	$(MAKE) -C 01.simple_command clean
