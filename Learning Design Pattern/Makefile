@@ -42,7 +42,7 @@ format :
 	$(MAKE) -C 03.decorator format
 	$(MAKE) -C 04.factory format
 	$(MAKE) -C 05.singleton format
-	# $(MAKE) -C 06.command format
+	$(MAKE) -C 06.command format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -51,4 +51,4 @@ clean :
 	$(MAKE) -C 03.decorator clean
 	$(MAKE) -C 04.factory clean
 	$(MAKE) -C 05.singleton clean
-	# $(MAKE) -C 06.command clean
+	$(MAKE) -C 06.command clean

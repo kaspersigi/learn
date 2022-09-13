@@ -18,18 +18,26 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : Chocolate
-Chocolate : Chocolate.o singleton.o
-	$(CXX) Chocolate.o singleton/*.o -o Chocolate $(CLANGXX_LINK_FLAGS)
-	rm -v Chocolate.o
-	$(MAKE) -C singleton clean
-Chocolate.o : Chocolate.cc Chocolate.h
-	$(CXX) Chocolate.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
-singleton.o :
-	$(MAKE) -C singleton
+all : SimpleRemote
+SimpleRemote : SimpleRemote.o commands.o control.o devices.o
+	$(CXX) SimpleRemote.o commands/*.o control/*.o devices/*.o -o SimpleRemote $(CLANGXX_LINK_FLAGS)
+	rm -v SimpleRemote.o
+	$(MAKE) -C commands clean
+	$(MAKE) -C control clean
+	$(MAKE) -C devices clean
+SimpleRemote.o : SimpleRemote.cc SimpleRemote.h
+	$(CXX) SimpleRemote.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+commands.o :
+	$(MAKE) -C commands
+control.o :
+	$(MAKE) -C control
+devices.o :
+	$(MAKE) -C devices
 format :
-	$(FORMAT) Chocolate.cc -style=file -i
-	$(FORMAT) Chocolate.h -style=file -i
-	$(MAKE) -C singleton format
+	$(FORMAT) SimpleRemote.cc -style=file -i
+	$(FORMAT) SimpleRemote.h -style=file -i
+	$(MAKE) -C commands format
+	$(MAKE) -C control format
+	$(MAKE) -C devices format
 clean :
-	rm -v Chocolate
+	rm -v SimpleRemote
