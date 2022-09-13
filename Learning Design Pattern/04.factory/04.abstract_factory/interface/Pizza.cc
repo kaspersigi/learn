@@ -29,7 +29,7 @@ void Pizza::setName(std::string name) { _name = name; }
 std::string Pizza::toShow() const
 {
     std::string value;
-    value += "---- " + _name + " ----" + "\n";
+    value += "\"" + _name + "\"" + "\n";
     if (_dough.get())
         value += _dough->toShow() + "\n";
 
