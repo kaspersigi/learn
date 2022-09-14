@@ -1,8 +1,9 @@
 #pragma once
 #include "../devices/Light.h"
+#include "../interface/Command.h"
 #include <memory>
 
-class LightOffCommand {
+class LightOffCommand : public Command {
 public:
     explicit LightOffCommand(const Light* light);
     explicit LightOffCommand(std::nullptr_t) = delete;

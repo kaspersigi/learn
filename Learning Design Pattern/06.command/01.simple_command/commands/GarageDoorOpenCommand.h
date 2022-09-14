@@ -1,8 +1,9 @@
 #pragma once
 #include "../devices/GarageDoor.h"
+#include "../interface/Command.h"
 #include <memory>
 
-class GarageDoorOpenCommand {
+class GarageDoorOpenCommand : public Command {
 public:
     explicit GarageDoorOpenCommand(const GarageDoor* garageDoor);
     explicit GarageDoorOpenCommand(std::nullptr_t) = delete;
