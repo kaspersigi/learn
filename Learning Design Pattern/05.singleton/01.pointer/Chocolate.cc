@@ -19,7 +19,6 @@ auto main(int argc, char* argv[]) -> int
     boiler1->boil();
     boiler1->drain();
 
-    // will return the existing instance
     ChocolateBoiler* boiler2 = ChocolateBoiler::getInstance();
 
     if (boiler1 == boiler2)
