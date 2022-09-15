@@ -1,13 +1,13 @@
-#include "SimpleRemote.h"
+#include "Remote.h"
 #include <iostream>
 
 auto main(int argc, char* argv[]) -> int
 {
     std::shared_ptr<SimpleRemoteControl> remote(new SimpleRemoteControl());
 
-    remote->setCommand(new LightOnCommand(new Light()));
+    remote->setCommand(new LightOnCommand(new Light("Bedroom")));
     remote->buttonWasPressed();
-    remote->setCommand(new GarageDoorOpenCommand(new GarageDoor()));
+    remote->setCommand(new GarageDoorUpCommand(new GarageDoor("Bedroom")));
     remote->buttonWasPressed();
 
     return 0;

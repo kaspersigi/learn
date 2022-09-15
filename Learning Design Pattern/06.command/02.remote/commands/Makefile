@@ -18,22 +18,32 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : LightOnCommand.o LightOffCommand.o GarageDoorOpenCommand.o
-LightOnCommand.o : LightOnCommand.cc LightOnCommand.h
-	$(CXX) LightOnCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+all : GarageDoorDownCommand.o GarageDoorUpCommand.o LightOffCommand.o LightOnCommand.o NoCommand.o
+GarageDoorDownCommand.o : GarageDoorDownCommand.cc GarageDoorDownCommand.h
+	$(CXX) GarageDoorDownCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+GarageDoorUpCommand.o : GarageDoorUpCommand.cc GarageDoorUpCommand.h
+	$(CXX) GarageDoorUpCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 LightOffCommand.o : LightOffCommand.cc LightOffCommand.h
 	$(CXX) LightOffCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
-GarageDoorOpenCommand.o : GarageDoorOpenCommand.cc GarageDoorOpenCommand.h
-	$(CXX) GarageDoorOpenCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+LightOnCommand.o : LightOnCommand.cc LightOnCommand.h
+	$(CXX) LightOnCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+NoCommand.o : NoCommand.cc NoCommand.h
+	$(CXX) NoCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
-	$(FORMAT) LightOnCommand.cc -style=file -i
-	$(FORMAT) LightOnCommand.h -style=file -i
+	$(FORMAT) GarageDoorDownCommand.cc -style=file -i
+	$(FORMAT) GarageDoorDownCommand.h -style=file -i
+	$(FORMAT) GarageDoorUpCommand.cc -style=file -i
+	$(FORMAT) GarageDoorUpCommand.h -style=file -i
 	$(FORMAT) LightOffCommand.cc -style=file -i
 	$(FORMAT) LightOffCommand.h -style=file -i
-	$(FORMAT) GarageDoorOpenCommand.cc -style=file -i
-	$(FORMAT) GarageDoorOpenCommand.h -style=file -i
+	$(FORMAT) LightOnCommand.cc -style=file -i
+	$(FORMAT) LightOnCommand.h -style=file -i
+	$(FORMAT) NoCommand.cc -style=file -i
+	$(FORMAT) NoCommand.h -style=file -i
 	$(FORMAT) commands.h -style=file -i
 clean :
-	rm -v LightOnCommand.o
+	rm -v GarageDoorDownCommand.o
+	rm -v GarageDoorUpCommand.o
 	rm -v LightOffCommand.o
-	rm -v GarageDoorOpenCommand.o
+	rm -v LightOnCommand.o
+	rm -v NoCommand.o

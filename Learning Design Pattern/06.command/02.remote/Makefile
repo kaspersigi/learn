@@ -18,15 +18,15 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : SimpleRemote
-SimpleRemote : SimpleRemote.o commands.o control.o devices.o
-	$(CXX) SimpleRemote.o commands/*.o control/*.o devices/*.o -o SimpleRemote $(CLANGXX_LINK_FLAGS)
-	rm -v SimpleRemote.o
+all : Remote
+Remote : Remote.o commands.o control.o devices.o
+	$(CXX) Remote.o commands/*.o control/*.o devices/*.o -o Remote $(CLANGXX_LINK_FLAGS)
+	rm -v Remote.o
 	$(MAKE) -C commands clean
 	$(MAKE) -C control clean
 	$(MAKE) -C devices clean
-SimpleRemote.o : SimpleRemote.cc SimpleRemote.h
-	$(CXX) SimpleRemote.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+Remote.o : Remote.cc Remote.h
+	$(CXX) Remote.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 commands.o :
 	$(MAKE) -C commands
 control.o :
@@ -34,10 +34,10 @@ control.o :
 devices.o :
 	$(MAKE) -C devices
 format :
-	$(FORMAT) SimpleRemote.cc -style=file -i
-	$(FORMAT) SimpleRemote.h -style=file -i
+	$(FORMAT) Remote.cc -style=file -i
+	$(FORMAT) Remote.h -style=file -i
 	$(MAKE) -C commands format
 	$(MAKE) -C control format
 	$(MAKE) -C devices format
 clean :
-	rm -v SimpleRemote
+	rm -v Remote

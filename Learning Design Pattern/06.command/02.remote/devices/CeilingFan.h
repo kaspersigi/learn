@@ -6,14 +6,17 @@ class CeilingFan {
 public:
     explicit CeilingFan(const std::string location);
     ~CeilingFan() = default;
-    
-    enum Level { LOW,
+
+    enum Level { DOWN,
+        LOW,
         MEDIUM,
         HIGH };
-    static Level level;
 
-    void on() const;
+    void low() const;
+    void medium() const;
+    void high() const;
     void off() const;
+    Level getSpeed();
 
 protected:
     CeilingFan(const CeilingFan&) = delete;
@@ -23,4 +26,5 @@ protected:
 
 private:
     std::string _location {};
+    mutable Level _level { Level::DOWN };
 };
