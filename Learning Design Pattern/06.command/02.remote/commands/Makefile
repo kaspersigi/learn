@@ -18,15 +18,27 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : GarageDoorDownCommand.o GarageDoorUpCommand.o LightOffCommand.o LightOnCommand.o NoCommand.o
+all : GarageDoorDownCommand.o GarageDoorUpCommand.o HottubOffCommand.o HottubOnCommand.o LightOffCommand.o LightOnCommand.o LivingroomLightOffCommand.o LivingroomLightOnCommand.o StereoOffCommand.o StereoOnWithCDCommand.o NoCommand.o
 GarageDoorDownCommand.o : GarageDoorDownCommand.cc GarageDoorDownCommand.h
 	$(CXX) GarageDoorDownCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 GarageDoorUpCommand.o : GarageDoorUpCommand.cc GarageDoorUpCommand.h
 	$(CXX) GarageDoorUpCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+HottubOffCommand.o : HottubOffCommand.cc HottubOffCommand.h
+	$(CXX) HottubOffCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+HottubOnCommand.o : HottubOnCommand.cc HottubOnCommand.h
+	$(CXX) HottubOnCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 LightOffCommand.o : LightOffCommand.cc LightOffCommand.h
 	$(CXX) LightOffCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 LightOnCommand.o : LightOnCommand.cc LightOnCommand.h
 	$(CXX) LightOnCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+LivingroomLightOffCommand.o : LivingroomLightOffCommand.cc LivingroomLightOffCommand.h
+	$(CXX) LivingroomLightOffCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+LivingroomLightOnCommand.o : LivingroomLightOnCommand.cc LivingroomLightOnCommand.h
+	$(CXX) LivingroomLightOnCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+StereoOffCommand.o : StereoOffCommand.cc StereoOffCommand.h
+	$(CXX) StereoOffCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+StereoOnWithCDCommand.o : StereoOnWithCDCommand.cc StereoOnWithCDCommand.h
+	$(CXX) StereoOnWithCDCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 NoCommand.o : NoCommand.cc NoCommand.h
 	$(CXX) NoCommand.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
@@ -34,16 +46,34 @@ format :
 	$(FORMAT) GarageDoorDownCommand.h -style=file -i
 	$(FORMAT) GarageDoorUpCommand.cc -style=file -i
 	$(FORMAT) GarageDoorUpCommand.h -style=file -i
+	$(FORMAT) HottubOffCommand.cc -style=file -i
+	$(FORMAT) HottubOffCommand.h -style=file -i
+	$(FORMAT) HottubOnCommand.cc -style=file -i
+	$(FORMAT) HottubOnCommand.h -style=file -i
 	$(FORMAT) LightOffCommand.cc -style=file -i
 	$(FORMAT) LightOffCommand.h -style=file -i
 	$(FORMAT) LightOnCommand.cc -style=file -i
 	$(FORMAT) LightOnCommand.h -style=file -i
+	$(FORMAT) LivingroomLightOffCommand.cc -style=file -i
+	$(FORMAT) LivingroomLightOffCommand.h -style=file -i
+	$(FORMAT) LivingroomLightOnCommand.cc -style=file -i
+	$(FORMAT) LivingroomLightOnCommand.h -style=file -i
+	$(FORMAT) StereoOffCommand.cc -style=file -i
+	$(FORMAT) StereoOffCommand.h -style=file -i
+	$(FORMAT) StereoOnWithCDCommand.cc -style=file -i
+	$(FORMAT) StereoOnWithCDCommand.h -style=file -i
 	$(FORMAT) NoCommand.cc -style=file -i
 	$(FORMAT) NoCommand.h -style=file -i
 	$(FORMAT) commands.h -style=file -i
 clean :
 	rm -v GarageDoorDownCommand.o
 	rm -v GarageDoorUpCommand.o
+	rm -v HottubOffCommand.o
+	rm -v HottubOnCommand.o
 	rm -v LightOffCommand.o
 	rm -v LightOnCommand.o
+	rm -v LivingroomLightOffCommand.o
+	rm -v LivingroomLightOnCommand.o
+	rm -v StereoOffCommand.o
+	rm -v StereoOnWithCDCommand.o
 	rm -v NoCommand.o

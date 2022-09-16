@@ -1,5 +1,5 @@
 #pragma once
 
 #include "commands/commands.h"
-#include "control/SimpleRemoteControl.h"
+#include "control/RemoteControl.h"
 #include "devices/devices.h"

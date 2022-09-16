@@ -18,11 +18,11 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : SimpleRemoteControl.o
-SimpleRemoteControl.o : SimpleRemoteControl.cc SimpleRemoteControl.h
-	$(CXX) SimpleRemoteControl.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+all : RemoteControl.o
+RemoteControl.o : RemoteControl.cc RemoteControl.h
+	$(CXX) RemoteControl.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
-	$(FORMAT) SimpleRemoteControl.cc -style=file -i
-	$(FORMAT) SimpleRemoteControl.h -style=file -i
+	$(FORMAT) RemoteControl.cc -style=file -i
+	$(FORMAT) RemoteControl.h -style=file -i
 clean :
-	rm -v SimpleRemoteControl.o
+	rm -v RemoteControl.o
