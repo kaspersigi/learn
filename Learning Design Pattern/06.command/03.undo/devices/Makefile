@@ -18,20 +18,17 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : simple_command remote undo
-simple_command :
-	$(MAKE) -C 01.simple_command
-remote :
-	$(MAKE) -C 02.remote
-undo :
-	$(MAKE) -C 03.undo
-
+all : CeilingFan.o Light.o
+CeilingFan.o : CeilingFan.cc CeilingFan.h
+	$(CXX) CeilingFan.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+Light.o : Light.cc Light.h
+	$(CXX) Light.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
-	$(MAKE) -C 01.simple_command format
-	$(MAKE) -C 02.remote format
-	$(MAKE) -C 03.undo format
-
+	$(FORMAT) CeilingFan.cc -style=file -i
+	$(FORMAT) CeilingFan.h -style=file -i
+	$(FORMAT) Light.cc -style=file -i
+	$(FORMAT) Light.h -style=file -i
+	$(FORMAT) devices.h -style=file -i
 clean :
-	$(MAKE) -C 01.simple_command clean
-	$(MAKE) -C 02.remote clean
-	$(MAKE) -C 03.undo clean
+	rm -v CeilingFan.o
+	rm -v Light.o

@@ -18,20 +18,11 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : simple_command remote undo
-simple_command :
-	$(MAKE) -C 01.simple_command
-remote :
-	$(MAKE) -C 02.remote
-undo :
-	$(MAKE) -C 03.undo
-
+all : RemoteControlWithUndo.o
+RemoteControlWithUndo.o : RemoteControlWithUndo.cc RemoteControlWithUndo.h
+	$(CXX) RemoteControlWithUndo.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
-	$(MAKE) -C 01.simple_command format
-	$(MAKE) -C 02.remote format
-	$(MAKE) -C 03.undo format
-
+	$(FORMAT) RemoteControlWithUndo.cc -style=file -i
+	$(FORMAT) RemoteControlWithUndo.h -style=file -i
 clean :
-	$(MAKE) -C 01.simple_command clean
-	$(MAKE) -C 02.remote clean
-	$(MAKE) -C 03.undo clean
+	rm -v RemoteControlWithUndo.o
