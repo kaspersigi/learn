@@ -5,18 +5,18 @@
 
 class LivingroomLightOffCommand : public Command {
 public:
-    explicit LivingroomLightOffCommand(const Light* light);
+    explicit LivingroomLightOffCommand(std::shared_ptr<const Light> light);
     explicit LivingroomLightOffCommand(std::nullptr_t) = delete;
-    ~LivingroomLightOffCommand() = default;
 
     void execute() const;
 
 protected:
+    ~LivingroomLightOffCommand() = default;
     LivingroomLightOffCommand(const LivingroomLightOffCommand&) = delete;
     LivingroomLightOffCommand(LivingroomLightOffCommand&&) = delete;
     LivingroomLightOffCommand& operator=(const LivingroomLightOffCommand&) = delete;
     LivingroomLightOffCommand& operator=(LivingroomLightOffCommand&&) = delete;
 
 private:
-    std::shared_ptr<const Light> _light;
+    std::weak_ptr<const Light> _light;
 };

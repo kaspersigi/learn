@@ -1,13 +1,17 @@
 #include "StereoOnWithCDCommand.h"
+#include <iostream>
 
-StereoOnWithCDCommand::StereoOnWithCDCommand(const Stereo* stereo)
+StereoOnWithCDCommand::StereoOnWithCDCommand(std::shared_ptr<const Stereo> stereo)
+    : _stereo(stereo)
 {
-    _stereo = std::shared_ptr<const Stereo>(stereo);
 }
 
 void StereoOnWithCDCommand::execute() const
 {
-    _stereo->on();
-    _stereo->setCD();
-    _stereo->setVolume(11);
+    if (_stereo.use_count()) {
+        _stereo.lock()->on();
+        _stereo.lock()->setCD();
+        _stereo.lock()->setVolume(11);
+    } else
+        std::cout << "device is broken" << std::endl;
 }

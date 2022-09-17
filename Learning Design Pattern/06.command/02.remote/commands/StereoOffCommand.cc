@@ -1,11 +1,15 @@
 #include "StereoOffCommand.h"
+#include <iostream>
 
-StereoOffCommand::StereoOffCommand(const Stereo* stereo)
+StereoOffCommand::StereoOffCommand(std::shared_ptr<const Stereo> stereo)
+    : _stereo(stereo)
 {
-    _stereo = std::shared_ptr<const Stereo>(stereo);
 }
 
 void StereoOffCommand::execute() const
 {
-    _stereo->off();
+    if (_stereo.use_count())
+        _stereo.lock()->off();
+    else
+        std::cout << "device is broken" << std::endl;
 }

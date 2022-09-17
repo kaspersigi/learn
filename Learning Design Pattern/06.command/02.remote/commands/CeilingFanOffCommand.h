@@ -5,18 +5,18 @@
 
 class CeilingFanOffCommand : public Command {
 public:
-    explicit CeilingFanOffCommand(const CeilingFan* ceilingFan);
+    explicit CeilingFanOffCommand(std::shared_ptr<const CeilingFan> ceilingFan);
     explicit CeilingFanOffCommand(std::nullptr_t) = delete;
-    ~CeilingFanOffCommand() = default;
 
     void execute() const;
 
 protected:
+    ~CeilingFanOffCommand() = default;
     CeilingFanOffCommand(const CeilingFanOffCommand&) = delete;
     CeilingFanOffCommand(CeilingFanOffCommand&&) = delete;
     CeilingFanOffCommand& operator=(const CeilingFanOffCommand&) = delete;
     CeilingFanOffCommand& operator=(CeilingFanOffCommand&&) = delete;
 
 private:
-    std::shared_ptr<const CeilingFan> _ceilingFan;
+    std::weak_ptr<const CeilingFan> _ceilingFan;
 };

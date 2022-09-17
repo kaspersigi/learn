@@ -1,11 +1,15 @@
 #include "GarageDoorUpCommand.h"
+#include <iostream>
 
-GarageDoorUpCommand::GarageDoorUpCommand(const GarageDoor* garageDoor)
+GarageDoorUpCommand::GarageDoorUpCommand(std::shared_ptr<const GarageDoor> garageDoor)
+    : _garageDoor(garageDoor)
 {
-    _garageDoor = std::shared_ptr<const GarageDoor>(garageDoor);
 }
 
 void GarageDoorUpCommand::execute() const
 {
-    _garageDoor->up();
+    if (_garageDoor.use_count())
+        _garageDoor.lock()->up();
+    else
+        std::cout << "device is broken" << std::endl;
 }

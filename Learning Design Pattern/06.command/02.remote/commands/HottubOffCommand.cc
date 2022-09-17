@@ -1,12 +1,16 @@
 #include "HottubOffCommand.h"
+#include <iostream>
 
-HottubOffCommand::HottubOffCommand(const Hottub* hottub)
+HottubOffCommand::HottubOffCommand(std::shared_ptr<const Hottub> hottub)
+    : _hottub(hottub)
 {
-    _hottub = std::shared_ptr<const Hottub>(hottub);
 }
 
 void HottubOffCommand::execute() const
 {
-    _hottub->cool();
-    _hottub->off();
+    if (_hottub.use_count()) {
+        _hottub.lock()->cool();
+        _hottub.lock()->off();
+    } else
+        std::cout << "device is broken" << std::endl;
 }

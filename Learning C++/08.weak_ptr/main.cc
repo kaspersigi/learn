@@ -11,6 +11,8 @@ public:
     Object& operator=(Object&& obj) & noexcept;
     ~Object();
 
+    void show();
+
 private:
     char* _ptr {};
     std::size_t _length {};
@@ -91,6 +93,13 @@ Object::~Object()
     delete _ptr;
 }
 
+void Object::show()
+{
+    for (int i = 0; i < _length; ++i)
+        std::cout << _ptr[i];
+    std::cout << std::endl;
+}
+
 Object func(std::string& str)
 {
     return Object(str.c_str(), str.length());
@@ -101,12 +110,15 @@ auto main(int argc, char* argv[]) -> int
     std::string str("Hello World");
     Object* p_obj = new Object(str.c_str(), str.length());
     std::shared_ptr<Object> obj(p_obj);
+    obj->show();
+
     std::weak_ptr<Object> obj1(obj);
     std::weak_ptr<Object> obj2(obj);
-}
 
-#if 0
-Object::Object(const char *, size_t)构造函数
---------------------
-Object::~Object()析构函数
-#endif
+    if (obj1.use_count())
+        obj1.lock()->show();
+
+    obj.reset();
+    if (obj2.use_count())
+        obj2.lock()->show();
+}

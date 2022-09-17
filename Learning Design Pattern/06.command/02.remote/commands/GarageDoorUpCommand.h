@@ -5,18 +5,18 @@
 
 class GarageDoorUpCommand : public Command {
 public:
-    explicit GarageDoorUpCommand(const GarageDoor* garageDoor);
+    explicit GarageDoorUpCommand(std::shared_ptr<const GarageDoor> garageDoor);
     explicit GarageDoorUpCommand(std::nullptr_t) = delete;
-    ~GarageDoorUpCommand() = default;
 
     void execute() const;
 
 protected:
+    ~GarageDoorUpCommand() = default;
     GarageDoorUpCommand(const GarageDoorUpCommand&) = delete;
     GarageDoorUpCommand(GarageDoorUpCommand&&) = delete;
     GarageDoorUpCommand& operator=(const GarageDoorUpCommand&) = delete;
     GarageDoorUpCommand& operator=(GarageDoorUpCommand&&) = delete;
 
 private:
-    std::shared_ptr<const GarageDoor> _garageDoor;
+    std::weak_ptr<const GarageDoor> _garageDoor;
 };

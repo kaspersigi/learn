@@ -5,18 +5,18 @@
 
 class HottubOnCommand : public Command {
 public:
-    explicit HottubOnCommand(const Hottub* hottub);
+    explicit HottubOnCommand(std::shared_ptr<const Hottub> hottub);
     explicit HottubOnCommand(std::nullptr_t) = delete;
-    ~HottubOnCommand() = default;
 
     void execute() const;
 
 protected:
+    ~HottubOnCommand() = default;
     HottubOnCommand(const HottubOnCommand&) = delete;
     HottubOnCommand(HottubOnCommand&&) = delete;
     HottubOnCommand& operator=(const HottubOnCommand&) = delete;
     HottubOnCommand& operator=(HottubOnCommand&&) = delete;
 
 private:
-    std::shared_ptr<const Hottub> _hottub;
+    std::weak_ptr<const Hottub> _hottub;
 };

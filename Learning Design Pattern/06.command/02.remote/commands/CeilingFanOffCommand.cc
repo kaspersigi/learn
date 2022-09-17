@@ -1,11 +1,15 @@
 #include "CeilingFanOffCommand.h"
+#include <iostream>
 
-CeilingFanOffCommand::CeilingFanOffCommand(const CeilingFan* ceilingFan)
+CeilingFanOffCommand::CeilingFanOffCommand(std::shared_ptr<const CeilingFan> ceilingFan)
+    : _ceilingFan(ceilingFan)
 {
-    _ceilingFan = std::shared_ptr<const CeilingFan>(ceilingFan);
 }
 
 void CeilingFanOffCommand::execute() const
 {
-    _ceilingFan->off();
+    if (_ceilingFan.use_count())
+        _ceilingFan.lock()->off();
+    else
+        std::cout << "device is broken" << std::endl;
 }

@@ -18,12 +18,16 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : simple_command
+all : simple_command remote
 simple_command :
 	$(MAKE) -C 01.simple_command
+remote :
+	$(MAKE) -C 02.remote
 
 format :
 	$(MAKE) -C 01.simple_command format
+	$(MAKE) -C 02.remote format
 
 clean :
 	$(MAKE) -C 01.simple_command clean
+	$(MAKE) -C 02.remote clean

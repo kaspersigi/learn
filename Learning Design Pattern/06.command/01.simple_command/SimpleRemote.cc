@@ -3,11 +3,16 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::shared_ptr<SimpleRemoteControl> remote(new SimpleRemoteControl());
+    auto remote = std::make_shared<SimpleRemoteControl>();
+    auto light = std::make_shared<Light>();
 
-    remote->setCommand(new LightOnCommand(new Light()));
+    remote->setCommand(new LightOnCommand(light));
     remote->buttonWasPressed();
-    remote->setCommand(new GarageDoorOpenCommand(new GarageDoor()));
+    remote->setCommand(new LightOffCommand(light));
+    remote->buttonWasPressed();
+
+    // 假设灯坏了
+    light.reset();
     remote->buttonWasPressed();
 
     return 0;

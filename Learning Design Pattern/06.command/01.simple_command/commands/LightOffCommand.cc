@@ -1,11 +1,15 @@
 #include "LightOffCommand.h"
+#include <iostream>
 
-LightOffCommand::LightOffCommand(const Light* light)
+LightOffCommand::LightOffCommand(std::shared_ptr<const Light> light)
+    : _light(light)
 {
-    _light = std::shared_ptr<const Light>(light);
 }
 
 void LightOffCommand::execute() const
 {
-    _light->off();
+    if (_light.use_count())
+        _light.lock()->off();
+    else
+        std::cout << "device is broken" << std::endl;
 }

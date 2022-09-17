@@ -1,11 +1,15 @@
 #include "LightOnCommand.h"
+#include <iostream>
 
-LightOnCommand::LightOnCommand(const Light* light)
+LightOnCommand::LightOnCommand(std::shared_ptr<const Light> light)
+    : _light(light)
 {
-    _light = std::shared_ptr<const Light>(light);
 }
 
 void LightOnCommand::execute() const
 {
-    _light->on();
+    if (_light.use_count())
+        _light.lock()->on();
+    else
+        std::cout << "device is broken" << std::endl;
 }
