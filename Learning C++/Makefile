@@ -19,7 +19,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template macro regex constructor deconstructor interface interface_template smart_pointer const function_template class_template threadpool
+all : template macro regex constructor deconstructor interface interface_template shared_ptr weak_ptr const function_template class_template threadpool
 template :
 	$(MAKE) -C 00.template
 macro :
@@ -34,18 +34,20 @@ interface :
 	$(MAKE) -C 05.interface
 interface_template :
 	$(MAKE) -C 06.interface_template
-smart_pointer :
-	$(MAKE) -C 07.smart_pointer
+shared_ptr :
+	$(MAKE) -C 07.shared_ptr
+weak_ptr :
+	$(MAKE) -C 08.weak_ptr
 const :
-	$(MAKE) -C 08.const
+	$(MAKE) -C 09.const
 function_template :
-	$(MAKE) -C 09.function_template
+	$(MAKE) -C 10.function_template
 class_template :
-	$(MAKE) -C 10.class_template
+	$(MAKE) -C 11.class_template
 threadpool :
-	$(MAKE) -C 11.threadpool
+	$(MAKE) -C 12.threadpool
 android_c++ :
-	$(MAKE) -C 12.android_c++
+	$(MAKE) -C 13.android_c++
 
 format :
 	$(MAKE) -C 00.template format
@@ -55,12 +57,13 @@ format :
 	$(MAKE) -C 04.deconstructor format
 	$(MAKE) -C 05.interface format
 	$(MAKE) -C 06.interface_template format
-	$(MAKE) -C 07.smart_pointer format
-	$(MAKE) -C 08.const format
-	$(MAKE) -C 09.function_template format
-	$(MAKE) -C 10.class_template format
-	$(MAKE) -C 11.threadpool format
-	# $(MAKE) -C 12.android_c++ format
+	$(MAKE) -C 07.shared_ptr format
+	$(MAKE) -C 08.weak_ptr format
+	$(MAKE) -C 09.const format
+	$(MAKE) -C 10.function_template format
+	$(MAKE) -C 11.class_template format
+	$(MAKE) -C 12.threadpool format
+	# $(MAKE) -C 13.android_c++ format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -70,9 +73,10 @@ clean :
 	$(MAKE) -C 04.deconstructor clean
 	$(MAKE) -C 05.interface clean
 	$(MAKE) -C 06.interface_template clean
-	$(MAKE) -C 07.smart_pointer clean
-	$(MAKE) -C 08.const clean
-	$(MAKE) -C 09.function_template clean
-	$(MAKE) -C 10.class_template clean
-	$(MAKE) -C 11.threadpool clean
-	# $(MAKE) -C 12.android_c++ clean
+	$(MAKE) -C 07.shared_ptr clean
+	$(MAKE) -C 08.weak_ptr clean
+	$(MAKE) -C 09.const clean
+	$(MAKE) -C 10.function_template clean
+	$(MAKE) -C 11.class_template clean
+	$(MAKE) -C 12.threadpool clean
+	# $(MAKE) -C 13.android_c++ clean
