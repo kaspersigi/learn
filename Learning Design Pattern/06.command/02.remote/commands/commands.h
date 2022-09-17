@@ -1,7 +1,15 @@
 #pragma once
 
+#include "CeilingFanOffCommand.h"
+#include "CeilingFanOnCommand.h"
 #include "GarageDoorDownCommand.h"
 #include "GarageDoorUpCommand.h"
+#include "HottubOffCommand.h"
+#include "HottubOnCommand.h"
 #include "LightOffCommand.h"
 #include "LightOnCommand.h"
+#include "LivingroomLightOffCommand.h"
+#include "LivingroomLightOnCommand.h"
 #include "NoCommand.h"
+#include "StereoOffCommand.h"
+#include "StereoOnWithCDCommand.h"

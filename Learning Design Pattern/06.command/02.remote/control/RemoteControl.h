@@ -1,14 +1,18 @@
 #pragma once
 #include "../interface/Command.h"
+#include <array>
 #include <memory>
+#include <string>
 
 class RemoteControl {
 public:
-    RemoteControl() = default;
+    RemoteControl();
     ~RemoteControl() = default;
 
-    void setCommand(const Command* command);
-    void buttonWasPressed() const;
+    void setCommand(int slot, Command* onCommand, Command* offCommand);
+    void onButtonWasPushed(int slot) const;
+    void offButtonWasPushed(int slot) const;
+    std::string toShow() const;
 
 protected:
     RemoteControl(const RemoteControl&) = delete;
@@ -17,5 +21,7 @@ protected:
     RemoteControl& operator=(RemoteControl&&) = delete;
 
 private:
-    std::shared_ptr<const Command> _slot;
+    static const int SLOTS = 7;
+    std::array<std::shared_ptr<Command>, SLOTS> _onCommands {};
+    std::array<std::shared_ptr<Command>, SLOTS> _offCommands {};
 };

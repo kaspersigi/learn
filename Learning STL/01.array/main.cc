@@ -22,5 +22,9 @@ auto main(int argc, char* argv[]) -> int
     std::cout << std::endl;
     // nums.earas(); //array没有erase函数
 
+    std::array<int, 8> nums2 {};
+    std::for_each(nums2.cbegin(), nums2.cend(), [](auto e) { std::cout << e << " "; });
+    std::cout << std::endl;
+
     return 0;
 }
