@@ -19,7 +19,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm
+all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool inline_asm syscall
 template :
 	$(MAKE) -C 00.template
 macro :
@@ -120,12 +120,14 @@ union :
 	$(MAKE) -C 48.union
 threadpool :
 	$(MAKE) -C 49.threadpool
+inline_asm :
+	$(MAKE) -C 50.inline_asm
+syscall :
+	$(MAKE) -C 51.syscall
 driver :
-	$(MAKE) -C 50.driver
-asm :
-	$(MAKE) -C 51.asm
+	$(MAKE) -C 52.driver
 android_c :
-	$(MAKE) -C 52.android_c
+	$(MAKE) -C 53.android_c
 
 format :
 	$(MAKE) -C 00.template format
@@ -178,9 +180,10 @@ format :
 	$(MAKE) -C 47.perror format
 	$(MAKE) -C 48.union format
 	$(MAKE) -C 49.threadpool format
-	$(MAKE) -C 50.driver format
-	$(MAKE) -C 51.asm format
-	# $(MAKE) -C 52.android_c format
+	$(MAKE) -C 50.inline_asm format
+	$(MAKE) -C 51.syscall format
+	$(MAKE) -C 52.driver format
+	$(MAKE) -C 53.android_c format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -233,6 +236,7 @@ clean :
 	$(MAKE) -C 47.perror clean
 	$(MAKE) -C 48.union clean
 	$(MAKE) -C 49.threadpool clean
-	# $(MAKE) -C 50.driver clean
-	$(MAKE) -C 51.asm clean
-	# $(MAKE) -C 52.android_c clean
+	$(MAKE) -C 50.inline_asm clean
+	$(MAKE) -C 51.syscall clean
+	# $(MAKE) -C 52.driver clean
+	# $(MAKE) -C 53.android_c clean
