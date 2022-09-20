@@ -3,22 +3,20 @@ char* g_str = "Hello World! -- global\n";
 int main(int argc, char* argv[])
 {
     char* p_str = "Hello World! -- local\n";
-    __asm__ __volatile__("\
-        movl $4, %eax\n\t\
-        movl $1, %ebx\n\t\
-        movl g_str, %ecx\n\t\
-        movl $24, %edx\n\t\
-        int $0x80");
-#if 0
-    __asm__ __volatile__("\
-        movl $4, %eax\n\t\
-        movl $1, %ebx\n\t\
-        movl %1, %ecx\n\t\
-        movl $23, %edx\n\t\
-        int $0x80"
-                         :
-                         : "c"(p_str));
-#endif
+    int ret = 0;
 
-    return 0;
+    // write() 4号系统调用
+    __asm__ __volatile__("int $0x80"
+                         : "=a"(ret)
+                         : "a"(4), "b"(1), "c"(g_str), "d"(24));
+
+    // write() 4号系统调用
+    __asm__ __volatile__("int $0x80"
+                         : "=a"(ret)
+                         : "a"(4), "b"(1), "c"(p_str), "d"(23));
+
+    // exit() 1号系统调用
+    __asm__ __volatile__("int $0x80"
+                         : "=a"(ret)
+                         : "a"(1), "b"(0));
 }
