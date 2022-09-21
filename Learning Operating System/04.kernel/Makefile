@@ -2,7 +2,7 @@
 #Makefile for my assembler programs
 ###########################################
 TRG = all
-OBJ = boot.bin head.bin kernel.bin program.bin
+OBJ = bootsect.bin setup.bin kernel.bin program.bin
 AS = /usr/bin/as
 LD = /usr/bin/ld
 
@@ -11,16 +11,16 @@ $(TRG) : $(OBJ) boot.img
 	rm -v $(OBJ)
 boot.img :
 	dd if=/dev/zero of=boot.img count=1 bs=1440k conv=sync
-boot.bin : boot.s boot.img
-	$(AS) boot.s -o boot.o --32
-	$(LD) boot.o -o boot.bin -T head.lds
-	rm -v boot.o
-	dd if=boot.bin of=boot.img count=1 bs=1440k conv=sync
-head.bin : head.s boot.img
-	$(AS) head.s -o head.o --32
-	$(LD) head.o -o head.bin -T head.lds
-	rm -v head.o
-	dd if=head.bin of=boot.img count=2880k bs=512 conv=notrunc seek=1
+bootsect.bin : bootsect.s boot.img
+	$(AS) bootsect.s -o bootsect.o --32
+	$(LD) bootsect.o -o bootsect.bin -T setup.lds
+	rm -v bootsect.o
+	dd if=bootsect.bin of=boot.img count=1 bs=1440k conv=sync
+setup.bin : setup.s boot.img
+	$(AS) setup.s -o setup.o --32
+	$(LD) setup.o -o setup.bin -T setup.lds
+	rm -v setup.o
+	dd if=setup.bin of=boot.img count=2880k bs=512 conv=notrunc seek=1
 kernel.bin : kernel.s boot.img
 	$(AS) kernel.s -o kernel.o --32
 	$(LD) kernel.o -o kernel.bin -T kernel.lds
