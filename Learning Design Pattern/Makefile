@@ -19,7 +19,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template strategy observer decorator factory singleton command adapter
+all : template strategy observer decorator factory singleton command adapter facade
 template :
 	$(MAKE) -C 00.template
 strategy :
@@ -36,6 +36,8 @@ command :
 	$(MAKE) -C 06.command
 adapter :
 	$(MAKE) -C 07.adapter
+facade :
+	$(MAKE) -C 08.facade
 
 format :
 	$(MAKE) -C 00.template format
@@ -46,6 +48,7 @@ format :
 	$(MAKE) -C 05.singleton format
 	$(MAKE) -C 06.command format
 	$(MAKE) -C 07.adapter format
+	$(MAKE) -C 08.facade format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -56,3 +59,4 @@ clean :
 	$(MAKE) -C 05.singleton clean
 	$(MAKE) -C 06.command clean
 	$(MAKE) -C 07.adapter clean
+	$(MAKE) -C 08.facade clean
