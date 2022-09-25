@@ -1,13 +1,13 @@
 #include "DinerMenuIterator.h"
 
-DinerMenuIterator::DinerMenuIterator(MenuItem** items)
+DinerMenuIterator::DinerMenuIterator(std::shared_ptr<MenuItem>* items)
     : _items(items)
 {
 }
 
-MenuItem* DinerMenuIterator::next() const
+std::shared_ptr<MenuItem> DinerMenuIterator::next() const
 {
-    MenuItem* menuItem = _items[_position];
+    auto menuItem = _items[_position];
     _position++;
     return menuItem;
 }

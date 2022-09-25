@@ -4,11 +4,11 @@
 
 class DinerMenuIterator : public Iterator<MenuItem> {
 public:
-    explicit DinerMenuIterator(MenuItem** items);
+    explicit DinerMenuIterator(std::shared_ptr<MenuItem>* items);
     explicit DinerMenuIterator(std::nullptr_t) = delete;
     ~DinerMenuIterator() = default;
 
-    virtual MenuItem* next() const override;
+    virtual std::shared_ptr<MenuItem> next() const override;
     virtual bool hasNext() const override;
 
 protected:
@@ -18,6 +18,6 @@ protected:
     DinerMenuIterator& operator=(DinerMenuIterator&&) = delete;
 
 private:
-    MenuItem** _items { nullptr };
+    std::shared_ptr<MenuItem>* _items { nullptr };
     mutable int _position { 0 };
 };

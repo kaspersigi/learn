@@ -4,7 +4,7 @@
 
 DinerMenu::DinerMenu()
 {
-    _menuItems = new MenuItem*[MAX_ITEMS + 1];
+    _menuItems = new std::shared_ptr<MenuItem>[MAX_ITEMS + 1];
     for (int i = 0; i <= MAX_ITEMS; i++) {
         _menuItems[i] = nullptr;
     }
@@ -16,9 +16,11 @@ DinerMenu::DinerMenu()
     addItem("Pasta", "Spaghetti with Marinara Sauce, and a slice of sourdough bread", true, 3.89);
 }
 
+DinerMenu::~DinerMenu() { delete[] _menuItems; }
+
 void DinerMenu::addItem(std::string name, std::string description, bool vegetarian, double price)
 {
-    MenuItem* menuItem = new MenuItem(name, description, vegetarian, price);
+    auto menuItem = std::make_shared<MenuItem>(name, description, vegetarian, price);
 
     if (_numberOfItems >= MAX_ITEMS) {
         std::cerr << "Sorry, menu is full!  Can't add item to menu" << std::endl;
@@ -28,6 +30,6 @@ void DinerMenu::addItem(std::string name, std::string description, bool vegetari
     }
 }
 
-MenuItem** DinerMenu::getMenuItems() const { return _menuItems; }
+std::shared_ptr<MenuItem>* DinerMenu::getMenuItems() const { return _menuItems; }
 
 Iterator<MenuItem>* DinerMenu::createIterator() const { return new DinerMenuIterator(_menuItems); }

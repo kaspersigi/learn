@@ -5,10 +5,10 @@
 
 class PancakeHouseMenuIterator : public Iterator<MenuItem> {
 public:
-    explicit PancakeHouseMenuIterator(std::vector<MenuItem*> items);
+    explicit PancakeHouseMenuIterator(std::vector<std::shared_ptr<MenuItem>> items);
     ~PancakeHouseMenuIterator() = default;
 
-    virtual MenuItem* next() const override;
+    virtual std::shared_ptr<MenuItem> next() const override;
     virtual bool hasNext() const override;
 
 protected:
@@ -18,6 +18,6 @@ protected:
     PancakeHouseMenuIterator& operator=(PancakeHouseMenuIterator&&) = delete;
 
 private:
-    std::vector<MenuItem*> _items {};
+    std::vector<std::shared_ptr<MenuItem>> _items {};
     mutable int _position { 0 };
 };

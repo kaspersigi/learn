@@ -1,4 +1,4 @@
-#pragma
+#pragma once
 
 #include "../interface/Menu.h"
 #include <string>
@@ -6,10 +6,10 @@
 class DinerMenu : public Menu {
 public:
     DinerMenu();
-    virtual ~DinerMenu() = default;
+    virtual ~DinerMenu();
 
     void addItem(std::string name, std::string description, bool vegetarian, double price);
-    MenuItem** getMenuItems() const;
+    std::shared_ptr<MenuItem>* getMenuItems() const;
     virtual Iterator<MenuItem>* createIterator() const override;
 
 protected:
@@ -21,5 +21,5 @@ protected:
 private:
     static const int MAX_ITEMS { 6 };
     int _numberOfItems { 0 };
-    MenuItem** _menuItems { nullptr };
+    std::shared_ptr<MenuItem>* _menuItems { nullptr };
 };

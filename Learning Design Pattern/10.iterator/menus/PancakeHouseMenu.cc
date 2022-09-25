@@ -12,11 +12,11 @@ PancakeHouseMenu::PancakeHouseMenu()
 
 void PancakeHouseMenu::addItem(std::string name, std::string description, bool vegetarian, double price)
 {
-    MenuItem* menuItem = new MenuItem(name, description, vegetarian, price);
+    auto menuItem = std::make_shared<MenuItem>(name, description, vegetarian, price);
     _menuItems.push_back(menuItem);
 }
 
-std::vector<MenuItem*> PancakeHouseMenu::getMenuItems() const { return _menuItems; }
+std::vector<std::shared_ptr<MenuItem>> PancakeHouseMenu::getMenuItems() const { return _menuItems; }
 
 Iterator<MenuItem>* PancakeHouseMenu::createIterator() const { return new PancakeHouseMenuIterator(_menuItems); }
 

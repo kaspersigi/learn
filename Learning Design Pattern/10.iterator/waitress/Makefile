@@ -18,13 +18,11 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : MenuItem.o
-MenuItem.o : MenuItem.cc MenuItem.h
-	$(CXX) MenuItem.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+all : Waitress.o
+Waitress.o : Waitress.cc Waitress.h
+	$(CXX) Waitress.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
-	$(FORMAT) MenuItem.cc -style=file -i
-	$(FORMAT) MenuItem.h -style=file -i
-	$(FORMAT) Iterator.h -style=file -i
-	$(FORMAT) Menu.h -style=file -i
+	$(FORMAT) Waitress.cc -style=file -i
+	$(FORMAT) Waitress.h -style=file -i
 clean :
-	rm -v MenuItem.o
+	rm -v Waitress.o
