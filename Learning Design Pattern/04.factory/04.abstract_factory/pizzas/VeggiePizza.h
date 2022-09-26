@@ -18,5 +18,5 @@ protected:
     VeggiePizza& operator=(VeggiePizza&&) = delete;
 
 private:
-    mutable std::shared_ptr<PizzaIngredientFactory> _ingredientFactory;
+    mutable std::shared_ptr<PizzaIngredientFactory> _ingredientFactory {};
 };

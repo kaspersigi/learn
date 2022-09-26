@@ -7,6 +7,7 @@ class ReggianoCheese : public Cheese {
 public:
     ReggianoCheese() = default;
     virtual ~ReggianoCheese() = default;
+
     virtual std::string toShow() const override;
 
 protected:

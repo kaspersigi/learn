@@ -5,6 +5,7 @@
 class Dough {
 public:
     virtual ~Dough() = default;
+
     virtual std::string toShow() const = 0;
 
 protected:

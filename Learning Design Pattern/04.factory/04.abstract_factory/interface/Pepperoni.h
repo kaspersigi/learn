@@ -5,6 +5,7 @@
 class Pepperoni {
 public:
     virtual ~Pepperoni() = default;
+
     virtual std::string toShow() const = 0;
 
 protected:

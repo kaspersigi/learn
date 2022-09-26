@@ -9,15 +9,14 @@ public:
     explicit HeatIndexDisplay(Subject* weatherData);
     virtual ~HeatIndexDisplay();
 
+    virtual void update(float temperature, float humidity, float pressure) override;
+    virtual void display() const override;
+
 protected:
     HeatIndexDisplay(const HeatIndexDisplay&) = delete;
     HeatIndexDisplay(HeatIndexDisplay&&) = delete;
     HeatIndexDisplay& operator=(const HeatIndexDisplay&) = delete;
     HeatIndexDisplay& operator=(HeatIndexDisplay&&) = delete;
-
-public:
-    virtual void update(float temperature, float humidity, float pressure) override;
-    virtual void display() const override;
 
 private:
     Subject* _weatherData {};

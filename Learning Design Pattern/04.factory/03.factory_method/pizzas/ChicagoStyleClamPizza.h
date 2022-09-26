@@ -7,12 +7,11 @@ public:
     ChicagoStyleClamPizza();
     virtual ~ChicagoStyleClamPizza() = default;
 
+    virtual void cut() const override;
+
 protected:
     ChicagoStyleClamPizza(const ChicagoStyleClamPizza&) = delete;
     ChicagoStyleClamPizza(ChicagoStyleClamPizza&&) = delete;
     ChicagoStyleClamPizza& operator=(const ChicagoStyleClamPizza&) = delete;
     ChicagoStyleClamPizza& operator=(ChicagoStyleClamPizza&&) = delete;
-
-public:
-    virtual void cut() const override;
 };

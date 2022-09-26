@@ -6,6 +6,7 @@ class RedPepper : public Veggies {
 public:
     RedPepper() = default;
     virtual ~RedPepper() = default;
+
     virtual std::string toShow() const override;
 
 protected:

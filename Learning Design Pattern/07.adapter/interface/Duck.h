@@ -9,6 +9,13 @@ class Duck {
 public:
     virtual ~Duck() = default;
 
+    void setFlyBehavior(FlyBehavior* flyBehavior);
+    void setQuackBehavior(QuackBehavior* quackBehavior);
+    void performFly() const;
+    void performQuack() const;
+    void swim() const;
+    virtual void display() const = 0;
+
 protected:
     Duck(FlyBehavior* flyBehavior, QuackBehavior* quackBehavior);
     Duck(const Duck&) = delete;
@@ -17,14 +24,6 @@ protected:
     Duck& operator=(Duck&&) = delete;
 
 private:
-    std::shared_ptr<FlyBehavior> _flyBehavior;
-    std::shared_ptr<QuackBehavior> _quackBehavior;
-
-public:
-    void setFlyBehavior(FlyBehavior* flyBehavior);
-    void setQuackBehavior(QuackBehavior* quackBehavior);
-    void performFly() const;
-    void performQuack() const;
-    void swim() const;
-    virtual void display() const = 0;
+    std::shared_ptr<FlyBehavior> _flyBehavior {};
+    std::shared_ptr<QuackBehavior> _quackBehavior {};
 };

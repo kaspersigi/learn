@@ -6,6 +6,7 @@ class Onion : public Veggies {
 public:
     Onion() = default;
     virtual ~Onion() = default;
+
     virtual std::string toShow() const override;
 
 protected:

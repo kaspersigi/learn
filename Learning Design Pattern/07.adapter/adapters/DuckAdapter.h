@@ -21,5 +21,5 @@ protected:
     DuckAdapter& operator=(DuckAdapter&&) = delete;
 
 private:
-    std::shared_ptr<const Duck> _duck;
+    std::shared_ptr<const Duck> _duck {};
 };

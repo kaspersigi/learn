@@ -8,13 +8,6 @@ public:
     WeatherData() = default;
     virtual ~WeatherData() = default;
 
-protected:
-    WeatherData(const WeatherData&) = delete;
-    WeatherData(WeatherData&&) = delete;
-    WeatherData& operator=(const WeatherData&) = delete;
-    WeatherData& operator=(WeatherData&&) = delete;
-
-public:
     virtual void registerObserver(Observer* observer) override;
     virtual void removeObserver(Observer* observer) override;
     virtual void notifyObservers() const override;
@@ -24,8 +17,14 @@ public:
     float getHumidity() const;
     float getPressure() const;
 
+protected:
+    WeatherData(const WeatherData&) = delete;
+    WeatherData(WeatherData&&) = delete;
+    WeatherData& operator=(const WeatherData&) = delete;
+    WeatherData& operator=(WeatherData&&) = delete;
+
 private:
-    std::list<Observer*> _observers;
+    std::list<Observer*> _observers {};
     float _temperature {};
     float _humidity {};
     float _pressure {};

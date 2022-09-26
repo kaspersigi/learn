@@ -5,6 +5,7 @@
 class Clams {
 public:
     virtual ~Clams() = default;
+
     virtual std::string toShow() const = 0;
 
 protected:

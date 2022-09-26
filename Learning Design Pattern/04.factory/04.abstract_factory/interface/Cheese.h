@@ -5,6 +5,7 @@
 class Cheese {
 public:
     virtual ~Cheese() = default;
+
     virtual std::string toShow() const = 0;
 
 protected:

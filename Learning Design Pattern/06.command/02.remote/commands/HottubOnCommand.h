@@ -18,5 +18,5 @@ protected:
     HottubOnCommand& operator=(HottubOnCommand&&) = delete;
 
 private:
-    std::weak_ptr<const Hottub> _hottub;
+    std::weak_ptr<const Hottub> _hottub {};
 };

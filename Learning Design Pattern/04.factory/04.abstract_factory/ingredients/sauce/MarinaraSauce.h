@@ -7,6 +7,7 @@ class MarinaraSauce : public Sauce {
 public:
     MarinaraSauce() = default;
     virtual ~MarinaraSauce() = default;
+
     virtual std::string toShow() const override;
 
 protected:

@@ -5,6 +5,7 @@
 class Sauce {
 public:
     virtual ~Sauce() = default;
+
     virtual std::string toShow() const = 0;
 
 protected:

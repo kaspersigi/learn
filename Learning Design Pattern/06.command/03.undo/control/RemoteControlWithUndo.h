@@ -23,7 +23,7 @@ protected:
 
 private:
     static const int SLOTS = 7;
-    mutable std::shared_ptr<Command> _undoCommand;
+    mutable std::shared_ptr<Command> _undoCommand {};
     std::array<std::shared_ptr<Command>, SLOTS> _onCommands {};
     std::array<std::shared_ptr<Command>, SLOTS> _offCommands {};
 };

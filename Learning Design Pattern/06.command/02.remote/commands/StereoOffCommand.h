@@ -18,5 +18,5 @@ protected:
     StereoOffCommand& operator=(StereoOffCommand&&) = delete;
 
 private:
-    std::weak_ptr<const Stereo> _stereo;
+    std::weak_ptr<const Stereo> _stereo {};
 };

@@ -7,6 +7,7 @@ class FreshClams : public Clams {
 public:
     FreshClams() = default;
     virtual ~FreshClams() = default;
+
     virtual std::string toShow() const override;
 
 protected:

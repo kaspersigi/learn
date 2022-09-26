@@ -7,6 +7,7 @@ class PlumTomatoSauce : public Sauce {
 public:
     PlumTomatoSauce() = default;
     virtual ~PlumTomatoSauce() = default;
+
     virtual std::string toShow() const override;
 
 protected:

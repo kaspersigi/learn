@@ -7,6 +7,7 @@ class SlicedPepperoni : public Pepperoni {
 public:
     SlicedPepperoni() = default;
     virtual ~SlicedPepperoni() = default;
+
     virtual std::string toShow() const override;
 
 protected:

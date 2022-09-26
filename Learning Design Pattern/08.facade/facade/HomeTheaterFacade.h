@@ -31,12 +31,12 @@ protected:
     HomeTheaterFacade& operator=(HomeTheaterFacade&&) = delete;
 
 private:
-    std::weak_ptr<Amplifier> _amp;
-    std::weak_ptr<Tuner> _tuner;
-    std::weak_ptr<DvdPlayer> _dvd;
-    std::weak_ptr<CdPlayer> _cd;
-    std::weak_ptr<Projector> _projector;
-    std::weak_ptr<TheaterLights> _lights;
-    std::weak_ptr<Screen> _screen;
-    std::weak_ptr<PopcornPopper> _popper;
+    std::weak_ptr<Amplifier> _amp {};
+    std::weak_ptr<Tuner> _tuner {};
+    std::weak_ptr<DvdPlayer> _dvd {};
+    std::weak_ptr<CdPlayer> _cd {};
+    std::weak_ptr<Projector> _projector {};
+    std::weak_ptr<TheaterLights> _lights {};
+    std::weak_ptr<Screen> _screen {};
+    std::weak_ptr<PopcornPopper> _popper {};
 };

@@ -22,5 +22,5 @@ protected:
     TurkeyAdapter& operator=(TurkeyAdapter&&) = delete;
 
 private:
-    std::shared_ptr<const Turkey> _turkey;
+    std::shared_ptr<const Turkey> _turkey {};
 };

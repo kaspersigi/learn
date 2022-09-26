@@ -17,5 +17,5 @@ protected:
     SimpleRemoteControl& operator=(SimpleRemoteControl&&) = delete;
 
 private:
-    std::shared_ptr<const Command> _slot;
+    std::shared_ptr<const Command> _slot {};
 };

@@ -3,7 +3,6 @@
 #include <string>
 
 class MenuItem {
-
 public:
     MenuItem(std::string name, std::string description, bool vegetarian, double price);
     virtual ~MenuItem() = default;

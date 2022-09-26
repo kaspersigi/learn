@@ -7,12 +7,11 @@ public:
     ChicagoPizzaStore() = default;
     ~ChicagoPizzaStore() = default;
 
+    virtual std::shared_ptr<Pizza> createPizza(std::string type) const override;
+
 protected:
     ChicagoPizzaStore(const ChicagoPizzaStore&) = delete;
     ChicagoPizzaStore(ChicagoPizzaStore&&) = delete;
     ChicagoPizzaStore& operator=(const ChicagoPizzaStore&) = delete;
     ChicagoPizzaStore& operator=(ChicagoPizzaStore&&) = delete;
-
-public:
-    virtual std::shared_ptr<Pizza> createPizza(std::string type) const override;
 };

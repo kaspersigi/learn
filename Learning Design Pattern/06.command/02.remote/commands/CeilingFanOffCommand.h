@@ -18,5 +18,5 @@ protected:
     CeilingFanOffCommand& operator=(CeilingFanOffCommand&&) = delete;
 
 private:
-    std::weak_ptr<const CeilingFan> _ceilingFan;
+    std::weak_ptr<const CeilingFan> _ceilingFan {};
 };

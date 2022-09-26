@@ -18,5 +18,5 @@ protected:
     LivingroomLightOffCommand& operator=(LivingroomLightOffCommand&&) = delete;
 
 private:
-    std::weak_ptr<const Light> _light;
+    std::weak_ptr<const Light> _light {};
 };

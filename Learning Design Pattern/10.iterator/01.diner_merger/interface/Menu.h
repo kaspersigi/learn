@@ -4,7 +4,6 @@
 #include "MenuItem.h"
 
 class Menu {
-
 public:
     virtual ~Menu() = default;
 

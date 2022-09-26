@@ -18,5 +18,5 @@ protected:
     GarageDoorDownCommand& operator=(GarageDoorDownCommand&&) = delete;
 
 private:
-    std::weak_ptr<const GarageDoor> _garageDoor;
+    std::weak_ptr<const GarageDoor> _garageDoor {};
 };
