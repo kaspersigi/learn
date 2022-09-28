@@ -6,7 +6,7 @@ class DinerMenuIterator : public Iterator<MenuItem> {
 public:
     explicit DinerMenuIterator(std::shared_ptr<MenuItem>* items);
     explicit DinerMenuIterator(std::nullptr_t) = delete;
-    ~DinerMenuIterator() = default;
+    virtual ~DinerMenuIterator() = default;
 
     virtual std::shared_ptr<MenuItem> next() const override;
     virtual bool hasNext() const override;

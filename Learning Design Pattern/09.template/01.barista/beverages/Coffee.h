@@ -5,7 +5,7 @@
 class Coffee : public CaffeineBeverage {
 public:
     Coffee() = default;
-    ~Coffee() = default;
+    virtual ~Coffee() = default;
 
     virtual void brew() const override;
     virtual void addCondiments() const override;

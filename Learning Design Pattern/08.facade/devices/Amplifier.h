@@ -23,8 +23,7 @@ public:
     std::string toShow() const;
 
 protected:
-    Amplifier(const Amplifier&)
-        = delete;
+    Amplifier(const Amplifier&) = delete;
     Amplifier(Amplifier&&) = delete;
     Amplifier& operator=(const Amplifier&) = delete;
     Amplifier& operator=(Amplifier&&) = delete;

@@ -4,10 +4,12 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::shared_ptr<PizzaStore> nyStore(new NYPizzaStore());
-    std::shared_ptr<PizzaStore> chicagoStore(new ChicagoPizzaStore());
+    std::shared_ptr<PizzaStore> nyStore = std::make_shared<NYPizzaStore>();
+    std::shared_ptr<PizzaStore> chicagoStore = std::make_shared<ChicagoPizzaStore>();
 
-    std::shared_ptr<Pizza> pizza = nyStore->orderPizza("cheese");
+    std::shared_ptr<Pizza> pizza {};
+
+    pizza = nyStore->orderPizza("cheese");
     std::cout << "Ethan ordered a " << pizza->toShow() << std::endl;
 
     pizza = chicagoStore->orderPizza("cheese");

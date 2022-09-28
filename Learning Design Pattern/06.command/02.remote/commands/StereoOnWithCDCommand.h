@@ -11,7 +11,7 @@ public:
     void execute() const;
 
 protected:
-    ~StereoOnWithCDCommand() = default;
+    virtual ~StereoOnWithCDCommand() = default;
     StereoOnWithCDCommand(const StereoOnWithCDCommand&) = delete;
     StereoOnWithCDCommand(StereoOnWithCDCommand&&) = delete;
     StereoOnWithCDCommand& operator=(const StereoOnWithCDCommand&) = delete;

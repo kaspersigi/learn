@@ -5,7 +5,7 @@
 class SimpleRemoteControl {
 public:
     SimpleRemoteControl() = default;
-    ~SimpleRemoteControl() = default;
+    virtual ~SimpleRemoteControl() = default;
 
     void setCommand(const Command* command);
     void buttonWasPressed() const;

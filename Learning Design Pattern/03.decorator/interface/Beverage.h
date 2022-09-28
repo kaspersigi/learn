@@ -17,5 +17,5 @@ protected:
     Beverage& operator=(Beverage&&) = delete;
 
 protected:
-    std::string _description;
+    std::string _description {};
 };

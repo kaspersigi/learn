@@ -18,5 +18,5 @@ protected:
     Whip& operator=(Whip&&) = delete;
 
 private:
-    std::shared_ptr<const Beverage> _beverage;
+    std::shared_ptr<const Beverage> _beverage {};
 };

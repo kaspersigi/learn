@@ -5,7 +5,7 @@
 class CoffeeWithHook : public CaffeineBeverageWithHook {
 public:
     CoffeeWithHook() = default;
-    ~CoffeeWithHook() = default;
+    virtual ~CoffeeWithHook() = default;
 
     virtual void brew() const override;
     virtual void addCondiments() const override;

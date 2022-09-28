@@ -17,5 +17,5 @@ protected:
     PizzaStore& operator=(PizzaStore&&) = delete;
 
 private:
-    std::shared_ptr<SimplePizzaFactory> _factory;
+    std::shared_ptr<SimplePizzaFactory> _factory {};
 };

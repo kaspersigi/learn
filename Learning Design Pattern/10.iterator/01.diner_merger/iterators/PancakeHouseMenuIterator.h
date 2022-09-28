@@ -6,7 +6,7 @@
 class PancakeHouseMenuIterator : public Iterator<MenuItem> {
 public:
     explicit PancakeHouseMenuIterator(std::vector<std::shared_ptr<MenuItem>> items);
-    ~PancakeHouseMenuIterator() = default;
+    virtual ~PancakeHouseMenuIterator() = default;
 
     virtual std::shared_ptr<MenuItem> next() const override;
     virtual bool hasNext() const override;

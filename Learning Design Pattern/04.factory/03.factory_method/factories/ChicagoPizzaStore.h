@@ -5,7 +5,7 @@
 class ChicagoPizzaStore : public PizzaStore {
 public:
     ChicagoPizzaStore() = default;
-    ~ChicagoPizzaStore() = default;
+    virtual ~ChicagoPizzaStore() = default;
 
     virtual std::shared_ptr<Pizza> createPizza(std::string type) const override;
 

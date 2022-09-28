@@ -3,16 +3,16 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    PizzaStore store(new SimplePizzaFactory());
+    auto store = std::make_shared<PizzaStore>(new SimplePizzaFactory());
 
-    std::shared_ptr<Pizza> pizza;
+    std::shared_ptr<Pizza> pizza {};
 
-    pizza = store.orderPizza("cheese");
+    pizza = store->orderPizza("cheese");
     std::cout << "We ordered a " << pizza->getName() << std::endl;
 
     std::cout << "--------------------" << std::endl;
 
-    pizza = store.orderPizza("veggie");
+    pizza = store->orderPizza("veggie");
     std::cout << "We ordered a " << pizza->getName() << std::endl;
 
     return 0;

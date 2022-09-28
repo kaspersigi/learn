@@ -5,7 +5,7 @@
 class NoCommand : public Command {
 public:
     NoCommand() = default;
-    ~NoCommand() = default;
+    virtual ~NoCommand() = default;
 
     void execute() const override;
     void undo() const override;

@@ -20,6 +20,6 @@ protected:
     Waitress& operator=(Waitress&&) = delete;
 
 private:
-    std::shared_ptr<PancakeHouseMenu> _pancakeHouseMenu;
-    std::shared_ptr<DinerMenu> _dinerMenu;
+    std::shared_ptr<PancakeHouseMenu> _pancakeHouseMenu {};
+    std::shared_ptr<DinerMenu> _dinerMenu {};
 };

@@ -38,5 +38,5 @@ protected:
     mutable std::vector<Veggies*> _veggies {};
 
 private:
-    std::string _name;
+    std::string _name {};
 };

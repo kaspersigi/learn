@@ -11,7 +11,7 @@ public:
     void execute() const;
 
 protected:
-    ~GarageDoorDownCommand() = default;
+    virtual ~GarageDoorDownCommand() = default;
     GarageDoorDownCommand(const GarageDoorDownCommand&) = delete;
     GarageDoorDownCommand(GarageDoorDownCommand&&) = delete;
     GarageDoorDownCommand& operator=(const GarageDoorDownCommand&) = delete;

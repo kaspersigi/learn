@@ -4,6 +4,7 @@
 
 template <class T>
 class Iterator {
+
 public:
     virtual ~Iterator() = default;
 

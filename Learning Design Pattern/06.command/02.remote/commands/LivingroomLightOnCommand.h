@@ -11,7 +11,7 @@ public:
     void execute() const;
 
 protected:
-    ~LivingroomLightOnCommand() = default;
+    virtual ~LivingroomLightOnCommand() = default;
     LivingroomLightOnCommand(const LivingroomLightOnCommand&) = delete;
     LivingroomLightOnCommand(LivingroomLightOnCommand&&) = delete;
     LivingroomLightOnCommand& operator=(const LivingroomLightOnCommand&) = delete;

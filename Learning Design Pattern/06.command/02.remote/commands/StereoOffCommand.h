@@ -11,7 +11,7 @@ public:
     void execute() const;
 
 protected:
-    ~StereoOffCommand() = default;
+    virtual ~StereoOffCommand() = default;
     StereoOffCommand(const StereoOffCommand&) = delete;
     StereoOffCommand(StereoOffCommand&&) = delete;
     StereoOffCommand& operator=(const StereoOffCommand&) = delete;

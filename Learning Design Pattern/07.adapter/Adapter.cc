@@ -3,11 +3,11 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    auto mallard = std::make_shared<MallardDuck>();
-    auto rubberDuckie = std::make_shared<RubberDuck>();
-    auto decoy = std::make_shared<DecoyDuck>();
-    auto model = std::make_shared<ModelDuck>();
-    auto wild = std::make_shared<WildTurkey>();
+    std::shared_ptr<Duck> mallard = std::make_shared<MallardDuck>();
+    std::shared_ptr<Duck> rubberDuckie = std::make_shared<RubberDuck>();
+    std::shared_ptr<Duck> decoy = std::make_shared<DecoyDuck>();
+    std::shared_ptr<Duck> model = std::make_shared<ModelDuck>();
+    std::shared_ptr<Turkey> wild = std::make_shared<WildTurkey>();
 
     mallard->performQuack();
     mallard->performFly();
@@ -31,13 +31,13 @@ auto main(int argc, char* argv[]) -> int
     wild->performFly();
     std::cout << "--------------------" << std::endl;
 
-    auto duckAdapter = std::make_shared<DuckAdapter>(new RubberDuck());
+    std::shared_ptr<Turkey> duckAdapter = std::make_shared<DuckAdapter>(new RubberDuck());
     duckAdapter->display();
     duckAdapter->performQuack();
     duckAdapter->performFly();
     std::cout << "--------------------" << std::endl;
 
-    auto turkeyAdapter = std::make_shared<TurkeyAdapter>(new WildTurkey());
+    std::shared_ptr<Duck> turkeyAdapter = std::make_shared<TurkeyAdapter>(new WildTurkey());
     turkeyAdapter->display();
     turkeyAdapter->performQuack();
     turkeyAdapter->performFly();

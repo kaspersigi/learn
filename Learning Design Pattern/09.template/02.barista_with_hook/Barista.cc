@@ -4,8 +4,8 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    auto coffee = std::make_shared<CoffeeWithHook>();
-    auto tea = std::make_shared<TeaWithHook>();
+    std::shared_ptr<CaffeineBeverageWithHook> coffee = std::make_shared<CoffeeWithHook>();
+    std::shared_ptr<CaffeineBeverageWithHook> tea = std::make_shared<TeaWithHook>();
     std::cout << std::endl
               << "Making tea..." << std::endl;
     tea->prepareRecipe();

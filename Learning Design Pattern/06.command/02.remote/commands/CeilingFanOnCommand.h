@@ -11,7 +11,7 @@ public:
     void execute() const;
 
 protected:
-    ~CeilingFanOnCommand() = default;
+    virtual ~CeilingFanOnCommand() = default;
     CeilingFanOnCommand(const CeilingFanOnCommand&) = delete;
     CeilingFanOnCommand(CeilingFanOnCommand&&) = delete;
     CeilingFanOnCommand& operator=(const CeilingFanOnCommand&) = delete;

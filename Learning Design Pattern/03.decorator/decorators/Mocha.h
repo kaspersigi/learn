@@ -18,5 +18,5 @@ protected:
     Mocha& operator=(Mocha&&) = delete;
 
 private:
-    std::shared_ptr<const Beverage> _beverage;
+    std::shared_ptr<const Beverage> _beverage {};
 };

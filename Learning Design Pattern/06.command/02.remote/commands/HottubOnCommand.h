@@ -11,7 +11,7 @@ public:
     void execute() const;
 
 protected:
-    ~HottubOnCommand() = default;
+    virtual ~HottubOnCommand() = default;
     HottubOnCommand(const HottubOnCommand&) = delete;
     HottubOnCommand(HottubOnCommand&&) = delete;
     HottubOnCommand& operator=(const HottubOnCommand&) = delete;

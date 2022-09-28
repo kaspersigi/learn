@@ -12,7 +12,7 @@ public:
     void undo() const;
 
 protected:
-    ~LightOnCommand() = default;
+    virtual ~LightOnCommand() = default;
     LightOnCommand(const LightOnCommand&) = delete;
     LightOnCommand(LightOnCommand&&) = delete;
     LightOnCommand& operator=(const LightOnCommand&) = delete;
