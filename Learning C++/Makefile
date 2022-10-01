@@ -46,8 +46,6 @@ class_template :
 	$(MAKE) -C 11.class_template
 threadpool :
 	$(MAKE) -C 12.threadpool
-android_c++ :
-	$(MAKE) -C 13.android_c++
 
 format :
 	$(MAKE) -C 00.template format
@@ -63,7 +61,6 @@ format :
 	$(MAKE) -C 10.function_template format
 	$(MAKE) -C 11.class_template format
 	$(MAKE) -C 12.threadpool format
-	# $(MAKE) -C 13.android_c++ format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -79,4 +76,3 @@ clean :
 	$(MAKE) -C 10.function_template clean
 	$(MAKE) -C 11.class_template clean
 	$(MAKE) -C 12.threadpool clean
-	# $(MAKE) -C 13.android_c++ clean
