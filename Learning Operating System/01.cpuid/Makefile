@@ -13,8 +13,7 @@ LD = /usr/bin/ld
 $(TRG) : $(EXEC)
 	rm -v $(OBJ)
 $(EXEC) : $(OBJ)
-	# $(LD) $(OBJ) -o $(EXEC) -m elf_i386
-	$(LD) $(OBJ) -o $(EXEC) -T main.lds
+	$(LD) $(OBJ) -o $(EXEC) -m elf_i386 --entry=_start
 $(OBJ) : $(SRC)
 	$(AS) $(SRC) -o $(OBJ) --32
 clean :
