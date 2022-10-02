@@ -3,10 +3,8 @@
 .global _start
 _start:
 .code16
-    start:
     # 保护模式下中断机制尚未建立，应禁止中断
     cli
-    cld
 
     # 初始化堆栈段及堆栈段指针
     movw $0x07e0, %ax
@@ -77,6 +75,7 @@ _start:
     movl $(buffer), %ebx
     xorl %esi, %esi
     xorl %edi, %edi
+    cld
 
     print:
     movb (%ebx, %esi), %al
