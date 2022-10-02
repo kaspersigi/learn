@@ -93,6 +93,6 @@ buffer_end:
 gdt_size:
     .word 0x0000
 gdt_base:
-    .word 0x8000
+    .long 0x00008000
 .org 510
 boot_flag: .word 0xAA55

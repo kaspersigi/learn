@@ -22,13 +22,18 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 $(TRG) : $(BIN) boot.img
+	./util main.bin
 	dd if=main.bin of=boot.img count=1 bs=1440k conv=sync
-	rm -v $(OBJ) func.o
-	rm -v $(BIN)
+	rm -v $(OBJ) func.o $(BIN) util
 boot.img :
 	dd if=/dev/zero of=boot.img count=1 bs=1440k conv=sync
-$(BIN) : main.o func.o
-	$(LD) $(OBJ) -o $(BIN) -N -e _start -Ttext 0x7C00 --oformat binary -m elf_i386
+$(BIN) : main.o func.o util
+	$(LD) $(OBJ) func.o -o $(BIN) -N -e _start -Ttext 0x7C00 --oformat binary -m elf_i386
+util : util.o
+	$(CC) util.o -o util
+	rm -v util.o
+util.o : util.c
+	$(CC) util.c -c $(C_FLAGS) $(DEBUG)
 main.o :
 	$(AS) $(SRC) -o $(OBJ) --32
 func.o : func.c
