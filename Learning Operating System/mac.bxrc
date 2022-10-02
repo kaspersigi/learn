@@ -96,7 +96,7 @@ config_interface: textconfig
 #display_library: win32, options="traphotkeys"
 #display_library: wx
 #display_library: x
-display_library: sdl2
+display_library: sdl2, options="gui_debug"
 
 #=======================================================================
 # CPU:

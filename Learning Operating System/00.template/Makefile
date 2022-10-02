@@ -1,18 +1,23 @@
 ###########################################
 #Makefile for my assembler programs
 ###########################################
-
 TRG = all
-OBJ = main.bin
-AS = nasm
+EXEC = main
+BIN = main.bin
+OBJ = main.o
+SRC = main.s
+AS = /usr/bin/as
+LD = /usr/bin/ld
 
 .PHONY : all
-$(TRG) : $(OBJ) boot.img
-	rm -v $(OBJ)
+$(TRG) : $(BIN) boot.img
+	rm -v $(BIN)
 boot.img :
 	dd if=/dev/zero of=boot.img count=1 bs=1440k conv=sync
-main.bin : main.s boot.img
-	$(AS) -f bin main.s -o main.bin
+$(BIN) : main.s boot.img
+	$(AS) $(SRC) -o $(OBJ) --32
+	$(LD) $(OBJ) -o $(BIN) -T main.lds
+	rm -v $(OBJ)
 	dd if=main.bin of=boot.img count=1 bs=1440k conv=sync
 clean :
 	rm -v boot.img

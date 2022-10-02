@@ -16,7 +16,7 @@ boot.img :
 	dd if=/dev/zero of=boot.img count=1 bs=1440k conv=sync
 $(BIN) : main.s boot.img
 	$(AS) $(SRC) -o $(OBJ) --32
-	$(LD) $(OBJ) -o $(BIN) -T main.lds
+	$(LD) $(OBJ) -o $(BIN) -e _start -Ttext 0x7C00 --oformat binary -m elf_i386
 	rm -v $(OBJ)
 	dd if=main.bin of=boot.img count=1 bs=1440k conv=sync
 clean :

@@ -19,7 +19,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template driver android_c android_c++
+all : template driver android_c android_c++ rust
 template :
 	$(MAKE) -C 00.template
 driver :
@@ -28,15 +28,19 @@ android_c :
 	$(MAKE) -C 02.android_c
 android_c++ :
 	$(MAKE) -C 03.android_c++
+rust :
+	$(MAKE) -C 04.rust
 
 format :
 	$(MAKE) -C 00.template format
 	$(MAKE) -C 01.driver format
 	$(MAKE) -C 02.android_c format
 	$(MAKE) -C 03.android_c++ format
+	# $(MAKE) -C 04.rust format
 
 clean :
 	$(MAKE) -C 00.template clean
 	$(MAKE) -C 01.driver clean
 	$(MAKE) -C 02.android_c clean
 	$(MAKE) -C 03.android_c++ clean
+	$(MAKE) -C 04.rust clean
