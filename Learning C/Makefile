@@ -19,7 +19,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm asm_call_c inline_asm syscall
+all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm asm_call_c inline_asm syscall mmap
 template :
 	$(MAKE) -C 00.template
 macro :
@@ -128,6 +128,8 @@ inline_asm :
 	$(MAKE) -C 52.inline_asm
 syscall :
 	$(MAKE) -C 53.syscall
+mmap :
+	$(MAKE) -C 54.mmap
 
 format :
 	$(MAKE) -C 00.template format
@@ -184,6 +186,7 @@ format :
 	$(MAKE) -C 51.asm_call_c format
 	$(MAKE) -C 52.inline_asm format
 	$(MAKE) -C 53.syscall format
+	$(MAKE) -C 54.mmap format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -240,3 +243,4 @@ clean :
 	$(MAKE) -C 51.asm_call_c clean
 	$(MAKE) -C 52.inline_asm clean
 	$(MAKE) -C 53.syscall clean
+	$(MAKE) -C 54.mmap clean
