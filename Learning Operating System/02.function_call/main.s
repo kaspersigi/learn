@@ -13,9 +13,21 @@ _start:
     xorw %ax, %ax
     movw %ax, %ds
 
+    # 以下在屏幕上显示"Booting..."
+    movl $(.buffer_end-.buffer), %ecx
+    movl $.buffer, %esi
+    movb $0x0e, %ah
+    movb $0x07, %bl
+
+    .putc:
+    movb (%esi), %al
+    int $0x10
+    incl %esi
+    loop .putc
+
     # 计算GDT所在的逻辑段地址
-    movw (gdt_base), %ax # 低16位
-    movw (gdt_base+0x02), %dx # 高16位
+    movw (.gdt_base), %ax # 低16位
+    movw (.gdt_base+0x02), %dx # 高16位
 
     movw $16, %bx
     divw %bx
@@ -46,8 +58,8 @@ _start:
     popw %ds
 
     # 初始化描述符表寄存器GDTR
-    movw $39, (gdt_size)
-    lgdt (gdt_size) # 描述符表的界限（总字节数减一）
+    movw $39, (.gdt_size)
+    lgdt (.gdt_size) # 描述符表的界限（总字节数减一）
 
     inb $0x92, %al # 南桥芯片内的端口
     orb $0B00000010, %al # 打开A20
@@ -59,9 +71,9 @@ _start:
     movl %eax, %cr0
 
     # 代码段选择子 00000000000_10_000B
-    ljmp $0B0000000000010000, $(protected) # 加载代码段选择子(索引0x02)
+    ljmp $0B0000000000010000, $(.protected) # 加载代码段选择子(索引0x02)
 .code32
-    protected:
+    .protected:
     movw $0B0000000000011000, %cx # 加载数据段选择子(索引0x03)
     movw %cx, %ds
     movw $0B0000000000001000, %cx # 加载数据段选择子(索引0x01)
@@ -70,28 +82,13 @@ _start:
     movw %cx, %ss
     movl $0x1000, %esp
 
-    # 以下在屏幕上显示"Protect mode OK!"
-    movl $(buffer_end-buffer), %ecx
-    movl $(buffer), %ebx
-    xorl %esi, %esi
-    xorl %edi, %edi
-    cld
-
-    print:
-    movb (%ebx, %esi), %al
-    movb %al, %es:(%edi)
-    movb $0x07, %es:0x01(%edi)
-    addl $1, %esi
-    addl $2, %edi
-    loop print
-
     call func
 
     hlt
-buffer:
-    .asciz "protected mode OK!"
-buffer_end:
-gdt_size:
+.buffer:
+    .asciz "Booting..."
+.buffer_end:
+.gdt_size:
     .word 0x0000
-gdt_base:
+.gdt_base:
     .long 0x00008000
