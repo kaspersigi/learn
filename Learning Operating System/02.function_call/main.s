@@ -14,15 +14,15 @@ _start:
     movw %ax, %ds
 
     # 以下在屏幕上显示"Booting..."
-    movl $(.buffer_end-.buffer), %ecx
-    movl $.buffer, %esi
+    movw $(.buffer_end-.buffer), %cx
+    movw $.buffer, %si
     movb $0x0e, %ah
     movb $0x07, %bl
 
     .putc:
-    movb (%esi), %al
+    movb (%si), %al
     int $0x10
-    incl %esi
+    incw %si
     loop .putc
 
     # 计算GDT所在的逻辑段地址
