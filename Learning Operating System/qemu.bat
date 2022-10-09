@@ -1,1 +1,0 @@
-qemu-system-i386 -cpu Skylake-Client-v1 -machine pc,accel=whpx,kernel-irqchip=on,hmat=on -smp 1,cores=1,threads=1,sockets=1 -m 2M -drive format=raw,file=./boot.img

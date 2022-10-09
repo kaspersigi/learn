@@ -96,7 +96,8 @@ config_interface: win32config
 #display_library: win32, options="traphotkeys"
 #display_library: wx
 #display_library: x
-display_library: win32, options="gui_debug"
+#display_library: win32, options="gui_debug"
+display_library: win32
 
 #=======================================================================
 # CPU:
