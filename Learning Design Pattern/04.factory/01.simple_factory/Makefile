@@ -45,3 +45,5 @@ format :
 	$(MAKE) -C store format
 clean :
 	rm -v Pizza
+check :
+	valgrind --tool=memcheck --leak-check=full --error-limit=no ./Pizza

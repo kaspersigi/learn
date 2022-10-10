@@ -37,3 +37,5 @@ format :
 	$(MAKE) -C beverages format
 clean :
 	rm -v Barista
+check :
+	valgrind --tool=memcheck --leak-check=full --error-limit=no ./Barista

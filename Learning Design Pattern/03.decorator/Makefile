@@ -41,3 +41,5 @@ format :
 	$(MAKE) -C decorators format
 clean :
 	rm -v Starbuzz
+check :
+	valgrind --tool=memcheck --leak-check=full --error-limit=no ./Starbuzz

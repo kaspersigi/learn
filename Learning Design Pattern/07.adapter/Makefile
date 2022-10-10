@@ -53,3 +53,5 @@ format :
 	$(MAKE) -C adapters format
 clean :
 	rm -v Adapter
+check :
+	valgrind --tool=memcheck --leak-check=full --error-limit=no ./Adapter

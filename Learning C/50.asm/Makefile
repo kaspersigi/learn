@@ -1,8 +1,7 @@
 ###########################################
 #Makefile for my assembler programs
 ###########################################
-TRG = all
-EXEC = main
+TRG = main
 BIN = main.bin
 OBJ = main.o
 SRC = main.s
@@ -10,11 +9,12 @@ AS = /usr/bin/as
 LD = /usr/bin/ld
 
 .PHONY : all
-$(TRG) : $(EXEC)
+$(TRG) : $(OBJ)
+	$(LD) $(OBJ) -o $(TRG) -m elf_i386 --entry=_start
 	rm -v $(OBJ)
-$(EXEC) : $(OBJ)
-	$(LD) $(OBJ) -o $(EXEC) -m elf_i386 --entry=_start
 $(OBJ) : $(SRC)
 	$(AS) $(SRC) -o $(OBJ) --32
 clean :
-	rm -v $(EXEC)
+	rm -v $(TRG)
+check :
+	valgrind --tool=memcheck --leak-check=full --error-limit=no ./$(TRG)

@@ -37,3 +37,5 @@ format :
 	$(MAKE) -C facade format
 clean :
 	rm -v HomeTheater
+check :
+	valgrind --tool=memcheck --leak-check=full --error-limit=no ./HomeTheater

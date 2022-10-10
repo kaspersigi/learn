@@ -41,3 +41,5 @@ format :
 	$(MAKE) -C devices format
 clean :
 	rm -v Undo
+check :
+	valgrind --tool=memcheck --leak-check=full --error-limit=no ./Undo

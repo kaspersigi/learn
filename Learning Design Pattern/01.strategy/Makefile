@@ -45,3 +45,5 @@ format :
 	$(MAKE) -C quackBehaviors format
 clean :
 	rm -v DuckSimulator
+check :
+	valgrind --tool=memcheck --leak-check=full --error-limit=no ./DuckSimulator

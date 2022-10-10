@@ -45,3 +45,5 @@ format :
 	$(MAKE) -C waitress format
 clean :
 	rm -v DinerMerger
+check :
+	valgrind --tool=memcheck --leak-check=full --error-limit=no ./DinerMerger

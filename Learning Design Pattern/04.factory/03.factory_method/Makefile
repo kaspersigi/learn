@@ -41,3 +41,5 @@ format :
 	$(MAKE) -C pizzas format
 clean :
 	rm -v Pizzafm
+check :
+	valgrind --tool=memcheck --leak-check=full --error-limit=no ./Pizzafm

@@ -49,3 +49,5 @@ format :
 	$(MAKE) -C stores format
 clean :
 	rm -v Pizzaaf
+check :
+	valgrind --tool=memcheck --leak-check=full --error-limit=no ./Pizzaaf

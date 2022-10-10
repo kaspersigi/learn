@@ -29,3 +29,5 @@ format :
 	$(FORMAT) Iterator.hpp -style=file -i
 clean :
 	rm -v $(TRG)
+check :
+	valgrind --tool=memcheck --leak-check=full --error-limit=no ./$(TRG)

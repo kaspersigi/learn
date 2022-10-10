@@ -40,3 +40,5 @@ format :
 	$(MAKE) -C observers format
 clean :
 	rm -v WeatherStation
+check :
+	valgrind --tool=memcheck --leak-check=full --error-limit=no ./WeatherStation
