@@ -3,12 +3,12 @@
 class Object {
 public:
     Object();
-    Object(const char* ptr, std::size_t length = 0);
-    // explicit Object(const char* ptr, std::size_t length = 0);
+    // Object(const char* ptr, std::size_t length = 0);
+    explicit Object(const char* ptr, std::size_t length = 0);
     Object(const Object& obj);
     Object(Object&& obj);
-    Object& operator=(const Object& obj) & noexcept;
-    Object& operator=(Object&& obj) & noexcept;
+    Object& operator=(const Object& obj);
+    Object& operator=(Object&& obj);
     ~Object();
 
 private:
@@ -51,7 +51,7 @@ Object::Object(Object&& obj)
     obj._length = 0;
 }
 
-Object& Object::operator=(const Object& obj) & noexcept
+Object& Object::operator=(const Object& obj)
 {
     std::cout << __PRETTY_FUNCTION__ << "拷贝赋值运算符" << std::endl;
     if (this == &obj) // 自赋值检查
@@ -69,7 +69,7 @@ Object& Object::operator=(const Object& obj) & noexcept
     return *this;
 }
 
-Object& Object::operator=(Object&& obj) & noexcept
+Object& Object::operator=(Object&& obj)
 {
     std::cout << __PRETTY_FUNCTION__ << "移动赋值运算符" << std::endl;
     if (this == &obj) // 自赋值检查
@@ -101,22 +101,20 @@ auto main(int argc, char* argv[]) -> int
     std::string str("Hello World");
     Object obj1 { str.c_str(), str.length() };
     std::cout << "--------------------" << std::endl;
+
     Object obj2 = obj1;
     std::cout << "--------------------" << std::endl;
-    Object obj3;
+
+    Object obj3 = func(str);
     std::cout << "--------------------" << std::endl;
-    obj3 = obj2;
-    // obj3 = obj3; // 自赋值
+
+    Object obj4;
+    obj4 = obj1;
+    // obj4 = obj4; // 自赋值
     std::cout << "--------------------" << std::endl;
-    Object obj4 = func(str);
-    std::cout << "--------------------" << std::endl;
-    obj3 = std::move(obj3); // 自赋值
-    std::cout << "--------------------" << std::endl;
-    obj3 = Object(str.c_str(), str.length());
-    std::cout << "--------------------" << std::endl;
-    Object obj5 = nullptr;
-    std::cout << "--------------------" << std::endl;
-    Object obj6 = Object(str.c_str(), str.length());
+
+    Object obj5;
+    obj5 = func(str);
     std::cout << "--------------------" << std::endl;
 
     return 0;
@@ -128,25 +126,20 @@ Object::Object(const char *, std::size_t)构造函数
 --------------------
 Object::Object(const Object &)拷贝构造函数
 --------------------
+Object::Object(const char *, std::size_t)构造函数
+Object::Object(Object &&)移动构造函数
+Object::~Object()析构函数
+Object::Object(Object &&)移动构造函数
+Object::~Object()析构函数
+--------------------
 Object::Object()构造函数
+Object &Object::operator=(const Object &)拷贝赋值运算符
 --------------------
-Object &Object::operator=(const Object &) &拷贝赋值运算符
---------------------
+Object::Object()构造函数
 Object::Object(const char *, std::size_t)构造函数
 Object::Object(Object &&)移动构造函数
 Object::~Object()析构函数
-Object::Object(Object &&)移动构造函数
-Object::~Object()析构函数
---------------------
-Object &Object::operator=(Object &&) &移动赋值运算符
-自赋值
---------------------
-Object::Object(const char *, std::size_t)构造函数
-Object &Object::operator=(Object &&) &移动赋值运算符
-Object::~Object()析构函数
---------------------
-Object::Object(const char *, std::size_t)构造函数
-Object::Object(Object &&)移动构造函数
+Object &Object::operator=(Object &&)移动赋值运算符
 Object::~Object()析构函数
 --------------------
 Object::~Object()析构函数
@@ -160,20 +153,15 @@ Object::Object(const char *, std::size_t)构造函数
 --------------------
 Object::Object(const Object &)拷贝构造函数
 --------------------
+Object::Object(const char *, std::size_t)构造函数
+--------------------
 Object::Object()构造函数
+Object &Object::operator=(const Object &)拷贝赋值运算符
 --------------------
-Object &Object::operator=(const Object &) &拷贝赋值运算符
---------------------
+Object::Object()构造函数
 Object::Object(const char *, std::size_t)构造函数
---------------------
-Object &Object::operator=(Object &&) &移动赋值运算符
-自赋值
---------------------
-Object::Object(const char *, std::size_t)构造函数
-Object &Object::operator=(Object &&) &移动赋值运算符
+Object &Object::operator=(Object &&)移动赋值运算符
 Object::~Object()析构函数
---------------------
-Object::Object(const char *, std::size_t)构造函数
 --------------------
 Object::~Object()析构函数
 Object::~Object()析构函数

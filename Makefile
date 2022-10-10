@@ -19,15 +19,13 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : c c++ design_pattern leetcode operating_system socket stl
+all : c c++ design_pattern operating_system socket stl
 c :
 	$(MAKE) -C Learning\ C
 c++ :
 	$(MAKE) -C Learning\ C++
 design_pattern :
 	$(MAKE) -C Learning\ Design\ Pattern
-leetcode :
-	$(MAKE) -C Learning\ Leetcode
 native :
 	$(MAKE) -C Learning\ Native
 operating_system :
@@ -41,7 +39,6 @@ format :
 	$(MAKE) -C Learning\ C format
 	$(MAKE) -C Learning\ C++ format
 	$(MAKE) -C Learning\ Design\ Pattern format
-	$(MAKE) -C Learning\ Leetcode format
 	$(MAKE) -C Learning\ Native format
 	# $(MAKE) -C Learning\ Operating\ System format
 	$(MAKE) -C Learning\ Socket format
@@ -51,7 +48,6 @@ clean :
 	$(MAKE) -C Learning\ C clean
 	$(MAKE) -C Learning\ C++ clean
 	$(MAKE) -C Learning\ Design\ Pattern clean
-	$(MAKE) -C Learning\ Leetcode clean
 	# $(MAKE) -C Learning\ Native clean
 	$(MAKE) -C Learning\ Operating\ System clean
 	$(MAKE) -C Learning\ Socket clean
