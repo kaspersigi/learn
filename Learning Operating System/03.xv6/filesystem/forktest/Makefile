@@ -23,21 +23,18 @@ ARCH = -m32
 KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-pointer -fno-stack-protector -fno-pic -fno-pie -no-pie -static
 
 .PHONY : all
-all : xv6.img bootloader.bin kernel.bin
-	dd if=bootloader/bootblock of=xv6.img count=1 bs=1440k conv=sync
-	dd if=kernel/kernel of=xv6.img count=2880k bs=512 conv=notrunc seek=1
-	$(MAKE) -C filesystem
-	mv filesystem/fs.img .
-	$(MAKE) -C bootloader clean
-	$(MAKE) -C kernel clean
-xv6.img :
-	dd if=/dev/zero of=xv6.img count=1 bs=1440k conv=sync
-bootloader.bin : bootloader
-	$(MAKE) -C bootloader
-kernel.bin : kernel
-	$(MAKE) -C kernel
+all : _forktest
+_forktest : ulib.o forktest.o usys.o
+	$(LD) ulib.o forktest.o usys.o -o _forktest -N -e main -Ttext 0x0 -m elf_i386
+	rm -v ulib.o forktest.o usys.o
+ulib.o : ulib.c
+	$(CC) ulib.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+forktest.o : forktest.c
+	$(CC) forktest.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+usys.o : usys.S
+	$(CC) usys.S -c -gdwarf-2 -Wa,-divide $(ARCH)
 format :
-	$(MAKE) -C bootloader format
-	$(MAKE) -C kernel format
+	$(FORMAT) ulib.c -style=file -i
+	$(FORMAT) forktest.c -style=file -i
 clean :
-	rm -v xv6.img fs.img
+	rm -v _forktest

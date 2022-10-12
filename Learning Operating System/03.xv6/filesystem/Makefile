@@ -23,21 +23,27 @@ ARCH = -m32
 KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-pointer -fno-stack-protector -fno-pic -fno-pie -no-pie -static
 
 .PHONY : all
-all : xv6.img bootloader.bin kernel.bin
-	dd if=bootloader/bootblock of=xv6.img count=1 bs=1440k conv=sync
-	dd if=kernel/kernel of=xv6.img count=2880k bs=512 conv=notrunc seek=1
-	$(MAKE) -C filesystem
-	mv filesystem/fs.img .
-	$(MAKE) -C bootloader clean
-	$(MAKE) -C kernel clean
-xv6.img :
-	dd if=/dev/zero of=xv6.img count=1 bs=1440k conv=sync
-bootloader.bin : bootloader
-	$(MAKE) -C bootloader
-kernel.bin : kernel
-	$(MAKE) -C kernel
+all : mkfs _cat _echo _forktest
+	mv cat/_cat .
+	mv echo/_echo .
+	mv forktest/_forktest .
+	./mkfs fs.img README _cat _echo _forktest
+	rm -v mkfs _cat _echo _forktest
+mkfs : mkfs.o
+	$(CC) mkfs.o -o mkfs
+	rm -v mkfs.o
+mkfs.o : mkfs.c
+	$(CC) mkfs.c -c $(C_FLAGS) $(DEBUG)
+_cat : cat
+	$(MAKE) -C cat
+_echo : echo
+	$(MAKE) -C echo
+_forktest : cat
+	$(MAKE) -C forktest
 format :
-	$(MAKE) -C bootloader format
-	$(MAKE) -C kernel format
+	$(FORMAT) mkfs.c -style=file -i
+	$(MAKE) -C cat format
+	$(MAKE) -C echo format
+	$(MAKE) -C forktest format
 clean :
-	rm -v xv6.img fs.img
+	rm -v fs.img
