@@ -1,6 +1,8 @@
 #pragma once
 
+#ifndef __ASM__
 #include "types.h"
+#endif
 
 // This file contains definitions for the
 // x86 memory management unit (MMU).

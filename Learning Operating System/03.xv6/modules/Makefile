@@ -20,7 +20,7 @@ LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 ARCH = -m32
-KERNEL_FLAGS = -nostdinc -fno-builtin -static
+KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -static
 
 .PHONY : all
 all : bio.o console.o exec.o file.o fs.o ide.o ioapic.o kalloc.o kbd.o lapic.o log.o main.o mp.o picirq.o pipe.o proc.o sleeplock.o spinlock.o string.o syscall.o sysfile.o sysproc.o trap.o uart.o vm.o
