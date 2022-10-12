@@ -13,7 +13,7 @@ CXX = /usr/bin/g++
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++20 -Wall -Wno-unused
-DEBUG = -ggdb -O1
+DEBUG = -ggdb -O0
 RELEASE = -static -O3
 LINK_FLAGS = -no-pie
 LIBS = -lpthread
@@ -23,19 +23,19 @@ ARCH = -m32
 KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-pointer -fno-stack-protector -fno-pic -fno-pie -no-pie -static
 
 .PHONY : all
-all : bootblock
-bootblock : bootblock.o
-	objcopy bootblock.o -S -O binary -j .text bootblock
-	rm -v bootblock.o
-	./sign.pl bootblock
-bootblock.o : bootasm.o bootmain.o
-	$(LD) bootasm.o bootmain.o -o bootblock.o -N -e start -Ttext 0x7C00 -m elf_i386
-	rm -v bootasm.o bootmain.o
-bootasm.o : bootasm.S
-	$(CC) bootasm.S -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
-bootmain.o : bootmain.c
-	$(CC) bootmain.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+all : xv6.img bootloader.bin kernel.bin
+	dd if=bootloader/bootblock of=xv6.img count=1 bs=1440k conv=sync
+	dd if=kernel/kernel of=xv6.img count=2880k bs=512 conv=notrunc seek=1
+	$(MAKE) -C bootloader clean
+	$(MAKE) -C kernel clean
+xv6.img :
+	dd if=/dev/zero of=xv6.img count=1 bs=1440k conv=sync
+bootloader.bin : bootloader
+	$(MAKE) -C bootloader
+kernel.bin : kernel
+	$(MAKE) -C kernel
 format :
-	$(FORMAT) bootmain.c -style=file -i
+	$(MAKE) -C bootloader format
+	$(MAKE) -C kernel format
 clean :
-	rm -v bootblock
+	rm -v xv6.img

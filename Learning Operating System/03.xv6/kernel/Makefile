@@ -20,10 +20,13 @@ LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 ARCH = -m32
-KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -static
+KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-pointer -fno-stack-protector -fno-pic -fno-pie -no-pie -static
 
 .PHONY : all
-all : bio.o console.o exec.o file.o fs.o ide.o ioapic.o kalloc.o kbd.o lapic.o log.o main.o mp.o picirq.o pipe.o proc.o sleeplock.o spinlock.o string.o syscall.o sysfile.o sysproc.o trap.o uart.o vm.o
+all : kernel
+kernel : bio.o console.o exec.o file.o fs.o ide.o ioapic.o kalloc.o kbd.o lapic.o log.o main.o mp.o picirq.o pipe.o proc.o sleeplock.o spinlock.o string.o syscall.o sysfile.o sysproc.o trap.o uart.o vm.o entry.o swtch.o trapasm.o vectors.o initcode entryother
+	$(LD) entry.o bio.o console.o exec.o file.o fs.o ide.o ioapic.o kalloc.o kbd.o lapic.o log.o main.o mp.o picirq.o pipe.o proc.o sleeplock.o spinlock.o string.o swtch.o syscall.o sysfile.o sysproc.o trapasm.o trap.o uart.o vectors.o vm.o -o kernel -T kernel.ld -b binary initcode entryother
+	rm -v bio.o console.o exec.o file.o fs.o ide.o ioapic.o kalloc.o kbd.o lapic.o log.o main.o mp.o picirq.o pipe.o proc.o sleeplock.o spinlock.o string.o syscall.o sysfile.o sysproc.o trap.o uart.o vm.o entry.o swtch.o trapasm.o vectors.o initcode entryother
 bio.o : bio.c
 	$(CC) bio.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
 console.o : console.c
@@ -74,6 +77,32 @@ uart.o : uart.c
 	$(CC) uart.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
 vm.o : vm.c
 	$(CC) vm.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+entry.o : entry.S
+	$(CC) entry.S -c -gdwarf-2 -Wa,-divide $(ARCH)
+swtch.o : swtch.S
+	$(CC) swtch.S -c -gdwarf-2 -Wa,-divide $(ARCH)
+trapasm.o : trapasm.S
+	$(CC) trapasm.S -c -gdwarf-2 -Wa,-divide $(ARCH)
+vectors.o : vectors.pl
+	./vectors.pl > vectors.S
+	$(CC) vectors.S -c -gdwarf-2 -Wa,-divide $(ARCH)
+	rm -v vectors.S
+initcode : initcode.bin
+	objcopy initcode.bin -S -O binary initcode
+	rm -v initcode.bin
+initcode.bin : initcode.o
+	$(LD) initcode.o -o initcode.bin -N -e start -Ttext 0x0 -m elf_i386
+	rm -v initcode.o
+initcode.o : initcode.S
+	$(CC) initcode.S -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+entryother : entryother.bin
+	objcopy entryother.bin -S -O binary -j .text entryother
+	rm -v entryother.bin
+entryother.bin : entryother.o
+	$(LD) entryother.o -o entryother.bin -N -e start -Ttext 0x7000 -m elf_i386
+	rm -v entryother.o
+entryother.o : entryother.S
+	$(CC) entryother.S -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
 format :
 	$(FORMAT) bio.c -style=file -i
 	$(FORMAT) console.c -style=file -i
@@ -101,4 +130,4 @@ format :
 	$(FORMAT) uart.c -style=file -i
 	$(FORMAT) vm.c -style=file -i
 clean :
-	rm -v bio.o console.o exec.o file.o fs.o ide.o ioapic.o kalloc.o kbd.o lapic.o log.o main.o mp.o picirq.o pipe.o proc.o sleeplock.o spinlock.o string.o syscall.o sysfile.o sysproc.o trap.o uart.o vm.o
+	rm -v kernel
