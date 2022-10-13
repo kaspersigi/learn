@@ -19,15 +19,21 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template protected function_call
+all : template protected function_call xv6
 template :
 	$(MAKE) -C 00.template
 protected :
 	$(MAKE) -C 01.protected
 function_call :
 	$(MAKE) -C 02.function_call
+xv6 :
+	$(MAKE) -C 03.xv6
+
+format :
+	$(MAKE) -C 03.xv6 format
 
 clean :
 	$(MAKE) -C 00.template clean
 	$(MAKE) -C 01.protected clean
 	$(MAKE) -C 02.function_call clean
+	$(MAKE) -C 03.xv6 clean
