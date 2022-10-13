@@ -8,13 +8,13 @@ OBJ = main.o
 SRC = main.s
 AS = /usr/bin/as
 LD = /usr/bin/ld
-CC = /usr/bin/gcc
-CXX = /usr/bin/g++
+CC = /usr/bin/clang
+CXX = /usr/bin/clang++
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++20 -Wall -Wno-unused
 DEBUG = -ggdb -O0
-RELEASE = -static -O3
+RELEASE = -static -Oz
 LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
@@ -31,7 +31,7 @@ printf.o : printf.c
 umalloc.o : umalloc.c
 	$(CC) umalloc.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
 usys.o : usys.S
-	$(CC) usys.S -c -gdwarf-2 -Wa,-divide $(ARCH)
+	$(CC) usys.S -c -gdwarf-2 -Wa,-divide -no-integrated-as $(ARCH)
 format :
 	$(FORMAT) ulib.c -style=file -i
 	$(FORMAT) printf.c -style=file -i

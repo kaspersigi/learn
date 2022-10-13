@@ -490,12 +490,12 @@ int kill(int pid)
 void procdump(void)
 {
     static char* states[] = {
-        [UNUSED] "unused",
-        [EMBRYO] "embryo",
-        [SLEEPING] "sleep ",
-        [RUNNABLE] "runble",
-        [RUNNING] "run   ",
-        [ZOMBIE] "zombie"
+        [UNUSED] = "unused",
+        [EMBRYO] = "embryo",
+        [SLEEPING] = "sleep ",
+        [RUNNABLE] = "runble",
+        [RUNNING] = "run   ",
+        [ZOMBIE] = "zombie"
     };
     int i;
     struct proc* p;

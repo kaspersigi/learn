@@ -13,7 +13,7 @@ FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++20 -Wall -Wno-unused
 DEBUG = -g -O0
-RELEASE = -static -O3
+RELEASE = -static -Oz
 LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++

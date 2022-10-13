@@ -14,7 +14,7 @@ FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++20 -Wall -Wno-unused
 DEBUG = -g -O0
-RELEASE = -static -O3
+RELEASE = -static -Oz
 LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
@@ -37,7 +37,7 @@ util.o : util.c
 main.o :
 	$(AS) $(SRC) -o $(OBJ) --32
 func.o : func.c
-	$(CC) func.c -c $(C_FLAGS) $(DEBUG) -m32
+	$(CC) func.c -c $(C_FLAGS) $(RELEASE) -m32
 clean :
 	rm -v boot.img
 qemu :
