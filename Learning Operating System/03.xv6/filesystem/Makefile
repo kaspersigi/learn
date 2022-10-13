@@ -20,30 +20,37 @@ LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 ARCH = -m32
-KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-pointer -fno-stack-protector -fno-pic -fno-pie -no-pie -static
+KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-pointer -fno-stack-protector -fno-pic -fno-pie -static
 
 .PHONY : all
-all : mkfs _cat _echo _forktest
-	mv cat/_cat .
-	mv echo/_echo .
-	mv forktest/_forktest .
+all : mkfs _common _cat _echo _forktest
 	./mkfs fs.img README _cat _echo _forktest
+	$(MAKE) -C common clean
 	rm -v mkfs _cat _echo _forktest
 mkfs : mkfs.o
 	$(CC) mkfs.o -o mkfs
 	rm -v mkfs.o
 mkfs.o : mkfs.c
 	$(CC) mkfs.c -c $(C_FLAGS) $(DEBUG)
-_cat : cat
-	$(MAKE) -C cat
-_echo : echo
-	$(MAKE) -C echo
-_forktest : cat
-	$(MAKE) -C forktest
+_common : common
+	$(MAKE) -C common
+_cat : cat.c
+	$(CC) cat.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(LD) cat.o common/ulib.o common/printf.o common/umalloc.o common/usys.o -o _cat -N -e main -Ttext 0x0 -m elf_i386
+	rm -v cat.o
+_echo : echo.c
+	$(CC) echo.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(LD) echo.o common/ulib.o common/printf.o common/umalloc.o common/usys.o -o _echo -N -e main -Ttext 0x0 -m elf_i386
+	rm -v echo.o
+_forktest : forktest.c
+	$(CC) forktest.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(LD) forktest.o common/ulib.o common/usys.o -o _forktest -N -e main -Ttext 0x0 -m elf_i386
+	rm -v forktest.o
 format :
 	$(FORMAT) mkfs.c -style=file -i
-	$(MAKE) -C cat format
-	$(MAKE) -C echo format
-	$(MAKE) -C forktest format
+	$(MAKE) -C common format
+	$(FORMAT) cat.c -style=file -i
+	$(FORMAT) echo.c -style=file -i
+	$(FORMAT) forktest.c -style=file -i
 clean :
 	rm -v fs.img

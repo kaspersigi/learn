@@ -1,6 +1,6 @@
-#include "../../include/stat.h"
-#include "../../include/types.h"
-#include "../include/user.h"
+#include "../include/stat.h"
+#include "../include/types.h"
+#include "include/user.h"
 
 int main(int argc, char* argv[])
 {

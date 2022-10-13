@@ -13,15 +13,14 @@ CXX = /usr/bin/g++
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++20 -Wall -Wno-unused
-DEBUG = -ggdb -O1
-RELEASE = -static -O3
+DEBUG = -ggdb -O0
+RELEASE = -static -O1
 LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 ARCH = -m32
-KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-pointer -fno-stack-protector -fno-pic -fno-pie -no-pie -static
-
+KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-pointer -fno-stack-protector -fno-pic -fno-pie
 .PHONY : all
 all : bootblock
 bootblock : bootblock.o
@@ -32,9 +31,9 @@ bootblock.o : bootasm.o bootmain.o
 	$(LD) bootasm.o bootmain.o -o bootblock.o -N -e start -Ttext 0x7C00 -m elf_i386
 	rm -v bootasm.o bootmain.o
 bootasm.o : bootasm.S
-	$(CC) bootasm.S -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) bootasm.S -c $(C_FLAGS) $(KERNEL_FLAGS) $(RELEASE) $(ARCH)
 bootmain.o : bootmain.c
-	$(CC) bootmain.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) bootmain.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(RELEASE) $(ARCH)
 format :
 	$(FORMAT) bootmain.c -style=file -i
 clean :
