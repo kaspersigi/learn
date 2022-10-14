@@ -24,8 +24,8 @@ KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-point
 
 .PHONY : all
 all : xv6.img bootloader.bin kernel.bin
-	dd if=bootloader/bootblock of=xv6.img count=1 bs=1440k conv=sync
-	dd if=kernel/kernel of=xv6.img count=2880k bs=512 conv=notrunc seek=1
+	dd if=bootloader/bootblock of=xv6.img count=1 bs=200k conv=sync
+	dd if=kernel/kernel of=xv6.img count=400k bs=512 conv=notrunc seek=1
 	$(MAKE) -C filesystem
 	mv filesystem/fs.img .
 	$(MAKE) -C bootloader clean
