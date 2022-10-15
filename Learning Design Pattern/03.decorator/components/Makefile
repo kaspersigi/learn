@@ -38,7 +38,4 @@ format :
 	$(FORMAT) HouseBlend.cc -style=file -i
 	$(FORMAT) HouseBlend.h -style=file -i
 clean :
-	rm -v DarkRoast.o
-	rm -v Decaf.o
-	rm -v Espresso.o
-	rm -v HouseBlend.o
+	rm -v DarkRoast.o Decaf.o Espresso.o HouseBlend.o

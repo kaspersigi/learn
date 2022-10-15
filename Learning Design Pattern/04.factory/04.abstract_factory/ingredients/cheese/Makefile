@@ -33,6 +33,4 @@ format :
 	$(FORMAT) ReggianoCheese.cc -style=file -i
 	$(FORMAT) ReggianoCheese.h -style=file -i
 clean :
-	rm -v MozzarellaCheese.o
-	rm -v ParmesanCheese.o
-	rm -v ReggianoCheese.o
+	rm -v MozzarellaCheese.o ParmesanCheese.o ReggianoCheese.o

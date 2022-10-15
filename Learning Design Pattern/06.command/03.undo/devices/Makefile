@@ -30,5 +30,4 @@ format :
 	$(FORMAT) Light.h -style=file -i
 	$(FORMAT) devices.h -style=file -i
 clean :
-	rm -v CeilingFan.o
-	rm -v Light.o
+	rm -v CeilingFan.o Light.o

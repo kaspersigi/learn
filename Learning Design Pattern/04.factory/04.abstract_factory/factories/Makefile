@@ -29,5 +29,4 @@ format :
 	$(FORMAT) NYPizzaIngredientFactory.cc -style=file -i
 	$(FORMAT) NYPizzaIngredientFactory.h -style=file -i
 clean :
-	rm -v ChicagoPizzaIngredientFactory.o
-	rm -v NYPizzaIngredientFactory.o
+	rm -v ChicagoPizzaIngredientFactory.o NYPizzaIngredientFactory.o

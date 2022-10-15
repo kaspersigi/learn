@@ -66,14 +66,4 @@ format :
 	$(FORMAT) NoCommand.h -style=file -i
 	$(FORMAT) commands.h -style=file -i
 clean :
-	rm -v GarageDoorDownCommand.o
-	rm -v GarageDoorUpCommand.o
-	rm -v HottubOffCommand.o
-	rm -v HottubOnCommand.o
-	rm -v LightOffCommand.o
-	rm -v LightOnCommand.o
-	rm -v LivingroomLightOffCommand.o
-	rm -v LivingroomLightOnCommand.o
-	rm -v StereoOffCommand.o
-	rm -v StereoOnWithCDCommand.o
-	rm -v NoCommand.o
+	rm -v GarageDoorDownCommand.o GarageDoorUpCommand.o HottubOffCommand.o HottubOnCommand.o LightOffCommand.o LightOnCommand.o LivingroomLightOffCommand.o LivingroomLightOnCommand.o StereoOffCommand.o StereoOnWithCDCommand.o NoCommand.o

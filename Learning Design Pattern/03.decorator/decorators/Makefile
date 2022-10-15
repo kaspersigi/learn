@@ -38,7 +38,4 @@ format :
 	$(FORMAT) Whip.cc -style=file -i
 	$(FORMAT) Whip.h -style=file -i
 clean :
-	rm -v Milk.o
-	rm -v Mocha.o
-	rm -v Soy.o
-	rm -v Whip.o
+	rm -v Milk.o Mocha.o Soy.o Whip.o

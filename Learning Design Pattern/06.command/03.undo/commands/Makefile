@@ -34,6 +34,4 @@ format :
 	$(FORMAT) NoCommand.h -style=file -i
 	$(FORMAT) commands.h -style=file -i
 clean :
-	rm -v LightOffCommand.o
-	rm -v LightOnCommand.o
-	rm -v NoCommand.o
+	rm -v LightOffCommand.o LightOnCommand.o NoCommand.o

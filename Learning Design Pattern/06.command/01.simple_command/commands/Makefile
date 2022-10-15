@@ -34,6 +34,4 @@ format :
 	$(FORMAT) GarageDoorOpenCommand.h -style=file -i
 	$(FORMAT) commands.h -style=file -i
 clean :
-	rm -v LightOnCommand.o
-	rm -v LightOffCommand.o
-	rm -v GarageDoorOpenCommand.o
+	rm -v LightOnCommand.o LightOffCommand.o GarageDoorOpenCommand.o

@@ -30,5 +30,4 @@ format :
 	$(FORMAT) PancakeHouseMenuIterator.h -style=file -i
 	$(FORMAT) iterators.h -style=file -i
 clean :
-	rm -v DinerMenuIterator.o
-	rm -v PancakeHouseMenuIterator.o
+	rm -v DinerMenuIterator.o PancakeHouseMenuIterator.o

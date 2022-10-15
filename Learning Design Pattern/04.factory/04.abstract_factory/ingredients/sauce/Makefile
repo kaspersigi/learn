@@ -29,5 +29,4 @@ format :
 	$(FORMAT) PlumTomatoSauce.cc -style=file -i
 	$(FORMAT) PlumTomatoSauce.h -style=file -i
 clean :
-	rm -v MarinaraSauce.o
-	rm -v PlumTomatoSauce.o
+	rm -v MarinaraSauce.o PlumTomatoSauce.o

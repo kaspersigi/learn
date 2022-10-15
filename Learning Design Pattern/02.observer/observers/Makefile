@@ -38,7 +38,4 @@ format :
 	$(FORMAT) StatisticsDisplay.cc -style=file -i
 	$(FORMAT) StatisticsDisplay.h -style=file -i
 clean :
-	rm -v CurrentConditionsDisplay.o
-	rm -v ForecastDisplay.o
-	rm -v HeatIndexDisplay.o
-	rm -v StatisticsDisplay.o
+	rm -v CurrentConditionsDisplay.o ForecastDisplay.o HeatIndexDisplay.o StatisticsDisplay.o

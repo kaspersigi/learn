@@ -29,5 +29,4 @@ format :
 	$(FORMAT) PizzaStore.cc -style=file -i
 	$(FORMAT) PizzaStore.h -style=file -i
 clean :
-	rm -v Pizza.o
-	rm -v PizzaStore.o
+	rm -v Pizza.o PizzaStore.o

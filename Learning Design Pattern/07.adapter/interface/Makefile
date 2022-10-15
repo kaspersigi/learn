@@ -31,5 +31,4 @@ format :
 	$(FORMAT) Turkey.cc -style=file -i
 	$(FORMAT) Turkey.h -style=file -i
 clean :
-	rm -v Duck.o
-	rm -v Turkey.o
+	rm -v Duck.o Turkey.o

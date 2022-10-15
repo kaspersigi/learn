@@ -30,5 +30,4 @@ format :
 	$(FORMAT) PancakeHouseMenu.h -style=file -i
 	$(FORMAT) menus.h -style=file -i
 clean :
-	rm -v DinerMenu.o
-	rm -v PancakeHouseMenu.o
+	rm -v DinerMenu.o PancakeHouseMenu.o

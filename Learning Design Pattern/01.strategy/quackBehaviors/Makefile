@@ -38,7 +38,4 @@ format :
 	$(FORMAT) Squeak.cc -style=file -i
 	$(FORMAT) Squeak.h -style=file -i
 clean :
-	rm -v FakeQuack.o
-	rm -v MuteQuack.o
-	rm -v Quack.o
-	rm -v Squeak.o
+	rm -v FakeQuack.o MuteQuack.o Quack.o Squeak.o

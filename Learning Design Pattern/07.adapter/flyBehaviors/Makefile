@@ -34,6 +34,4 @@ format :
 	$(FORMAT) FlyWithWings.cc -style=file -i
 	$(FORMAT) FlyWithWings.h -style=file -i
 clean :
-	rm -v FlyNoWay.o
-	rm -v FlyRocketPowered.o
-	rm -v FlyWithWings.o
+	rm -v FlyNoWay.o FlyRocketPowered.o FlyWithWings.o

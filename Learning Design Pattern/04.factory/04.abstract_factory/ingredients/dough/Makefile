@@ -29,5 +29,4 @@ format :
 	$(FORMAT) ThinCrustDough.cc -style=file -i
 	$(FORMAT) ThinCrustDough.h -style=file -i
 clean :
-	rm -v ThickCrustDough.o
-	rm -v ThinCrustDough.o
+	rm -v ThickCrustDough.o ThinCrustDough.o

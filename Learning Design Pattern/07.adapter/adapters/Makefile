@@ -29,5 +29,4 @@ format :
 	$(FORMAT) TurkeyAdapter.cc -style=file -i
 	$(FORMAT) TurkeyAdapter.h -style=file -i
 clean :
-	rm -v DuckAdapter.o
-	rm -v TurkeyAdapter.o
+	rm -v DuckAdapter.o TurkeyAdapter.o

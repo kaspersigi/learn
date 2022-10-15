@@ -30,5 +30,4 @@ format :
 	$(FORMAT) TeaWithHook.h -style=file -i
 	$(FORMAT) beverages.h -style=file -i
 clean :
-	rm -v CoffeeWithHook.o
-	rm -v TeaWithHook.o
+	rm -v CoffeeWithHook.o TeaWithHook.o

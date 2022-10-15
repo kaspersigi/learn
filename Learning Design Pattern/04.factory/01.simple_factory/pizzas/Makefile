@@ -38,7 +38,4 @@ format :
 	$(FORMAT) VeggiePizza.cc -style=file -i
 	$(FORMAT) VeggiePizza.h -style=file -i
 clean :
-	rm -v CheesePizza.o
-	rm -v ClamPizza.o
-	rm -v PepperoniPizza.o
-	rm -v VeggiePizza.o
+	rm -v CheesePizza.o ClamPizza.o PepperoniPizza.o VeggiePizza.o

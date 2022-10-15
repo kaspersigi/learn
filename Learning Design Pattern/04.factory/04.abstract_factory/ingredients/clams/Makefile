@@ -29,5 +29,4 @@ format :
 	$(FORMAT) FrozenClams.cc -style=file -i
 	$(FORMAT) FrozenClams.h -style=file -i
 clean :
-	rm -v FreshClams.o
-	rm -v FrozenClams.o
+	rm -v FreshClams.o FrozenClams.o

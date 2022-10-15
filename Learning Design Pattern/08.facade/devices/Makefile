@@ -54,11 +54,4 @@ format :
 	$(FORMAT) Tuner.h -style=file -i
 	$(FORMAT) devices.h -style=file -i
 clean :
-	rm -v Amplifier.o
-	rm -v CdPlayer.o
-	rm -v DvdPlayer.o
-	rm -v PopcornPopper.o
-	rm -v Projector.o
-	rm -v Screen.o
-	rm -v TheaterLights.o
-	rm -v Tuner.o
+	rm -v Amplifier.o CdPlayer.o DvdPlayer.o PopcornPopper.o Projector.o Screen.o TheaterLights.o Tuner.o

@@ -30,5 +30,4 @@ format :
 	$(FORMAT) GarageDoor.h -style=file -i
 	$(FORMAT) devices.h -style=file -i
 clean :
-	rm -v Light.o
-	rm -v GarageDoor.o
+	rm -v Light.o GarageDoor.o

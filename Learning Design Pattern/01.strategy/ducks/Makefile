@@ -42,8 +42,4 @@ format :
 	$(FORMAT) RubberDuck.cc -style=file -i
 	$(FORMAT) RubberDuck.h -style=file -i
 clean :
-	rm -v DecoyDuck.o
-	rm -v MallardDuck.o
-	rm -v ModelDuck.o
-	rm -v RedHeadDuck.o
-	rm -v RubberDuck.o
+	rm -v DecoyDuck.o MallardDuck.o ModelDuck.o RedHeadDuck.o RubberDuck.o

@@ -55,11 +55,4 @@ format :
 	$(FORMAT) NYStyleVeggiePizza.cc -style=file -i
 	$(FORMAT) NYStyleVeggiePizza.h -style=file -i
 clean :
-	rm -v ChicagoStyleCheesePizza.o
-	rm -v ChicagoStyleClamPizza.o
-	rm -v ChicagoStylePepperoniPizza.o
-	rm -v ChicagoStyleVeggiePizza.o
-	rm -v NYStyleCheesePizza.o
-	rm -v NYStyleClamPizza.o
-	rm -v NYStylePepperoniPizza.o
-	rm -v NYStyleVeggiePizza.o
+	rm -v ChicagoStyleCheesePizza.o ChicagoStyleClamPizza.o ChicagoStylePepperoniPizza.o ChicagoStyleVeggiePizza.o NYStyleCheesePizza.o NYStyleClamPizza.o NYStylePepperoniPizza.o NYStyleVeggiePizza.o

@@ -46,9 +46,4 @@ format :
 	$(FORMAT) TV.h -style=file -i
 	$(FORMAT) devices.h -style=file -i
 clean :
-	rm -v CeilingFan.o
-	rm -v Hottub.o
-	rm -v GarageDoor.o
-	rm -v Light.o
-	rm -v Stereo.o
-	rm -v TV.o
+	rm -v CeilingFan.o Hottub.o GarageDoor.o Light.o Stereo.o TV.o

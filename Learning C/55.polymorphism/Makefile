@@ -1,10 +1,10 @@
 ###########################################
-#Makefile for my C++ programs
+#Makefile for my C programs
 ###########################################
 
 TRG = main
 OBJ = main.o
-SRC = main.cc
+SRC = main.c
 CC = /usr/bin/clang
 CXX = /usr/bin/clang++
 FORMAT = /usr/bin/clang-format
@@ -18,16 +18,14 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : Coffee.o Tea.o
-Coffee.o : Coffee.cc Coffee.h
-	$(CXX) Coffee.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
-Tea.o : Tea.cc Tea.h
-	$(CXX) Tea.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+$(TRG) : $(OBJ)
+	$(CC) $(OBJ) -o $(TRG)
+	rm -v $(OBJ)
+$(OBJ) : $(SRC)
+	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
 format :
-	$(FORMAT) Coffee.cc -style=file -i
-	$(FORMAT) Coffee.h -style=file -i
-	$(FORMAT) Tea.cc -style=file -i
-	$(FORMAT) Tea.h -style=file -i
-	$(FORMAT) beverages.h -style=file -i
+	$(FORMAT) main.c -style=file -i
 clean :
-	rm -v Coffee.o Tea.o
+	rm -v $(TRG)
+check :
+	valgrind --tool=memcheck --leak-check=full --error-limit=no ./$(TRG)

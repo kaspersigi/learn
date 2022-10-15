@@ -33,7 +33,6 @@ format :
 	$(FORMAT) func.c -style=file -i
 	$(FORMAT) func.h -style=file -i
 clean :
-	rm -v $(TRG)
-	rm -v libfunc.a
+	rm -v $(TRG) libfunc.a
 check :
 	valgrind --tool=memcheck --leak-check=full --error-limit=no ./$(TRG)

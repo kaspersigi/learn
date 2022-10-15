@@ -49,10 +49,4 @@ format :
 	$(FORMAT) Spinach.cc -style=file -i
 	$(FORMAT) Spinach.h -style=file -i
 clean :
-	rm -v BlackOlives.o
-	rm -v Eggplant.o
-	rm -v Garlic.o
-	rm -v Mushroom.o
-	rm -v Onion.o
-	rm -v RedPepper.o
-	rm -v Spinach.o
+	rm -v BlackOlives.o Eggplant.o Garlic.o Mushroom.o Onion.o RedPepper.o Spinach.o

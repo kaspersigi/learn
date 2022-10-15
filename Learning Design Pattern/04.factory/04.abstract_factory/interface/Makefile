@@ -36,5 +36,4 @@ format :
 	$(FORMAT) Veggies.h -style=file -i
 	$(FORMAT) PizzaIngredientFactory.h -style=file -i
 clean :
-	rm -v Pizza.o
-	rm -v PizzaStore.o
+	rm -v Pizza.o PizzaStore.o
