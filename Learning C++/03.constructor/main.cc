@@ -88,7 +88,7 @@ Object& Object::operator=(Object&& obj)
 Object::~Object()
 {
     std::cout << __PRETTY_FUNCTION__ << "析构函数" << std::endl;
-    delete _ptr;
+    delete[] _ptr;
 }
 
 Object func(std::string& str)

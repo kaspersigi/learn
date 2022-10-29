@@ -94,7 +94,7 @@ String& String::operator=(String&& str)
 
 String::~String()
 {
-    delete _c_str;
+    delete[] _c_str;
 }
 
 std::ostream& operator<<(std::ostream& os, const String& str)
