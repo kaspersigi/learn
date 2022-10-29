@@ -2,6 +2,8 @@
 
 int main(int argc, char* argv[])
 {
-    std::cout << "Hello World!" << std::endl;
+    char* str = new char[13];
+    delete[] str;
+
     return 0;
 }
