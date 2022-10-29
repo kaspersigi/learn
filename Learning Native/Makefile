@@ -5,9 +5,9 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
-VPATH = /home/miku/learn/Learning\ C
-CC = /usr/bin/clang
-CXX = /usr/bin/clang++
+VPATH = /home/miku/learn/Learning\ Native
+CC = /usr/bin/gcc
+CXX = /usr/bin/g++
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++20 -Wall -Wno-unused
@@ -19,7 +19,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template driver android_c android_c++ rust
+all : template driver android_c android_c++ rust malloc new
 template :
 	$(MAKE) -C 00.template
 driver :
@@ -30,6 +30,10 @@ android_c++ :
 	$(MAKE) -C 03.android_c++
 rust :
 	$(MAKE) -C 04.rust
+malloc :
+	$(MAKE) -C 05.malloc
+new :
+	$(MAKE) -C 06.new
 
 format :
 	$(MAKE) -C 00.template format
@@ -37,6 +41,8 @@ format :
 	$(MAKE) -C 02.android_c format
 	$(MAKE) -C 03.android_c++ format
 	# $(MAKE) -C 04.rust format
+	$(MAKE) -C 05.malloc format
+	$(MAKE) -C 06.new format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -44,3 +50,5 @@ clean :
 	$(MAKE) -C 02.android_c clean
 	$(MAKE) -C 03.android_c++ clean
 	$(MAKE) -C 04.rust clean
+	$(MAKE) -C 05.malloc clean
+	$(MAKE) -C 06.new clean

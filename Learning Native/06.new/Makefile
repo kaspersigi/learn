@@ -4,7 +4,7 @@
 
 TRG = main
 OBJ = main.o
-SRC = main.c
+SRC = main.cc
 CC = /usr/bin/gcc
 CXX = /usr/bin/g++
 FORMAT = /usr/bin/clang-format
@@ -19,12 +19,12 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 $(TRG) : $(OBJ)
-	$(CC) $(OBJ) -o $(TRG)
+	$(CXX) $(OBJ) -o $(TRG)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
+	$(CXX) $(SRC) -c $(CXX_FLAGS) $(DEBUG)
 format :
-	$(FORMAT) main.c -style=file -i
+	$(FORMAT) main.cc -style=file -i
 clean :
 	rm -v $(TRG)
 check :
