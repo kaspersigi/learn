@@ -34,4 +34,4 @@ format :
 clean :
 	rm -v Chocolate
 check :
-	valgrind --tool=memcheck --leak-check=full --error-limit=no ./Chocolate
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./Chocolate

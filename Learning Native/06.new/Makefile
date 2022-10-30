@@ -28,4 +28,11 @@ format :
 clean :
 	rm -v $(TRG)
 check :
-	valgrind --tool=memcheck --leak-check=full --error-limit=no ./$(TRG)
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)
+mtrace :
+	export MALLOC_TRACE=./log
+	./main
+	mtrace main log
+	rm -v log
+addr2line :
+	addr2line -f -e main 0x80485ED

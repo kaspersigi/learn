@@ -38,4 +38,4 @@ format :
 clean :
 	rm -v HomeTheater
 check :
-	valgrind --tool=memcheck --leak-check=full --error-limit=no ./HomeTheater
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./HomeTheater

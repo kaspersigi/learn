@@ -41,4 +41,4 @@ format :
 clean :
 	rm -v WeatherStation
 check :
-	valgrind --tool=memcheck --leak-check=full --error-limit=no ./WeatherStation
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./WeatherStation

@@ -38,4 +38,4 @@ format :
 clean :
 	rm -v Barista
 check :
-	valgrind --tool=memcheck --leak-check=full --error-limit=no ./Barista
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./Barista

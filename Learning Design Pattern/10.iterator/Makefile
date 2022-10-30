@@ -46,4 +46,4 @@ format :
 clean :
 	rm -v DinerMerger
 check :
-	valgrind --tool=memcheck --leak-check=full --error-limit=no ./DinerMerger
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./DinerMerger

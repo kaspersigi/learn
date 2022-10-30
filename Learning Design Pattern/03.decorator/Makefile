@@ -42,4 +42,4 @@ format :
 clean :
 	rm -v Starbuzz
 check :
-	valgrind --tool=memcheck --leak-check=full --error-limit=no ./Starbuzz
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./Starbuzz

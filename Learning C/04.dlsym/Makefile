@@ -35,4 +35,4 @@ format :
 clean :
 	rm -v $(TRG) libfunc.so
 check :
-	valgrind --tool=memcheck --leak-check=full --error-limit=no ./$(TRG)
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)

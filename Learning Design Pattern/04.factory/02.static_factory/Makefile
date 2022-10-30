@@ -46,4 +46,4 @@ format :
 clean :
 	rm -v Pizza
 check :
-	valgrind --tool=memcheck --leak-check=full --error-limit=no ./Pizza
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./Pizza

@@ -54,4 +54,4 @@ format :
 clean :
 	rm -v Adapter
 check :
-	valgrind --tool=memcheck --leak-check=full --error-limit=no ./Adapter
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./Adapter

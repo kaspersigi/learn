@@ -42,4 +42,4 @@ format :
 clean :
 	rm -v Remote
 check :
-	valgrind --tool=memcheck --leak-check=full --error-limit=no ./Remote
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./Remote
