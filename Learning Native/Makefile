@@ -9,8 +9,8 @@ VPATH = /home/miku/learn/Learning\ Native
 CC = /usr/bin/gcc
 CXX = /usr/bin/g++
 FORMAT = /usr/bin/clang-format
-C_FLAGS = -std=c18 -Wall -Wno-unused
-CXX_FLAGS = -std=c++20 -Wall -Wno-unused
+C_FLAGS = -std=c11 -Wall -Wno-unused
+CXX_FLAGS = -std=c++11 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -static -Oz
 LINK_FLAGS = -no-pie

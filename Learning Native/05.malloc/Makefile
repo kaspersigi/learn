@@ -8,8 +8,8 @@ SRC = main.c
 CC = /usr/bin/gcc
 CXX = /usr/bin/g++
 FORMAT = /usr/bin/clang-format
-C_FLAGS = -std=c99 -Wall -Wno-unused
-CXX_FLAGS = -std=c++0x -Wall -Wno-unused
+C_FLAGS = -std=c11 -Wall -Wno-unused
+CXX_FLAGS = -std=c++11 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -static -Oz
 LINK_FLAGS = -no-pie
