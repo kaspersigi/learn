@@ -25,7 +25,6 @@ KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-point
 all : bootblock
 bootblock : bootblock.o
 	objcopy bootblock.o -S -O binary -j .text bootblock
-	rm -v bootblock.o
 	./sign.pl bootblock
 bootblock.o : bootasm.o bootmain.o
 	$(LD) bootasm.o bootmain.o -o bootblock.o -N -e start -Ttext 0x7C00 -m elf_i386
@@ -33,8 +32,8 @@ bootblock.o : bootasm.o bootmain.o
 bootasm.o : bootasm.S
 	$(CC) bootasm.S -c $(C_FLAGS) $(KERNEL_FLAGS) $(RELEASE) $(ARCH)
 bootmain.o : bootmain.c
-	$(CC) bootmain.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(RELEASE) $(ARCH)
+	$(CC) bootmain.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(ARCH) -ggdb -Oz
 format :
 	$(FORMAT) bootmain.c -style=file -i
 clean :
-	rm -v bootblock
+	rm -v bootblock.o

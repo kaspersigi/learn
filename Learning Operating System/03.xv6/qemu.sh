@@ -1,0 +1,2 @@
+#!/bin/bash
+qemu-system-i386 -cpu max -machine pc,accel=tcg,kernel-irqchip=split -smp 4,cores=1,threads=1,sockets=4 -m 256M -drive file=fs.img,index=1,media=disk,format=raw -drive file=xv6.img,index=0,media=disk,format=raw -nographic -S -s

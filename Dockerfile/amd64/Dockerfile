@@ -28,8 +28,10 @@ RUN apt install sudo -y \
     && apt install lldb-11 -y \
     && apt install libc++-11-dev -y \
     && apt install libc++abi-11-dev -y \
+    && apt install gdb -y \
+    && apt install cgdb -y \
+    && apt install qemu-system -y \
     && apt install make -y \
-    && apt install nasm -y \
     && apt install git -y \
     && apt install file -y \
     && apt install wget -y \

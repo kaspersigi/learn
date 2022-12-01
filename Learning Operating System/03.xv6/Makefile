@@ -28,8 +28,7 @@ all : xv6.img bootloader.bin kernel.bin
 	dd if=kernel/kernel of=xv6.img count=400k bs=512 conv=notrunc seek=1
 	$(MAKE) -C filesystem
 	mv filesystem/fs.img .
-	$(MAKE) -C bootloader clean
-	$(MAKE) -C kernel clean
+	rm bootloader/bootblock
 xv6.img :
 	dd if=/dev/zero of=xv6.img count=1 bs=1440k conv=sync
 bootloader.bin : bootloader
@@ -41,3 +40,5 @@ format :
 	$(MAKE) -C kernel format
 clean :
 	rm -v xv6.img fs.img
+	$(MAKE) -C bootloader clean
+	$(MAKE) -C kernel clean
