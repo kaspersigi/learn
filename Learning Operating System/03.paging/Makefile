@@ -19,6 +19,7 @@ LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+ARCH = -m32
 
 .PHONY : all
 $(TRG) : $(BIN) boot.img
@@ -30,7 +31,8 @@ $(BIN) : $(OBJ)
 	$(LD) $(OBJ) -o $(BIN) -e _start -Ttext 0x7C00 --oformat binary -m elf_i386
 	rm -v $(OBJ)
 $(OBJ) : main.s
-	$(AS) $(SRC) -o $(OBJ) --32
+	# $(AS) $(SRC) -o $(OBJ) --32
+	$(CC) $(SRC) -c -no-integrated-as $(ARCH)
 clean :
 	rm -v boot.img
 qemu :

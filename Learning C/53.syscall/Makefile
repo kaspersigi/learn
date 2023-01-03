@@ -17,13 +17,14 @@ LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+ARCH = -m32
 
 .PHONY : all
 $(TRG) : $(OBJ)
 	$(LD) $(OBJ) -o $(TRG) -m elf_i386 --entry=main
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG) -m32
+	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG) $(ARCH)
 format :
 	$(FORMAT) main.c -style=file -i
 clean :

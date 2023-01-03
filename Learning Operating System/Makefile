@@ -17,6 +17,7 @@ LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+ARCH = -m32
 
 .PHONY : all
 all : template protected function_call paging ia32e xv6
