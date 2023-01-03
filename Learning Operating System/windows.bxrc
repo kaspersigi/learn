@@ -356,7 +356,7 @@ cpuid: family=6, model=0x1a, stepping=5
 # used all allocated host memory and wants more.
 #
 #=======================================================================
-memory: guest=2, host=2
+memory: guest=4, host=4
 
 #=======================================================================
 # ROMIMAGE:

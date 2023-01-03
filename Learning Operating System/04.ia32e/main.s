@@ -126,7 +126,6 @@ _start:
     bts $8, %eax
     wrmsr
 
-
     # 开启分页功能
     movl %cr0, %eax
     bts $31, %eax

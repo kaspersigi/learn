@@ -1,3 +1,12 @@
+.equ SDA_PHY_ADDR, 0x00007e00 # 系统数据区的起始物理地址
+.equ PDT_PHY_ADDR, 0x00009000 # 对应于页目录表物理地址
+.equ PT_PHY_ADDR, 0x0000a000 # 对应于低端4MB的内核页表的物理地址
+.equ IDT_PHY_ADDR, 0x0000b000 # 中断描述符表的物理地址
+.equ LDR_PHY_ADDR, 0x0000c000 # 用于安装内核加载器的起始物理地址
+.equ GDT_PHY_ADDR, 0x00010000 # 全局描述符表GDT的物理地址
+.equ CORE_PHY_ADDR, 0x00020000 # 内核的起始物理地址
+.equ COR_PDPT_ADDR, 0x00100000 # 从这个物理地址开始的1MB是内核的254个页目录指针表
+
 .section .text
 .align 4
 .global _start
@@ -13,18 +22,6 @@ _start:
     xorw %ax, %ax
     movw %ax, %ds
 
-    # 以下在屏幕上显示"Booting..."
-    movw $(.buffer_end-.buffer), %cx
-    movw $.buffer, %si
-    movb $0x0e, %ah
-    movb $0x07, %bl
-
-    .putc:
-    movb (%si), %al
-    int $0x10
-    incw %si
-    loop .putc
-
     # 计算GDT所在的逻辑段地址
     movw (.gdt_base), %ax # 低16位
     movw (.gdt_base+0x02), %dx # 高16位
@@ -39,56 +36,73 @@ _start:
     movl $0x00, 0x00(%bx)
     movl $0x00, 0x04(%bx)
 
-    # 创建#1描述符，保护模式下的数据段描述符（文本模式下的显示缓冲区）
-    movl $0x80007fff, 0x08(%bx) # 32k
-    movl $0x0040920b, 0x0c(%bx)
+    # 创建#1描述符，保护模式下的代码段描述符
+    movl $0x0000ffff, 0x08(%bx) # 4G
+    movl $0x00cf9800, 0x0c(%bx)
 
-    # 创建#2描述符，保护模式下的代码段描述符
+    # 创建#2描述符，保护模式下的数据段描述符
     movl $0x0000ffff, 0x10(%bx) # 4G
-    movl $0x00cf9800, 0x14(%bx)
+    movl $0x00cf9200, 0x14(%bx)
 
-    # 创建#3描述符，保护模式下的数据段描述符
-    movl $0x0000ffff, 0x18(%bx) # 4G
-    movl $0x00cf9200, 0x1c(%bx)
-
-    # 创建#4描述符，保护模式下的堆栈段描述符
-    movl $0x80000fff, 0x20(%bx) # 4k
-    movl $0x00409200, 0x24(%bx)
+    # 创建#3描述符，保护模式下的堆栈段描述符
+    movl $0x80000fff, 0x18(%bx) # 4k
+    movl $0x00409200, 0x1c(%bx)
 
     popw %ds
 
     # 初始化描述符表寄存器GDTR
-    movw $39, (.gdt_size)
+    movw $31, (.gdt_size)
     lgdt (.gdt_size) # 描述符表的界限（总字节数减一）
-
-    inb $0x92, %al # 南桥芯片内的端口
-    orb $0B00000010, %al # 打开A20
-    outb %al, $0x92 # 打开A20
 
     # 设置PE位
     movl %cr0, %eax
     orl $1, %eax
     movl %eax, %cr0
 
-    # 代码段选择子 00000000000_10_000B
-    ljmp $0B0000000000010000, $(.protected) # 加载代码段选择子(索引0x02)
+    # 代码段选择子 00000000000_01_000B
+    ljmp $0B0000000000001000, $(.protected) # 加载代码段选择子(索引0x01)
 .code32
     .protected:
-    movw $0B0000000000011000, %cx # 加载数据段选择子(索引0x03)
+    movw $0B0000000000010000, %cx # 加载数据段选择子(索引0x02)
     movw %cx, %ds
-    movw $0B0000000000001000, %cx # 加载数据段选择子(索引0x01)
-    movw %cx, %es
-    movw $0B0000000000100000, %cx # 加载堆栈段选择子(索引0x04)
+    movw $0B0000000000011000, %cx # 加载堆栈段选择子(索引0x03)
     movw %cx, %ss
     movl $0x1000, %esp
 
+    movl $0x3ff << 2, %esi
+
+    movl $PDT_PHY_ADDR, %ebx
+    movl $PT_PHY_ADDR | 0x03, %eax
+    movl %eax, (%ebx)
+    movl $PDT_PHY_ADDR | 0x03, %eax
+    movl %eax, (%ebx, %esi)
+
+    movl $1024, %ecx
+    movl $0x00, %esi
+    movl $PT_PHY_ADDR, %ebx
+.set_pt:
+    movl %esi, %eax
+    shll $12, %eax
+    orl $0x03, %eax
+    movl %eax, (%ebx, %esi, 4)
+    incl %esi
+    loop .set_pt
+
+    # 令CR3寄存器指向页目录表
+    movl $PDT_PHY_ADDR, %eax
+    movl %eax, %cr3
+
+    # 开启分页功能
+    movl %cr0, %eax
+    bts $31, %eax
+    movl %eax, %cr0
+
+    movl (0x3ffffc), %eax
+
     hlt
-.buffer:
-    .asciz "Booting..."
-.buffer_end:
 .gdt_size:
     .word 0x0000
 .gdt_base:
-    .long 0x00008000
+    .long GDT_PHY_ADDR
 .org 510
 .boot_flag: .word 0xAA55
