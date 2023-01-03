@@ -19,21 +19,27 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template protected function_call xv6
+all : template protected function_call paging ia32e xv6
 template :
 	$(MAKE) -C 00.template
 protected :
 	$(MAKE) -C 01.protected
 function_call :
 	$(MAKE) -C 02.function_call
+paging :
+	$(MAKE) -C 03.paging
+ia32e :
+	$(MAKE) -C 04.ia32e
 xv6 :
-	$(MAKE) -C 03.xv6
+	$(MAKE) -C 05.xv6
 
 format :
-	$(MAKE) -C 03.xv6 format
+	$(MAKE) -C 05.xv6 format
 
 clean :
 	$(MAKE) -C 00.template clean
 	$(MAKE) -C 01.protected clean
 	$(MAKE) -C 02.function_call clean
-	$(MAKE) -C 03.xv6 clean
+	$(MAKE) -C 03.paging clean
+	$(MAKE) -C 04.ia32e clean
+	$(MAKE) -C 05.xv6 clean
