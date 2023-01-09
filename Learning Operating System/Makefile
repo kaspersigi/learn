@@ -47,6 +47,6 @@ clean :
 	$(MAKE) -C 02.function_call clean
 	$(MAKE) -C 03.paging clean
 	$(MAKE) -C 04.ia32e clean
-	$(MAKE) -C 05.64bit
-	$(MAKE) -C 06.long_mode
+	$(MAKE) -C 05.64bit clean
+	$(MAKE) -C 06.long_mode clean
 	$(MAKE) -C 07.xv6 clean
