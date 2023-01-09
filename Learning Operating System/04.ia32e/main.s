@@ -73,7 +73,7 @@ _start:
     movl $0x1000, %esp
 
     movl $0x0, %edx
-    movl $0x1ff << 3, %esi
+    movl $(0x1ff << 3), %esi
 
     movl $PML4_PHY_ADDR, %ebx
     movl $PDPT_PHY_ADDR | 0x03, %eax

@@ -20,7 +20,7 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 ARCH = -m32
 
 .PHONY : all
-all : template protected function_call paging ia32e xv6
+all : template protected function_call paging ia32e 64bit long_mode xv6
 template :
 	$(MAKE) -C 00.template
 protected :
@@ -31,11 +31,15 @@ paging :
 	$(MAKE) -C 03.paging
 ia32e :
 	$(MAKE) -C 04.ia32e
+64bit :
+	$(MAKE) -C 05.64bit
+long_mode :
+	$(MAKE) -C 06.long_mode
 xv6 :
-	$(MAKE) -C 05.xv6
+	$(MAKE) -C 07.xv6
 
 format :
-	$(MAKE) -C 05.xv6 format
+	$(MAKE) -C 07.xv6 format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -43,4 +47,6 @@ clean :
 	$(MAKE) -C 02.function_call clean
 	$(MAKE) -C 03.paging clean
 	$(MAKE) -C 04.ia32e clean
-	$(MAKE) -C 05.xv6 clean
+	$(MAKE) -C 05.64bit
+	$(MAKE) -C 06.long_mode
+	$(MAKE) -C 07.xv6 clean
