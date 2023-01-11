@@ -77,13 +77,12 @@ _start:
     movl $0x1000, %esp
 
     movl $0x0, %edx
-    movl $(0x1ff << 3), %esi
+    movl $(256 << 3), %esi
 
     movl $PML4_PHY_ADDR, %ebx
     movl $PDPT_PHY_ADDR | 0x03, %eax
     movl %eax, (%ebx)
     movl %edx, 0x04(%ebx)
-    movl $PML4_PHY_ADDR | 0x03, %eax
     movl %eax, (%ebx, %esi)
     movl %edx, 0x04(%ebx, %esi)
 
@@ -91,17 +90,11 @@ _start:
     movl $PDT_PHY_ADDR | 0x03, %eax
     movl %eax, (%ebx)
     movl %edx, 0x04(%ebx)
-    movl $PDPT_PHY_ADDR | 0x03, %eax
-    movl %eax, (%ebx, %esi)
-    movl %edx, 0x04(%ebx, %esi)
 
     movl $PDT_PHY_ADDR, %ebx
     movl $PT_PHY_ADDR | 0x03, %eax
     movl %eax, (%ebx)
     movl %edx, 0x04(%ebx)
-    movl $PDT_PHY_ADDR | 0x03, %eax
-    movl %eax, (%ebx, %esi)
-    movl %edx, 0x04(%ebx, %esi)
 
     movl $512, %ecx
     movl $0x00, %esi
@@ -141,7 +134,10 @@ _start:
     ljmp $0B0000000000100000, $(.64bit) # 加载代码段选择子(索引0x04)
 .code64
     .64bit:
-    movq (0xffffffffffffffcf), %rax
+    movq $0xf0f0f0f0f0f0f0f0, %rax
+    movq %rax, (0x00000000001fffcf)
+    xorq %rax, %rax
+    movq (0xffff8000001fffcf), %rax
 
     hlt
 .gdt_size:
