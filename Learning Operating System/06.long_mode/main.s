@@ -10,7 +10,7 @@
 .equ CORE_PHY_ADDR, 0x00020000 # 内核的起始物理地址
 .equ COR_PDPT_ADDR, 0x00100000 # 从这个物理地址开始的1MB是内核的254个页目录指针表
 .equ UPPER_LINEAR_START, 0xffff800000000000 # 虚拟内存的高端起始于线性地址0xffff800000000000
-.equ UPPER_GDT_LINEAR, UPPER_LINEAR_START + GDT_PHY_ADDR
+.equ UPPER_GDT_LINEAR, UPPER_LINEAR_START + GDT_PHY_ADDR #GDT的高端线性地址
 
 .section .text
 .align 4
@@ -54,7 +54,7 @@ _start:
     movl $0x00409200, 0x1c(%bx)
 
     # 创建#4描述符，64bit模式下的代码段描述符
-    movl $0x0000ffff, 0x20(%bx) # 4G
+    movl $0x0000ffff, 0x20(%bx)
     movl $0x00af9800, 0x24(%bx)
 
     popw %ds

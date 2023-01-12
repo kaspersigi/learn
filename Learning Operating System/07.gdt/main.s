@@ -9,6 +9,8 @@
 .equ GDT_PHY_ADDR, 0x00010000 # 全局描述符表GDT的物理地址
 .equ CORE_PHY_ADDR, 0x00020000 # 内核的起始物理地址
 .equ COR_PDPT_ADDR, 0x00100000 # 从这个物理地址开始的1MB是内核的254个页目录指针表
+.equ UPPER_LINEAR_START, 0xffff800000000000 # 虚拟内存的高端起始于线性地址0xffff800000000000
+.equ UPPER_GDT_LINEAR, UPPER_LINEAR_START + GDT_PHY_ADDR #GDT的高端线性地址
 
 .section .text
 .align 4
@@ -51,10 +53,18 @@ _start:
     movl $0x80000fff, 0x18(%bx) # 4k
     movl $0x00409200, 0x1c(%bx)
 
+    # 创建#4描述符，64bit模式下的代码段描述符
+    movl $0x0000ffff, 0x20(%bx)
+    movl $0x00af9800, 0x24(%bx)
+
+    # 创建#5描述符，64bit模式下的 数据段描述符
+    movl $0x0000ffff, 0x28(%bx)
+    movl $0x00af9200, 0x2c(%bx)
+
     popw %ds
 
     # 初始化描述符表寄存器GDTR
-    movw $31, (.gdt_size)
+    movw $47, (.gdt_size)
     lgdt (.gdt_size) # 描述符表的界限（总字节数减一）
 
     # 设置PE位
@@ -63,7 +73,7 @@ _start:
     movl %eax, %cr0
 
     # 代码段选择子 00000000000_01_000B
-    ljmp $0B0000000000001000, $(.protected) # 加载代码段选择子(索引0x01)
+    ljmp $0x08, $(.protected) # 加载代码段选择子(索引0x01)
 .code32
     .protected:
     movw $0B0000000000010000, %cx # 加载数据段选择子(索引0x02)
@@ -73,13 +83,12 @@ _start:
     movl $0x1000, %esp
 
     movl $0x0, %edx
-    movl $(0x1ff << 3), %esi
+    movl $(256 << 3), %esi
 
     movl $PML4_PHY_ADDR, %ebx
     movl $PDPT_PHY_ADDR | 0x03, %eax
     movl %eax, (%ebx)
     movl %edx, 0x04(%ebx)
-    movl $PML4_PHY_ADDR | 0x03, %eax
     movl %eax, (%ebx, %esi)
     movl %edx, 0x04(%ebx, %esi)
 
@@ -87,17 +96,11 @@ _start:
     movl $PDT_PHY_ADDR | 0x03, %eax
     movl %eax, (%ebx)
     movl %edx, 0x04(%ebx)
-    movl $PDPT_PHY_ADDR | 0x03, %eax
-    movl %eax, (%ebx, %esi)
-    movl %edx, 0x04(%ebx, %esi)
 
     movl $PDT_PHY_ADDR, %ebx
     movl $PT_PHY_ADDR | 0x03, %eax
     movl %eax, (%ebx)
     movl %edx, 0x04(%ebx)
-    movl $PDT_PHY_ADDR | 0x03, %eax
-    movl %eax, (%ebx, %esi)
-    movl %edx, 0x04(%ebx, %esi)
 
     movl $512, %ecx
     movl $0x00, %esi
@@ -131,31 +134,43 @@ _start:
     bts $31, %eax
     movl %eax, %cr0
 
-    movl (0x1ffffc), %eax
-
-    movl $GDT_PHY_ADDR, %ebx
-    xorl %edx, %edx
-    movw (.gdt_size), %dx
-    incl %edx
-    # 创建#4描述符，64bit下的代码段描述符
-    movl $0x0000ffff, (%ebx, %edx)
-    movl $0x00af9800, 0x04(%ebx, %edx)
-
-    movw (.gdt_size), %dx
-    addw $8, %dx
-    movw %dx, (.gdt_size)
-    lgdt (.gdt_size) # 描述符表的界限（总字节数减一）
-
     # 代码段选择子 0000000000100_000B
     ljmp $0B0000000000100000, $(.64bit) # 加载代码段选择子(索引0x04)
 .code64
     .64bit:
-    movq (0xffffffffffffffcf), %rax
+    movl $0x28, %eax
+    movl %eax, %ds
+    movl %eax, %ss
+    movq $0xffff800000007000, %rsp
+
+    movq $UPPER_GDT_LINEAR, %rbx
+    # 创建#4描述符，64bit模式下的代码段描述符
+    movq $0x00af98000000ffff, %rdx
+    movq %rdx, 0x08(%rbx)
+
+    movw $15, (.gdt_size)
+    movq %rbx, (.gdt_base)
+    lgdt (.gdt_size)
+
+    movq $.64bit_gdt, %rax
+    pushw $0x0008
+    pushq %rax
+
+    sysretq # 从64位模式内核返回64位的用户态
+    # 本想模拟retf返回 但是失败了
+    # 继续学习，如何跳转后，修改此处代码
+
+    nop
+    nop
+    nop
+
+    .64bit_gdt:
+    movq (0xffff8000001fffcf), %rax
 
     hlt
 .gdt_size:
     .word 0x0000
 .gdt_base:
-    .long GDT_PHY_ADDR
+    .8byte GDT_PHY_ADDR
 .org 510
 .boot_flag: .word 0xAA55
