@@ -9,6 +9,8 @@
 .equ GDT_PHY_ADDR, 0x00010000 # 全局描述符表GDT的物理地址
 .equ CORE_PHY_ADDR, 0x00020000 # 内核的起始物理地址
 .equ COR_PDPT_ADDR, 0x00100000 # 从这个物理地址开始的1MB是内核的254个页目录指针表
+.equ UPPER_LINEAR_START, 0xffff800000000000 # 虚拟内存的高端起始于线性地址0xffff800000000000
+.equ UPPER_GDT_LINEAR, UPPER_LINEAR_START + GDT_PHY_ADDR
 
 .section .text
 .align 4
@@ -138,6 +140,7 @@ _start:
     movq %rax, (0x00000000001fffcf)
     xorq %rax, %rax
     movq (0xffff8000001fffcf), %rax
+    movq (UPPER_GDT_LINEAR), %rax
 
     hlt
 .gdt_size:
