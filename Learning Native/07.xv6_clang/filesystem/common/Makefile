@@ -31,7 +31,7 @@ printf.o : printf.c
 umalloc.o : umalloc.c
 	$(CC) umalloc.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 usys.o : usys.S
-	$(CC) usys.S -c -gdwarf-2 -Wa,-divide -no-integrated-as
+	$(CC) usys.S -c -gdwarf-2
 format :
 	$(FORMAT) ulib.c -style=file -i
 	$(FORMAT) printf.c -style=file -i

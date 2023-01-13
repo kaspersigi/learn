@@ -9,8 +9,8 @@ SRC = main.s
 AS = /usr/bin/i686-linux-gnu-as
 LD = /usr/bin/i686-linux-gnu-ld
 ARCH = i386-unknown-linux-gnu
-CC = /usr/bin/clang
-CXX = /usr/bin/clang++
+CC = /usr/bin/clang --target=$(ARCH)
+CXX = /usr/bin/clang++ --target=$(ARCH)
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++20 -Wall -Wno-unused
@@ -20,7 +20,6 @@ LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
-ARCH = -m32
 KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-pointer -fno-stack-protector -fno-pic -fno-pie -static
 
 .PHONY : all
@@ -29,68 +28,68 @@ all : mkfs _cat _echo _forktest _grep _init _kill _ln _ls _mkdir _rm _sh _stress
 	$(MAKE) -C common clean
 	rm -v mkfs _cat _echo _forktest _grep _init _kill _ln _ls _mkdir _rm _sh _stressfs _usertests _wc _zombie
 mkfs : mkfs.o
-	$(CC) mkfs.o -o mkfs
+	/usr/bin/clang mkfs.o -o mkfs
 	rm -v mkfs.o
 mkfs.o : mkfs.c
-	$(CC) mkfs.c -c $(C_FLAGS) $(DEBUG)
+	/usr/bin/clang mkfs.c -c $(C_FLAGS) $(DEBUG)
 _cat : cat.c _common
-	$(CC) cat.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) cat.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) cat.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _cat -N -e main -Ttext 0x0 -m elf_i386
 	rm -v cat.o
 _echo : echo.c _common
-	$(CC) echo.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) echo.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) echo.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _echo -N -e main -Ttext 0x0 -m elf_i386
 	rm -v echo.o
 _forktest : forktest.c _common
-	$(CC) forktest.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) forktest.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) forktest.o common/ulib.o common/usys.o -o _forktest -N -e main -Ttext 0x0 -m elf_i386
 	rm -v forktest.o
 _grep : grep.c _common
-	$(CC) grep.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) grep.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) grep.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _grep -N -e main -Ttext 0x0 -m elf_i386
 	rm -v grep.o
 _init : init.c _common
-	$(CC) init.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) init.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) init.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _init -N -e main -Ttext 0x0 -m elf_i386
 	rm -v init.o
 _kill : kill.c _common
-	$(CC) kill.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) kill.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) kill.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _kill -N -e main -Ttext 0x0 -m elf_i386
 	rm -v kill.o
 _ln : ln.c _common
-	$(CC) ln.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) ln.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) ln.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _ln -N -e main -Ttext 0x0 -m elf_i386
 	rm -v ln.o
 _ls : ls.c _common
-	$(CC) ls.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) ls.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) ls.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _ls -N -e main -Ttext 0x0 -m elf_i386
 	rm -v ls.o
 _mkdir : mkdir.c _common
-	$(CC) mkdir.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) mkdir.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) mkdir.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _mkdir -N -e main -Ttext 0x0 -m elf_i386
 	rm -v mkdir.o
 _rm : rm.c _common
-	$(CC) rm.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) rm.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) rm.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _rm -N -e main -Ttext 0x0 -m elf_i386
 	rm -v rm.o
 _sh : sh.c _common
-	$(CC) sh.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) sh.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) sh.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _sh -N -e main -Ttext 0x0 -m elf_i386
 	rm -v sh.o
 _stressfs : stressfs.c _common
-	$(CC) stressfs.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) stressfs.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) stressfs.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _stressfs -N -e main -Ttext 0x0 -m elf_i386
 	rm -v stressfs.o
 _usertests : usertests.c _common
-	$(CC) usertests.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) usertests.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) usertests.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _usertests -N -e main -Ttext 0x0 -m elf_i386
 	rm -v usertests.o
 _wc : wc.c _common
-	$(CC) wc.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) wc.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) wc.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _wc -N -e main -Ttext 0x0 -m elf_i386
 	rm -v wc.o
 _zombie : zombie.c _common
-	$(CC) zombie.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) zombie.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 	$(LD) zombie.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _zombie -N -e main -Ttext 0x0 -m elf_i386
 	rm -v zombie.o
 _common : common

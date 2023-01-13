@@ -78,14 +78,14 @@ uart.o : uart.c
 vm.o : vm.c
 	$(CC) vm.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 entry.o : entry.S
-	$(CC) entry.S -c -gdwarf-2 -Wa,-divide -no-integrated-as
+	$(CC) entry.S -c -gdwarf-2
 swtch.o : swtch.S
-	$(CC) swtch.S -c -gdwarf-2 -Wa,-divide -no-integrated-as
+	$(CC) swtch.S -c -gdwarf-2
 trapasm.o : trapasm.S
-	$(CC) trapasm.S -c -gdwarf-2 -Wa,-divide -no-integrated-as
+	$(CC) trapasm.S -c -gdwarf-2
 vectors.o : vectors.pl
 	./vectors.pl > vectors.S
-	$(CC) vectors.S -c -gdwarf-2 -Wa,-divide -no-integrated-as
+	$(CC) vectors.S -c -gdwarf-2
 	rm -v vectors.S
 initcode : initcode.bin
 	i686-linux-gnu-objcopy initcode.bin -S -O binary initcode
