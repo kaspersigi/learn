@@ -5,8 +5,9 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
-CC = /usr/bin/clang
-CXX = /usr/bin/clang++
+ARCH = $(shell llvm-config --host-target)
+CC = /usr/bin/clang --target=$(ARCH)
+CXX = /usr/bin/clang++ --target=$(ARCH)
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++20 -Wall -Wno-unused
@@ -24,7 +25,7 @@ $(TRG) : $(OBJ) libfunc.a
 $(OBJ) : $(SRC)
 	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
 libfunc.a : func.o
-	ar -crv libfunc.a func.o
+	llvm-ar -crv libfunc.a func.o
 	rm -v func.o
 func.o : func.c func.h
 	$(CC) func.c -c $(C_FLAGS) $(DEBUG)

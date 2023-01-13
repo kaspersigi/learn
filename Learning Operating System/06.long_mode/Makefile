@@ -8,8 +8,9 @@ OBJ = main.o
 SRC = main.s
 AS = /usr/bin/as
 LD = /usr/bin/ld
-CC = /usr/bin/clang
-CXX = /usr/bin/clang++
+ARCH = x86_64-pc-linux-gnu
+CC = /usr/bin/clang --target=$(ARCH)
+CXX = /usr/bin/clang++ --target=$(ARCH)
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++20 -Wall -Wno-unused
@@ -31,7 +32,7 @@ $(BIN) : $(OBJ)
 	$(LD) $(OBJ) -o $(BIN) -e _start -Ttext 0x7C00 --oformat binary -m elf_x86_64
 	rm -v $(OBJ)
 $(OBJ) : main.s
-	$(CC) $(SRC) -c -no-integrated-as
+	$(CC) $(SRC) -c
 clean :
 	rm -v boot.img
 qemu :

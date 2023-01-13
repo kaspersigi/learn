@@ -6,8 +6,9 @@ TRG = main
 OBJ = main.o
 SRC = main.c
 VPATH = /home/miku/learn/Learning\ C
-CC = /usr/bin/clang
-CXX = /usr/bin/clang++
+ARCH = $(shell llvm-config --host-target)
+CC = /usr/bin/clang --target=$(ARCH)
+CXX = /usr/bin/clang++ --target=$(ARCH)
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++20 -Wall -Wno-unused
@@ -19,7 +20,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm asm_call_c inline_asm syscall mmap polymorphism
+all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm asm_call_c syscall mmap polymorphism
 template :
 	$(MAKE) -C 00.template
 macro :
@@ -244,7 +245,7 @@ clean :
 	$(MAKE) -C 49.threadpool clean
 	$(MAKE) -C 50.asm clean
 	$(MAKE) -C 51.asm_call_c clean
-	$(MAKE) -C 52.inline_asm clean
+	# $(MAKE) -C 52.inline_asm clean
 	$(MAKE) -C 53.syscall clean
 	$(MAKE) -C 54.mmap clean
 	$(MAKE) -C 55.polymorphism clean

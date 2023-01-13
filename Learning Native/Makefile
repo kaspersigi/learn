@@ -19,7 +19,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template driver android_c android_c++ rust malloc new
+all : template driver android_c android_c++ rust malloc new xv6_clang xv6_gcc
 template :
 	$(MAKE) -C 00.template
 driver :
@@ -34,6 +34,10 @@ malloc :
 	$(MAKE) -C 05.malloc
 new :
 	$(MAKE) -C 06.new
+xv6_clang :
+	$(MAKE) -C 07.xv6_clang
+xv6_gcc :
+	$(MAKE) -C 08.xv6_gcc
 
 format :
 	$(MAKE) -C 00.template format
@@ -43,6 +47,8 @@ format :
 	# $(MAKE) -C 04.rust format
 	$(MAKE) -C 05.malloc format
 	$(MAKE) -C 06.new format
+	$(MAKE) -C 07.xv6_clang format
+	$(MAKE) -C 08.xv6_gcc format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -52,3 +58,5 @@ clean :
 	$(MAKE) -C 04.rust clean
 	$(MAKE) -C 05.malloc clean
 	$(MAKE) -C 06.new clean
+	$(MAKE) -C 07.xv6_clang clean
+	$(MAKE) -C 08.xv6_gcc clean

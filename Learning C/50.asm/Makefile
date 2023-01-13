@@ -7,8 +7,9 @@ OBJ = main.o
 SRC = main.s
 AS = /usr/bin/as
 LD = /usr/bin/ld
-CC = /usr/bin/clang
-CXX = /usr/bin/clang++
+ARCH = i386-pc-linux-gnu
+CC = /usr/bin/clang --target=$(ARCH)
+CXX = /usr/bin/clang++ --target=$(ARCH)
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++20 -Wall -Wno-unused
@@ -18,7 +19,6 @@ LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
-ARCH = -m32
 
 .PHONY : all
 $(TRG) : $(OBJ)
@@ -26,7 +26,7 @@ $(TRG) : $(OBJ)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
 	# $(AS) $(SRC) -o $(OBJ) --32
-	$(CC) $(SRC) -c -no-integrated-as $(ARCH)
+	$(CC) $(SRC) -c
 clean :
 	rm -v $(TRG)
 check :

@@ -5,8 +5,9 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
-CC = /usr/bin/clang
-CXX = /usr/bin/clang++
+ARCH = i386-pc-linux-gnu
+CC = /usr/bin/clang --target=$(ARCH)
+CXX = /usr/bin/clang++ --target=$(ARCH)
 LD = /usr/bin/ld
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
@@ -17,14 +18,13 @@ LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
-ARCH = -m32
 
 .PHONY : all
 $(TRG) : $(OBJ)
 	$(LD) $(OBJ) -o $(TRG) -m elf_i386 --entry=main
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG) $(ARCH)
+	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
 format :
 	$(FORMAT) main.c -style=file -i
 clean :

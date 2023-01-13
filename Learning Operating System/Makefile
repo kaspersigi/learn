@@ -6,8 +6,9 @@ TRG = main
 OBJ = main.o
 SRC = main.c
 VPATH = /home/miku/learn/Learning\ Operating\ System
-CC = /usr/bin/clang
-CXX = /usr/bin/clang++
+ARCH = $(shell llvm-config --host-target)
+CC = /usr/bin/clang --target=$(ARCH)
+CXX = /usr/bin/clang++ --target=$(ARCH)
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++20 -Wall -Wno-unused
@@ -17,10 +18,9 @@ LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
-ARCH = -m32
 
 .PHONY : all
-all : template protected function_call paging ia32e 64bit long_mode gdt xv6
+all : template protected function_call paging ia32e 64bit long_mode gdt
 template :
 	$(MAKE) -C 00.template
 protected :
@@ -37,11 +37,6 @@ long_mode :
 	$(MAKE) -C 06.long_mode
 gdt :
 	$(MAKE) -C 07.gdt
-xv6 :
-	$(MAKE) -C 08.xv6
-
-format :
-	$(MAKE) -C 08.xv6 format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -52,4 +47,3 @@ clean :
 	$(MAKE) -C 05.64bit clean
 	$(MAKE) -C 06.long_mode clean
 	$(MAKE) -C 07.gdt clean
-	$(MAKE) -C 08.xv6 clean

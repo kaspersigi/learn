@@ -8,8 +8,9 @@ SRC = main.c
 CC = /usr/bin/clang
 CXX = /usr/bin/clang++
 FORMAT = /usr/bin/clang-format
-C_FLAGS = -std=c18 -Wall -Wno-unused
-CXX_FLAGS = -std=c++20 -Wall -Wno-unused
+ARCH = $(shell llvm-config --host-target)
+CC = /usr/bin/clang --target=$(ARCH)
+CXX = /usr/bin/clang++ --target=$(ARCH)
 DEBUG = -g -O0
 RELEASE = -static -Oz
 LINK_FLAGS = -no-pie
