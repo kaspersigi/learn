@@ -5,11 +5,11 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
+AS = /usr/bin/i686-linux-gnu-as
 LD = /usr/bin/i686-linux-gnu-ld
 ARCH = i386-unknown-linux-gnu
 CC = /usr/bin/clang --target=$(ARCH)
 CXX = /usr/bin/clang++ --target=$(ARCH)
-LD = /usr/bin/ld
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++20 -Wall -Wno-unused

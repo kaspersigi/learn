@@ -5,6 +5,8 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
+AS = /usr/bin/i686-linux-gnu-as
+LD = /usr/bin/i686-linux-gnu-ld
 ARCH = $(shell llvm-config --host-target)
 CC = /usr/bin/clang --target=$(ARCH)
 CXX = /usr/bin/clang++ --target=$(ARCH)

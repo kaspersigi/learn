@@ -5,8 +5,8 @@
 TRG = main
 OBJ = main.o
 SRC = main.s
-AS = /usr/bin/as
-LD = /usr/bin/ld
+AS = /usr/bin/i686-linux-gnu-as
+LD = /usr/bin/i686-linux-gnu-ld
 ARCH = i386-unknown-linux-gnu
 CC = /usr/bin/clang --target=$(ARCH)
 CXX = /usr/bin/clang++ --target=$(ARCH)
