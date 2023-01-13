@@ -39,9 +39,7 @@ RUN apt install sudo -y \
     && apt install vim -y \
     && apt install openssh-server -y \
     && apt install bsdmainutils -y \
-    && apt install valgrind -y \
-    && apt install binutils-i686-linux-gnu -y \
-    && apt install binutils-x86-64-linux-gnu -y
+    && apt install valgrind -y
 RUN ln -s /usr/bin/clang-11 /usr/bin/clang \
     && ln -s /usr/bin/clang-11 /usr/bin/cc \
     && ln -s /usr/bin/clang++-11 /usr/bin/clang++ \
