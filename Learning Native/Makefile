@@ -6,8 +6,9 @@ TRG = main
 OBJ = main.o
 SRC = main.c
 VPATH = /home/miku/learn/Learning\ Native
-CC = /usr/bin/gcc
-CXX = /usr/bin/g++
+ARCH = $(shell llvm-config --host-target)
+CC = /usr/bin/clang --target=$(ARCH)
+CXX = /usr/bin/clang++ --target=$(ARCH)
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c11 -Wall -Wno-unused
 CXX_FLAGS = -std=c++11 -Wall -Wno-unused
@@ -19,7 +20,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template driver android_c android_c++ rust malloc new xv6_clang xv6_gcc
+all : template xv6_clang
 template :
 	$(MAKE) -C 00.template
 driver :
@@ -52,11 +53,11 @@ format :
 
 clean :
 	$(MAKE) -C 00.template clean
-	$(MAKE) -C 01.driver clean
-	$(MAKE) -C 02.android_c clean
-	$(MAKE) -C 03.android_c++ clean
-	$(MAKE) -C 04.rust clean
-	$(MAKE) -C 05.malloc clean
-	$(MAKE) -C 06.new clean
+	# $(MAKE) -C 01.driver clean
+	# $(MAKE) -C 02.android_c clean
+	# $(MAKE) -C 03.android_c++ clean
+	# $(MAKE) -C 04.rust clean
+	# $(MAKE) -C 05.malloc clean
+	# $(MAKE) -C 06.new clean
 	$(MAKE) -C 07.xv6_clang clean
-	$(MAKE) -C 08.xv6_gcc clean
+	# $(MAKE) -C 08.xv6_gcc clean

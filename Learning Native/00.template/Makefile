@@ -5,8 +5,9 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
-CC = /usr/bin/gcc
-CXX = /usr/bin/g++
+ARCH = $(shell llvm-config --host-target)
+CC = /usr/bin/clang --target=$(ARCH)
+CXX = /usr/bin/clang++ --target=$(ARCH)
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c11 -Wall -Wno-unused
 CXX_FLAGS = -std=c+11 -Wall -Wno-unused

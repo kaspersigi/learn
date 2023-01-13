@@ -20,7 +20,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : c c++ design_pattern operating_system socket stl
+all : c c++ design_pattern native operating_system socket stl
 c :
 	$(MAKE) -C Learning\ C
 c++ :
@@ -49,7 +49,7 @@ clean :
 	$(MAKE) -C Learning\ C clean
 	$(MAKE) -C Learning\ C++ clean
 	$(MAKE) -C Learning\ Design\ Pattern clean
-	# $(MAKE) -C Learning\ Native clean
+	$(MAKE) -C Learning\ Native clean
 	$(MAKE) -C Learning\ Operating\ System clean
 	$(MAKE) -C Learning\ Socket clean
 	$(MAKE) -C Learning\ STL clean
