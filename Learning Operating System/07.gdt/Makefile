@@ -6,8 +6,8 @@ EXEC = main
 BIN = main.bin
 OBJ = main.o
 SRC = main.s
-AS = /usr/bin/as
-LD = /usr/bin/ld
+AS = /usr/bin/x86_64-linux-gnu-as
+LD = /usr/bin/x86_64-linux-gnu-ld
 ARCH = x86_64-pc-linux-gnu
 CC = /usr/bin/clang --target=$(ARCH)
 CXX = /usr/bin/clang++ --target=$(ARCH)
