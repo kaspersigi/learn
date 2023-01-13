@@ -88,7 +88,7 @@ vectors.o : vectors.pl
 	$(CC) vectors.S -c -gdwarf-2 -Wa,-divide $(ARCH)
 	rm -v vectors.S
 initcode : initcode.bin
-	objcopy initcode.bin -S -O binary initcode
+	i686-linux-gnu-objcopy initcode.bin -S -O binary initcode
 	rm -v initcode.bin
 initcode.bin : initcode.o
 	$(LD) initcode.o -o initcode.bin -N -e start -Ttext 0x0 -m elf_i386
@@ -96,7 +96,7 @@ initcode.bin : initcode.o
 initcode.o : initcode.S
 	$(CC) initcode.S -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
 entryother : entryother.bin
-	objcopy entryother.bin -S -O binary -j .text entryother
+	i686-linux-gnu-objcopy entryother.bin -S -O binary -j .text entryother
 	rm -v entryother.bin
 entryother.bin : entryother.o
 	$(LD) entryother.o -o entryother.bin -N -e start -Ttext 0x7000 -m elf_i386

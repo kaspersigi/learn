@@ -31,7 +31,7 @@ $(BIN) : $(OBJ)
 	$(LD) $(OBJ) -o $(BIN) -e _start -Ttext 0x7C00 --oformat binary -m elf_x86_64
 	rm -v $(OBJ)
 $(OBJ) : main.s
-	$(CC) $(SRC) -c -no-integrated-as
+	$(CC) $(SRC) -c
 clean :
 	rm -v boot.img
 qemu :

@@ -25,7 +25,7 @@ KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-point
 .PHONY : all
 all : bootblock
 bootblock : bootblock.o
-	objcopy bootblock.o -S -O binary -j .text bootblock
+	i686-linux-gnu-objcopy bootblock.o -S -O binary -j .text bootblock
 	./sign.pl bootblock
 bootblock.o : bootasm.o bootmain.o
 	$(LD) bootasm.o bootmain.o -o bootblock.o -N -e start -Ttext 0x7C00 -m elf_i386
