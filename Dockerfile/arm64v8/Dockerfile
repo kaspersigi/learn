@@ -45,8 +45,8 @@ RUN ln -s /usr/bin/clang-11 /usr/bin/clang \
     && ln -s /usr/bin/clang++-11 /usr/bin/clang++ \
     && ln -s /usr/bin/clang-format-11 /usr/bin/clang-format \
     && ln -s /usr/bin/lldb-11 /usr/bin/lldb \
-    && ln -s /usr/bin/llvm-config-14 /usr/bin/llvm-config \
-    && ln -s /usr/bin/llvm-ar-14 /usr/bin/llvm-ar \
+    && ln -s /usr/bin/llvm-config-11 /usr/bin/llvm-config \
+    && ln -s /usr/bin/llvm-ar-11 /usr/bin/llvm-ar \
     && echo 'miku    ALL=(ALL:ALL) ALL' >> /etc/sudoers \
     && echo '/usr/sbin/sshd -D &' > /root/run.sh \
     && chmod 110 /root/run.sh
