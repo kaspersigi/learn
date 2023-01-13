@@ -8,7 +8,7 @@ OBJ = main.o
 SRC = main.s
 AS = /usr/bin/x86_64-linux-gnu-as
 LD = /usr/bin/x86_64-linux-gnu-ld
-ARCH = x86_64-pc-linux-gnu
+ARCH = x86_64-unknown-linux-gnu
 CC = /usr/bin/clang --target=$(ARCH)
 CXX = /usr/bin/clang++ --target=$(ARCH)
 FORMAT = /usr/bin/clang-format

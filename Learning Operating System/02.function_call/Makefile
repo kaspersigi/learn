@@ -37,9 +37,9 @@ util.o : util.c
 	$(CC) util.c -c $(C_FLAGS) $(DEBUG)
 main.o :
 	# $(AS) $(SRC) -o $(OBJ) --32
-	$(CC) --target=i386-pc-linux-gnu $(SRC) -c
+	$(CC) --target=i386-unknown-linux-gnu $(SRC) -c
 func.o : func.c
-	$(CC) --target=i386-pc-linux-gnu func.c -c $(C_FLAGS) $(RELEASE)
+	$(CC) --target=i386-unknown-linux-gnu func.c -c $(C_FLAGS) $(RELEASE)
 clean :
 	rm -v boot.img
 qemu :
