@@ -23,11 +23,11 @@ RUN chown miku:miku -R /home/miku/.ssh \
     && chmod 600 /home/miku/.ssh/id_rsa \
     && chmod 644 /home/miku/.ssh/id_rsa.pub
 RUN apt install sudo -y \
-    && apt install clang-11 -y \
-    && apt install clang-format-11 -y \
-    && apt install lldb-11 -y \
-    && apt install libc++-11-dev -y \
-    && apt install libc++abi-11-dev -y \
+    && apt install clang-13 -y \
+    && apt install clang-format-13 -y \
+    && apt install lldb-13 -y \
+    && apt install libc++-13-dev -y \
+    && apt install libc++abi-13-dev -y \
     && apt install gdb -y \
     && apt install cgdb -y \
     && apt install qemu-system -y \
@@ -41,13 +41,13 @@ RUN apt install sudo -y \
     && apt install bsdmainutils -y \
     && apt install valgrind -y \
     && apt install binutils-x86-64-linux-gnu -y
-RUN ln -s /usr/bin/clang-11 /usr/bin/clang \
-    && ln -s /usr/bin/clang-11 /usr/bin/cc \
-    && ln -s /usr/bin/clang++-11 /usr/bin/clang++ \
-    && ln -s /usr/bin/clang-format-11 /usr/bin/clang-format \
-    && ln -s /usr/bin/lldb-11 /usr/bin/lldb \
-    && ln -s /usr/bin/llvm-config-11 /usr/bin/llvm-config \
-    && ln -s /usr/bin/llvm-ar-11 /usr/bin/llvm-ar \
+RUN ln -s /usr/bin/clang-13 /usr/bin/clang \
+    && ln -s /usr/bin/clang-13 /usr/bin/cc \
+    && ln -s /usr/bin/clang++-13 /usr/bin/clang++ \
+    && ln -s /usr/bin/clang-format-13 /usr/bin/clang-format \
+    && ln -s /usr/bin/lldb-13 /usr/bin/lldb \
+    && ln -s /usr/bin/llvm-config-13 /usr/bin/llvm-config \
+    && ln -s /usr/bin/llvm-ar-13 /usr/bin/llvm-ar \
     && echo 'miku    ALL=(ALL:ALL) ALL' >> /etc/sudoers \
     && echo '/usr/sbin/sshd -D &' > /root/run.sh \
     && chmod 110 /root/run.sh
