@@ -153,6 +153,16 @@ _start:
     movq (0xffff8000001fffcf), %rax
     push %rax
     push %rax
+    nop
+    pop %rax
+    pop %rax
+
+    leaq .stop, %rax
+    movq $UPPER_LINEAR_START, %rbx
+    addq %rbx, %rax
+    jmpq *%rax
+
+    .stop:
     hlt
 .gdt_size:
     .word 0x0000
