@@ -185,7 +185,7 @@ format :
 	$(MAKE) -C 47.perror format
 	$(MAKE) -C 48.union format
 	$(MAKE) -C 49.threadpool format
-	$(MAKE) -C 50.asm format
+	# $(MAKE) -C 50.asm format
 	$(MAKE) -C 51.asm_call_c format
 	$(MAKE) -C 52.inline_asm format
 	$(MAKE) -C 53.syscall format
