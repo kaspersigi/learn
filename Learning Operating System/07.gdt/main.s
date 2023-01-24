@@ -143,34 +143,13 @@ _start:
     movl %eax, %ss
     movq $0xffff800000007000, %rsp
 
-    movq $UPPER_GDT_LINEAR, %rbx
-    # 创建#4描述符，64bit模式下的代码段描述符
-    movq $0x00af98000000ffff, %rdx
-    movq %rdx, 0x08(%rbx)
-
-    movw $15, (.gdt_size)
-    movq %rbx, (.gdt_base)
     lgdt (.gdt_size)
 
-    movq $.64bit_gdt, %rax
-    pushw $0x0008
-    pushq %rax
-
-    sysretq # 从64位模式内核返回64位的用户态
-    # 本想模拟retf返回 但是失败了
-    # 继续学习，如何跳转后，修改此处代码
-
-    nop
-    nop
-    nop
-
-    .64bit_gdt:
     movq (0xffff8000001fffcf), %rax
-
     hlt
 .gdt_size:
     .word 0x0000
 .gdt_base:
-    .8byte GDT_PHY_ADDR
+    .8byte UPPER_GDT_LINEAR
 .org 510
 .boot_flag: .word 0xAA55
