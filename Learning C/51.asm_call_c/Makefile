@@ -8,7 +8,7 @@ SRC = main.c
 AS = /usr/bin/i686-linux-gnu-as
 LD = /usr/bin/i686-linux-gnu-ld
 ARCH = i386-unknown-linux-gnu
-CC = /usr/bin/clang --target=$(ARCH)
+CC = /usr/bin/clang --target=i386-unknown-linux-gnu
 CXX = /usr/bin/clang++ --target=$(ARCH)
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
