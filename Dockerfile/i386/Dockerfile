@@ -40,14 +40,14 @@ RUN apt install sudo -y \
     && apt install openssh-server -y \
     && apt install bsdmainutils -y \
     && apt install valgrind -y \
-    && apt install binutils-x86-64-linux-gnu -y
-RUN ln -s /usr/bin/clang-13 /usr/bin/clang \
-    && ln -s /usr/bin/clang-13 /usr/bin/cc \
-    && ln -s /usr/bin/clang++-13 /usr/bin/clang++ \
-    && ln -s /usr/bin/clang-format-13 /usr/bin/clang-format \
-    && ln -s /usr/bin/lldb-13 /usr/bin/lldb \
-    && ln -s /usr/bin/llvm-config-13 /usr/bin/llvm-config \
-    && ln -s /usr/bin/llvm-ar-13 /usr/bin/llvm-ar \
+    && apt install binutils-x86-64-linux-gnu -y \
+    && apt install fonts-firacode
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-13 100 \
+    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-13 100 \
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-13 100 \
+    && update-alternatives --install /usr/bin/lldb lldb /usr/bin/lldb-13 100 \
+    && update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-13 100 \
+    && update-alternatives --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-13 100 \
     && echo 'miku    ALL=(ALL:ALL) ALL' >> /etc/sudoers \
     && echo '/usr/sbin/sshd -D &' > /root/run.sh \
     && chmod 110 /root/run.sh
@@ -55,14 +55,10 @@ USER miku
 RUN git config --global pull.rebase false \
     && git config --global user.name kaspersigi \
     && git config --global user.email kaspersigi@gmail.com \
-    # && ssh-keyscan 106.52.13.193 > $HOME/.ssh/known_hosts \
-    # && ssh -T git@github.com
     && ssh-keyscan github.com > $HOME/.ssh/known_hosts \
     && echo '' > $HOME/.ssh/authorized_keys \
-    # && ssh-keygen -f $HOME/.ssh/id_rsa -t rsa -N '' \
     && mkdir $HOME/linux \
     && cd $HOME \
-    # && git clone git@106.52.13.193:/home/git/learn.git
     && git clone git@github.com:kaspersigi/learn.git
 USER root
 WORKDIR /root
