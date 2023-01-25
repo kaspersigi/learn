@@ -40,7 +40,7 @@ RUN apt install sudo -y \
     && apt install openssh-server -y \
     && apt install bsdmainutils -y \
     && apt install valgrind -y \
-    && apt install fonts-firacode
+    && apt install fonts-firacode -y
 RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-13 100 \
     && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-13 100 \
     && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-13 100 \

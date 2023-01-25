@@ -42,7 +42,7 @@ RUN apt install sudo -y \
     && apt install valgrind -y \
     && apt install binutils-i686-linux-gnu -y \
     && apt install gcc-i686-linux-gnu -y \
-    && apt install fonts-firacode
+    && apt install fonts-firacode -y
 RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-13 100 \
     && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-13 100 \
     && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-13 100 \
