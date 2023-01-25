@@ -8,7 +8,7 @@ SRC = main.c
 AS = /usr/bin/i686-linux-gnu-as
 LD = /usr/bin/i686-linux-gnu-ld
 ARCH = $(shell llvm-config --host-target)
-CC = /usr/bin/clang --target=$(ARCH)
+CC = /usr/bin/clang --target=i386-unknown-linux-gnu
 CXX = /usr/bin/clang++ --target=$(ARCH)
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
@@ -22,7 +22,7 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 $(TRG) : $(OBJ)
-	$(CC) $(OBJ) -o $(TRG)
+	$(CC) $(OBJ) -o $(TRG) -fuse-ld=/usr/bin/i686-linux-gnu-ld
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
 	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
