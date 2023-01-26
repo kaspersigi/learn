@@ -8,7 +8,7 @@ OBJ = main.o
 SRC = main.s
 AS = /usr/bin/i686-linux-gnu-as
 LD = /usr/bin/i686-linux-gnu-ld
-CC = /usr/bin/gcc
+CC = /usr/bin/i686-linux-gnu-gcc
 CXX = /usr/bin/g++
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
