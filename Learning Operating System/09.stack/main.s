@@ -167,6 +167,6 @@ _start:
 .gdt_size:
     .word 0x0000
 .gdt_base:
-    .8byte UPPER_GDT_LINEAR
+    .quad UPPER_GDT_LINEAR
 .org 510
 .boot_flag: .word 0xAA55
