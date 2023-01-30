@@ -13,6 +13,9 @@
 .equ UPPER_GDT_LINEAR, UPPER_LINEAR_START + GDT_PHY_ADDR #GDT的高端线性地址
 .equ UPPER_IDT_LINEAR, UPPER_LINEAR_START + IDT_PHY_ADDR #IDT的高端线性地址
 
+.equ kernel_sector_number, 0x02 #常数，内核程序的起始逻辑扇区号
+.equ kernel_sector_count, 0x08 #常数，内核程序的总扇区个数
+
 .section .text
 .align 4
 .global _start
@@ -37,6 +40,22 @@ _start:
     pushw %ds
     movw %ax, %ds # 令DS指向该段以进行操作
     movw %dx, %bx # 段内起始偏移地址
+
+    # 读磁盘 普通
+    # INT 13H AH=2
+    # AL=读取/写入的扇区数
+    # CH,CL=磁道号，扇区号
+    # DH:DL=磁头号，驱动器号
+    # ES:BX=数据缓冲区地址
+    movb $0x02, %ah
+    movb $kernel_sector_count, %al
+    movb $kernel_sector_number, %cl
+    movb $0x00 ,%ch
+    movw $0x0080, %dx
+    movw $(CORE_PHY_ADDR >> 4), %bx
+    movw %bx, %es
+    movw $0x0000, %bx
+    int $0x13
 
     # 创建#0描述符，它是空描述符，这是处理器的要求
     movl $0x00, 0x00(%bx)
@@ -140,50 +159,11 @@ _start:
     movl %eax, %cr0
 
     # 代码段选择子 0000000000100_000B
-    ljmp $0B0000000000100000, $(.64bit) # 加载代码段选择子(索引0x04)
-.code64
-    .64bit:
-    movl $0x28, %eax
-    movl %eax, %ds
-    movl $0x30, %eax
-    movl %eax, %ss
-    movq $0xffff800000200000, %rsp
-
-    lgdt (.gdt_size)
-
-    leaq .upper(%rip), %rax
-    movq $UPPER_LINEAR_START, %rbx
-    addq %rbx, %rax
-    jmpq *%rax
-    .upper:
-
-    leaq general_interrupt_handler(%rip), %rax
-    movq %rax, %rbx
-    shrq $32, %rbx #右移32位，得到门的高64位
-    pushq %rax
-    movw $0x20, 2(%rsp)
-    movl %eax, 4(%rsp)
-    movw $0x8e00,4(%rsp) #中断门
-    popq %rax
-
-    leaq general_exception_handler(%rip), %rax
-    movq %rax, %rbx
-    shrq $32, %rbx #右移32位，得到门的高64位
-    pushq %rax
-    movw $0x20, 2(%rsp)
-    movl %eax, 4(%rsp)
-    movw $0x8f00,4(%rsp) #陷阱门
-    popq %rax
-
-    hlt
-general_interrupt_handler:
-    iretq
-general_exception_handler:
-    iretq
+    ljmp $0B0000000000100000, $CORE_PHY_ADDR # 加载代码段选择子(索引0x04)
 
 .gdt_size:
     .word 0x0000
 .gdt_base:
-    .quad UPPER_GDT_LINEAR
+    .long GDT_PHY_ADDR
 .org 510
 .boot_flag: .word 0xAA55
