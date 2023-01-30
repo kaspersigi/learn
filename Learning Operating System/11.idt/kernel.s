@@ -38,6 +38,8 @@ _start:
 
     leaq general_interrupt_handler(%rip), %rax
     call make_interrupt_gate
+    leaq general_exception_handler(%rip), %rax
+    call make_trap_gate
 
     hlt
 general_interrupt_handler:
@@ -67,7 +69,7 @@ make_trap_gate:
     pushq %rax # 构造数据结构，并预置线性地址的位15~0
     movw $CORE_CODE64_SEL, 2(%rsp) # 预置段选择子部分
     movl %eax, 4(%rsp) # 预置线性地址的位31~16
-    movw $0x8e00,4(%rsp) # 添加P=1，TYPE=64位陷阱门
+    movw $0x8f00,4(%rsp) # 添加P=1，TYPE=64位陷阱门
     popq %rsi
     ret
 
