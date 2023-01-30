@@ -36,10 +36,15 @@ _start:
     jmpq *%rax
     .upper:
 
-    leaq general_interrupt_handler(%rip), %rax
-    call make_interrupt_gate
-    leaq general_exception_handler(%rip), %rax
-    call make_trap_gate
+    # 为32个异常创建通用处理过程的中断门
+    # 和保护模式下的中断向量表一样
+    # 0~21基本是异常
+    # 22~31保留，不允许使用
+    # 32~255自定义
+    # leaq general_interrupt_handler(%rip), %rax
+    # call make_interrupt_gate
+    # leaq general_exception_handler(%rip), %rax
+    # call make_trap_gate
 
     hlt
 general_interrupt_handler:
