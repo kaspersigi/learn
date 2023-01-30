@@ -1,11 +1,11 @@
-###########################################
+#################################x86_64##########
 #Makefile for my C programs
 ###########################################
 TRG = all
 EXEC = main
-BIN = main.bin
-OBJ = main.o
-SRC = main.s
+BIN = mbr.bin kernel.bin
+OBJ = mbr.o kernel.o
+SRC = mbr.s kernel.s
 AS = /usr/bin/x86_64-linux-gnu-as
 LD = /usr/bin/x86_64-linux-gnu-ld
 ARCH = x86_64-unknown-linux-gnu
@@ -23,15 +23,21 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 $(TRG) : $(BIN) boot.img
-	dd if=main.bin of=boot.img count=1 bs=1440k conv=sync
+	dd if=mbr.bin of=boot.img count=1 bs=1440k conv=sync
+	dd if=kernel.bin of=boot.img count=2880k bs=512 conv=notrunc seek=1
 	rm -v $(BIN)
 boot.img :
 	dd if=/dev/zero of=boot.img count=1 bs=1440k conv=sync
-$(BIN) : $(OBJ)
-	$(LD) $(OBJ) -o $(BIN) -e _start -Ttext 0x7C00 --oformat binary -m elf_x86_64
-	rm -v $(OBJ)
-$(OBJ) : main.s
-	$(CC) $(SRC) -c
+mbr.bin : mbr.o
+	$(LD) mbr.o -o mbr.bin -e _start -Ttext 0x7C00 --oformat binary -m elf_x86_64
+	rm -v mbr.o
+mbr.o : mbr.s
+	$(CC) mbr.s -c
+kernel.bin : kernel.o
+	$(LD) kernel.o -o kernel.bin -e _start --oformat binary -m elf_x86_64
+	rm -v kernel.o
+kernel.o : kernel.s
+	$(CC) kernel.s -c
 clean :
 	rm -v boot.img
 qemu :
