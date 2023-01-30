@@ -10,8 +10,9 @@
 .equ CORE_PHY_ADDR, 0x00020000 # 内核的起始物理地址
 .equ COR_PDPT_ADDR, 0x00100000 # 从这个物理地址开始的1MB是内核的254个页目录指针表
 .equ UPPER_LINEAR_START, 0xffff800000000000 # 虚拟内存的高端起始于线性地址0xffff800000000000
-.equ UPPER_GDT_LINEAR, UPPER_LINEAR_START + GDT_PHY_ADDR #GDT的高端线性地址
-.equ UPPER_IDT_LINEAR, UPPER_LINEAR_START + IDT_PHY_ADDR #IDT的高端线性地址
+.equ UPPER_GDT_LINEAR, UPPER_LINEAR_START + GDT_PHY_ADDR # GDT的高端线性地址
+.equ UPPER_IDT_LINEAR, UPPER_LINEAR_START + IDT_PHY_ADDR # IDT的高端线性地址
+.equ CORE_CODE64_SEL, 0x20 # 内核代码段段选择子
 
 .section .text
 .align 4
@@ -36,28 +37,39 @@ _start:
     .upper:
 
     leaq general_interrupt_handler(%rip), %rax
-    movq %rax, %rbx
-    shrq $32, %rbx #右移32位，得到门的高64位
-    pushq %rax
-    movw $0x20, 2(%rsp)
-    movl %eax, 4(%rsp)
-    movw $0x8e00,4(%rsp) #中断门
-    popq %rax
-
-    leaq general_exception_handler(%rip), %rax
-    movq %rax, %rbx
-    shrq $32, %rbx #右移32位，得到门的高64位
-    pushq %rax
-    movw $0x20, 2(%rsp)
-    movl %eax, 4(%rsp)
-    movw $0x8f00,4(%rsp) #陷阱门
-    popq %rax
+    call make_interrupt_gate
 
     hlt
 general_interrupt_handler:
     iretq
 general_exception_handler:
     iretq
+
+#创建64位的中断门
+#输入：RAX=例程的线性地址
+#输出：RDI:RSI=中断门
+make_interrupt_gate:
+    movq %rax, %rdi
+    shrq $32, %rdi # 得到门的高64位，在RDI中
+    pushq %rax # 构造数据结构，并预置线性地址的位15~0
+    movw $CORE_CODE64_SEL, 2(%rsp) # 预置段选择子部分
+    movl %eax, 4(%rsp) # 预置线性地址的位31~16
+    movw $0x8e00,4(%rsp) # 添加P=1，TYPE=64位中断门
+    popq %rsi
+    ret
+
+# 创建64位的陷阱门
+# 输入：RAX=例程的线性地址
+# 输出：RDI:RSI=陷阱门
+make_trap_gate:
+    movq %rax, %rdi
+    shrq $32, %rdi # 得到门的高64位，在RDI中
+    pushq %rax # 构造数据结构，并预置线性地址的位15~0
+    movw $CORE_CODE64_SEL, 2(%rsp) # 预置段选择子部分
+    movl %eax, 4(%rsp) # 预置线性地址的位31~16
+    movw $0x8e00,4(%rsp) # 添加P=1，TYPE=64位陷阱门
+    popq %rsi
+    ret
 
 .gdt_size:
     .word 0x0000

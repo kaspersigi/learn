@@ -10,11 +10,11 @@
 .equ CORE_PHY_ADDR, 0x00020000 # 内核的起始物理地址
 .equ COR_PDPT_ADDR, 0x00100000 # 从这个物理地址开始的1MB是内核的254个页目录指针表
 .equ UPPER_LINEAR_START, 0xffff800000000000 # 虚拟内存的高端起始于线性地址0xffff800000000000
-.equ UPPER_GDT_LINEAR, UPPER_LINEAR_START + GDT_PHY_ADDR #GDT的高端线性地址
-.equ UPPER_IDT_LINEAR, UPPER_LINEAR_START + IDT_PHY_ADDR #IDT的高端线性地址
+.equ UPPER_GDT_LINEAR, UPPER_LINEAR_START + GDT_PHY_ADDR # GDT的高端线性地址
+.equ UPPER_IDT_LINEAR, UPPER_LINEAR_START + IDT_PHY_ADDR # IDT的高端线性地址
 
-.equ kernel_sector_number, 0x02 #常数，内核程序的起始逻辑扇区号
-.equ kernel_sector_count, 0x08 #常数，内核程序的总扇区个数
+.equ kernel_sector_number, 0x02 # 常数，内核程序的起始逻辑扇区号
+.equ kernel_sector_count, 0x08 # 常数，内核程序的总扇区个数
 
 .section .text
 .align 4
