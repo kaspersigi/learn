@@ -64,20 +64,46 @@ _start:
 
     movq $UPPER_IDT_LINEAR, %rax # 中断描述符表IDT的高端线性地址
     movq %rax, .idt_base(%rip)
-    movw $255, %ax
+    movw $(256 << 16 -1), %ax
     movw %ax, .idt_size(%rip)
 
     lidt .idt_size(%rip)
+    call init_8259
+
+    leaq general_8259ints_handler(%rip), %rax
+    call make_interrupt_gate
+    movq $0x20, %r8
+
+    .mount_idt_8259:
+    call mount_idt_entry
+    inc %r8
+    cmpq $0x2f, %r8
+    jle .mount_idt_8259
+
+    sti #开放硬件中断
+
+    int $0x80
 
     hlt
 
 general_exception_handler:
     movq $0, %rax
-    iret
+    iretq
 
 general_interrupt_handler:
     movq $1, %rax
-    iret
+    iretq
+
+# 通用的8259中断处理过程
+general_8259ints_handler:
+    pushq %rax
+
+    movb $0x20, %al # 中断结束命令EOI
+    outb %al, $0xa0 # 向从片发送
+    outb %al, $0x20 # 向主片发送
+
+    pop %rax
+    iretq
 
 #创建64位的中断门
 #输入：RAX=例程的线性地址
@@ -118,6 +144,31 @@ mount_idt_entry:
     movq %rdi, 8(%r9, %r8)
     popq %r9
     popq %r8
+    ret
+
+    # 初始化8259中断控制器，包括重新设置向量号
+init_8259:
+    pushq %rax
+
+    movb $0x11, %al
+    outb %al, $0x20 # ICW1：边沿触发/级联方式
+    movb $0x20, %al
+    outb %al, $0x21 # ICW2:起始中断向量（避开前31个异常的向量）
+    movb $0x04, %al
+    outb %al, $0x21 # ICW3:从片级联到IR2
+    movb $0x01, %al
+    outb %al, $0x21 # ICW4:非总线缓冲，全嵌套，正常EOI
+
+    movb $0x11, %al
+    outb %al, $0xa0 # ICW1：边沿触发/级联方式
+    movb $0x28, %al
+    outb %al, $0xa1 # ICW2:起始中断向量-->0x28
+    movb $0x02, %al
+    outb %al, $0xa1 # ICW3:从片识别标志，级联到主片IR2
+    movb $0x01, %al
+    outb %al, $0xa1 # ICW4:非总线缓冲，全嵌套，正常EOI
+
+    popq %rax
     ret
 
 .gdt_size:
