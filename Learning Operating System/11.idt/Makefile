@@ -34,7 +34,7 @@ mbr.bin : mbr.o
 mbr.o : mbr.s
 	$(CC) mbr.s -c
 kernel.bin : kernel.o
-	$(LD) kernel.o -o kernel.bin -e _start --oformat binary -m elf_x86_64
+	$(LD) kernel.o -o kernel.bin -e _start -Ttext 0x0000 --oformat binary -m elf_x86_64
 	rm -v kernel.o
 kernel.o : kernel.s
 	$(CC) kernel.s -c

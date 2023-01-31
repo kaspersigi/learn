@@ -12,6 +12,7 @@
 .equ UPPER_LINEAR_START, 0xffff800000000000 # 虚拟内存的高端起始于线性地址0xffff800000000000
 .equ UPPER_GDT_LINEAR, UPPER_LINEAR_START + GDT_PHY_ADDR # GDT的高端线性地址
 .equ UPPER_IDT_LINEAR, UPPER_LINEAR_START + IDT_PHY_ADDR # IDT的高端线性地址
+.equ UPPER_CORE_ADDR, UPPER_LINEAR_START + CORE_PHY_ADDR # kernel起始的高端线性地址
 .equ CORE_CODE64_SEL, 0x20 # 内核代码段段选择子
 
 .section .text
@@ -84,7 +85,12 @@ _start:
 
     int $0x80
 
+    movq $.halt, %rax
+    movq $UPPER_CORE_ADDR, %rbx
+    addq %rbx, %rax
+    .halt:
     hlt
+    jmpq *%rax
 
 general_exception_handler:
     movq $0, %rax
