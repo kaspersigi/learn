@@ -41,16 +41,43 @@ _start:
     # 0~21基本是异常
     # 22~31保留，不允许使用
     # 32~255自定义
-    # leaq general_interrupt_handler(%rip), %rax
-    # call make_interrupt_gate
-    # leaq general_exception_handler(%rip), %rax
-    # call make_trap_gate
+
+    leaq general_exception_handler(%rip), %rax
+    call make_interrupt_gate
+    xorq %r8, %r8
+
+    .mount_idt_32:
+    call mount_idt_entry
+    inc %r8
+    cmpq $31, %r8
+    jle .mount_idt_32
+
+    leaq general_interrupt_handler(%rip), %rax
+    call make_interrupt_gate
+    movq $32, %r8
+
+    .mount_idt_255:
+    call mount_idt_entry
+    inc %r8
+    cmpq $255, %r8
+    jle .mount_idt_255
+
+    movq $UPPER_IDT_LINEAR, %rax # 中断描述符表IDT的高端线性地址
+    movq %rax, .idt_base(%rip)
+    movw $255, %ax
+    movw %ax, .idt_size(%rip)
+
+    lidt .idt_size(%rip)
 
     hlt
-general_interrupt_handler:
-    iretq
+
 general_exception_handler:
-    iretq
+    movq $0, %rax
+    iret
+
+general_interrupt_handler:
+    movq $1, %rax
+    iret
 
 #创建64位的中断门
 #输入：RAX=例程的线性地址
@@ -78,7 +105,26 @@ make_trap_gate:
     popq %rsi
     ret
 
+# 在中断描述符表IDT中安装门描述符
+# R8=中断向量
+# RDI:RSI=门描述符
+mount_idt_entry:
+    pushq %r8
+    pushq %r9
+
+    shl $4, %r8 # 中断号乘以16，得到表内偏移
+    movq $UPPER_IDT_LINEAR, %r9 # 中断描述符表的高端线性地址
+    movq %rsi, (%r9, %r8)
+    movq %rdi, 8(%r9, %r8)
+    popq %r9
+    popq %r8
+    ret
+
 .gdt_size:
     .word 0x0000
 .gdt_base:
     .quad UPPER_GDT_LINEAR
+.idt_size:
+    .word 0x0000
+.idt_base:
+    .quad UPPER_IDT_LINEAR
