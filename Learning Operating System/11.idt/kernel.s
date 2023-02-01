@@ -85,12 +85,9 @@ _start:
 
     int $0x80
 
-    movq $.halt, %rax
-    movq $UPPER_CORE_ADDR, %rbx
-    addq %rbx, %rax
     .halt:
     hlt
-    jmpq *%rax
+    jmpq *.halt(%rip)
 
 general_exception_handler:
     movq $0, %rax
