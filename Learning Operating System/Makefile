@@ -20,7 +20,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template protected function_call paging ia32e 64bit long_mode gdt rip stack kernel idt task star
+all : template protected function_call paging ia32e 64bit long_mode gdt rip stack kernel idt star
 template :
 	$(MAKE) -C 00.template
 protected :
@@ -45,10 +45,8 @@ kernel :
 	$(MAKE) -C 10.kernel
 idt :
 	$(MAKE) -C 11.idt
-task :
-	$(MAKE) -C 12.task
 star :
-	$(MAKE) -C 13.star
+	$(MAKE) -C 12.star
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -63,5 +61,4 @@ clean :
 	$(MAKE) -C 09.stack clean
 	$(MAKE) -C 10.kernel clean
 	$(MAKE) -C 11.idt clean
-	$(MAKE) -C 12.task clean
-	$(MAKE) -C 13.star clean
+	$(MAKE) -C 12.star clean

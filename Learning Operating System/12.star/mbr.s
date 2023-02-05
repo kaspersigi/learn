@@ -9,9 +9,6 @@
 .equ GDT_PHY_ADDR, 0x00010000 # 全局描述符表GDT的物理地址
 .equ CORE_PHY_ADDR, 0x00020000 # 内核的起始物理地址
 .equ COR_PDPT_ADDR, 0x00100000 # 从这个物理地址开始的1MB是内核的254个页目录指针表
-.equ UPPER_LINEAR_START, 0xffff800000000000 # 虚拟内存的高端起始于线性地址0xffff800000000000
-.equ UPPER_GDT_LINEAR, UPPER_LINEAR_START + GDT_PHY_ADDR # GDT的高端线性地址
-.equ UPPER_IDT_LINEAR, UPPER_LINEAR_START + IDT_PHY_ADDR # IDT的高端线性地址
 
 .equ kernel_sector_number, 0x02 # 常数，内核程序的起始逻辑扇区号
 .equ kernel_sector_count, 0x08 # 常数，内核程序的总扇区个数
@@ -77,18 +74,26 @@ _start:
     movl $0x0000ffff, 0x20(%bx)
     movl $0x00af9800, 0x24(%bx)
 
-    # 创建#5描述符，64bit模式下的 数据段描述符
+    # 创建#5描述符，64bit模式下的 数据段/栈描述符
     movl $0x0000ffff, 0x28(%bx)
-    movl $0x00af9200, 0x2c(%bx)
+    movl $0x00cf9200, 0x2c(%bx)
 
-    # 创建#6描述符，64bit模式下的 数据段描述符
-    movl $0x0000ffff, 0x30(%bx)
-    movl $0x00cf9200, 0x34(%bx)
+    # 创建#6描述符，它是空描述符，占位，不需要兼容模式代码段描述符，不想切换到兼容模式，DPL=3
+    movl $0x00, 0x30(%bx)
+    movl $0x00, 0x34(%bx)
+
+    # 创建#7描述符，64bit模式下的 数据段/栈描述符，DPL=3
+    movl $0x0000ffff, 0x38(%bx)
+    movl $0x00cff200, 0x3c(%bx)
+
+    # 创建#8描述符，64bit模式下的代码段描述符，DPL=3
+    movl $0x0000ffff, 0x40(%bx)
+    movl $0x00aff800, 0x44(%bx)
 
     popw %ds
 
     # 初始化描述符表寄存器GDTR
-    movw $55, (.gdt_size)
+    movw $71, (.gdt_size)
     lgdt (.gdt_size) # 描述符表的界限（总字节数减一）
 
     # 设置PE位

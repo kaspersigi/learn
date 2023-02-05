@@ -13,16 +13,20 @@
 .equ UPPER_GDT_LINEAR, UPPER_LINEAR_START + GDT_PHY_ADDR # GDT的高端线性地址
 .equ UPPER_IDT_LINEAR, UPPER_LINEAR_START + IDT_PHY_ADDR # IDT的高端线性地址
 .equ UPPER_CORE_ADDR, UPPER_LINEAR_START + CORE_PHY_ADDR # kernel起始的高端线性地址
-.equ CORE_CODE64_SEL, 0x20 # 内核代码段段选择子
+.equ CORE_CODE64_SEL, 0x20 # 内核代码段段选择子，DPL=0
+.equ CORE_STACK64_SEL, 0x28 # 内核堆栈段段选择子，DPL=0
+.equ RESVD_DESC_SEL, 0x33 # 保留的描述符选择子
+.equ USER_STACK64_SEL, 0x3b # 特权级3的栈段段选择子，DPL=3
+.equ USER_CODE64_SEL, 0x43 # 特权级3的代码段段选择子，DPL=3
 
 .section .text
 .align 4
 .global _start
 _start:
 .code64
-    movl $0x28, %eax
+    movl $CORE_STACK64_SEL, %eax
     movl %eax, %ds
-    movl $0x30, %eax
+    movl %eax, %es
     movl %eax, %ss
     movq $0xffff800000200000, %rsp
 
@@ -40,6 +44,17 @@ _start:
     call set_int
 
     sti #开放硬件中断
+
+    # 为快速系统调用SYSCALL和SYSRET准备参数
+    movl $0x0c0000080, %ecx # 指定型号专属寄存器IA32_EFER
+    rdmsr
+    bts $0, %eax # 设置SCE位，允许SYSCALL指令
+    wrmsr
+
+    movl $0xc0000081, %ecx #STAR
+    movl $((RESVD_DESC_SEL << 16) | CORE_CODE64_SEL), %edx
+    xorl %eax, %eax
+    wrmsr
 
     movq $.halt, %rax
     movq $UPPER_CORE_ADDR, %rbx
