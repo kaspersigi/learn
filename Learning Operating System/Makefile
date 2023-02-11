@@ -20,7 +20,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template protected function_call paging ia32e 64bit long_mode gdt rip stack kernel idt star
+all : template protected function_call paging pae ia32e 64bit long_mode gdt rip stack kernel idt star
 template :
 	$(MAKE) -C 00.template
 protected :
@@ -29,36 +29,39 @@ function_call :
 	$(MAKE) -C 02.function_call
 paging :
 	$(MAKE) -C 03.paging
+pae :
+	$(MAKE) -C 04.pae
 ia32e :
-	$(MAKE) -C 04.ia32e
+	$(MAKE) -C 05.ia32e
 64bit :
-	$(MAKE) -C 05.64bit
+	$(MAKE) -C 06.64bit
 long_mode :
-	$(MAKE) -C 06.long_mode
+	$(MAKE) -C 07.long_mode
 gdt :
-	$(MAKE) -C 07.gdt
+	$(MAKE) -C 08.gdt
 rip :
-	$(MAKE) -C 08.rip
+	$(MAKE) -C 09.rip
 stack :
-	$(MAKE) -C 09.stack
+	$(MAKE) -C 10.stack
 kernel :
-	$(MAKE) -C 10.kernel
+	$(MAKE) -C 11.kernel
 idt :
-	$(MAKE) -C 11.idt
+	$(MAKE) -C 12.idt
 star :
-	$(MAKE) -C 12.star
+	$(MAKE) -C 13.star
 
 clean :
 	$(MAKE) -C 00.template clean
 	$(MAKE) -C 01.protected clean
 	$(MAKE) -C 02.function_call clean
 	$(MAKE) -C 03.paging clean
-	$(MAKE) -C 04.ia32e clean
-	$(MAKE) -C 05.64bit clean
-	$(MAKE) -C 06.long_mode clean
-	$(MAKE) -C 07.gdt clean
-	$(MAKE) -C 08.rip clean
-	$(MAKE) -C 09.stack clean
-	$(MAKE) -C 10.kernel clean
-	$(MAKE) -C 11.idt clean
-	$(MAKE) -C 12.star clean
+	$(MAKE) -C 04.pae clean
+	$(MAKE) -C 05.ia32e clean
+	$(MAKE) -C 06.64bit clean
+	$(MAKE) -C 07.long_mode clean
+	$(MAKE) -C 08.gdt clean
+	$(MAKE) -C 09.rip clean
+	$(MAKE) -C 10.stack clean
+	$(MAKE) -C 11.kernel clean
+	$(MAKE) -C 12.idt clean
+	$(MAKE) -C 13.star clean
