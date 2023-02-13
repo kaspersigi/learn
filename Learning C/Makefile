@@ -20,7 +20,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm asm_call_c inline_asm syscall mmap polymorphism
+all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm asm_call_c inline_asm syscall mmap polymorphism complex_macro
 template :
 	$(MAKE) -C 00.template
 macro :
@@ -133,6 +133,8 @@ mmap :
 	$(MAKE) -C 54.mmap
 polymorphism :
 	$(MAKE) -C 55.polymorphism
+complex_macro :
+	$(MAKE) -C 56.complex_macro
 
 format :
 	$(MAKE) -C 00.template format
@@ -191,6 +193,7 @@ format :
 	$(MAKE) -C 53.syscall format
 	$(MAKE) -C 54.mmap format
 	$(MAKE) -C 55.polymorphism format
+	$(MAKE) -C 56.complex_macro format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -249,3 +252,4 @@ clean :
 	$(MAKE) -C 53.syscall clean
 	$(MAKE) -C 54.mmap clean
 	$(MAKE) -C 55.polymorphism clean
+	$(MAKE) -C 56.complex_macro clean
