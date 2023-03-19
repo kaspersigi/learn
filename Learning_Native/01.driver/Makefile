@@ -8,7 +8,7 @@ PWD := $(shell pwd)
 KDIR := /usr/src/kernels/linux-$(shell uname -r)
 all :
 	make -C $(KDIR) M=$(PWD)
-	rm -rfv *.o *.mod.c *.symvers *.order .tmp_versions \.*.cmd
+	rm -rfv *.o *.mod.c *.symvers *.order *.mod .tmp_versions \.*.cmd
 format :
 	clang-format $(SRC) -style=file -i
 clean :
