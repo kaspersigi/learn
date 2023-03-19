@@ -28,6 +28,7 @@ RUN apt install sudo -y \
     && apt install lldb-13 -y \
     && apt install libc++-13-dev -y \
     && apt install libc++abi-13-dev -y \
+    && apt install lld-13 -y \
     && apt install gdb -y \
     && apt install cgdb -y \
     && apt install qemu-system -y \
@@ -41,12 +42,19 @@ RUN apt install sudo -y \
     && apt install bsdmainutils -y \
     && apt install valgrind -y \
     && apt install fonts-firacode -y
-RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-13 100 \
-    && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-13 100 \
+RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-13 100 \
     && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-13 100 \
     && update-alternatives --install /usr/bin/lldb lldb /usr/bin/lldb-13 100 \
     && update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-13 100 \
+    && update-alternatives --install /usr/bin/lld lld /usr/bin/lld-13 100 \
+    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-13 100 \
+    && update-alternatives --install /usr/bin/ld.lld ld.lld /usr/bin/ld.lld-13 100 \
     && update-alternatives --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-13 100 \
+    && update-alternatives --install /usr/bin/llvm-nm llvm-nm /usr/bin/llvm-nm-13 100 \
+    && update-alternatives --install /usr/bin/llvm-objcopy llvm-objcopy /usr/bin/llvm-objcopy-13 100 \
+    && update-alternatives --install /usr/bin/llvm-objdump llvm-objdump /usr/bin/llvm-objdump-13 100 \
+    && update-alternatives --install /usr/bin/llvm-readelf llvm-readelf /usr/bin/llvm-readelf-13 100 \
+    && update-alternatives --install /usr/bin/llvm-strip llvm-strip /usr/bin/llvm-strip-13 100 \
     && echo 'miku    ALL=(ALL:ALL) ALL' >> /etc/sudoers \
     && echo '/usr/sbin/sshd -D &' > /root/run.sh \
     && chmod 110 /root/run.sh
