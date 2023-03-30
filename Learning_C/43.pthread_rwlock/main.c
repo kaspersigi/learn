@@ -10,7 +10,7 @@
 // 互斥量要么加锁，要么并不加锁，同时只有一个线程能够访问
 // 读写锁，可以让多个线程同时读取
 
-#if 0 //用到的函数及结构体定义
+#if 0 // 用到的函数及结构体定义
 typedef union {
     struct __pthread_rwlock_arch_t __data;
     char __size[__SIZEOF_PTHREAD_RWLOCK_T];
@@ -130,5 +130,5 @@ int main(int argc, char* argv[])
     pthread_cancel(tid_child_2);
     pthread_cancel(tid_child_3);
     pthread_rwlock_destroy(&rwlock);
-    pthread_exit(0); //主线程使用pthread_exit()退出时，进程会等待所有线程退出，才退出
+    pthread_exit(0); // 主线程使用pthread_exit()退出时，进程会等待所有线程退出，才退出
 }

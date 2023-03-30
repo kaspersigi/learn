@@ -3,7 +3,7 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::queue<int> nums; //无法以初始化列表进行初始化
+    std::queue<int> nums; // 无法以初始化列表进行初始化
     nums.push(1);
     nums.push(2);
     nums.push(3);

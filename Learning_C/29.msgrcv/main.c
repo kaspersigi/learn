@@ -37,9 +37,9 @@
 // 通过msgget()第一个参数设置共享内存的key值，若使用宏定义IPC_PRIVATE，得到的key值永远为0
 
 typedef struct msgbuff {
-    long type; //第一个参数必须是类型
-    char voltage[124]; //自定义类型，传输的消息内容，这里是电压的值
-    char ID[4]; //自定义内容，这里是某设备ID
+    long type; // 第一个参数必须是类型
+    char voltage[124]; // 自定义类型，传输的消息内容，这里是电压的值
+    char ID[4]; // 自定义内容，这里是某设备ID
 } msgbuff;
 
 int main(int argc, char* argv[])
@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
     printf("create key success, key = %X\n", key);
 
     // int msqid = msgget(IPC_PRIVATE, IPC_CREAT | 0664); //成功返回消息队列ID，失败返回-1
-    int msqid = msgget(key, IPC_CREAT | 0664); //成功返回消息队列ID，失败返回-1
+    int msqid = msgget(key, IPC_CREAT | 0664); // 成功返回消息队列ID，失败返回-1
     if (msqid < 0) {
         printf("create message queue failure\n");
         return -1;
@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
     printf("create message queue sucess, msgid = %d\n", msqid);
 
     // init sendbuff
-    msgbuff sendbuff; //实例化msgbuff对象
+    msgbuff sendbuff; // 实例化msgbuff对象
     sendbuff.type = 100;
     printf("please input message: \n");
     fgets(sendbuff.voltage, 124, stdin);
@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
     system("ipcs -q");
 
     // init recievebuff
-    msgbuff recievebuff; //实例化msgbuff对象
+    msgbuff recievebuff; // 实例化msgbuff对象
     recievebuff.type = 100;
 
     // 返回值 成功则返回实际读到的字节数 失败返回-1

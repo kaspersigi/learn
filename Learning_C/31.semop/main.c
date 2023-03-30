@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
 
     // semget()比shmget() msgget()多一个参数，信号量的个数
     // int semid = semget(IPC_PRIVATE, 3, IPC_CREAT | 0664); //成功返回消息队列ID，失败返回-1
-    int semid = semget(key, 3, IPC_CREAT | 0664); //成功返回消息队列ID，失败返回-1
+    int semid = semget(key, 3, IPC_CREAT | 0664); // 成功返回消息队列ID，失败返回-1
     if (semid < 0) {
         printf("create semaphore array failure\n");
         return -1;
@@ -101,7 +101,7 @@ int main(int argc, char* argv[])
     semop(semid, &mysembuf, 1);
 
     system("ipcs -s");
-    //第二个参数为需要修改信号量，与删除无关，可以随便写
+    // 第二个参数为需要修改信号量，与删除无关，可以随便写
     semctl(semid, 3, IPC_RMID, NULL);
 
     return 0;

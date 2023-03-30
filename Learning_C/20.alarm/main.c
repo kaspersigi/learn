@@ -10,7 +10,7 @@
 int main(int argc, char* argv[])
 {
     printf("alarm before\n");
-    alarm(9); //若干秒后，发送一个SIGALRM信号
+    alarm(9); // 若干秒后，发送一个SIGALRM信号
     printf("alarm after\n");
     for (int i = 0; i < 20; i++) {
         sleep(1);

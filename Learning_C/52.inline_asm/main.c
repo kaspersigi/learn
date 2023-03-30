@@ -11,9 +11,9 @@ static inline void atomic_set(atomic_t* v, int i)
 
 static inline void atomic_add(int i, atomic_t* v)
 {
-    __asm__ __volatile__("addl %1, %0" //汇编语句 %0 result, %1 data1, %2 data2
-                         : "+m"(v->counter) //输出寄存器
-                         : "ir"(i)); //输入寄存器
+    __asm__ __volatile__("addl %1, %0" // 汇编语句 %0 result, %1 data1, %2 data2
+                         : "+m"(v->counter) // 输出寄存器
+                         : "ir"(i)); // 输入寄存器
 }
 
 static inline void atomic_sub(int i, atomic_t* v)

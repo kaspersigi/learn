@@ -74,7 +74,7 @@ void* worker_f(void* arg)
             // 阻塞工作线程
             pthread_cond_wait(&(threadpool_p->not_empty), &(threadpool_p->mutex_pool));
 
-            //判断是不是要销毁线程
+            // 判断是不是要销毁线程
             if (threadpool_p->exit_num > 0) {
                 threadpool_p->exit_num--;
                 if (threadpool_p->live_num > threadpool_p->min_num) {
@@ -191,7 +191,7 @@ ThreadPool* threadpool_create(int min, int max, int capacity)
         memset(threadpool_p->thread_tids_p, 0, max * sizeof(pthread_t));
 
         threadpool_p->busy_num = 0;
-        threadpool_p->live_num = min; //和最小个数相等
+        threadpool_p->live_num = min; // 和最小个数相等
         threadpool_p->exit_num = 0;
 
         if (pthread_mutex_init(&threadpool_p->mutex_pool, NULL) != 0 || pthread_mutex_init(&threadpool_p->mutex_busy, NULL) != 0 || pthread_cond_init(&threadpool_p->not_empty, NULL) != 0 || pthread_cond_init(&threadpool_p->not_full, NULL) != 0) {

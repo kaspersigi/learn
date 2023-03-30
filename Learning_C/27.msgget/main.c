@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
     printf("create key success, key = %X\n", key);
 
     // int msqid = msgget(IPC_PRIVATE, IPC_CREAT | 0664); //成功返回消息队列ID，失败返回-1
-    int msqid = msgget(key, IPC_CREAT | 0664); //成功返回消息队列ID，失败返回-1
+    int msqid = msgget(key, IPC_CREAT | 0664); // 成功返回消息队列ID，失败返回-1
     if (msqid < 0) {
         printf("create message queue failure\n");
         return -1;

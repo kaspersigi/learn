@@ -3,7 +3,7 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::priority_queue<int> nums; //无法以初始化列表进行初始化
+    std::priority_queue<int> nums; // 无法以初始化列表进行初始化
     nums.push(1);
     nums.push(3);
     nums.push(2);
@@ -25,7 +25,7 @@ auto main(int argc, char* argv[]) -> int
         nums.pop();
     }
 
-    //有点类似栈，默认最大的在栈顶
+    // 有点类似栈，默认最大的在栈顶
 
     return 0;
 }

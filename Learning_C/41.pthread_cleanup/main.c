@@ -111,5 +111,5 @@ int main(int argc, char* argv[])
     pthread_cancel(tid_child);
     // pthread_kill(tid_child, SIGQUIT);
     // return 0;
-    pthread_exit(0); //主线程使用pthread_exit()退出时，进程会等待所有线程退出，才退出
+    pthread_exit(0); // 主线程使用pthread_exit()退出时，进程会等待所有线程退出，才退出
 }

@@ -47,15 +47,15 @@ auto main(int argc, char* argv[]) -> int
     std::for_each(nums.cbegin(), nums.cend(), [](auto e) { std::cout << e << " "; });
     std::cout << std::endl;
 
-    nums.insert(nums.begin(), 0); //在it前插入元素
+    nums.insert(nums.begin(), 0); // 在it前插入元素
     std::for_each(nums.cbegin(), nums.cend(), [](auto e) { std::cout << e << " "; });
     std::cout << std::endl;
 
-    nums.emplace(nums.begin(), -2); //插入对象不是类时，退化为insert()
+    nums.emplace(nums.begin(), -2); // 插入对象不是类时，退化为insert()
     std::for_each(nums.cbegin(), nums.cend(), [](auto e) { std::cout << e << " "; });
     std::cout << std::endl;
 
-    nums.emplace_back(0); //插入对象不是类时，退化为push_back()
+    nums.emplace_back(0); // 插入对象不是类时，退化为push_back()
     std::for_each(nums.cbegin(), nums.cend(), [](auto e) { std::cout << e << " "; });
     std::cout << std::endl;
 
@@ -79,7 +79,7 @@ auto main(int argc, char* argv[]) -> int
     std::cout << nums.capacity() << std::endl;
     std::cout << nums.max_size() << std::endl;
 
-    std::vector<int>().swap(nums); //此处的效果和shrink_to_fit()相同，释放内存
+    std::vector<int>().swap(nums); // 此处的效果和shrink_to_fit()相同，释放内存
 
     nums.push_back(1);
     std::cout << nums.size() << std::endl;

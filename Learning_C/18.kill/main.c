@@ -72,7 +72,7 @@ my_fun fun2(int num, my_fun fun)
     return fun;
 }
 
-//编译器原因，gcc对没有变量的东西sizeof，返回不是0，而是1
+// 编译器原因，gcc对没有变量的东西sizeof，返回不是0，而是1
 
 int main(int argc, char* argv[])
 {
@@ -95,16 +95,16 @@ int main(int argc, char* argv[])
 
     // signal(SIGPIPE, SIG_IGN); //实际这个函数的目的就是防止程序收到SIGPIPE后自动退出
 
-    printf("gid is %d\n", getgid()); //返回组识别码，普通用户和root用户值不同
-    printf("My parent pid = %d\n", getppid()); //返回父进程识别码
+    printf("gid is %d\n", getgid()); // 返回组识别码，普通用户和root用户值不同
+    printf("My parent pid = %d\n", getppid()); // 返回父进程识别码
 
     pid_t child;
 
-    //创建子进程
+    // 创建子进程
     if ((child = fork()) < 0) {
         printf("Fork Error: %s\n", strerror(errno));
         exit(1);
-    } else if (child == 0) { //子进程
+    } else if (child == 0) { // 子进程
         signal(SIGPIPE, SIG_IGN);
         int i;
         printf("I am the child: %d\n", getpid());

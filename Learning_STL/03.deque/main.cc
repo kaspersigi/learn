@@ -16,7 +16,7 @@ auto main(int argc, char* argv[]) -> int
 
     nums.shrink_to_fit(); // deque内存模型和vector不一样，不需要capacity
 
-    //其他几乎同vector
+    // 其他几乎同vector
 
     return 0;
 }

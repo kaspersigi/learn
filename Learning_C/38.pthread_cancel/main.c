@@ -51,12 +51,12 @@ void* thread_func(void* arg)
 // 2、main()参数比一般的线程多
 // 3、主线程一般在默认堆栈上执行，而且可以增长到足够的长度，普通线程堆栈是受限的，一旦溢出就会产生错误
 
-//如果进程中任何一个线程调用了_exit()、exit()等exit簇函数，那么整个进程将会退出
+// 如果进程中任何一个线程调用了_exit()、exit()等exit簇函数，那么整个进程将会退出
 
-//三种不会终止进程的普通线程退出方式
-// 1、从启动例程中返回（即return），返回值是线程的退出码
-// 2、线程可以被同一进程的其他线程取消
-// 3、线程调用pthread_exit(void* rval)，rval是退出码
+// 三种不会终止进程的普通线程退出方式
+//  1、从启动例程中返回（即return），返回值是线程的退出码
+//  2、线程可以被同一进程的其他线程取消
+//  3、线程调用pthread_exit(void* rval)，rval是退出码
 
 // 取消thread指定的线程，成功返回0。但是，取消只是发送一个请求，并不意味着等待线程终止，而且发送成功，也不意味着thread一定会终止
 // int pthread_cancel(pthread_t thread);
@@ -77,5 +77,5 @@ int main(int argc, char* argv[])
 
     // pthread_join(tid_child, NULL);
     // return 0;
-    pthread_exit(0); //主线程使用pthread_exit()退出时，进程会等待所有线程退出，才退出
+    pthread_exit(0); // 主线程使用pthread_exit()退出时，进程会等待所有线程退出，才退出
 }

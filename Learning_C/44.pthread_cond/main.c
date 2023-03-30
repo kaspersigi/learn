@@ -11,7 +11,7 @@
 // 条件变量可以一次锁住一组线程，一次打开一组线程
 // 因此在线程同步中，在多生产者-多消费者模型中，非常实用
 
-#if 0 //用到的函数及结构体定义
+#if 0 // 用到的函数及结构体定义
 // 用于阻塞和唤醒多个线程，因此存储了多个线程的ID
 typedef union {
     struct __pthread_cond_s __data;
@@ -94,7 +94,7 @@ void* producer_f(void* arg)
         printf("%s: %s, pid: %d, tid: %lx, number: %d\n", __PRETTY_FUNCTION__, (char*)arg, getpid(), pthread_self(), new_node->number);
 
         pthread_mutex_unlock(&mutex);
-        //唤醒消费者线程
+        // 唤醒消费者线程
         pthread_cond_broadcast(&cond);
         sleep(rand() % 3);
     }
@@ -105,7 +105,7 @@ void* consumer_f(void* arg)
 {
     print((char*)arg);
 
-    //阻塞消费者线程
+    // 阻塞消费者线程
     while (1) {
 
         pthread_mutex_lock(&mutex);
@@ -147,5 +147,5 @@ int main(int argc, char* argv[])
 
     pthread_cond_destroy(&cond);
     pthread_mutex_destroy(&mutex);
-    pthread_exit(0); //主线程使用pthread_exit()退出时，进程会等待所有线程退出，才退出
+    pthread_exit(0); // 主线程使用pthread_exit()退出时，进程会等待所有线程退出，才退出
 }

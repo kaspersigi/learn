@@ -14,7 +14,7 @@ auto main(int argc, char* argv[]) -> int
 
     auto it = nums.find(4);
 
-    auto count = nums.erase(4); //全部删除
+    auto count = nums.erase(4); // 全部删除
     std::cout << count << std::endl;
 
     std::for_each(nums.cbegin(), nums.cend(), [](auto e) { std::cout << e << " "; });

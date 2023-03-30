@@ -43,7 +43,7 @@ auto main(int argc, char* argv[]) -> int
     std::cout << nums.max_size() << std::endl;
 
     decltype(nums) nums3;
-    nums3.splice(nums3.end(), nums, nums.begin()); //将nums的元素移到nums3中
+    nums3.splice(nums3.end(), nums, nums.begin()); // 将nums的元素移到nums3中
     std::for_each(nums3.cbegin(), nums3.cend(), [](auto e) { std::cout << e << " "; });
     std::cout << std::endl;
     std::cout << nums3.size() << std::endl;
@@ -56,7 +56,7 @@ auto main(int argc, char* argv[]) -> int
 
     std::list nums4 { 1, 3, 5, 7, 9 };
     std::list nums5 { 2, 4, 6, 8, 10 };
-    nums4.merge(nums5); //两个有序list，将nums5移动到nums4中
+    nums4.merge(nums5); // 两个有序list，将nums5移动到nums4中
     std::for_each(nums4.cbegin(), nums4.cend(), [](auto e) { std::cout << e << " "; });
     std::cout << std::endl;
     std::for_each(nums5.cbegin(), nums5.cend(), [](auto e) { std::cout << e << " "; });
@@ -84,7 +84,7 @@ auto main(int argc, char* argv[]) -> int
     nums6.push_back(8);
     std::for_each(nums6.cbegin(), nums6.cend(), [](auto e) { std::cout << e << " "; });
     std::cout << std::endl;
-    //对list，push_front()头插，push_back()尾插
+    // 对list，push_front()头插，push_back()尾插
 
     return 0;
 }

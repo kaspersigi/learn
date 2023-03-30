@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
     // shmctl()成功返回0 失败返回-1
     // shmctl(shmid, IPC_SET, NULL); //设置IPC对象属性
     // shmctl(shmid, IPC_STAT, NULL); //获得IPC对象属性
-    shmctl(shmid, IPC_RMID, NULL); //删除IPC对象
+    shmctl(shmid, IPC_RMID, NULL); // 删除IPC对象
 
     return 0;
 }

@@ -6,7 +6,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#if 0 //用到的函数及结构体定义
+#if 0 // 用到的函数及结构体定义
 typedef union {
     struct __pthread_mutex_s __data;
     char __size[__SIZEOF_PTHREAD_MUTEX_T];
@@ -108,5 +108,5 @@ int main(int argc, char* argv[])
     pthread_cancel(tid_child_1);
     pthread_cancel(tid_child_2);
     pthread_mutex_destroy(&mutex);
-    pthread_exit(0); //主线程使用pthread_exit()退出时，进程会等待所有线程退出，才退出
+    pthread_exit(0); // 主线程使用pthread_exit()退出时，进程会等待所有线程退出，才退出
 }

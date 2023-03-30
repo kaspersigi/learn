@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
     int write_ret;
     fd = open("./a.txt", O_TRUNC | O_RDWR | O_CREAT, 0664);
     // open()返回值为文件inode号(非负整数)，即文件标识符
-    //失败返回-1
+    // 失败返回-1
     if (fd < 0) {
         printf("open file a.txt failure\n");
         return -1;

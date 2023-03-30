@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     FILE* fp;
     char read_buffer[128] = {};
     char write_buffer[128] = {};
-    fp = fopen("./a.txt", "r"); //如果文件不存在，则创建，读写方式打开
+    fp = fopen("./a.txt", "r"); // 如果文件不存在，则创建，读写方式打开
     if (fp == NULL) {
         printf("creat file failure\n");
         return -1;
