@@ -20,39 +20,43 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : c c++ design_pattern native operating_system socket stl
+all : c c++ design_pattern native driver operating_system socket stl
 c :
-	$(MAKE) -C Learning\ C
+	$(MAKE) -C Learning_C
 c++ :
-	$(MAKE) -C Learning\ C++
+	$(MAKE) -C Learning_C++
 design_pattern :
-	$(MAKE) -C Learning\ Design\ Pattern
+	$(MAKE) -C Learning_Design_Pattern
+driver :
+	$(MAKE) -C Learning_Driver
 native :
-	$(MAKE) -C Learning\ Native
+	$(MAKE) -C Learning_Native
 operating_system :
-	$(MAKE) -C Learning\ Operating\ System
+	$(MAKE) -C Learning_Operating_System
 socket :
-	$(MAKE) -C Learning\ Socket
+	$(MAKE) -C Learning_Socket
 stl :
-	$(MAKE) -C Learning\ STL
+	$(MAKE) -C Learning_STL
 
 format :
-	$(MAKE) -C Learning\ C format
-	$(MAKE) -C Learning\ C++ format
-	$(MAKE) -C Learning\ Design\ Pattern format
-	$(MAKE) -C Learning\ Native format
-	# $(MAKE) -C Learning\ Operating\ System format
-	$(MAKE) -C Learning\ Socket format
-	$(MAKE) -C Learning\ STL format
+	$(MAKE) -C Learning_C format
+	$(MAKE) -C Learning_C++ format
+	$(MAKE) -C Learning_Design_Pattern format
+	$(MAKE) -C Learning_Driver format
+	$(MAKE) -C Learning_Native format
+	# $(MAKE) -C Learning_Operating_System format
+	$(MAKE) -C Learning_Socket format
+	$(MAKE) -C Learning_STL format
 
 clean :
-	$(MAKE) -C Learning\ C clean
-	$(MAKE) -C Learning\ C++ clean
-	$(MAKE) -C Learning\ Design\ Pattern clean
-	$(MAKE) -C Learning\ Native clean
-	$(MAKE) -C Learning\ Operating\ System clean
-	$(MAKE) -C Learning\ Socket clean
-	$(MAKE) -C Learning\ STL clean
+	$(MAKE) -C Learning_C clean
+	$(MAKE) -C Learning_C++ clean
+	$(MAKE) -C Learning_Design_Pattern clean
+	$(MAKE) -C Learning_Driver clean
+	$(MAKE) -C Learning_Native clean
+	$(MAKE) -C Learning_Operating_System clean
+	$(MAKE) -C Learning_Socket clean
+	$(MAKE) -C Learning_STL clean
 
 bak :
 	git archive --format=tar.gz --output ../learn.tar.gz master
