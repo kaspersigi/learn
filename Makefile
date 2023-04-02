@@ -20,7 +20,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : c c++ design_pattern native driver operating_system socket stl
+all : c c++ design_pattern native huawei operating_system socket stl
 c :
 	$(MAKE) -C Learning_C
 c++ :
@@ -29,6 +29,8 @@ design_pattern :
 	$(MAKE) -C Learning_Design_Pattern
 driver :
 	$(MAKE) -C Learning_Driver
+huawei :
+	$(MAKE) -C Learning_Huawei
 native :
 	$(MAKE) -C Learning_Native
 operating_system :
@@ -43,6 +45,7 @@ format :
 	$(MAKE) -C Learning_C++ format
 	$(MAKE) -C Learning_Design_Pattern format
 	$(MAKE) -C Learning_Driver format
+	$(MAKE) -C Learning_Huawei format
 	$(MAKE) -C Learning_Native format
 	# $(MAKE) -C Learning_Operating_System format
 	$(MAKE) -C Learning_Socket format
@@ -52,7 +55,8 @@ clean :
 	$(MAKE) -C Learning_C clean
 	$(MAKE) -C Learning_C++ clean
 	$(MAKE) -C Learning_Design_Pattern clean
-	$(MAKE) -C Learning_Driver clean
+	# $(MAKE) -C Learning_Driver clean
+	$(MAKE) -C Learning_Huawei clean
 	$(MAKE) -C Learning_Native clean
 	$(MAKE) -C Learning_Operating_System clean
 	$(MAKE) -C Learning_Socket clean
