@@ -6,7 +6,7 @@
 #if 0
 auto main(int argc, char* argv[]) -> int
 {
-    constexpr int MAX_SIZE = 5000;
+    constexpr size_t MAX_SIZE = 5001;
     char buffer[MAX_SIZE] = {};
     std::string answer {};
     while (std::cin.getline(buffer, MAX_SIZE)) {
