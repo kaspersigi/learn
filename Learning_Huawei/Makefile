@@ -20,16 +20,36 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : c00 c01
-c00 :
-	$(MAKE) -C 00
-c01 :
-	$(MAKE) -C 01
+all : hj000 hj001 hj002 hj003 hj004 hj005 hj006
+hj000 :
+	$(MAKE) -C 000
+hj001 :
+	$(MAKE) -C 001
+hj002 :
+	$(MAKE) -C 002
+hj003 :
+	$(MAKE) -C 003
+hj004 :
+	$(MAKE) -C 004
+hj005 :
+	$(MAKE) -C 005
+hj006 :
+	$(MAKE) -C 006
 
 format :
-	$(MAKE) -C 00 format
-	$(MAKE) -C 01 format
+	$(MAKE) -C 000 format
+	$(MAKE) -C 001 format
+	$(MAKE) -C 002 format
+	$(MAKE) -C 003 format
+	$(MAKE) -C 004 format
+	$(MAKE) -C 005 format
+	$(MAKE) -C 006 format
 
 clean :
-	$(MAKE) -C 00 clean
-	$(MAKE) -C 01 clean
+	$(MAKE) -C 000 clean
+	$(MAKE) -C 001 clean
+	$(MAKE) -C 002 clean
+	$(MAKE) -C 003 clean
+	$(MAKE) -C 004 clean
+	$(MAKE) -C 005 clean
+	$(MAKE) -C 006 clean

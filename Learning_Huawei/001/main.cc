@@ -1,6 +1,9 @@
 // HJ1 字符串最后一个单词的长度
 #include <iostream>
 #include <string>
+extern "C" {
+#include <string.h>
+}
 
 // 题目明示不会以空格结尾
 #if 0
@@ -21,6 +24,7 @@ auto main(int argc, char* argv[]) -> int
         }
         // std::cout << answer << " " << answer.length() << std::endl;
         std::cout << answer.length() << std::endl;
+        memset(buffer, 0, MAX_SIZE);
     }
     return 0;
 }
@@ -30,7 +34,7 @@ auto main(int argc, char* argv[]) -> int
 // 如果没有这句话呢？思考后，还是纯c思想更好做，第一个非' '到最后一个非' '
 auto main(int argc, char* argv[]) -> int
 {
-    constexpr int MAX_SIZE = 5000;
+    constexpr size_t MAX_SIZE = 5001;
     char buffer[MAX_SIZE] = {};
     std::string answer {};
     while (std::cin.getline(buffer, MAX_SIZE)) {
@@ -49,6 +53,7 @@ auto main(int argc, char* argv[]) -> int
         }
         // std::cout << answer << " " << answer.length() << std::endl;
         std::cout << answer.length() << std::endl;
+        memset(buffer, 0, MAX_SIZE);
     }
     return 0;
 }
