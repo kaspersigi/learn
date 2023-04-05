@@ -2,22 +2,24 @@
 #include <algorithm>
 #include <iostream>
 #include <string>
-extern "C" {
-#include <string.h>
-}
+#include <unordered_set>
 
 #if 1
 auto main(int argc, char* argv[]) -> int
 {
-    constexpr size_t MAX_SIZE = 1001;
-    char buffer[MAX_SIZE] = {};
-    std::string answer {};
-    while (std::cin.getline(buffer, MAX_SIZE)) {
-        std::string str = std::string(buffer);
-        answer = str;
-        std::cout << answer << std::endl;
-        memset(buffer, 0, MAX_SIZE);
+    int n;
+    while (std::cin >> n) {
+        std::string str = std::to_string(n);
+        std::unordered_set<char> hash {};
+        std::for_each(str.cbegin(), str.cend(), [&](auto e) { hash.insert(e); });
+        std::for_each(str.crbegin(), str.crend(), [&](auto e) { if(hash.end()!=hash.find(e)) {std::cout << e; hash.erase(e);} });
+        std::cout << std::endl;
     }
     return 0;
 }
+#endif
+
+#if 0
+int转std::string std::to_string(n)
+std::string转int atoi(str.c_str())
 #endif
