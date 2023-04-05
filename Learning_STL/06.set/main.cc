@@ -24,6 +24,12 @@ auto main(int argc, char* argv[]) -> int
     std::cout << nums.size() << std::endl;
     std::cout << nums.max_size() << std::endl;
 
+    auto it = nums.find(10);
+    if (nums.end() == it)
+        std::cout << "not found!" << std::endl;
+    else
+        std::cout << "found!" << std::endl;
+
     auto count = nums.erase(5);
     std::cout << count << std::endl;
 

@@ -26,3 +26,8 @@ auto main(int argc, char* argv[]) -> int
     return 0;
 }
 #endif
+
+#if 0
+std::set.find(index) 返回的是it, it==set.end()就是没找到
+std::for_each(set.cbegin(), set.cend(), [](auto e){}) e是set里的元素, 使用e访问其值
+#endif
