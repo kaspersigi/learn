@@ -30,9 +30,9 @@ auto main(int argc, char* argv[]) -> int
     std::string word {};
     while (std::cin.getline(buffer, MAX_SIZE)) {
         std::string str = std::string(buffer);
-        std::istringstream iss(str);
+        std::stringstream ss = std::stringstream(str);
         std::vector<std::string> vs {};
-        while (iss >> word) {
+        while (ss >> word) {
             vs.push_back(word);
         }
         std::for_each(vs.crbegin(), vs.crend(), [](auto e) { std::cout << e << " "; });
@@ -46,6 +46,6 @@ auto main(int argc, char* argv[]) -> int
 #if 0
 如何对std::string做split?
 std::cin //不太行
-std::istringstream //很好，开销也不大
+std::stringstream //很好，开销也不大
 std::regex //就本题来说，完全没有必要
 #endif

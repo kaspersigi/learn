@@ -21,5 +21,5 @@ auto main(int argc, char* argv[]) -> int
 
 #if 0
 int转std::string std::to_string(n)
-std::string转int atoi(str.c_str())
+std::string转int std::stoi(str)
 #endif
