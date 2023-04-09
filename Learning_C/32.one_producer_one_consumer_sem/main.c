@@ -60,9 +60,9 @@ int main(int argc, char* argv[])
     pthread_create(&tid_consumer, NULL, fn_consumer, NULL);
 
     printf("pid: %d\n", pid);
-    printf("tid_main: %ld\n", tid_main);
-    printf("tid_producer: %ld\n", tid_producer);
-    printf("tid_consumer: %ld\n", tid_consumer);
+    printf("tid_main: %lx\n", tid_main);
+    printf("tid_producer: %lx\n", tid_producer);
+    printf("tid_consumer: %lx\n", tid_consumer);
 
     while (1) {
         sem_wait(&mutex);
@@ -70,8 +70,6 @@ int main(int argc, char* argv[])
         sem_post(&mutex);
         sleep(1);
     }
-
-    sleep(60);
 
     return 0;
 }

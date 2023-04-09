@@ -93,11 +93,11 @@ int main(int argc, char* argv[])
     pthread_create(&tid_consumer2, NULL, fn_consumer2, NULL);
 
     printf("pid: %d\n", pid);
-    printf("tid_main: %ld\n", tid_main);
-    printf("tid_producer1: %ld\n", tid_producer1);
-    printf("tid_producer2: %ld\n", tid_producer2);
-    printf("tid_consumer1: %ld\n", tid_consumer1);
-    printf("tid_consumer2: %ld\n", tid_consumer2);
+    printf("tid_main: %lx\n", tid_main);
+    printf("tid_producer1: %lx\n", tid_producer1);
+    printf("tid_producer2: %lx\n", tid_producer2);
+    printf("tid_consumer1: %lx\n", tid_consumer1);
+    printf("tid_consumer2: %lx\n", tid_consumer2);
 
     while (1) {
         sem_wait(&mutex);
@@ -105,8 +105,6 @@ int main(int argc, char* argv[])
         sem_post(&mutex);
         sleep(1);
     }
-
-    sleep(60);
 
     return 0;
 }
