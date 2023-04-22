@@ -20,7 +20,9 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : c c++ design_pattern native huawei operating_system socket stl
+all : algorithm c c++ design_pattern native operating_system socket stl
+algorithm :
+	$(MAKE) -C Learning_Algorithm
 c :
 	$(MAKE) -C Learning_C
 c++ :
@@ -29,8 +31,6 @@ design_pattern :
 	$(MAKE) -C Learning_Design_Pattern
 driver :
 	$(MAKE) -C Learning_Driver
-huawei :
-	$(MAKE) -C Learning_Huawei
 native :
 	$(MAKE) -C Learning_Native
 operating_system :
@@ -41,26 +41,26 @@ stl :
 	$(MAKE) -C Learning_STL
 
 format :
+	$(MAKE) -C Learning_Algorithm format
 	$(MAKE) -C Learning_C format
 	$(MAKE) -C Learning_C++ format
 	$(MAKE) -C Learning_Design_Pattern format
 	$(MAKE) -C Learning_Driver format
-	$(MAKE) -C Learning_Huawei format
 	$(MAKE) -C Learning_Native format
 	# $(MAKE) -C Learning_Operating_System format
 	$(MAKE) -C Learning_Socket format
 	$(MAKE) -C Learning_STL format
 
 clean :
+	$(MAKE) -C Learning_Algorithm clean
 	$(MAKE) -C Learning_C clean
 	$(MAKE) -C Learning_C++ clean
 	$(MAKE) -C Learning_Design_Pattern clean
 	# $(MAKE) -C Learning_Driver clean
-	$(MAKE) -C Learning_Huawei clean
 	$(MAKE) -C Learning_Native clean
 	$(MAKE) -C Learning_Operating_System clean
 	$(MAKE) -C Learning_Socket clean
 	$(MAKE) -C Learning_STL clean
 
 bak :
-	git archive --format=tar.gz --output ../learn.tar.gz master
+	git archive --format=tar.gz --prefix=learn/ --output ../learn.tar.gz master

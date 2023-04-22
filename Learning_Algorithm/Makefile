@@ -5,6 +5,7 @@
 TRG = main
 OBJ = main.o
 SRC = main.cc
+VPATH = /home/miku/learn/Learning\ C++
 ARCH = $(shell llvm-config --host-target)
 CC = /usr/bin/clang --target=$(ARCH)
 CXX = /usr/bin/clang++ --target=$(ARCH)
@@ -19,14 +20,12 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-$(TRG) : $(OBJ)
-	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS)
-	rm -v $(OBJ)
-$(OBJ) : $(SRC)
-	$(CXX) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+all : template
+template :
+	$(MAKE) -C 00.template
+
 format :
-	$(FORMAT) main.cc -style=file -i
+	$(MAKE) -C 00.template format
+
 clean :
-	rm -v $(TRG)
-check :
-	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)
+	$(MAKE) -C 00.template clean
