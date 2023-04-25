@@ -20,20 +20,24 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template binary_search remove_element
+all : template binary_search remove_element squares_of_a_sorted_array
 template :
 	$(MAKE) -C 00.template
 binary_search :
 	$(MAKE) -C 01.binary_search
 remove_element :
 	$(MAKE) -C 02.remove_element
+squares_of_a_sorted_array :
+	$(MAKE) -C 03.squares_of_a_sorted_array
 
 format :
 	$(MAKE) -C 00.template format
 	$(MAKE) -C 01.binary_search format
 	$(MAKE) -C 02.remove_element format
+	$(MAKE) -C 03.squares_of_a_sorted_array format
 
 clean :
 	$(MAKE) -C 00.template clean
 	$(MAKE) -C 01.binary_search clean
 	$(MAKE) -C 02.remove_element clean
+	$(MAKE) -C 03.squares_of_a_sorted_array clean
