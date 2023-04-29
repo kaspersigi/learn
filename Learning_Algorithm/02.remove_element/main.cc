@@ -22,18 +22,15 @@ int remove_element(std::vector<int>& nums, int value)
 // 快慢指针，O(n)
 int remove_element(std::vector<int>& nums, int value)
 {
-    int length = nums.size();
-    for (size_t fast = 0, slow = 0; fast < nums.size(); ++fast) {
-        if (nums[fast] == value)
-            length--;
-        else {
+    int slow = 0;
+    for (size_t fast = 0; fast < nums.size(); ++fast) {
+        if (nums[fast] != value) {
             nums[slow] = nums[fast];
             slow++;
         }
     }
-    return length;
+    return slow;
 }
-
 #endif
 
 auto main(int argc, char* argv[]) -> int
