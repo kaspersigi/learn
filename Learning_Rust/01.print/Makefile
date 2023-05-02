@@ -9,16 +9,9 @@ DEBUG = -g -C opt-level=0
 RELEASE = -C debuginfo=0 -C opt-level=3
 
 .PHONY : all
-all : template print
-template :
-	$(MAKE) -C 00.template
-print :
-	$(MAKE) -C 01.print
-
+$(TRG) : $(SRC)
+	rustc $(SRC) -o $(TRG) $(FLAGS) $(DEBUG)
 format :
-	$(MAKE) -C 00.template format
-	$(MAKE) -C 01.print format
-
+	rustfmt $(SRC) $(FLAGS)
 clean :
-	$(MAKE) -C 00.template clean
-	$(MAKE) -C 01.print clean
+	rm -v main
