@@ -25,6 +25,10 @@ int min_sub_array_len(int target, std::vector<int>& nums)
 }
 #endif
 
+#if 0
+// 滑动窗口
+#endif
+
 auto main(int argc, char* argv[]) -> int
 {
     int target = 7;
