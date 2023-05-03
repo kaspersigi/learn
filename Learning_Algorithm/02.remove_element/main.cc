@@ -3,11 +3,11 @@
 
 #if 0
 // 暴力破解，双循环，O(n^2)
-int remove_element(std::vector<int>& nums, int value)
+int remove_element(std::vector<int>& nums, int val)
 {
     int length = nums.size();
     for (int i = 0; i < length; ++i) {
-        if (nums[i] == value) {
+        if (nums[i] == val) {
             for (int j = i; j < length - 1; ++j)
                 nums[j] = nums[j + 1];
             length--;
@@ -20,11 +20,11 @@ int remove_element(std::vector<int>& nums, int value)
 
 #if 1
 // 快慢指针，O(n)
-int remove_element(std::vector<int>& nums, int value)
+int remove_element(std::vector<int>& nums, int val)
 {
     int slow = 0;
     for (size_t fast = 0; fast < nums.size(); ++fast) {
-        if (nums[fast] != value) {
+        if (nums[fast] != val) {
             nums[slow] = nums[fast];
             slow++;
         }

@@ -4,10 +4,10 @@
 
 #if 0
 // 暴力破解，双循环，O(n+nlogn)
-std::vector<int> sorted_squares(std::vector<int>& A)
+std::vector<int> sorted_squares(std::vector<int>& nums)
 {
     std::vector<int> vi {};
-    std::for_each(A.cbegin(), A.cend(), [&](auto e) { vi.push_back(e * e); });
+    std::for_each(nums.cbegin(), nums.cend(), [&](auto e) { vi.push_back(e * e); });
     std::sort(vi.begin(), vi.end());
     return vi;
 }
@@ -15,18 +15,18 @@ std::vector<int> sorted_squares(std::vector<int>& A)
 
 #if 1
 // 快慢指针，单循环，O(n)
-std::vector<int> sorted_squares(std::vector<int>& A)
+std::vector<int> sorted_squares(std::vector<int>& nums)
 {
-    std::vector<int> vi(A.size(), 0);
+    std::vector<int> vi(nums.size(), 0);
     size_t slow {};
-    size_t fast { A.size() - 1 };
-    size_t pos { A.size() - 1 };
+    size_t fast { nums.size() - 1 };
+    size_t pos { nums.size() - 1 };
     while (slow <= fast) {
-        if (A[fast] * A[fast] > A[slow] * A[slow]) {
-            vi[pos] = A[fast] * A[fast];
+        if (nums[fast] * nums[fast] > nums[slow] * nums[slow]) {
+            vi[pos] = nums[fast] * nums[fast];
             --fast;
         } else {
-            vi[pos] = A[slow] * A[slow];
+            vi[pos] = nums[slow] * nums[slow];
             ++slow;
         }
         pos--;

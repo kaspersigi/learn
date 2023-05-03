@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 
-#if 1
+#if 0
 // 暴力破解法，O(n^2)
 int min_sub_array_len(int target, std::vector<int>& nums)
 {
@@ -25,8 +25,24 @@ int min_sub_array_len(int target, std::vector<int>& nums)
 }
 #endif
 
-#if 0
+#if 1
 // 滑动窗口
+int min_sub_array_len(int target, std::vector<int>& nums)
+{
+    int slow {};
+    int fast {};
+    int sum {};
+    int answer { INT32_MAX };
+    while (fast < nums.size()) { // 到底是遍历起点，还是终点
+        sum += nums[fast];
+        while (sum >= target) {
+            answer = fast - slow + 1 < answer ? fast - slow + 1 : answer;
+            sum -= nums[slow++];
+        }
+        fast++;
+    }
+    return INT32_MAX == answer ? 0 : answer;
+}
 #endif
 
 auto main(int argc, char* argv[]) -> int
