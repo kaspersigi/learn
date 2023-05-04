@@ -1,9 +1,9 @@
 #include <fcntl.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
 #include <linux/videodev2.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <sys/ioctl.h>
+#include <unistd.h>
 
 int main(int argc, char* argv[])
 {
@@ -29,7 +29,8 @@ int main(int argc, char* argv[])
         printf("bus_info: %s\n", cap.bus_info);
         printf("version: %x\n", cap.version);
         printf("capabilities: %x\n", cap.capabilities);
-    } else {
+    }
+    else {
         printf("This isn't a video capture device.\n");
         exit(-1);
     }
