@@ -20,7 +20,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template binary_search remove_element squares_of_a_sorted_array minimum_size_subarray_sum spiral_matrix_ii remove_linked_list_elements
+all : template binary_search remove_element squares_of_a_sorted_array minimum_size_subarray_sum spiral_matrix_ii remove_linked_list_elements design_linked_list reverse_linked_list
 template :
 	$(MAKE) -C 00.template
 binary_search :
@@ -35,6 +35,10 @@ spiral_matrix_ii :
 	$(MAKE) -C 05.spiral_matrix_ii
 remove_linked_list_elements :
 	$(MAKE) -C 06.remove_linked_list_elements
+design_linked_list :
+	$(MAKE) -C 07.design_linked_list
+reverse_linked_list :
+	$(MAKE) -C 08.reverse_linked_list
 
 format :
 	$(MAKE) -C 00.template format
@@ -44,6 +48,8 @@ format :
 	$(MAKE) -C 04.minimum_size_subarray_sum format
 	$(MAKE) -C 05.spiral_matrix_ii format
 	$(MAKE) -C 06.remove_linked_list_elements format
+	$(MAKE) -C 07.design_linked_list format
+	$(MAKE) -C 08.reverse_linked_list format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -53,3 +59,5 @@ clean :
 	$(MAKE) -C 04.minimum_size_subarray_sum clean
 	$(MAKE) -C 05.spiral_matrix_ii clean
 	$(MAKE) -C 06.remove_linked_list_elements clean
+	$(MAKE) -C 07.design_linked_list clean
+	$(MAKE) -C 08.reverse_linked_list clean
