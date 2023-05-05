@@ -28,6 +28,7 @@ RUN apt install sudo -y \
     && apt install lldb-13 -y \
     && apt install libc++-13-dev -y \
     && apt install libc++abi-13-dev -y \
+    && apt install clangd-13 -y \
     && apt install lld-13 -y \
     && apt install gdb -y \
     && apt install cgdb -y \
@@ -58,7 +59,8 @@ RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-13 1
     && update-alternatives --install /usr/bin/llvm-objdump llvm-objdump /usr/bin/llvm-objdump-13 100 \
     && update-alternatives --install /usr/bin/llvm-readelf llvm-readelf /usr/bin/llvm-readelf-13 100 \
     && update-alternatives --install /usr/bin/llvm-strip llvm-strip /usr/bin/llvm-strip-13 100 \
-    && update-alternatives --install /usr/bin/cc cc /usr/bin/clang++-13 100 \
+    && update-alternatives --install /usr/bin/cc cc /usr/bin/clang-13 100 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-13 100 \
     && echo 'miku    ALL=(ALL:ALL) ALL' >> /etc/sudoers \
     && echo '/usr/sbin/sshd -D &' > /root/run.sh \
     && chmod 110 /root/run.sh
