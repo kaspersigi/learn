@@ -23,7 +23,38 @@ struct ListNode {
 
 ListNode* get_intersection_node(ListNode* headA, ListNode* headB)
 {
-    return headA;
+    int lengthA {};
+    int lengthB {};
+    ListNode* p = headA;
+    ListNode* heada = nullptr;
+    ListNode* headb = nullptr;
+    while (p) {
+        p = p->next;
+        ++lengthA;
+    }
+    p = headB;
+    while (p) {
+        p = p->next;
+        ++lengthB;
+    }
+    heada = headA;
+    headb = headB;
+    if (lengthA < lengthB) {
+        for (int i = 0; i < lengthB - lengthA; ++i)
+            headb = headb->next;
+    } else if (lengthA > lengthB) {
+        for (int i = 0; i < lengthA - lengthB; ++i)
+            heada = heada->next;
+    }
+    for (int i = 0; i < (lengthA < lengthB ? lengthA : lengthB); ++i) {
+        if (heada == headb)
+            return heada;
+        else {
+            heada = heada->next;
+            headb = headb->next;
+        }
+    }
+    return nullptr;
 }
 
 ListNode* create_linklist(std::vector<int>& vi)
