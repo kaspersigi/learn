@@ -20,7 +20,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template binary_search remove_element squares_of_a_sorted_array minimum_size_subarray_sum spiral_matrix_ii remove_linked_list_elements design_linked_list reverse_linked_list
+all : template binary_search remove_element squares_of_a_sorted_array minimum_size_subarray_sum spiral_matrix_ii remove_linked_list_elements design_linked_list reverse_linked_list swap_nodes_in_pairs remove_nth_node_from_end_of_list intersection_of_two_linked_lists_lcci linked_list_cycle_ii
 template :
 	$(MAKE) -C 00.template
 binary_search :
@@ -39,6 +39,14 @@ design_linked_list :
 	$(MAKE) -C 07.design_linked_list
 reverse_linked_list :
 	$(MAKE) -C 08.reverse_linked_list
+swap_nodes_in_pairs :
+	$(MAKE) -C 09.swap_nodes_in_pairs
+remove_nth_node_from_end_of_list :
+	$(MAKE) -C 10.remove_nth_node_from_end_of_list
+intersection_of_two_linked_lists_lcci :
+	$(MAKE) -C 11.intersection_of_two_linked_lists_lcci
+linked_list_cycle_ii :
+	$(MAKE) -C 12.linked_list_cycle_ii
 
 format :
 	$(MAKE) -C 00.template format
@@ -50,6 +58,10 @@ format :
 	$(MAKE) -C 06.remove_linked_list_elements format
 	$(MAKE) -C 07.design_linked_list format
 	$(MAKE) -C 08.reverse_linked_list format
+	$(MAKE) -C 09.swap_nodes_in_pairs format
+	$(MAKE) -C 10.remove_nth_node_from_end_of_list format
+	$(MAKE) -C 11.intersection_of_two_linked_lists_lcci format
+	$(MAKE) -C 12.linked_list_cycle_ii format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -61,3 +73,7 @@ clean :
 	$(MAKE) -C 06.remove_linked_list_elements clean
 	$(MAKE) -C 07.design_linked_list clean
 	$(MAKE) -C 08.reverse_linked_list clean
+	$(MAKE) -C 09.swap_nodes_in_pairs clean
+	$(MAKE) -C 10.remove_nth_node_from_end_of_list clean
+	$(MAKE) -C 11.intersection_of_two_linked_lists_lcci clean
+	$(MAKE) -C 12.linked_list_cycle_ii clean

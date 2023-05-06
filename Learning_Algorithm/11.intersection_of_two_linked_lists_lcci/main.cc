@@ -21,17 +21,9 @@ struct ListNode {
     }
 };
 
-ListNode* reverse_list(ListNode* head)
+ListNode* get_intersection_node(ListNode* headA, ListNode* headB)
 {
-    ListNode* fast = head;
-    ListNode* slow = nullptr;
-    while (fast) {
-        ListNode* temp = fast->next;
-        fast->next = slow;
-        slow = fast;
-        fast = temp;
-    }
-    return slow;
+    return headA;
 }
 
 ListNode* create_linklist(std::vector<int>& vi)
@@ -71,8 +63,6 @@ auto main(int argc, char* argv[]) -> int
 {
     std::vector<int> vi { 1, 2, 3, 4, 5 };
     auto head = create_linklist(vi);
-    print_linklist(head);
-    head = reverse_list(head);
     print_linklist(head);
     destroy_linklist(head);
     return 0;

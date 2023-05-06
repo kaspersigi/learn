@@ -21,17 +21,23 @@ struct ListNode {
     }
 };
 
-ListNode* reverse_list(ListNode* head)
+ListNode* swap_pairs(ListNode* head)
 {
-    ListNode* fast = head;
-    ListNode* slow = nullptr;
-    while (fast) {
-        ListNode* temp = fast->next;
-        fast->next = slow;
-        slow = fast;
-        fast = temp;
+    ListNode* dummy_head = new ListNode(0, head);
+    ListNode* cur = head;
+    ListNode* last = dummy_head;
+    while (cur && cur->next) {
+        ListNode* third = cur->next->next;
+        ListNode* second = cur->next;
+        second->next = cur;
+        cur->next = third;
+        last->next = second;
+        last = cur;
+        cur = cur->next;
     }
-    return slow;
+    ListNode* answer = dummy_head->next;
+    delete dummy_head;
+    return answer;
 }
 
 ListNode* create_linklist(std::vector<int>& vi)
@@ -69,10 +75,10 @@ void destroy_linklist(ListNode* head)
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::vector<int> vi { 1, 2, 3, 4, 5 };
+    std::vector<int> vi { 1, 2, 3, 4, 5, 6, 7 };
     auto head = create_linklist(vi);
     print_linklist(head);
-    head = reverse_list(head);
+    head = swap_pairs(head);
     print_linklist(head);
     destroy_linklist(head);
     return 0;

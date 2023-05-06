@@ -21,17 +21,24 @@ struct ListNode {
     }
 };
 
-ListNode* reverse_list(ListNode* head)
+ListNode* remove_nth_from_end(ListNode* head, int n)
 {
+    ListNode* dummy_head = new ListNode(0, head);
     ListNode* fast = head;
-    ListNode* slow = nullptr;
-    while (fast) {
-        ListNode* temp = fast->next;
-        fast->next = slow;
-        slow = fast;
-        fast = temp;
+    ListNode* slow = dummy_head;
+    for (int i = 0; i < n - 1; ++i) {
+        fast = fast->next;
     }
-    return slow;
+    while (fast->next) {
+        fast = fast->next;
+        slow = slow->next;
+    }
+    ListNode* temp = slow->next;
+    slow->next = slow->next->next;
+    delete temp;
+    ListNode* answer = dummy_head->next;
+    delete dummy_head;
+    return answer;
 }
 
 ListNode* create_linklist(std::vector<int>& vi)
@@ -72,7 +79,7 @@ auto main(int argc, char* argv[]) -> int
     std::vector<int> vi { 1, 2, 3, 4, 5 };
     auto head = create_linklist(vi);
     print_linklist(head);
-    head = reverse_list(head);
+    head = remove_nth_from_end(head, 5);
     print_linklist(head);
     destroy_linklist(head);
     return 0;
