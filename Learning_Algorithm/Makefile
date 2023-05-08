@@ -20,7 +20,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template binary_search remove_element squares_of_a_sorted_array minimum_size_subarray_sum spiral_matrix_ii remove_linked_list_elements design_linked_list reverse_linked_list swap_nodes_in_pairs remove_nth_node_from_end_of_list intersection_of_two_linked_lists_lcci linked_list_cycle_ii valid_anagram intersection_of_two_arrays happy_number
+all : template binary_search remove_element squares_of_a_sorted_array minimum_size_subarray_sum spiral_matrix_ii remove_linked_list_elements design_linked_list reverse_linked_list swap_nodes_in_pairs remove_nth_node_from_end_of_list intersection_of_two_linked_lists_lcci linked_list_cycle_ii valid_anagram intersection_of_two_arrays happy_number two_sum 4sum_ii ransom_note
 template :
 	$(MAKE) -C 00.template
 binary_search :
@@ -53,6 +53,12 @@ intersection_of_two_arrays :
 	$(MAKE) -C 14.intersection_of_two_arrays
 happy_number :
 	$(MAKE) -C 15.happy_number
+two_sum :
+	$(MAKE) -C 16.two_sum
+4sum_ii :
+	$(MAKE) -C 17.4sum_ii
+ransom_note :
+	$(MAKE) -C 18.ransom_note
 
 format :
 	$(MAKE) -C 00.template format
@@ -71,6 +77,9 @@ format :
 	$(MAKE) -C 13.valid_anagram format
 	$(MAKE) -C 14.intersection_of_two_arrays format
 	$(MAKE) -C 15.happy_number format
+	$(MAKE) -C 16.two_sum format
+	$(MAKE) -C 17.4sum_ii format
+	$(MAKE) -C 18.ransom_note format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -89,3 +98,6 @@ clean :
 	$(MAKE) -C 13.valid_anagram clean
 	$(MAKE) -C 14.intersection_of_two_arrays clean
 	$(MAKE) -C 15.happy_number clean
+	$(MAKE) -C 16.two_sum clean
+	$(MAKE) -C 17.4sum_ii clean
+	$(MAKE) -C 18.ransom_note clean
