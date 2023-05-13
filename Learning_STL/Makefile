@@ -20,7 +20,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template array vector deque list forward_list set multiset map multimap unordered_set unordered_multiset unordered_map unordered_multimap stack queue priority_queue thread count count_if find find_if copy_if remove_if transform bind lambda function_object minmax_element equal
+all : template array vector deque list forward_list set multiset map multimap unordered_set unordered_multiset unordered_map unordered_multimap stack queue priority_queue thread count count_if find find_if copy_if remove_if transform bind lambda function_object minmax_element equal async
 template :
 	$(MAKE) -C 00.template
 array :
@@ -81,6 +81,8 @@ minmax_element :
 	$(MAKE) -C 28.minmax_element
 equal :
 	$(MAKE) -C 29.equal
+async :
+	$(MAKE) -C 30.async
 
 format :
 	$(MAKE) -C 00.template format
@@ -113,6 +115,7 @@ format :
 	$(MAKE) -C 27.function_object format
 	$(MAKE) -C 28.minmax_element format
 	$(MAKE) -C 29.equal format
+	$(MAKE) -C 30.async format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -145,3 +148,4 @@ clean :
 	$(MAKE) -C 27.function_object clean
 	$(MAKE) -C 28.minmax_element clean
 	$(MAKE) -C 29.equal clean
+	$(MAKE) -C 30.async clean
