@@ -173,7 +173,7 @@ int init_camera(const char* dev)
     fmt.fmt.pix.height = 480;
     fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
     if (ioctl(fd, VIDIOC_S_FMT, &fmt) < 0) {
-        perror("set foramt: V4L2_PIX_FMT_YUYV");
+        perror("set format: V4L2_PIX_FMT_YUYV");
         exit(-1);
     }
 
@@ -183,9 +183,9 @@ int init_camera(const char* dev)
 buf_type* mmap_buffer(int fd)
 {
     // 申请用户缓存空间
-    buf_type* usr_buf = calloc(buf_count, sizeof(buf_type));
+    buf_type* usr_buf = malloc(buf_count * sizeof(buf_type));
     if (!usr_buf) {
-        perror("calloc \"frame buffer\" : Out of memory");
+        perror("malloc \"frame buffer\" : out of memory");
         exit(-1);
     }
 
