@@ -254,8 +254,8 @@ int write_frame(int fd, buf_type* usr_buf)
 
     // 因为内核缓冲区与用户缓冲区建立的映射，所以可以通过用户空间缓冲区直接访问这个缓冲区的数据
     char buffer[256] = {};
-    sprintf(buffer, "./%d.yuyv", v4l2_buf.index);
-    int file_fd = open(buffer, O_RDWR | O_CREAT); // 若打开失败则不存储该帧图像
+    sprintf(buffer, "./%d.yuv", v4l2_buf.index);
+    int file_fd = open(buffer, O_RDWR | O_CREAT, 0644); // 若打开失败则不存储该帧图像
     memset(buffer, 0, 256);
     if (file_fd < 0) {
         perror("open file");
