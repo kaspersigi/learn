@@ -7,6 +7,11 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
+// resolution VGA 640 x 480
+// color space YUV
+// subsampling 4:2:2
+// ordering interleaved
+
 const char dev[] = "/dev/video0";
 const size_t buf_count = 4;
 
