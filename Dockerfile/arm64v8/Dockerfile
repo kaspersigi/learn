@@ -46,7 +46,6 @@ RUN apt install sudo -y \
     && apt install binutils-i686-linux-gnu -y \
     && apt install binutils-x86-64-linux-gnu -y \
     && apt install gcc-i686-linux-gnu -y \
-    && apt install gcc-multilib -y \
     && apt install fonts-firacode -y
 RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-15 100 \
     && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-15 100 \
