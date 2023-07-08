@@ -20,23 +20,23 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template driver v4l2
+all : template v4l2 module
 template :
 	$(MAKE) -C 00.template
-driver :
-	$(MAKE) -C 01.driver
 v4l2 :
-	$(MAKE) -C 02.v4l2
+	$(MAKE) -C 01.v4l2
+module :
+	$(MAKE) -C 02.module
 
 format :
 	$(MAKE) -C 00.template format
-	$(MAKE) -C 01.driver format
-	$(MAKE) -C 02.v4l2 format
+	$(MAKE) -C 01.v4l2 format
+	$(MAKE) -C 02.module format
 
 clean :
 	$(MAKE) -C 00.template clean
-	$(MAKE) -C 01.driver clean
-	$(MAKE) -C 02.v4l2 clean
+	$(MAKE) -C 01.v4l2 clean
+	$(MAKE) -C 02.module clean
 
 style :
 	clang-format -style=webkit -dump-config > .clang-format
