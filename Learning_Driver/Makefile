@@ -20,23 +20,31 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template v4l2 module
+all : template v4l2 module module_param export_symbol
 template :
 	$(MAKE) -C 00.template
 v4l2 :
 	$(MAKE) -C 01.v4l2
 module :
 	$(MAKE) -C 02.module
+module_param :
+	$(MAKE) -C 03.module_param
+export_symbol :
+	$(MAKE) -C 04.export_symbol
 
 format :
 	$(MAKE) -C 00.template format
 	$(MAKE) -C 01.v4l2 format
 	$(MAKE) -C 02.module format
+	$(MAKE) -C 03.module_param format
+	$(MAKE) -C 04.export_symbol format
 
 clean :
 	$(MAKE) -C 00.template clean
 	$(MAKE) -C 01.v4l2 clean
 	$(MAKE) -C 02.module clean
+	$(MAKE) -C 03.module_param clean
+	$(MAKE) -C 04.export_symbol clean
 
 style :
 	clang-format -style=webkit -dump-config > .clang-format
