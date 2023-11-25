@@ -21,6 +21,8 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
 all : algorithm c c++ design_pattern native operating_system socket stl
+arm :
+	$(MAKE) -C Learning_ARM
 algorithm :
 	$(MAKE) -C Learning_Algorithm
 c :
@@ -41,6 +43,7 @@ stl :
 	$(MAKE) -C Learning_STL
 
 format :
+	$(MAKE) -C Learning_ARM format
 	$(MAKE) -C Learning_Algorithm format
 	$(MAKE) -C Learning_C format
 	$(MAKE) -C Learning_C++ format
@@ -52,6 +55,7 @@ format :
 	$(MAKE) -C Learning_STL format
 
 clean :
+	$(MAKE) -C Learning_ARM clean
 	$(MAKE) -C Learning_Algorithm clean
 	$(MAKE) -C Learning_C clean
 	$(MAKE) -C Learning_C++ clean
@@ -61,6 +65,9 @@ clean :
 	$(MAKE) -C Learning_Operating_System clean
 	$(MAKE) -C Learning_Socket clean
 	$(MAKE) -C Learning_STL clean
+
+style :
+	clang-format -style=webkit -dump-config > .clang-format
 
 bak :
 	git archive --format=tar.gz --prefix=learn/ --output ../learn.tar.gz master

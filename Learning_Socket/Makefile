@@ -5,7 +5,7 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
-VPATH = /home/miku/learn/Learning\ Socket
+VPATH = /home/miku/learn/Learning_Socket
 ARCH = $(shell llvm-config --host-target)
 CC = /usr/bin/clang --target=$(ARCH)
 CXX = /usr/bin/clang++ --target=$(ARCH)

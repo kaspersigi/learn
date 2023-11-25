@@ -5,7 +5,7 @@
 TRG = main
 OBJ = main.o
 SRC = main.cc
-VPATH = /home/miku/learn/Learning\ C++
+VPATH = /home/miku/learn/Learning_C++
 ARCH = $(shell llvm-config --host-target)
 CC = /usr/bin/clang --target=$(ARCH)
 CXX = /usr/bin/clang++ --target=$(ARCH)
