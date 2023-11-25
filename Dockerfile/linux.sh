@@ -3,7 +3,7 @@
 apt install openssh-server -y
 systemctl status ssh
 systemctl enable ssh
-apt install qemu-system git fonts-firacode -y
+apt install qemu-system git vim fonts-firacode -y
 apt install gcc make libssl-dev libncurses-dev libelf-dev flex bison bc dwarves -y
 
 # arm
@@ -27,6 +27,8 @@ git clone --single-branch -b u-boot-2023.07.y --depth 1 git@github.com:u-boot/u-
 cd u-boot
 make vexpress_ca9x4_defconfig ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
 make menuconfig ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
+# Networking Support —> set a default gateway...
+# Boot options —> Enable a default value for bootcmd
 make -j8 ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
 cd ..
 
@@ -40,7 +42,7 @@ cd ..
 cd linux
 make vexpress_defconfig ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
 make menuconfig ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
-# File System —> Network File Systems—>NFS client support for NFS version 4
+# File System —> Network File Systems —> NFS client support for NFS version 4
 # open all nfs client switch
 make -j8 ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
 make modules -j8 ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
@@ -49,4 +51,4 @@ make LOADADDR=0x60003000 uImage -j8 ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
 make modules_install INSTALL_MOD_PATH=../_fs -j8 ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
 cd ..
 
-# tftp 0x60003000 linux/arch/arm/boot/uImage; tftp 0x60800000 linux/arch/arm/boot/dts/vexpress-v2p-ca9.dtb; setenv bootargs 'root=/dev/nfs rw nfsroot=192.168.42.132:/home/miku/linux/Learning_ARM/nfs,proto=tcp,nfsvers=3,nolock init=/linuxrc ip=192.168.42.200 console=ttyAMA0';bootm 0x60003000 - 0x60800000;
+# tftp 0x60003000 linux/arch/arm/boot/uImage; tftp 0x60800000 linux/arch/arm/boot/dts/arm/vexpress-v2p-ca9.dtb; setenv bootargs 'root=/dev/nfs rw nfsroot=192.168.204.133:/home/miku/linux/filesystem,proto=tcp,nfsvers=3,nolock init=/linuxrc ip=192.168.204.200 console=ttyAMA0';bootm 0x60003000 - 0x60800000;
