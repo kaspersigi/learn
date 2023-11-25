@@ -3,7 +3,7 @@
 apt install openssh-server -y
 systemctl status ssh
 systemctl enable ssh
-apt install qemu-system git vim fonts-firacode -y
+apt install qemu-system git vim net-tools fonts-firacode -y
 apt install gcc make libssl-dev libncurses-dev libelf-dev flex bison bc dwarves -y
 
 # arm
