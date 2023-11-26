@@ -13,6 +13,7 @@ git config --global user.email kaspersigi@gmail.com
 ssh-keyscan github.com > $HOME/.ssh/known_hosts
 
 mkdir ~/linux
+cp fs.tar.gz ~/linux
 cd ~/linux
 git clone git@github.com:kaspersigi/learn.git
 cd learn

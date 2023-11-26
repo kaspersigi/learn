@@ -30,14 +30,7 @@ apt install gcc-i686-linux-gnu -y
 apt install fonts-firacode -y
 
 # apt install clang-15 clang-format-15 lldb-15 libc++-15-dev libc++abi-15-dev make bsdmainutils qemu-system gdb cgdb valgrind libltdl7 libsdl2-2.0-0 libgtk2.0-0 binutils-i686-linux-gnu gcc-i686-linux-gnu fonts-firacode -y
-apt install gcc make libssl-dev libncurses-dev libelf-dev flex bison bc dwarves -y
-
-# arm
-# apt install gcc-arm-linux-gnueabi -y
-# apt install u-boot-tools -y
-# apt install tftp-hpa tftpd-hpa xinetd uml-utilities bridge-utils -y
-# apt install nfs-kernel-server -y
-# apt install bzip2 -y
+apt install gcc make bzip2 libssl-dev libncurses-dev libelf-dev flex bison bc dwarves -y
 
 update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-15 100
 update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-15 100

@@ -55,7 +55,7 @@ format :
 	$(MAKE) -C Learning_STL format
 
 clean :
-	$(MAKE) -C Learning_ARM clean
+	# $(MAKE) -C Learning_ARM clean
 	$(MAKE) -C Learning_Algorithm clean
 	$(MAKE) -C Learning_C clean
 	$(MAKE) -C Learning_C++ clean
