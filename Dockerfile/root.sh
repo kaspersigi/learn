@@ -10,6 +10,7 @@ apt update
 apt upgrade -y
 
 apt install clang-15 -y
+apt install clangd-15 -y
 apt install clang-format-15 -y
 apt install lldb-15 -y
 apt install libc++-15-dev -y
@@ -29,7 +30,7 @@ apt install binutils-i686-linux-gnu -y
 apt install gcc-i686-linux-gnu -y
 apt install fonts-firacode -y
 
-# apt install clang-15 clang-format-15 lldb-15 libc++-15-dev libc++abi-15-dev make bsdmainutils qemu-system gdb cgdb valgrind libltdl7 libsdl2-2.0-0 libgtk2.0-0 binutils-i686-linux-gnu gcc-i686-linux-gnu fonts-firacode -y
+# apt install clang-15 clangd-15 clang-format-15 lldb-15 libc++-15-dev libc++abi-15-dev make bsdmainutils qemu-system gdb cgdb valgrind libltdl7 libsdl2-2.0-0 libgtk2.0-0 binutils-i686-linux-gnu gcc-i686-linux-gnu fonts-firacode -y
 apt install gcc make bzip2 libssl-dev libncurses-dev libelf-dev flex bison bc dwarves -y
 
 update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-15 100
