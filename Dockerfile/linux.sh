@@ -17,7 +17,8 @@ su miku
 cd ~/linux
 mkdir Learning_ARM
 
-git clone --depth 1 git@github.com:oracle/opengrok.git
+# git clone --depth 1 git@github.com:oracle/opengrok.git
+wget https://github.com/oracle/opengrok/releases/download/1.13.0/opengrok-1.13.0.tar.gz
 
 git clone --depth 1 git@github.com:universal-ctags/ctags.git
 cd ctags
