@@ -7,20 +7,27 @@
 static char hello_buffer[512] = { 0 };
 
 // 动态分配主设备号
-const static unsigned CHARDEV_NUM = 1;
-const static char CHARDEV_NAME[] = "hello_world";
+const static unsigned CHARDEV_NUM = 6;
+const static char* CHARDEV_NAME = "hello_world";
 
 // 设备结构体
-typedef struct dev {
+struct dev {
     dev_t devno; // 设备号
+    int major; // 主设备号
+    int minor; // 次设备号
     struct cdev* cdev; // cdev
     struct class* class; // 类
     struct device* device; // 设备
-    int major; // 主设备号
-    int minor; // 次设备号
-} dev;
+};
 
-static dev mydev;
+static struct dev mydev = {
+    .devno = 0,
+    .major = 0,
+    .minor = 0,
+    .cdev = NULL,
+    .class = NULL,
+    .device = NULL,
+};
 
 static int hello_open(struct inode* inode, struct file* fp)
 {
@@ -76,26 +83,29 @@ static const struct file_operations hello_fops = {
 
 static int __init hello_init(void)
 {
-    int ret = alloc_chrdev_region(&mydev.devno, 0, CHARDEV_NUM, CHARDEV_NAME);
+    int ret = alloc_chrdev_region(&mydev.devno, mydev.minor, CHARDEV_NUM, CHARDEV_NAME);
     if (ret < 0) {
         printk(KERN_ERR "Register char module: %s failed!\n", CHARDEV_NAME);
         return ret;
     } else {
         mydev.major = MAJOR(mydev.devno);
-        mydev.minor = MINOR(mydev.devno);
-        printk(KERN_INFO "Register char module: %s success! major: %d\n", CHARDEV_NAME, mydev.major);
+        printk(KERN_INFO "Register char module: %s success! major: %d, minor: %d\n", CHARDEV_NAME, mydev.major, mydev.minor);
     }
     mydev.cdev = cdev_alloc();
     cdev_init(mydev.cdev, &hello_fops);
     cdev_add(mydev.cdev, mydev.devno, CHARDEV_NUM);
     mydev.class = class_create(CHARDEV_NAME);
-    mydev.device = device_create(mydev.class, NULL, mydev.devno, NULL, CHARDEV_NAME);
+    for (int i = mydev.minor; i < mydev.minor + CHARDEV_NUM; ++i) {
+        mydev.device = device_create(mydev.class, NULL, MKDEV(mydev.major, i), NULL, "%s%d", CHARDEV_NAME, i);
+    }
     return 0;
 }
 
 static void __exit hello_exit(void)
 {
-    device_destroy(mydev.class, mydev.devno);
+    for (int i = mydev.minor; i < mydev.minor + CHARDEV_NUM; ++i) {
+        device_destroy(mydev.class, MKDEV(mydev.major, i));
+    }
     class_destroy(mydev.class);
     cdev_del(mydev.cdev);
     unregister_chrdev_region(mydev.devno, CHARDEV_NUM);
