@@ -16,6 +16,17 @@ su miku
 cd ~/linux
 mkdir Learning_ARM
 
+git clone --depth 1 git@github.com:oracle/opengrok.git
+
+git clone --depth 1 git@github.com:universal-ctags/ctags.git
+cd ctags
+./autogen.sh
+./configure
+make -j16
+sudo make install
+
+wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.17/bin/apache-tomcat-10.1.17.tar.gz
+
 # git clone --single-branch -b linux-6.6.y --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 git clone --single-branch -b linux-6.6.y --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 # git clone --single-branch -b 1_36_stable --depth 1 git://git.busybox.net/busybox
