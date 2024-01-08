@@ -6,10 +6,10 @@ TRG = main
 OBJ = main.o
 SRC = main.c
 
-NDK = ~/linux/android-ndk-r25
+NDK = ~/linux/android-ndk-r26
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/linux-x86_64
 TARGET = aarch64-linux-android
-API = 33
+API = 34
 CC = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang
 CXX = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang++
 AR = $(TOOLCHAIN)/bin/llvm-ar
@@ -17,7 +17,7 @@ RANLIB = $(TOOLCHAIN)/bin/llvm-ranlib
 
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
-CXX_FLAGS = -std=c++20 -Wall -Wno-unused
+CXX_FLAGS = -std=c++23 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -static -Oz
 LINK_FLAGS = -no-pie

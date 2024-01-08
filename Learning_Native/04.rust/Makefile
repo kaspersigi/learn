@@ -4,7 +4,7 @@
 
 TRG = main
 SRC = main.rs
-FLAGS = --edition 2021
+FLAGS = --edition 2024
 DEBUG = -g -C opt-level=0
 RELEASE = -C debuginfo=0 -C opt-level=3
 

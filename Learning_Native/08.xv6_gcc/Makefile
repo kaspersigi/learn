@@ -12,7 +12,7 @@ CC = /usr/bin/i686-linux-gnu-gcc
 CXX = /usr/bin/g++
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
-CXX_FLAGS = -std=c++20 -Wall -Wno-unused
+CXX_FLAGS = -std=c++23 -Wall -Wno-unused
 DEBUG = -ggdb -O0
 RELEASE = -static -O2
 LINK_FLAGS = -no-pie
