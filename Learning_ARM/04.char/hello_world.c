@@ -1,8 +1,26 @@
+#include <linux/cdev.h>
 #include <linux/fs.h>
 #include <linux/init.h>
 #include <linux/module.h>
 
+// 内核缓冲区
 static char hello_buffer[512] = { 0 };
+
+// 动态分配主设备号
+const static unsigned CHARDEV_NUM = 1;
+const static char CHARDEV_NAME[] = "hello_world";
+
+// 设备结构体
+typedef struct dev {
+    dev_t devno; // 设备号
+    struct cdev* cdev; // cdev
+    struct class* class; // 类
+    struct device* device; // 设备
+    int major; // 主设备号
+    int minor; // 次设备号
+} dev;
+
+static dev mydev;
 
 static int hello_open(struct inode* inode, struct file* fp)
 {
@@ -24,7 +42,7 @@ static ssize_t hello_read(struct file* fp, char __user* buf, size_t size, loff_t
     if (count > 512)
         count = 512 - p;
     if (copy_to_user(buf, hello_buffer + p, count) != 0) {
-        printk(KERN_ALERT "read error!\n");
+        printk(KERN_ERR "read error!\n");
         return -1;
     }
 
@@ -41,7 +59,7 @@ static ssize_t hello_write(struct file* fp, const char __user* buf, size_t size,
     if (count > 512)
         count = 512 - p;
     if (copy_from_user(hello_buffer, buf + p, count) != 0) {
-        printk(KERN_ALERT "write error!\n");
+        printk(KERN_ERR "write error!\n");
         return -1;
     }
 
@@ -50,24 +68,43 @@ static ssize_t hello_write(struct file* fp, const char __user* buf, size_t size,
 
 static const struct file_operations hello_fops = {
     .owner = THIS_MODULE,
-    .read = hello_read,
-    .write = hello_write,
     .open = hello_open,
     .release = hello_release,
+    .read = hello_read,
+    .write = hello_write,
 };
 
 static int __init hello_init(void)
 {
-    printk(KERN_ALERT "Hello World! char module\n");
+    int ret = alloc_chrdev_region(&mydev.devno, 0, CHARDEV_NUM, CHARDEV_NAME);
+    if (ret < 0) {
+        printk(KERN_ERR "Register char module: %s failed!\n", CHARDEV_NAME);
+        return ret;
+    } else {
+        mydev.major = MAJOR(mydev.devno);
+        mydev.minor = MINOR(mydev.devno);
+        printk(KERN_INFO "Register char module: %s success! major: %d\n", CHARDEV_NAME, mydev.major);
+    }
+    mydev.cdev = cdev_alloc();
+    cdev_init(mydev.cdev, &hello_fops);
+    cdev_add(mydev.cdev, mydev.devno, CHARDEV_NUM);
+    mydev.class = class_create(CHARDEV_NAME);
+    mydev.device = device_create(mydev.class, NULL, mydev.devno, NULL, CHARDEV_NAME);
     return 0;
 }
 
 static void __exit hello_exit(void)
 {
-    printk(KERN_ALERT "Goodbye! char module\n");
+    device_destroy(mydev.class, mydev.devno);
+    class_destroy(mydev.class);
+    cdev_del(mydev.cdev);
+    unregister_chrdev_region(mydev.devno, CHARDEV_NUM);
+    printk(KERN_INFO "Unregister char module: hello_world success!\n");
 }
 
 module_init(hello_init);
 module_exit(hello_exit);
 MODULE_LICENSE("GPL v2");
 MODULE_AUTHOR("Zhuangzhuang Li <kaspersigi@outlook.com>");
+MODULE_VERSION("1.0");
+MODULE_DESCRIPTION("a charactor driver.");
