@@ -11,6 +11,7 @@ apt install gcc-arm-linux-gnueabi -y
 apt install u-boot-tools -y
 apt install tftp-hpa tftpd-hpa xinetd uml-utilities bridge-utils -y
 apt install nfs-kernel-server -y
+apt install default-jdk -y
 
 su miku
 cd ~/linux
