@@ -1,3 +1,5 @@
+#include <bits/types/struct_timespec.h>
+#include <bits/types/struct_timeval.h>
 #include <fcntl.h>
 #include <linux/videodev2.h>
 #include <stdio.h>
@@ -140,12 +142,10 @@ int init_camera(const char* dev)
         // 判断是否支持视频流捕获
         if (cap.capabilities & V4L2_CAP_STREAMING) {
             printf("support stream capture\n");
-        }
-        else {
+        } else {
             printf("unsupport stream capture\n");
         }
-    }
-    else {
+    } else {
         perror("VIDEO_CAPTURE");
         exit(-1);
     }
@@ -224,8 +224,7 @@ buf_type* mmap_buffer(int fd)
         if (MAP_FAILED == usr_buf[i].start) {
             printf("mmap failed: %lu\n", i);
             exit(-1);
-        }
-        else {
+        } else {
             // 若映射成功则将内核缓冲区入队
             if (ioctl(fd, VIDIOC_QBUF, &v4l2_buf) < 0) {
                 perror("VIDIOC_QBUF");
@@ -265,8 +264,7 @@ int write_frame(int fd, buf_type* usr_buf)
     if (file_fd < 0) {
         perror("open file");
         exit(-1);
-    }
-    else {
+    } else {
         write(file_fd, usr_buf[v4l2_buf.index].start, v4l2_buf.bytesused);
         close(file_fd);
         printf("saving %d images\n", v4l2_buf.index);

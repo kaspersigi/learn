@@ -31,8 +31,6 @@ c++ :
 	$(MAKE) -C Learning_C++
 design_pattern :
 	$(MAKE) -C Learning_Design_Pattern
-driver :
-	$(MAKE) -C Learning_Driver
 native :
 	$(MAKE) -C Learning_Native
 operating_system :
@@ -48,7 +46,6 @@ format :
 	$(MAKE) -C Learning_C format
 	$(MAKE) -C Learning_C++ format
 	$(MAKE) -C Learning_Design_Pattern format
-	$(MAKE) -C Learning_Driver format
 	$(MAKE) -C Learning_Native format
 	# $(MAKE) -C Learning_Operating_System format
 	$(MAKE) -C Learning_Socket format
@@ -60,7 +57,6 @@ clean :
 	$(MAKE) -C Learning_C clean
 	$(MAKE) -C Learning_C++ clean
 	$(MAKE) -C Learning_Design_Pattern clean
-	# $(MAKE) -C Learning_Driver clean
 	$(MAKE) -C Learning_Native clean
 	$(MAKE) -C Learning_Operating_System clean
 	$(MAKE) -C Learning_Socket clean

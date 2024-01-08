@@ -14,7 +14,7 @@ format :
 clean :
 	rm -v $(MOD) Module.symvers
 install : $(MOD)
-	cp $(MOD) ~/linux/filesystem
+	cp $(MOD) ~/linux/_fs
 remove :
-	rm ~/linux/filesystem/$(MOD)
+	rm ~/linux/_fs/$(MOD)
 endif

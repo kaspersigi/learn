@@ -1,4 +1,5 @@
-.vscode
+/.vscode
+settings.json
 .DS_Store
 ._.DS_Store
 bochsout.txt

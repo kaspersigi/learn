@@ -5,18 +5,16 @@ ifneq ($(KERNELRELEASE),)
 obj-m := $(TRG).o
 else
 PWD := $(shell pwd)
-KDIR := /usr/src/kernels/linux-$(shell uname -r)
+KDIR := ~/linux/linux
 all :
-	make -C $(KDIR) M=$(PWD)
+	make ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- -C $(KDIR) M=$(PWD)
 	rm -rfv *.o *.mod.c *.symvers *.order *.mod .tmp_versions \.*.cmd
 format :
 	clang-format $(SRC) -style=file -i
 clean :
 	rm -v $(MOD)
 install : $(MOD)
-	insmod $(MOD)
+	cp $(MOD) ~/linux/_fs
 remove :
-	rmmod $(TRG)
-show :
-	dmesg
+	rm ~/linux/_fs/$(MOD)
 endif

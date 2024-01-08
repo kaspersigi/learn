@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "~/linux/linux/include",
+                "~/linux/linux/arch/arm/include",
+                "~/linux/linux/arch/arm/include/generated/"
+            ],
+            "defines": [],
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++20",
+            "intelliSenseMode": "linux-gcc-arm",
+            "compilerPath": "/usr/bin/arm-linux-gnueabi-gcc"
+        }
+    ],
+    "version": 4
+}
