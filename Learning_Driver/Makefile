@@ -5,8 +5,8 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
-VPATH = /home/miku/learn/Learning_ARM
-ARCH = arm
+VPATH = /home/miku/learn/Learning_Driver
+ARCH =
 CROSS_COMPILE = arm-linux-gnueabi-
 CC = /usr/bin/$(CROSS_COMPILE)gcc
 CXX = /usr/bin/$(CROSS_COMPILE)g++

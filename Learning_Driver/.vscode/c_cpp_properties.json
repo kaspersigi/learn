@@ -4,13 +4,13 @@
             "name": "Linux",
             "includePath": [
                 "~/linux/linux/include",
-                "~/linux/linux/arch/arm/include",
-                "~/linux/linux/arch/arm/include/generated/"
+                "~/linux/linux/arch/x86/include",
+                "~/linux/linux/arch/x86/include/generated/"
             ],
             "defines": [],
             "cStandard": "c23",
             "cppStandard": "c++23",
-            "intelliSenseMode": "linux-gcc-arm64",
+            "intelliSenseMode": "linux-gcc-x64",
             "compilerPath": "/usr/bin/gcc"
         }
     ],
