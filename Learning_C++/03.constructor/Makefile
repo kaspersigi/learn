@@ -9,8 +9,8 @@ ARCH = $(shell llvm-config --host-target)
 CC = /usr/bin/clang --target=$(ARCH)
 CXX = /usr/bin/clang++ --target=$(ARCH)
 FORMAT = /usr/bin/clang-format
-C_FLAGS = -std=c18 -Wall -Wno-unused
-CXX_FLAGS = -std=c++23 -Wall -Wno-unused -fno-elide-constructors -Wno-self-move
+C_FLAGS = -std=c2x -Wall -Wno-unused
+CXX_FLAGS = -std=c++2b -Wall -Wno-unused -fno-elide-constructors -Wno-self-move
 DEBUG = -g -O0
 RELEASE = -static -Oz
 LINK_FLAGS = -no-pie

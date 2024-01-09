@@ -8,10 +8,10 @@
                 "~/linux/linux/arch/arm/include/generated/"
             ],
             "defines": [],
-            "cStandard": "gnu17",
-            "cppStandard": "gnu++20",
-            "intelliSenseMode": "linux-gcc-arm",
-            "compilerPath": "/usr/bin/arm-linux-gnueabi-gcc"
+            "cStandard": "c23",
+            "cppStandard": "c++23",
+            "intelliSenseMode": "linux-gcc-arm64",
+            "compilerPath": "/usr/bin/gcc"
         }
     ],
     "version": 4

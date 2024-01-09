@@ -11,8 +11,8 @@ ARCH = i386-unknown-linux-gnu
 CC = /usr/bin/clang --target=i386-unknown-linux-gnu
 CXX = /usr/bin/clang++ --target=$(ARCH)
 FORMAT = /usr/bin/clang-format
-C_FLAGS = -std=c18 -Wall -Wno-unused
-CXX_FLAGS = -std=c++23 -Wall -Wno-unused
+C_FLAGS = -std=c2x -Wall -Wno-unused
+CXX_FLAGS = -std=c++2b -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -static -Oz
 LINK_FLAGS = -no-pie
