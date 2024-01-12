@@ -15,7 +15,7 @@ format :
 clean :
 	rm -v $(MOD)
 install : $(MOD)
-	cp $(MOD) ~/linux/_fs
+	insmod $(MOD)
 remove :
-	rm ~/linux/_fs/$(MOD)
+	rmmod $(MOD)
 endif

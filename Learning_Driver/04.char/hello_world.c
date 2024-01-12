@@ -31,11 +31,13 @@ static struct dev mydev = {
 
 static int hello_open(struct inode* inode, struct file* fp)
 {
+    printk(KERN_INFO "char module: hello_world open success!\n");
     return 0;
 }
 
 static int hello_release(struct inode* inode, struct file* fp)
 {
+    printk(KERN_INFO "char module: hello_world release success!\n");
     return 0;
 }
 
