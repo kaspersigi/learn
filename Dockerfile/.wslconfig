@@ -2,4 +2,4 @@
 processors=16
 # memory=1G
 swap=1G
-kernel=D:\\Learning_Kernel\bzImage
+kernel=D:\\Learning_Kernel\\bzImage
