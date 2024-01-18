@@ -28,7 +28,8 @@ sudo make install
 
 wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.17/bin/apache-tomcat-10.1.17.tar.gz
 
-git clone --single-branch -b linux-msft-wsl-6.1.y --depth 1 https://github.com/microsoft/WSL2-Linux-Kernel.git
+# git clone --single-branch -b linux-msft-wsl-6.1.y --depth 1 https://github.com/microsoft/WSL2-Linux-Kernel.git
+git clone --single-branch -b linux-msft-wsl-6.1.y --depth 1 git@github.com:microsoft/WSL2-Linux-Kernel.git
 # git clone --single-branch -b linux-6.6.y --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 git clone --single-branch -b linux-6.6.y --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 # git clone --single-branch -b 1_36_stable --depth 1 git://git.busybox.net/busybox
