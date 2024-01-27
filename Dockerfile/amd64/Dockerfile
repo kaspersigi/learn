@@ -45,7 +45,8 @@ RUN apt install sudo -y \
     && apt install valgrind -y \
     && apt install binutils-i686-linux-gnu -y \
     && apt install gcc-i686-linux-gnu -y \
-    && apt install fonts-firacode -y
+    && apt install fonts-firacode -y \
+    && apt install pigz -y
 RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-16 100 \
     && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-16 100 \
     && update-alternatives --install /usr/bin/lldb lldb /usr/bin/lldb-16 100 \

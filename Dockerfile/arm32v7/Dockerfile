@@ -43,7 +43,8 @@ RUN apt install sudo -y \
     && apt install openssh-server -y \
     && apt install bsdmainutils -y \
     && apt install valgrind -y \
-    && apt install fonts-firacode -y
+    && apt install fonts-firacode -y \
+    && apt install pigz -y
 RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-16 100 \
     && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-16 100 \
     && update-alternatives --install /usr/bin/lldb lldb /usr/bin/lldb-16 100 \
