@@ -40,10 +40,10 @@ git clone --single-branch -b u-boot-2023.07.y --depth 1 git@github.com:u-boot/u-
 mv WSL2-Linux-Kernel linux
 cd linux
 cp arch/x86/configs/config-wsl .config
-make LLVM=17 menuconfig
-make LLVM=17 -j$(nproc)
+make LLVM=1 menuconfig
+make LLVM=1 -j$(nproc)
 cp arch/x86/boot/bzImage /mnt/d/Learning_Kernel/src/bzImage
-sudo make LLVM=17 modules_install headers_install
+sudo make LLVM=1 modules_install headers_install
 ./scripts/clang-tools/gen_compile_commands.py
 
 cd linux
