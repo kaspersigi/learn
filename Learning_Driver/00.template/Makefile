@@ -5,10 +5,9 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
-ARCH = arm
-CROSS_COMPILE =
-CC = /usr/bin/$(CROSS_COMPILE)gcc
-CXX = /usr/bin/$(CROSS_COMPILE)g++
+ARCH = $(shell llvm-config --host-target)
+CC = /usr/bin/clang --target=$(ARCH)
+CXX = /usr/bin/clang++ --target=$(ARCH)
 FORMAT = /usr/bin/clang-format
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++23 -Wall -Wno-unused
