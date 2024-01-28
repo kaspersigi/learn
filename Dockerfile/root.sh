@@ -22,12 +22,12 @@ apt install libltdl7 -y
 apt install libsdl2-2.0-0 -y
 apt install libgtk2.0-0 -y
 apt install binutils-i686-linux-gnu -y
-apt install gcc-i686-linux-gnu -y
+# apt install gcc-i686-linux-gnu -y
 apt install fonts-firacode -y
 apt install pigz -y
 
 # apt install clang-17 clangd-17 clang-format-17 lldb-17 libc++-17-dev libc++abi-17-dev make bsdmainutils qemu-system gdb cgdb valgrind libltdl7 libsdl2-2.0-0 libgtk2.0-0 binutils-i686-linux-gnu gcc-i686-linux-gnu fonts-firacode pigz -y
-apt install gcc make bzip2 libssl-dev libncurses-dev libelf-dev flex bison bc dwarves -y
+apt install bzip2 libssl-dev libncurses-dev libelf-dev flex bison bc dwarves -y
 
 update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-17 100
 update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-17 100

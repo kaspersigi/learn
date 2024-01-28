@@ -40,10 +40,10 @@ git clone --single-branch -b u-boot-2023.07.y --depth 1 git@github.com:u-boot/u-
 mv WSL2-Linux-Kernel linux
 cd linux
 cp arch/x86/configs/config-wsl .config
-make menuconfig
-make -j$(nproc)
-sudo make modules_install headers_install
-cp arch/x86/boot/bzImage /mnt/d/Learning_Kernel/bzImage
+make LLVM=17 menuconfig
+make LLVM=17 -j$(nproc)
+sudo make LLVM=17 modules_install headers_installsrc/
+cp arch/x86/boot/bzImage /mnt/d/Learning_Kernel/src/bzImage
 
 cd linux
 make vexpress_defconfig ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
