@@ -44,6 +44,7 @@ make LLVM=17 menuconfig
 make LLVM=17 -j$(nproc)
 cp arch/x86/boot/bzImage /mnt/d/Learning_Kernel/src/bzImage
 sudo make LLVM=17 modules_install headers_install
+./scripts/clang-tools/gen_compile_commands.py
 
 cd linux
 make vexpress_defconfig ARCH=arm CROSS_COMPILE=arm-linux-gnueabi-
