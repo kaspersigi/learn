@@ -15,7 +15,7 @@ format :
 clean :
 	rm -v $(MOD)
 install : $(MOD)
-	insmod $(MOD)
+	/usr/sbin/insmod $(MOD)
 remove :
-	rmmod $(MOD)
+	/usr/sbin/rmmod $(MOD)
 endif
