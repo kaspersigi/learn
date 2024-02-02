@@ -15,7 +15,7 @@ format :
 clean :
 	rm -v $(MOD) Module.symvers
 install : $(MOD)
-	sudo /usr/sbin/insmod $(MOD)
+	sudo /sbin/insmod $(MOD)
 remove :
-	sudo /usr/sbin/rmmod $(MOD)
+	sudo /sbin/rmmod $(MOD)
 endif
