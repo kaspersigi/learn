@@ -1,7 +1,9 @@
 #include <linux/cdev.h>
+#include <linux/device.h>
 #include <linux/fs.h>
 #include <linux/init.h>
 #include <linux/module.h>
+#include <linux/uaccess.h>
 
 // 内核缓冲区
 static char hello_buffer[512] = { 0 };
