@@ -1,5 +1,8 @@
 #!/usr/bin/bash
 
+cp .wslconfig /mnt/c/Users/kaspe/
+cp .vimrc ~
+
 mkdir ~/.ssh
 cp amd64/id_rsa ~/.ssh
 cp amd64/id_rsa.pub ~/.ssh
