@@ -1,8 +1,5 @@
 #!/usr/bin/bash
 
-cp .wslconfig /mnt/c/Users/kaspe/
-cp .vimrc ~
-
 mkdir ~/.ssh
 cp amd64/id_rsa ~/.ssh
 cp amd64/id_rsa.pub ~/.ssh
@@ -15,8 +12,9 @@ git config --global user.email kaspersigi@gmail.com
 
 ssh-keyscan github.com > $HOME/.ssh/known_hosts
 
+cp .wslconfig /mnt/c/Users/kaspe/
+cp .vimrc ~
 mkdir ~/linux
-cp fs.tar.gz ~/linux
 cd ~/linux
 git clone git@github.com:kaspersigi/learn.git
 cd learn
