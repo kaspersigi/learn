@@ -3,7 +3,7 @@
 ###########################################
 
 TRG = main
-OBJ = main.o
+OBJ = main.o String.o
 SRC = main.cc
 ARCH = $(shell llvm-config --host-target)
 CC = /usr/bin/clang --target=$(ARCH)
@@ -22,11 +22,15 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 $(TRG) : $(OBJ)
 	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS)
 	rm -v $(OBJ)
-$(OBJ) : $(SRC) String.hpp Iterator.hpp
+$(OBJ) : $(SRC) String.o Iterator.hpp
 	$(CXX) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+String.o : String.h
+	$(CXX) String.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+
 format :
 	$(FORMAT) main.cc -style=file -i
-	$(FORMAT) String.hpp -style=file -i
+	$(FORMAT) String.h -style=file -i
+	$(FORMAT) String.cc -style=file -i
 	$(FORMAT) Iterator.hpp -style=file -i
 clean :
 	rm -v $(TRG)
