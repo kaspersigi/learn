@@ -25,7 +25,7 @@ MenuItem.o : MenuItem.cc MenuItem.h
 format :
 	$(FORMAT) MenuItem.cc -style=file -i
 	$(FORMAT) MenuItem.h -style=file -i
-	$(FORMAT) Iterator.h -style=file -i
+	$(FORMAT) Iterator.hpp -style=file -i
 	$(FORMAT) Menu.h -style=file -i
 clean :
 	rm -v MenuItem.o

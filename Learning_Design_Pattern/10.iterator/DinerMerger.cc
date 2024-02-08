@@ -1,4 +1,5 @@
 #include "DinerMerger.h"
+#include <memory>
 
 auto main(int argc, char* argv[]) -> int
 {

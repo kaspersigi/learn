@@ -1,11 +1,9 @@
 #include "DinerMenu.h"
-#include "../iterators/DinerMenuIterator.h"
 #include <iostream>
 
 DinerMenu::DinerMenu()
 {
-    _menuItems = new std::shared_ptr<MenuItem>[MAX_ITEMS + 1];
-    for (int i = 0; i <= MAX_ITEMS; i++) {
+    for (int i = 0; i < MAX_ITEMS; i++) {
         _menuItems[i] = nullptr;
     }
     addItem("Vegetarian BLT", "(Fakin') Bacon with lettuce & tomato on whole wheat", true, 2.99);
@@ -16,11 +14,16 @@ DinerMenu::DinerMenu()
     addItem("Pasta", "Spaghetti with Marinara Sauce, and a slice of sourdough bread", true, 3.89);
 }
 
-DinerMenu::~DinerMenu() { delete[] _menuItems; }
+DinerMenu::~DinerMenu()
+{
+    for (int i = 0; i < MAX_ITEMS; i++) {
+        delete _menuItems[i];
+    }
+}
 
 void DinerMenu::addItem(std::string name, std::string description, bool vegetarian, double price)
 {
-    auto menuItem = std::make_shared<MenuItem>(name, description, vegetarian, price);
+    auto menuItem = new MenuItem(name, description, vegetarian, price);
 
     if (_numberOfItems >= MAX_ITEMS) {
         std::cerr << "Sorry, menu is full!  Can't add item to menu" << std::endl;
@@ -30,6 +33,17 @@ void DinerMenu::addItem(std::string name, std::string description, bool vegetari
     }
 }
 
-std::shared_ptr<MenuItem>* DinerMenu::getMenuItems() const { return _menuItems; }
+std::size_t DinerMenu::length() const
+{
+    return _numberOfItems + 1;
+}
 
-Iterator<MenuItem>* DinerMenu::createIterator() const { return new DinerMenuIterator(_menuItems); }
+DinerMenuIterator DinerMenu::begin()
+{
+    return DinerMenuIterator(_menuItems[0]);
+}
+
+DinerMenuIterator DinerMenu::end()
+{
+    return DinerMenuIterator(_menuItems[_numberOfItems]);
+}
