@@ -22,9 +22,9 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 $(TRG) : $(OBJ)
 	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS)
 	rm -v $(OBJ)
-$(OBJ) : $(SRC) String.o Iterator.hpp
+main.o : $(SRC) String.o Iterator.hpp
 	$(CXX) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
-String.o : String.h
+String.o : 
 	$(CXX) String.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 
 format :
