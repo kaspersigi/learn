@@ -4,9 +4,9 @@
 
 TRG = main
 SRC = main.rs
-FLAGS = --edition 2024
-DEBUG = -g -C opt-level=0
-RELEASE = -C debuginfo=0 -C opt-level=3
+FLAGS = --edition 2021
+DEBUG = -C debuginfo=full -C opt-level=0 -g
+RELEASE = -C debuginfo=none -C opt-level=z
 
 .PHONY : all
 $(TRG) : $(SRC)
