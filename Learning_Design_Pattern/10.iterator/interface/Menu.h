@@ -1,10 +1,13 @@
 #pragma once
 
+#include "Iterator.h"
 #include "MenuItem.h"
 
 class Menu {
 public:
     virtual ~Menu() = default;
+
+    virtual Iterator<MenuItem>* createIterator() const = 0;
 
 protected:
     Menu() = default;

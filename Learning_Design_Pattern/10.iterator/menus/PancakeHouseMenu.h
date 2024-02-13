@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../interface/Menu.h"
-#include "../iterators/PancakeHouseMenuIterator.h"
+#include <string>
 #include <vector>
 
 class PancakeHouseMenu : public Menu {
@@ -10,10 +10,9 @@ public:
     virtual ~PancakeHouseMenu() = default;
 
     void addItem(std::string name, std::string description, bool vegetarian, double price);
+    std::vector<std::shared_ptr<MenuItem>> getMenuItems() const;
+    virtual Iterator<MenuItem>* createIterator() const override;
     std::string toShow() const;
-    std::size_t length() const;
-    PancakeHouseMenuIterator begin();
-    PancakeHouseMenuIterator end();
 
 protected:
     PancakeHouseMenu(const PancakeHouseMenu&) = delete;
@@ -22,5 +21,5 @@ protected:
     PancakeHouseMenu& operator=(PancakeHouseMenu&&) = delete;
 
 private:
-    std::vector<MenuItem*> _menuItems;
+    std::vector<std::shared_ptr<MenuItem>> _menuItems {};
 };

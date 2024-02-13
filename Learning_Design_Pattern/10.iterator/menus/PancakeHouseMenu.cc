@@ -1,4 +1,6 @@
 #include "PancakeHouseMenu.h"
+#include "../iterators/PancakeHouseMenuIterator.h"
+#include <iostream>
 
 PancakeHouseMenu::PancakeHouseMenu()
 {
@@ -10,25 +12,15 @@ PancakeHouseMenu::PancakeHouseMenu()
 
 void PancakeHouseMenu::addItem(std::string name, std::string description, bool vegetarian, double price)
 {
-    _menuItems.push_back(new MenuItem(name, description, vegetarian, price));
+    auto menuItem = std::make_shared<MenuItem>(name, description, vegetarian, price);
+    _menuItems.push_back(menuItem);
 }
+
+std::vector<std::shared_ptr<MenuItem>> PancakeHouseMenu::getMenuItems() const { return _menuItems; }
+
+Iterator<MenuItem>* PancakeHouseMenu::createIterator() const { return new PancakeHouseMenuIterator(_menuItems); }
 
 std::string PancakeHouseMenu::toShow() const
 {
     return "Objectville Pancake House Menu";
-}
-
-std::size_t PancakeHouseMenu::length() const
-{
-    return _menuItems.size();
-}
-
-PancakeHouseMenuIterator PancakeHouseMenu::begin()
-{
-    return PancakeHouseMenuIterator(_menuItems[0]);
-}
-
-PancakeHouseMenuIterator PancakeHouseMenu::end()
-{
-    return PancakeHouseMenuIterator(_menuItems[_menuItems.size() - 1]);
 }

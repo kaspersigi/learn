@@ -1,8 +1,6 @@
 #pragma once
 
 #include "../interface/Menu.h"
-#include "../iterators/DinerMenuIterator.h"
-#include <memory>
 #include <string>
 
 class DinerMenu : public Menu {
@@ -11,9 +9,8 @@ public:
     virtual ~DinerMenu();
 
     void addItem(std::string name, std::string description, bool vegetarian, double price);
-    std::size_t length() const;
-    DinerMenuIterator begin();
-    DinerMenuIterator end();
+    std::shared_ptr<MenuItem>* getMenuItems() const;
+    virtual Iterator<MenuItem>* createIterator() const override;
 
 protected:
     DinerMenu(const DinerMenu&) = delete;
@@ -22,7 +19,7 @@ protected:
     DinerMenu& operator=(DinerMenu&&) = delete;
 
 private:
-    static const std::size_t MAX_ITEMS { 6 };
-    MenuItem* _menuItems[MAX_ITEMS];
-    std::size_t _numberOfItems { 0 };
+    static const int MAX_ITEMS { 6 };
+    int _numberOfItems { 0 };
+    std::shared_ptr<MenuItem>* _menuItems { nullptr };
 };
