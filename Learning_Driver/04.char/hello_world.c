@@ -87,7 +87,6 @@ static const struct file_operations hello_fops = {
 
 static int __init hello_init(void)
 {
-    int i = 0;
     int ret = alloc_chrdev_region(&mydev.devno, mydev.minor, CHARDEV_NUM, CHARDEV_NAME);
 
     if (ret < 0) {
@@ -101,17 +100,15 @@ static int __init hello_init(void)
     cdev_init(mydev.cdev, &hello_fops);
     cdev_add(mydev.cdev, mydev.devno, CHARDEV_NUM);
     mydev.class = class_create(THIS_MODULE, CHARDEV_NAME);
-    for (i = mydev.minor; i < mydev.minor + CHARDEV_NUM; ++i) {
-        mydev.device = device_create(mydev.class, NULL, MKDEV(mydev.major, i), NULL, "%s%d", CHARDEV_NAME, i);
+    for (size_t i = mydev.minor; i < mydev.minor + CHARDEV_NUM; ++i) {
+        mydev.device = device_create(mydev.class, NULL, MKDEV(mydev.major, i), NULL, "%s%zu", CHARDEV_NAME, i);
     }
     return 0;
 }
 
 static void __exit hello_exit(void)
 {
-    int i = 0;
-
-    for (i = mydev.minor; i < mydev.minor + CHARDEV_NUM; ++i) {
+    for (size_t i = mydev.minor; i < mydev.minor + CHARDEV_NUM; ++i) {
         device_destroy(mydev.class, MKDEV(mydev.major, i));
     }
     class_destroy(mydev.class);
