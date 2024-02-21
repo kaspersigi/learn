@@ -84,3 +84,21 @@ sudo apt install gcc g++ cpio unzip -y
 make qemu_aarch64_virt_defconfig
 make menuconfig
 make -j$(nproc)
+
+sudo apt install python2 -y
+cd ~
+wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
+sudo python2 get-pip.py
+python -m pip install formatter
+mkdir tspi
+cd tspi
+cp /mnt/d/Learning_Kernel/tspi/tspi_android_sdk_repo_20240202.tar.gz .
+tar zxvf tspi_android_sdk_repo_20240202.tar.gz
+
+.repo/repo/repo sync -l -j16
+
+cd kernel/ && git clean -xdf && cd .. && .repo/repo/repo forall -c "git checkout lckfb-tspi-v1.0.0"
+
+sudo apt install -y git make openjdk-8-jdk git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev libgl1-mesa-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev libxml2-utils xsltproc unzip bc imagemagick ccache schedtool libssl-dev libncursesw5-dev libncurses5 libncursesw5 libncurses5-dev libncurses-dev libncurses-gst libncurses5-dev clang device-tree-compiler lz4 -y
+
+cd u-boot && ./make.sh rk3566 && cd ../kernel && make clean && make distclean && make ARCH=arm64 tspi_defconfig rk356x_evb.config android-11.config && make ARCH=arm64 tspi-rk3566-user-v10.img -j16 && cd .. && source build/envsetup.sh && lunch rk3566_tspi-userdebug && make installclean -j16 && make -j16 && ./mkimage.sh
