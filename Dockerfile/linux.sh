@@ -89,11 +89,13 @@ sudo apt install python2 -y
 cd ~
 wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
 sudo python2 get-pip.py
+sudo ln -s /usr/bin/python2 /usr/bin/python
 python -m pip install formatter
 mkdir tspi
 cd tspi
 cp /mnt/d/Learning_Kernel/tspi/tspi_android_sdk_repo_20240202.tar.gz .
 tar zxvf tspi_android_sdk_repo_20240202.tar.gz
+rm -rf tspi_android_sdk_repo_20240202.tar.gz
 
 .repo/repo/repo sync -l -j16
 
