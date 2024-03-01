@@ -13,6 +13,8 @@ apt install tftp-hpa tftpd-hpa xinetd uml-utilities bridge-utils -y
 apt install nfs-kernel-server -y
 apt install default-jdk -y
 
+clang-tidy -checks=cert-* --warnings-as-errors=* $(SRC)
+
 su miku
 cd ~/linux
 

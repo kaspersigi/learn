@@ -26,6 +26,7 @@ RUN chown miku:miku -R /home/miku/.ssh \
 RUN apt install sudo -y \
     && apt install clang-16 -y \
     && apt install clang-format-16 -y \
+    && apt install clang-tidy-16 -y \
     && apt install lldb-16 -y \
     && apt install libc++-16-dev -y \
     && apt install libc++abi-16-dev -y \
@@ -60,6 +61,7 @@ RUN update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-16 1
     && update-alternatives --install /usr/bin/llvm-strip llvm-strip /usr/bin/llvm-strip-16 100 \
     && update-alternatives --install /usr/bin/cc cc /usr/bin/clang-16 100 \
     && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-16 100 \
+    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-16 100 \
     && echo 'miku    ALL=(ALL:ALL) ALL' >> /etc/sudoers \
     && echo '/usr/sbin/sshd -D &' > /root/run.sh \
     && chmod 110 /root/run.sh
