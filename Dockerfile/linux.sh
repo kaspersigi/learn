@@ -36,6 +36,8 @@ git clone --single-branch -b linux-2.6.32.y --depth 1 https://git.kernel.org/pub
 git clone --single-branch -b linux-msft-wsl-6.1.y --depth 1 git@github.com:microsoft/WSL2-Linux-Kernel.git
 # git clone --single-branch -b linux-6.6.y --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 git clone --single-branch -b linux-6.6.y --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+# git clone --single-branch -b linux-rolling-lts --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+git clone --single-branch -b linux-rolling-lts --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 # git clone --single-branch -b 1_36_stable --depth 1 git://git.busybox.net/busybox
 git clone --single-branch -b 1_36_stable --depth 1 https://git.busybox.net/busybox
 git clone --single-branch -b u-boot-2023.07.y --depth 1 git@github.com:u-boot/u-boot.git
