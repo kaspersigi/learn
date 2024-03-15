@@ -119,8 +119,8 @@ tar zxvf tspi_linux_sdk_repo_20240131.tar.gz
 
 sudo apt install git ssh make gcc libssl-dev liblz4-tool expect g++ patchelf chrpath gawk texinfo chrpath diffstat binfmt-support qemu-user-static live-build bison flex fakeroot cmake gcc-multilib g++-multilib unzip device-tree-compiler ncurses-dev fdisk -y
 
-sudo dpkg -i live-build_20230502_all.deb
 export RK_ROOTFS_SYSTEM=debian
+sudo dpkg -i debian/ubuntu-build-service/packages/*
 ./build.sh debian
 3
 ./mkfirmware.sh
