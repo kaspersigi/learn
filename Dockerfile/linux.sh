@@ -136,6 +136,5 @@ tar zxvf kernel.tar.gz
 cd kernel
 cp arch/arm64/configs/rockchip_linux_defconfig .config
 make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
-make -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
-make dtbs -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
-make kernel.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+make tspi-rk3566-user-v10-linux.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+cp boot.img /mnt/d/Learning_Kernel/tspi/
