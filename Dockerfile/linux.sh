@@ -111,8 +111,8 @@ cd u-boot && ./make.sh rk3566 && cd ../kernel && make clean && make distclean &&
 
 sudo apt install python2 -y
 sudo ln -s /usr/bin/python2 /usr/bin/python
-mkdir debian
-cd debian
+mkdir buildroot
+cd buildroot
 cp /mnt/d/Learning_Kernel/tspi/tspi_linux_sdk_repo_20240131.tar.gz .
 tar zxvf tspi_linux_sdk_repo_20240131.tar.gz
 .repo/repo/repo sync -l -j$(nproc)
@@ -127,5 +127,15 @@ export RK_ROOTFS_SYSTEM=debian
 sudo dpkg -i debian/ubuntu-build-service/packages/*
 sudo apt install -f
 ./build.sh debian
-./build.sh kernel
 ./mkfirmware.sh
+
+sudo apt install gcc-aarch64-linux-gnu gcc lz4 -y
+sudo ln -s /usr/bin/python3 /usr/bin/python
+cp /mnt/d/Learning_Kernel/tspi/kernel.tar.gz .
+tar zxvf kernel.tar.gz
+cd kernel
+cp arch/arm64/configs/rockchip_linux_defconfig .config
+make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+make -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+make dtbs -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+make kernel.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
