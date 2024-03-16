@@ -149,6 +149,7 @@ cp boot.img /mnt/d/Learning_Kernel/tspi/
 # git clone --single-branch -b nanopi6-v6.1.y --depth 1 https://github.com:friendlyarm/kernel-rockchip.git
 git clone --single-branch -b nanopi6-v6.1.y --depth 1 git@github.com:friendlyarm/kernel-rockchip.git
 mv kernel-rockchip linux
+cd linux
 cp arch/arm64/configs/rockchip_linux_defconfig .config
 cp /mnt/d/Learning_Kernel/tspi/dts/* arch/arm64/boot/dts/rockchip/
 make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
