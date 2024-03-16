@@ -46,10 +46,10 @@ git clone --single-branch -b u-boot-2023.07.y --depth 1 git@github.com:u-boot/u-
 mv WSL2-Linux-Kernel linux
 cd linux
 cp arch/x86/configs/config-wsl .config
-make LLVM=1 menuconfig
-make LLVM=1 -j$(nproc)
+make menuconfig LLVM=1
+make -j$(nproc) LLVM=1
 cp arch/x86/boot/bzImage /mnt/d/Learning_Kernel/src/bzImage
-sudo make LLVM=1 modules_install headers_install
+sudo make modules_install headers_install LLVM=1
 ./scripts/clang-tools/gen_compile_commands.py
 
 cd linux
@@ -152,6 +152,6 @@ mv kernel-rockchip linux
 cd linux
 cp arch/arm64/configs/rockchip_linux_defconfig .config
 cp /mnt/d/Learning_Kernel/tspi/dts/* arch/arm64/boot/dts/rockchip/
-make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
-make tspi-rk3566-user-v10-linux.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
+make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=1
+make tspi-rk3566-user-v10-linux.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=1
 cp boot.img /mnt/d/Learning_Kernel/tspi/
