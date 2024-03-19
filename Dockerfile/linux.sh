@@ -150,8 +150,8 @@ cp boot.img /mnt/d/Learning_Kernel/tspi/
 git clone --single-branch -b nanopi6-v6.1.y --depth 1 git@github.com:friendlyarm/kernel-rockchip.git
 mv kernel-rockchip linux
 cd linux
-cp arch/arm64/configs/rockchip_linux_defconfig .config
 cp /mnt/d/Learning_Kernel/tspi/dts/* arch/arm64/boot/dts/rockchip/
+cp /mnt/d/Learning_Kernel/tspi/rockchip_linux_defconfig .config
 make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=1
 make tspi-rk3566-user-v10-linux.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=1
 cp boot.img /mnt/d/Learning_Kernel/tspi/
