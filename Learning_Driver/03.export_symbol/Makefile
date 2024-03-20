@@ -6,12 +6,16 @@ obj-m := $(TRG).o
 else
 PWD := $(shell pwd)
 KDIR := ~/linux/linux
-C_FLAGS := LLVM=1
+LLVM := 17
+ARCH := arm64
+C_FLAGS := LLVM=$(LLVM) ARCH=$(ARCH)
+FORMAT = /usr/bin/clang-format-$(LLVM)
+
 all :
 	make $(C_FLAGS) -C $(KDIR) M=$(PWD)
 	rm -rfv *.o *.mod.c *.order *.mod .tmp_versions \.*.cmd \.*d
 format :
-	clang-format $(SRC) -style=file -i
+	$(FORMAT) $(SRC) -style=file -i
 clean :
 	rm -v $(MOD) Module.symvers
 install : $(MOD)

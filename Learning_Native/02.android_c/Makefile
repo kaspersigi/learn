@@ -15,7 +15,8 @@ CXX = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang++
 AR = $(TOOLCHAIN)/bin/llvm-ar
 RANLIB = $(TOOLCHAIN)/bin/llvm-ranlib
 
-FORMAT = /usr/bin/clang-format
+LLVM = 17
+FORMAT = /usr/bin/clang-format-$(LLVM)
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++20 -Wall -Wno-unused
 DEBUG = -g -O0

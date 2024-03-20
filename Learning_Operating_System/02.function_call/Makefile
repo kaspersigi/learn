@@ -8,9 +8,12 @@ OBJ = main.o
 SRC = main.s
 AS = /usr/bin/i686-linux-gnu-as
 LD = /usr/bin/i686-linux-gnu-ld
-CC = /usr/bin/clang
-CXX = /usr/bin/clang++
-FORMAT = /usr/bin/clang-format
+LLVM = 17
+CONFIG = llvm-config-$(LLVM)
+ARCH = i386-unknown-linux-gnu
+CC = /usr/bin/clang-$(LLVM)
+CXX = /usr/bin/clang++-$(LLVM)
+FORMAT = /usr/bin/clang-format-$(LLVM)
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++23 -Wall -Wno-unused
 DEBUG = -g -O0
@@ -19,7 +22,6 @@ LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
-ARCH = -m32
 
 .PHONY : all
 $(TRG) : $(BIN) boot.img

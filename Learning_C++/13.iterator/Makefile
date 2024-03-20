@@ -5,10 +5,12 @@
 TRG = main
 OBJ = main.o String.o
 SRC = main.cc
-ARCH = $(shell llvm-config --host-target)
-CC = /usr/bin/clang --target=$(ARCH)
-CXX = /usr/bin/clang++ --target=$(ARCH)
-FORMAT = /usr/bin/clang-format
+LLVM = 17
+CONFIG = llvm-config-$(LLVM)
+ARCH = $(shell $(CONFIG) --host-target)
+CC = /usr/bin/clang-$(LLVM) --target=$(ARCH)
+CXX = /usr/bin/clang++-$(LLVM) --target=$(ARCH)
+FORMAT = /usr/bin/clang-format-$(LLVM)
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++23 -Wall -Wno-unused
 DEBUG = -g -O0
@@ -24,7 +26,7 @@ $(TRG) : $(OBJ)
 	rm -v $(OBJ)
 main.o : $(SRC) String.o Iterator.hpp
 	$(CXX) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
-String.o : 
+String.o :
 	$(CXX) String.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 
 format :

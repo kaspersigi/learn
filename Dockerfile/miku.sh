@@ -8,7 +8,7 @@ chmod 644 ~/.ssh/id_rsa.pub
 
 git config --global pull.rebase false
 git config --global user.name kaspersigi
-git config --global user.email kaspersigi@gmail.com
+git config --global user.email kaspersigi@outlook.com
 
 ssh-keyscan github.com > $HOME/.ssh/known_hosts
 
