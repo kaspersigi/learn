@@ -6,10 +6,10 @@ obj-m := $(TRG).o
 else
 PWD := $(shell pwd)
 KDIR := ~/linux/linux
-LLVM := 17
+LLVM := -17
 ARCH := arm64
 C_FLAGS := LLVM=$(LLVM) ARCH=$(ARCH)
-FORMAT = /usr/bin/clang-format-$(LLVM)
+FORMAT = /usr/bin/clang-format$(LLVM)
 
 all :
 	make $(C_FLAGS) -C $(KDIR) M=$(PWD)

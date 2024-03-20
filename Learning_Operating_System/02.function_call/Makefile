@@ -8,12 +8,12 @@ OBJ = main.o
 SRC = main.s
 AS = /usr/bin/i686-linux-gnu-as
 LD = /usr/bin/i686-linux-gnu-ld
-LLVM = 17
-CONFIG = llvm-config-$(LLVM)
+LLVM = -17
+CONFIG = llvm-config$(LLVM)
 ARCH = i386-unknown-linux-gnu
-CC = /usr/bin/clang-$(LLVM)
-CXX = /usr/bin/clang++-$(LLVM)
-FORMAT = /usr/bin/clang-format-$(LLVM)
+CC = /usr/bin/clang$(LLVM)
+CXX = /usr/bin/clang++$(LLVM)
+FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++23 -Wall -Wno-unused
 DEBUG = -g -O0

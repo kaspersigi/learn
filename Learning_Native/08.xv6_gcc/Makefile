@@ -10,8 +10,8 @@ AS = /usr/bin/i686-linux-gnu-as
 LD = /usr/bin/i686-linux-gnu-ld
 CC = /usr/bin/i686-linux-gnu-gcc
 CXX = /usr/bin/g++
-LLVM = 17
-FORMAT = /usr/bin/clang-format-$(LLVM)
+LLVM = -17
+FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++23 -Wall -Wno-unused
 DEBUG = -ggdb -O0

@@ -5,12 +5,12 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
-LLVM = 17
-CONFIG = llvm-config-$(LLVM)
+LLVM = -17
+CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
-CC = /usr/bin/clang-$(LLVM) --target=$(ARCH)
-CXX = /usr/bin/clang++-$(LLVM) --target=$(ARCH)
-FORMAT = /usr/bin/clang-format-$(LLVM)
+CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
+CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
+FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++23 -Wall -Wno-unused
 DEBUG = -g -O0
@@ -27,7 +27,7 @@ $(TRG) : $(OBJ) libfunc.a
 $(OBJ) : $(SRC)
 	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
 libfunc.a : func.o
-	llvm-ar -crv libfunc.a func.o
+	llvm-ar$(LLVM) -crv libfunc.a func.o
 	rm -v func.o
 func.o : func.c func.h
 	$(CC) func.c -c $(C_FLAGS) $(DEBUG)

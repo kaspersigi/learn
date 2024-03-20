@@ -6,12 +6,12 @@ TRG = main
 OBJ = main.o
 SRC = main.c
 VPATH = /home/miku/learn/Learning_C
-LLVM = 17
-CONFIG = llvm-config-$(LLVM)
+LLVM = -17
+CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
-CC = /usr/bin/clang-$(LLVM) --target=$(ARCH)
-CXX = /usr/bin/clang++-$(LLVM) --target=$(ARCH)
-FORMAT = /usr/bin/clang-format-$(LLVM)
+CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
+CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
+FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c18 -Wall -Wno-unused
 CXX_FLAGS = -std=c++23 -Wall -Wno-unused
 DEBUG = -g -O0
