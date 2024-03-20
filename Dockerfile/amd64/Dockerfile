@@ -50,7 +50,6 @@ RUN apt install sudo -y \
     && apt install pigz -y
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 100 \
     && update-alternatives --install /usr/bin/cc cc /usr/bin/clang-16 100 \
-    && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-16 100 \
     && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-16 100 \
     && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-16 100 \
     && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-16 100 \
