@@ -72,6 +72,6 @@ ENTRYPOINT /root/run.sh && su miku
 # CMD /usr/sbin/sshd -D &
 # sudo apt install apparmor-utils
 # docker build -t kaspersigi/debian .
-# docker buildx build --platform=linux/i386 -t kaspersigi/clang:arm64v8 .
+# docker buildx build --platform=linux/arm64v8 -t kaspersigi/clang:arm64v8 .
 # docker run -it --privileged -p 2222:22 -v /Users/miku/Downloads/arm64:/home/miku/linux --name=arm64 --hostname Arm64-Miku kaspersigi/clang:arm64v8
 # docker run -it --privileged -p 2222:22 -v /d/arm64:/home/miku/linux --name=arm64 --hostname Arm64-Miku kaspersigi/clang:arm64v8
