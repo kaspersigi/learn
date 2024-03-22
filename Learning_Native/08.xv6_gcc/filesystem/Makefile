@@ -96,8 +96,9 @@ _zombie : zombie.c _common
 _common : common
 	$(MAKE) -C common
 format :
-	$(FORMAT) mkfs.c -style=file -i
 	$(MAKE) -C common format
+	$(FORMAT) include/user.h -style=file -i
+	$(FORMAT) mkfs.c -style=file -i
 	$(FORMAT) cat.c -style=file -i
 	$(FORMAT) echo.c -style=file -i
 	$(FORMAT) forktest.c -style=file -i

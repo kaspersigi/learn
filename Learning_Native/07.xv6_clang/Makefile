@@ -38,6 +38,27 @@ bootloader.bin : bootloader
 kernel.bin : kernel
 	$(MAKE) -C kernel
 format :
+	$(FORMAT) include/asm.h -style=file -i
+	$(FORMAT) include/buf.h -style=file -i
+	$(FORMAT) include/date.h -style=file -i
+	$(FORMAT) include/defs.h -style=file -i
+	$(FORMAT) include/elf.h -style=file -i
+	$(FORMAT) include/fcntl.h -style=file -i
+	$(FORMAT) include/file.h -style=file -i
+	$(FORMAT) include/fs.h -style=file -i
+	$(FORMAT) include/kbd.h -style=file -i
+	$(FORMAT) include/memlayout.h -style=file -i
+	$(FORMAT) include/mmu.h -style=file -i
+	$(FORMAT) include/mp.h -style=file -i
+	$(FORMAT) include/param.h -style=file -i
+	$(FORMAT) include/proc.h -style=file -i
+	$(FORMAT) include/sleeplock.h -style=file -i
+	$(FORMAT) include/spinlock.h -style=file -i
+	$(FORMAT) include/stat.h -style=file -i
+	$(FORMAT) include/syscall.h -style=file -i
+	$(FORMAT) include/traps.h -style=file -i
+	$(FORMAT) include/types.h -style=file -i
+	$(FORMAT) include/x86.h -style=file -i
 	$(MAKE) -C bootloader format
 	$(MAKE) -C kernel format
 clean :
