@@ -22,11 +22,11 @@ apt install libltdl7 -y
 apt install libsdl2-2.0-0 -y
 apt install libgtk2.0-0 -y
 apt install binutils-i686-linux-gnu -y
-# apt install gcc-i686-linux-gnu -y
+apt install gcc-i686-linux-gnu -y
 apt install fonts-firacode -y
 apt install pigz -y
 
-# apt install clang-17 clangd-17 clang-format-17 clang-tidy-17 lldb-17 libc++-17-dev libc++abi-17-dev lld-17 make bsdmainutils qemu-system gdb cgdb valgrind libltdl7 libsdl2-2.0-0 libgtk2.0-0 binutils-i686-linux-gnu fonts-firacode pigz -y
+# apt install clang-17 clangd-17 clang-format-17 clang-tidy-17 lldb-17 libc++-17-dev libc++abi-17-dev lld-17 make bsdmainutils qemu-system gdb cgdb valgrind libltdl7 libsdl2-2.0-0 libgtk2.0-0 binutils-i686-linux-gnu gcc-i686-linux-gnu fonts-firacode pigz -y
 apt install bzip2 libssl-dev libncurses-dev libelf-dev flex bison bc dwarves lz4 -y
 
 echo 'LANG="zh_CN.UTF-8"' > /etc/default/locale

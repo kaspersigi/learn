@@ -29,10 +29,10 @@ all : mkfs _cat _echo _forktest _grep _init _kill _ln _ls _mkdir _rm _sh _stress
 	$(MAKE) -C common clean
 	rm -v mkfs _cat _echo _forktest _grep _init _kill _ln _ls _mkdir _rm _sh _stressfs _usertests _wc _zombie
 mkfs : mkfs.o
-	/usr/bin/clang mkfs.o -o mkfs
+	/usr/bin/clang$(LLVM) mkfs.o -o mkfs
 	rm -v mkfs.o
 mkfs.o : mkfs.c
-	/usr/bin/clang mkfs.c -c $(C_FLAGS) $(DEBUG)
+	/usr/bin/clang$(LLVM) mkfs.c -c $(C_FLAGS) $(DEBUG)
 _cat : cat.c _common
 	$(CC) cat.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG) $(ARCH)
 	$(LD) cat.o common/ulib.o common/usys.o common/printf.o common/umalloc.o -o _cat -N -e main -Ttext 0x0 -m elf_i386

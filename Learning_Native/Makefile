@@ -22,7 +22,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template v4l2 malloc new xv6_clang
+all : template v4l2 malloc new xv6_clang xv6_gcc
 template :
 	$(MAKE) -C 00.template
 v4l2 :
@@ -62,4 +62,4 @@ clean :
 	$(MAKE) -C 05.malloc clean
 	$(MAKE) -C 06.new clean
 	$(MAKE) -C 07.xv6_clang clean
-	# $(MAKE) -C 08.xv6_gcc clean
+	$(MAKE) -C 08.xv6_gcc clean
