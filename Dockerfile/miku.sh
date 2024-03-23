@@ -12,7 +12,7 @@ git config --global user.email kaspersigi@outlook.com
 
 ssh-keyscan github.com > $HOME/.ssh/known_hosts
 
-cp .wslconfig /mnt/c/Users/kaspe/
+# cp .wslconfig /mnt/c/Users/kaspe/
 cp .vimrc ~
 mkdir ~/linux
 cd ~/linux
