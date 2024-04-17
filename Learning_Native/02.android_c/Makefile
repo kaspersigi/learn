@@ -18,7 +18,7 @@ RANLIB = $(TOOLCHAIN)/bin/llvm-ranlib
 LLVM = -17
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c18 -Wall -Wno-unused
-CXX_FLAGS = -std=c++20 -Wall -Wno-unused
+CXX_FLAGS = -std=c++23 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -static -Oz
 LINK_FLAGS = -no-pie
