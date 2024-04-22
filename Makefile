@@ -22,7 +22,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : algorithm c c++ design_pattern native operating_system socket stl
+all : algorithm c c++ design_pattern native operating_system rust socket stl
 algorithm :
 	$(MAKE) -C Learning_Algorithm
 c :
@@ -37,6 +37,8 @@ native :
 	$(MAKE) -C Learning_Native
 operating_system :
 	$(MAKE) -C Learning_Operating_System
+rust :
+	$(MAKE) -C Learning_Rust
 socket :
 	$(MAKE) -C Learning_Socket
 stl :
@@ -50,6 +52,7 @@ format :
 	$(MAKE) -C Learning_Driver format
 	$(MAKE) -C Learning_Native format
 	# $(MAKE) -C Learning_Operating_System format
+	$(MAKE) -C Learning_Rust format
 	$(MAKE) -C Learning_Socket format
 	$(MAKE) -C Learning_STL format
 
@@ -61,6 +64,7 @@ clean :
 	# $(MAKE) -C Learning_Driver clean
 	$(MAKE) -C Learning_Native clean
 	$(MAKE) -C Learning_Operating_System clean
+	$(MAKE) -C Learning_Rust format clean
 	$(MAKE) -C Learning_Socket clean
 	$(MAKE) -C Learning_STL clean
 
