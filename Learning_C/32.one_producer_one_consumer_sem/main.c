@@ -14,7 +14,7 @@ void show(const char* fun_name)
     printf("%s say: cost = %d, remain = %d\n", fun_name, vapple, vremain);
 }
 
-void* fn_producer()
+void* fn_producer(void*)
 {
     while (1) {
         sem_wait(&remain);
@@ -29,7 +29,7 @@ void* fn_producer()
     return (void*)0;
 }
 
-void* fn_consumer()
+void* fn_consumer(void*)
 {
     while (1) {
         sem_wait(&apple);

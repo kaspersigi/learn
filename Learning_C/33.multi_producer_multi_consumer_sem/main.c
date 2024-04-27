@@ -14,7 +14,7 @@ void show(const char* fun_name)
     printf("%s say: apple = %d, orange = %d, remain = %d\n", fun_name, vorange, vapple, vremain);
 }
 
-void* fn_producer1()
+void* fn_producer1(void*)
 {
     while (1) {
         sem_wait(&remain);
@@ -29,7 +29,7 @@ void* fn_producer1()
     return (void*)0;
 }
 
-void* fn_producer2()
+void* fn_producer2(void*)
 {
     while (1) {
         sem_wait(&remain);
@@ -44,7 +44,7 @@ void* fn_producer2()
     return (void*)0;
 }
 
-void* fn_consumer1()
+void* fn_consumer1(void*)
 {
     while (1) {
         sem_wait(&apple);
@@ -59,7 +59,7 @@ void* fn_consumer1()
     return (void*)0;
 }
 
-void* fn_consumer2()
+void* fn_consumer2(void*)
 {
     while (1) {
         sem_wait(&orange);
