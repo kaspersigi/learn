@@ -46,10 +46,10 @@ git clone --single-branch -b u-boot-2023.07.y --depth 1 git@github.com:u-boot/u-
 mv WSL2-Linux-Kernel linux
 cd linux
 cp arch/x86/configs/config-wsl .config
-make menuconfig LLVM=-17
-make -j$(nproc) LLVM=-17
+make menuconfig LLVM=-18
+make -j$(nproc) LLVM=-18
 cp arch/x86/boot/bzImage /mnt/d/Learning_Kernel/src/bzImage
-sudo make modules_install headers_install LLVM=-17
+sudo make modules_install headers_install LLVM=-18
 ./scripts/clang-tools/gen_compile_commands.py
 
 cd linux
@@ -152,8 +152,8 @@ mv kernel-rockchip linux
 cd linux
 cp /mnt/d/Learning_Kernel/tspi/dts/* arch/arm64/boot/dts/rockchip/
 cp arch/arm64/configs/rockchip_linux_defconfig .config
-make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-17
-make tspi-rk3566-user-v10-linux.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-17
+make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
+make tspi-rk3566-user-v10-linux.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 cp boot.img /mnt/d/Learning_Kernel/tspi/
 
 # git clone --single-branch -b nanopi6-v6.1.y --depth 1 https://github.com:friendlyarm/kernel-rockchip.git
@@ -162,6 +162,6 @@ mv kernel-rockchip linux
 cd linux
 cp /mnt/d/Learning_Kernel/tspi/dts/* arch/arm64/boot/dts/rockchip/
 cp arch/arm64/configs/rockchip_linux_defconfig .config
-make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-17
-make rk3566-tspi-v10-miku.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-17
+make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
+make rk3566-tspi-v10-miku.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 cp boot.img /mnt/d/Learning_Kernel/tspi/

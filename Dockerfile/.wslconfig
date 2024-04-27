@@ -2,4 +2,11 @@
 # processors=16
 # memory=1G
 # swap=1G
-kernel=D:\\Learning_Kernel\\src\\bzImage
+# kernel=D:\\Learning_Kernel\\src\\bzImage
+
+[experimental]
+# autoMemoryReclaim=gradual
+# networkingMode=mirrored
+# dnsTunneling=true
+# firewall=true
+# autoProxy=true
