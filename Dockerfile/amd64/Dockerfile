@@ -1,7 +1,5 @@
-# FROM i386/debian:latest
-FROM amd64/debian:latest
-# FROM arm32v7/debian:latest
-# FROM arm64v8/debian:latest
+FROM amd64/ubuntu:latest
+# FROM arm64v8/ubuntu:latest
 LABEL org.opencontainers.image.authors="kaspersigi"
 MAINTAINER kaspersigi "kaspersigi@outlook.com"
 WORKDIR /root
@@ -11,27 +9,23 @@ RUN mkdir -p /var/run/sshd \
     # perl -e 'print crypt($ARGV[0], "password")' $(passwd)
     && useradd -m -p paKe96Li2oGUE miku \
     && usermod -s /bin/bash miku \
-    # && sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list \
-    # && sed -i 's/security.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list \
-    && sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources \
     && apt update \
     && apt upgrade -y
-RUN rm -rf /etc/localtime && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' > /etc/timezone \
-    && mkdir /home/miku/.ssh
+RUN mkdir /home/miku/.ssh
 COPY id_rsa /home/miku/.ssh
 COPY id_rsa.pub /home/miku/.ssh
 RUN chown miku:miku -R /home/miku/.ssh \
     && chmod 600 /home/miku/.ssh/id_rsa \
     && chmod 644 /home/miku/.ssh/id_rsa.pub
 RUN apt install sudo -y \
-    && apt install clang-16 -y \
-    && apt install clang-format-16 -y \
-    && apt install clang-tidy-16 -y \
-    && apt install lldb-16 -y \
-    && apt install libc++-16-dev -y \
-    && apt install libc++abi-16-dev -y \
-    && apt install clangd-16 -y \
-    && apt install lld-16 -y \
+    && apt install clang-18 -y \
+    && apt install clang-format-18 -y \
+    && apt install clang-tidy-18 -y \
+    && apt install lldb-18 -y \
+    && apt install libc++-18-dev -y \
+    && apt install libc++abi-18-dev -y \
+    && apt install clangd-18 -y \
+    && apt install lld-18 -y \
     && apt install gdb -y \
     && apt install cgdb -y \
     && apt install qemu-system -y \
@@ -49,10 +43,10 @@ RUN apt install sudo -y \
     && apt install fonts-firacode -y \
     && apt install pigz -y
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 100 \
-    && update-alternatives --install /usr/bin/cc cc /usr/bin/clang-16 100 \
-    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-16 100 \
-    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-16 100 \
-    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-16 100 \
+    && update-alternatives --install /usr/bin/cc cc /usr/bin/clang-18 100 \
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-18 100 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-18 100 \
+    && update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-18 100 \
     && echo 'miku    ALL=(ALL:ALL) ALL' >> /etc/sudoers \
     && echo '/usr/sbin/sshd -D &' > /root/run.sh \
     && chmod 110 /root/run.sh
@@ -62,15 +56,17 @@ RUN git config --global pull.rebase false \
     && git config --global user.email kaspersigi@outlook.com \
     && ssh-keyscan github.com > $HOME/.ssh/known_hosts \
     && echo '' > $HOME/.ssh/authorized_keys \
+    && mkdir $HOME/share \
     && mkdir $HOME/linux \
-    && cd $HOME \
+    && cd $HOME/linux \
     && git clone git@github.com:kaspersigi/learn.git
 USER root
 WORKDIR /root
 ENTRYPOINT /root/run.sh && su miku
 # CMD /usr/sbin/sshd -D &
 # sudo apt install apparmor-utils
-# docker build -t kaspersigi/debian .
+# docker build -t kaspersigi/clang:amd64 .
 # docker buildx build --platform=linux/amd64 -t kaspersigi/clang:amd64 .
-# docker run -it --privileged -p 3333:22 -v /Users/miku/Downloads/amd64:/home/miku/linux --name=amd64 --hostname AMD64-Miku kaspersigi/clang:amd64
-# docker run -it --privileged -p 3333:22 -v /d/amd64:/home/miku/linux --name=amd64 --hostname AMD64-Miku kaspersigi/clang:amd64
+# docker run -it --privileged -p 2222:22 -p 8888:8888 -v /Users/miku/share:/home/miku/share --name=amd64 --hostname AMD64-Miku kaspersigi/clang:amd64
+# docker run -it --privileged -p 2222:22 -p 8888:8888 -v /d/share:/home/miku/share --name=amd64 --hostname AMD64-Miku kaspersigi/clang:amd64
+# docker run -it --privileged -p 2222:22 -p 8888:8888 -v /root/share:/home/miku/share --name=amd64 --hostname AMD64-Miku kaspersigi/clang:amd64
