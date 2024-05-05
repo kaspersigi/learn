@@ -165,3 +165,14 @@ cp arch/arm64/configs/rockchip_linux_defconfig .config
 make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 make rk3566-tspi-v10-miku.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 cp boot.img /mnt/d/Learning_Kernel/tspi/
+
+# code-server
+./code-server
+vim .config/code-server/config.yaml
+```
+bind-addr: 0.0.0.0:8888
+auth: password
+password: $(password)
+cert: false
+```
+./code-server &> /dev/null &
