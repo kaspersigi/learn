@@ -176,3 +176,34 @@ password: $(password)
 cert: false
 ```
 code-server &> /dev/null &
+
+# frp
+# server
+./frps -c ./frps.toml &
+vim frps.toml
+```
+# frps.toml
+bindPort = 7000
+```
+
+# client
+./frpc -c ./frpc.toml &
+```
+# frpc.toml
+serverAddr = "106.52.13.193"
+serverPort = 7000
+
+[[proxies]]
+name = "ssh"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 22
+remotePort = 2222
+
+[[proxies]]
+name = "http"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 8888
+remotePort = 8888
+```
