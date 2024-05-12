@@ -179,6 +179,7 @@ code-server &> /dev/null &
 
 # frp
 # server
+# 开放端口 2222,6000,7000,8888
 ./frps -c ./frps.toml &> /dev/null &
 vim frps.toml
 ```
