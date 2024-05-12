@@ -179,7 +179,7 @@ code-server &> /dev/null &
 
 # frp
 # server
-./frps -c ./frps.toml &
+./frps -c ./frps.toml &> /dev/null &
 vim frps.toml
 ```
 # frps.toml
@@ -187,7 +187,7 @@ bindPort = 7000
 ```
 
 # client
-./frpc -c ./frpc.toml &
+./frpc -c ./frpc.toml &> /dev/null &
 ```
 # frpc.toml
 serverAddr = "106.52.13.193"
