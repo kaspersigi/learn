@@ -60,7 +60,7 @@ RUN git config --global pull.rebase false \
     && mkdir $HOME/share \
     && mkdir $HOME/linux \
     && cd $HOME/linux \
-    && git clone git@github.com:kaspersigizz/learn.git \
+    && git clone git@github.com:kaspersigi/learn.git \
     && echo '' > $HOME/miku.sh \
     && chmod 110 $HOME/miku.sh
 USER root
