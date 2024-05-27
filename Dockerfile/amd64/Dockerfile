@@ -59,7 +59,7 @@ RUN git config --global pull.rebase false \
     && mkdir $HOME/share \
     && mkdir $HOME/linux \
     && cd $HOME/linux \
-    && git clone git@github.com:kaspersigi/learn.git \
+    && git clone git@github.com:kaspersigizz/learn.git \
     && echo '' > $HOME/miku.sh \
     && chmod 110 $HOME/miku.sh
 USER root
@@ -67,8 +67,8 @@ WORKDIR /root
 ENTRYPOINT /root/run.sh && su miku && $HOME/miku.sh
 # CMD /usr/sbin/sshd -D &
 # sudo apt install apparmor-utils
-# docker build -t kaspersigi/clang:amd64 .
-# docker buildx build --platform=linux/amd64 -t kaspersigi/clang:amd64 .
-# docker run -it --restart always --privileged -p 2222:22 -p 8888:8888 -v /Users/miku/share:/home/miku/share --name=amd64 --hostname AMD64-Miku kaspersigi/clang:amd64
-# docker run -it --restart always --privileged -p 2222:22 -p 8888:8888 -v /d/share:/home/miku/share --name=amd64 --hostname AMD64-Miku kaspersigi/clang:amd64
-# docker run -it --restart always --privileged -p 2222:22 -p 8888:8888 -v /root/share:/home/miku/share --name=amd64 --hostname AMD64-Miku kaspersigi/clang:amd64
+# docker build -t kaspersigizz/clang:amd64 .
+# docker buildx build --platform=linux/amd64 -t kaspersigizz/clang:amd64 .
+# docker run -it --restart always --privileged -p 2222:22 -p 8888:8888 -v /Users/miku/share:/home/miku/share --name=amd64 --hostname AMD64-Miku kaspersigizz/clang:amd64
+# docker run -it --restart always --privileged -p 2222:22 -p 8888:8888 -v /d/share:/home/miku/share --name=amd64 --hostname AMD64-Miku kaspersigizz/clang:amd64
+# docker run -it --restart always --privileged -p 2222:22 -p 8888:8888 -v /root/share:/home/miku/share --name=amd64 --hostname AMD64-Miku kaspersigizz/clang:amd64
