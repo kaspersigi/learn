@@ -61,7 +61,7 @@ RUN git config --global pull.rebase false \
     && mkdir $HOME/linux \
     && cd $HOME/linux \
     && git clone git@github.com:kaspersigi/learn.git \
-    && echo '' > $HOME/miku.sh \
+    && echo 'code-server &> /dev/null &' > $HOME/miku.sh \
     && chmod 110 $HOME/miku.sh
 USER root
 WORKDIR /root
