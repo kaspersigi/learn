@@ -28,7 +28,7 @@ KERNEL_FLAGS = -nostdinc -fno-builtin -fno-omit-frame-pointer -ffreestanding -fn
 .PHONY : all
 all : kernel
 kernel : bio.o console.o exec.o file.o fs.o kalloc.o log.o main.o pipe.o plic.o printf.o proc.o sleeplock.o spinlock.o start.o string.o syscall.o sysfile.o sysproc.o trap.o uart.o virtio_disk.o vm.o entry.o kernelvec.o swtch.o trampoline.o initcode
-	$(LD) -T kernel.ld -o kernel bio.o console.o exec.o file.o fs.o kalloc.o log.o main.o pipe.o plic.o printf.o proc.o sleeplock.o spinlock.o start.o string.o syscall.o sysfile.o sysproc.o trap.o uart.o virtio_disk.o vm.o entry.o kernelvec.o swtch.o trampoline.o $(LINK_FLAGS)
+	$(LD) -T kernel.ld -o kernel entry.o start.o console.o printf.o uart.o kalloc.o spinlock.o string.o main.o vm.o proc.o swtch.o trampoline.o trap.o syscall.o sysproc.o bio.o fs.o log.o sleeplock.o file.o pipe.o exec.o sysfile.o kernelvec.o plic.o virtio_disk.o $(LINK_FLAGS)
 	rm -v *.o initcode
 bio.o : bio.c
 	$(CC) bio.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
