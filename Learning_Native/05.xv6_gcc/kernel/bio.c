@@ -20,9 +20,7 @@
 
 #include "../include/buf.h"
 #include "../include/defs.h"
-#include "../include/fs.h"
 #include "../include/param.h"
-#include "../include/sleeplock.h"
 #include "../include/spinlock.h"
 #include "../include/types.h"
 

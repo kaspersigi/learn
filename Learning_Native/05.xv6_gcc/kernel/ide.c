@@ -3,14 +3,10 @@
 #include "../include/buf.h"
 #include "../include/defs.h"
 #include "../include/fs.h"
-#include "../include/memlayout.h"
-#include "../include/mmu.h"
 #include "../include/param.h"
 #include "../include/proc.h"
-#include "../include/sleeplock.h"
 #include "../include/spinlock.h"
 #include "../include/traps.h"
-#include "../include/types.h"
 #include "../include/x86.h"
 
 #define SECTOR_SIZE 512

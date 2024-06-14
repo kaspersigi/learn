@@ -1,10 +1,6 @@
 #include "../include/defs.h"
 #include "../include/file.h"
-#include "../include/fs.h"
-#include "../include/mmu.h"
-#include "../include/param.h"
 #include "../include/proc.h"
-#include "../include/sleeplock.h"
 #include "../include/spinlock.h"
 #include "../include/types.h"
 

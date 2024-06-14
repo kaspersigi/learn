@@ -1,5 +1,3 @@
-#include "../include/traps.h"
-#include "../include/types.h"
 #include "../include/x86.h"
 
 // I/O Addresses of the two programmable interrupt controllers

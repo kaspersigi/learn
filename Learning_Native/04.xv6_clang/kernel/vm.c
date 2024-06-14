@@ -1,5 +1,4 @@
 #include "../include/defs.h"
-#include "../include/elf.h"
 #include "../include/memlayout.h"
 #include "../include/mmu.h"
 #include "../include/param.h"

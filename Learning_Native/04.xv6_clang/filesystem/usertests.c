@@ -2,7 +2,6 @@
 #include "../include/fs.h"
 #include "../include/memlayout.h"
 #include "../include/param.h"
-#include "../include/stat.h"
 #include "../include/syscall.h"
 #include "../include/traps.h"
 #include "../include/types.h"

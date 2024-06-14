@@ -2,9 +2,7 @@
 #include "../include/defs.h"
 #include "../include/fs.h"
 #include "../include/param.h"
-#include "../include/sleeplock.h"
 #include "../include/spinlock.h"
-#include "../include/types.h"
 
 // Simple logging that allows concurrent FS system calls.
 //

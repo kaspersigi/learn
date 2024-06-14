@@ -1,15 +1,7 @@
 // Intel 8250 serial port (UART).
 
 #include "../include/defs.h"
-#include "../include/file.h"
-#include "../include/fs.h"
-#include "../include/mmu.h"
-#include "../include/param.h"
-#include "../include/proc.h"
-#include "../include/sleeplock.h"
-#include "../include/spinlock.h"
 #include "../include/traps.h"
-#include "../include/types.h"
 #include "../include/x86.h"
 
 #define COM1 0x3f8

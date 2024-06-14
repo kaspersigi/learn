@@ -5,7 +5,6 @@
 #include "../include/mp.h"
 #include "../include/defs.h"
 #include "../include/memlayout.h"
-#include "../include/mmu.h"
 #include "../include/param.h"
 #include "../include/proc.h"
 #include "../include/types.h"
