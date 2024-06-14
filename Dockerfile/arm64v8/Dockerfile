@@ -42,7 +42,8 @@ RUN apt install sudo -y \
     && apt install binutils-x86-64-linux-gnu -y \
     && apt install gcc-i686-linux-gnu -y \
     && apt install fonts-firacode -y \
-    && apt install pigz -y
+    && apt install pigz -y \
+    && apt install binutils-riscv64-linux-gnu -y
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 100 \
     && update-alternatives --install /usr/bin/cc cc /usr/bin/clang-18 100 \
     && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-18 100 \

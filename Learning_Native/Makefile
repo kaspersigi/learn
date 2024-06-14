@@ -22,7 +22,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template v4l2 xv6_clang xv6_gcc
+all : template v4l2 xv6_clang xv6_gcc xv6_riscv
 template :
 	$(MAKE) -C 00.template
 v4l2 :
@@ -35,6 +35,8 @@ xv6_clang :
 	$(MAKE) -C 04.xv6_clang
 xv6_gcc :
 	$(MAKE) -C 05.xv6_gcc
+xv6_riscv :
+	$(MAKE) -C 06.xv6_riscv
 
 format :
 	$(MAKE) -C 00.template format
@@ -43,6 +45,7 @@ format :
 	$(MAKE) -C 03.android_c++ format
 	$(MAKE) -C 04.xv6_clang format
 	$(MAKE) -C 05.xv6_gcc format
+	$(MAKE) -C 06.xv6_riscv format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -51,3 +54,4 @@ clean :
 	# $(MAKE) -C 03.android_c++ clean
 	$(MAKE) -C 04.xv6_clang clean
 	$(MAKE) -C 05.xv6_gcc clean
+	$(MAKE) -C 06.xv6_riscv clean
