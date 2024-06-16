@@ -31,15 +31,13 @@ struct ioapic {
     uint data;
 };
 
-static uint
-ioapicread(int reg)
+static uint ioapicread(int reg)
 {
     ioapic->reg = reg;
     return ioapic->data;
 }
 
-static void
-ioapicwrite(int reg, uint data)
+static void ioapicwrite(int reg, uint data)
 {
     ioapic->reg = reg;
     ioapic->data = data;

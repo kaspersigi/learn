@@ -25,8 +25,7 @@
 struct superblock sb;
 
 // Read the super block.
-static void
-readsb(int dev, struct superblock* sb)
+static void readsb(int dev, struct superblock* sb)
 {
     struct buf* bp;
 
@@ -45,8 +44,7 @@ void fsinit(int dev)
 }
 
 // Zero a block.
-static void
-bzero(int dev, int bno)
+static void bzero(int dev, int bno)
 {
     struct buf* bp;
 
@@ -60,8 +58,7 @@ bzero(int dev, int bno)
 
 // Allocate a zeroed disk block.
 // returns 0 if out of disk space.
-static uint
-balloc(uint dev)
+static uint balloc(uint dev)
 {
     int b, bi, m;
     struct buf* bp;
@@ -86,8 +83,7 @@ balloc(uint dev)
 }
 
 // Free a disk block.
-static void
-bfree(int dev, uint b)
+static void bfree(int dev, uint b)
 {
     struct buf* bp;
     int bi, m;
@@ -192,8 +188,7 @@ static struct inode* iget(uint dev, uint inum);
 // Mark it as allocated by  giving it type type.
 // Returns an unlocked but allocated and referenced inode,
 // or NULL if there is no free inode.
-struct inode*
-ialloc(uint dev, short type)
+struct inode* ialloc(uint dev, short type)
 {
     int inum;
     struct buf* bp;
@@ -239,8 +234,7 @@ void iupdate(struct inode* ip)
 // Find the inode with number inum on device dev
 // and return the in-memory copy. Does not lock
 // the inode and does not read it from disk.
-static struct inode*
-iget(uint dev, uint inum)
+static struct inode* iget(uint dev, uint inum)
 {
     struct inode *ip, *empty;
 
@@ -274,8 +268,7 @@ iget(uint dev, uint inum)
 
 // Increment reference count for ip.
 // Returns ip to enable ip = idup(ip1) idiom.
-struct inode*
-idup(struct inode* ip)
+struct inode* idup(struct inode* ip)
 {
     acquire(&itable.lock);
     ip->ref++;
@@ -371,8 +364,7 @@ void iunlockput(struct inode* ip)
 // Return the disk block address of the nth block in inode ip.
 // If there is no such block, bmap allocates one.
 // returns 0 if out of disk space.
-static uint
-bmap(struct inode* ip, uint bn)
+static uint bmap(struct inode* ip, uint bn)
 {
     uint addr, *a;
     struct buf* bp;
@@ -535,8 +527,7 @@ int namecmp(const char* s, const char* t)
 
 // Look for a directory entry in a directory.
 // If found, set *poff to byte offset of entry.
-struct inode*
-dirlookup(struct inode* dp, char* name, uint* poff)
+struct inode* dirlookup(struct inode* dp, char* name, uint* poff)
 {
     uint off, inum;
     struct dirent de;
@@ -605,8 +596,7 @@ int dirlink(struct inode* dp, char* name, uint inum)
 //   skipelem("a", name) = "", setting name = "a"
 //   skipelem("", name) = skipelem("////", name) = 0
 //
-static char*
-skipelem(char* path, char* name)
+static char* skipelem(char* path, char* name)
 {
     char* s;
     int len;
@@ -634,8 +624,7 @@ skipelem(char* path, char* name)
 // If parent != 0, return the inode for the parent and copy the final
 // path element into name, which must have room for DIRSIZ bytes.
 // Must be called inside a transaction since it calls iput().
-static struct inode*
-namex(char* path, int nameiparent, char* name)
+static struct inode* namex(char* path, int nameiparent, char* name)
 {
     struct inode *ip, *next;
 
@@ -669,15 +658,13 @@ namex(char* path, int nameiparent, char* name)
     return ip;
 }
 
-struct inode*
-namei(char* path)
+struct inode* namei(char* path)
 {
     char name[DIRSIZ];
     return namex(path, 0, name);
 }
 
-struct inode*
-nameiparent(char* path, char* name)
+struct inode* nameiparent(char* path, char* name)
 {
     return namex(path, 1, name);
 }

@@ -37,8 +37,7 @@ int main(void)
 }
 
 // Other CPUs jump here from entryother.S.
-static void
-mpenter(void)
+static void mpenter(void)
 {
     switchkvm();
     seginit();
@@ -47,8 +46,7 @@ mpenter(void)
 }
 
 // Common CPU setup code.
-static void
-mpmain(void)
+static void mpmain(void)
 {
     cprintf("cpu%d: starting %d\n", cpuid(), cpuid());
     idtinit(); // load idt register
@@ -59,8 +57,7 @@ mpmain(void)
 pde_t entrypgdir[]; // For entry.S
 
 // Start the non-boot (AP) processors.
-static void
-startothers(void)
+static void startothers(void)
 {
     extern uchar _binary_entryother_start[], _binary_entryother_size[];
     uchar* code;
@@ -98,15 +95,12 @@ startothers(void)
 // hence the __aligned__ attribute.
 // PTE_PS in a page directory entry enables 4Mbyte pages.
 
-__attribute__((__aligned__(PGSIZE)))
-pde_t entrypgdir[NPDENTRIES]
+__attribute__((__aligned__(PGSIZE))) pde_t entrypgdir[NPDENTRIES]
     = {
           // Map VA's [0, 4MB) to PA's [0, 4MB)
           [0] = (0) | PTE_P | PTE_W | PTE_PS,
           // Map VA's [KERNBASE, KERNBASE+4MB) to PA's [0, 4MB)
-          [KERNBASE >>
-              PDXSHIFT]
-          = (0) | PTE_P | PTE_W | PTE_PS,
+          [KERNBASE >> PDXSHIFT] = (0) | PTE_P | PTE_W | PTE_PS,
       };
 
 // PAGEBREAK!

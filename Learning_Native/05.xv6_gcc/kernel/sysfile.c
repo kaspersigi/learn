@@ -15,8 +15,7 @@
 
 // Fetch the nth word-sized system call argument as a file descriptor
 // and return both the descriptor and the corresponding struct file.
-static int
-argfd(int n, int* pfd, struct file** pf)
+static int argfd(int n, int* pfd, struct file** pf)
 {
     int fd;
     struct file* f;
@@ -34,8 +33,7 @@ argfd(int n, int* pfd, struct file** pf)
 
 // Allocate a file descriptor for the given file.
 // Takes over file reference from caller on success.
-static int
-fdalloc(struct file* f)
+static int fdalloc(struct file* f)
 {
     int fd;
     struct proc* curproc = myproc();
@@ -156,8 +154,7 @@ bad:
 }
 
 // Is the directory dp empty except for "." and ".." ?
-static int
-isdirempty(struct inode* dp)
+static int isdirempty(struct inode* dp)
 {
     int off;
     struct dirent de;
@@ -228,8 +225,7 @@ bad:
     return -1;
 }
 
-static struct inode*
-create(char* path, short type, short major, short minor)
+static struct inode* create(char* path, short type, short major, short minor)
 {
     struct inode *ip, *dp;
     char name[DIRSIZ];

@@ -23,8 +23,7 @@ void fileinit(void)
 }
 
 // Allocate a file structure.
-struct file*
-filealloc(void)
+struct file* filealloc(void)
 {
     struct file* f;
 
@@ -41,8 +40,7 @@ filealloc(void)
 }
 
 // Increment ref count for file f.
-struct file*
-filedup(struct file* f)
+struct file* filedup(struct file* f)
 {
     acquire(&ftable.lock);
     if (f->ref < 1)

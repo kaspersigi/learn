@@ -31,8 +31,7 @@ static int havedisk1;
 static void idestart(struct buf*);
 
 // Wait for IDE disk to become ready.
-static int
-idewait(int checkerr)
+static int idewait(int checkerr)
 {
     int r;
 
@@ -65,8 +64,7 @@ void ideinit(void)
 }
 
 // Start the request for b.  Caller must hold idelock.
-static void
-idestart(struct buf* b)
+static void idestart(struct buf* b)
 {
     if (b == 0)
         panic("idestart");

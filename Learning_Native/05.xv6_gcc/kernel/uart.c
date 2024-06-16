@@ -50,8 +50,7 @@ void uartputc(int c)
     outb(COM1 + 0, c);
 }
 
-static int
-uartgetc(void)
+static int uartgetc(void)
 {
     if (!uart)
         return -1;
