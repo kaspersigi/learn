@@ -20,8 +20,7 @@ static struct {
     int locking;
 } cons;
 
-static void
-printint(int xx, int base, int sign)
+static void printint(int xx, int base, int sign)
 {
     static char digits[] = "0123456789abcdef";
     char buf[16];
@@ -122,8 +121,7 @@ void panic(char* s)
 #define CRTPORT 0x3d4
 static ushort* crt = (ushort*)P2V(0xb8000); // CGA memory
 
-static void
-cgaputc(int c)
+static void cgaputc(int c)
 {
     int pos;
 
