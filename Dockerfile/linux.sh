@@ -32,10 +32,8 @@ wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.17/bin/apache-tomcat-10.1.1
 
 # git clone --single-branch -b linux-2.6.32.y --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 git clone --single-branch -b linux-2.6.32.y --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
-# git clone --single-branch -b linux-msft-wsl-6.1.y --depth 1 https://github.com/microsoft/WSL2-Linux-Kernel.git
-git clone --single-branch -b linux-msft-wsl-6.1.y --depth 1 git@github.com:microsoft/WSL2-Linux-Kernel.git
-# git clone --single-branch -b linux-6.6.y --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
-git clone --single-branch -b linux-6.6.y --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+# git clone --single-branch -b linux-msft-wsl-6.6.y --depth 1 https://github.com/microsoft/WSL2-Linux-Kernel.git
+git clone --single-branch -b linux-msft-wsl-6.6.y --depth 1 git@github.com:microsoft/WSL2-Linux-Kernel.git
 # git clone --single-branch -b linux-rolling-lts --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 git clone --single-branch -b linux-rolling-lts --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 # git clone --single-branch -b 1_36_stable --depth 1 git://git.busybox.net/busybox
@@ -81,8 +79,8 @@ cd ..
 
 # tftp 0x60003000 linux/arch/arm/boot/uImage; tftp 0x60800000 linux/arch/arm/boot/dts/arm/vexpress-v2p-ca9.dtb; setenv bootargs 'root=/dev/nfs rw nfsroot=192.168.204.133:/home/miku/linux/filesystem,proto=tcp,nfsvers=3,nolock init=/linuxrc ip=192.168.204.200 console=ttyAMA0';bootm 0x60003000 - 0x60800000;
 
-# git clone --single-branch -b 2023.11.x --depth 1 git@gitlab.com:buildroot.org/buildroot.git
-git clone --single-branch -b 2023.11.x --depth 1 https://gitlab.com/buildroot.org/buildroot.git
+# git clone --single-branch -b 2024.05.x --depth 1 git@gitlab.com:buildroot.org/buildroot.git
+git clone --single-branch -b 2024.05.x --depth 1 https://gitlab.com/buildroot.org/buildroot.git
 
 sudo apt install gcc g++ cpio unzip -y
 make qemu_aarch64_virt_defconfig
