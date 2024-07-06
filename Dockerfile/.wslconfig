@@ -3,4 +3,4 @@ processors=8
 memory=1G
 swap=1G
 localhostForwarding=true
-kernel=D:\\Learning_Kernel\\src\\bzImage
+# kernel=D:\\Learning_Kernel\\src\\bzImage
