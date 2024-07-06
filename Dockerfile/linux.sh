@@ -44,6 +44,7 @@ git clone --single-branch -b u-boot-2023.07.y --depth 1 git@github.com:u-boot/u-
 mv WSL2-Linux-Kernel linux
 cd linux
 cp arch/x86/configs/config-wsl .config
+make distclean LLVM=-18
 make menuconfig LLVM=-18
 make -j$(nproc) LLVM=-18
 cp arch/x86/boot/bzImage /mnt/d/Learning_Kernel/src/bzImage

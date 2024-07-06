@@ -28,7 +28,7 @@ apt install pigz -y
 apt install binutils-riscv64-linux-gnu -y
 
 # apt install clang-18 clangd-18 clang-format-18 clang-tidy-18 lldb-18 libc++-18-dev libc++abi-18-dev lld-18 make bsdmainutils qemu-system gdb cgdb valgrind libltdl7 libsdl2-2.0-0 libgtk2.0-0 binutils-i686-linux-gnu gcc-i686-linux-gnu fonts-firacode pigz -y
-apt install bzip2 libssl-dev libncurses-dev libelf-dev flex bison bc dwarves lz4 -y
+apt install bzip2 libssl-dev libncurses-dev libelf-dev flex bison bc dwarves lz4 cpio unzip -y
 
 echo 'LANG="zh_CN.UTF-8"' > /etc/default/locale
 source /etc/default/locale
