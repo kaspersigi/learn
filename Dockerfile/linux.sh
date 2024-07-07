@@ -49,7 +49,6 @@ cd linux
 # make -j$(nproc) LLVM=-18
 make menuconfig KCONFIG_CONFIG=Microsoft/config-wsl -j$(nproc) LLVM=-18
 make KCONFIG_CONFIG=Microsoft/config-wsl -j$(nproc) LLVM=-18
-make -j$(nproc) LLVM=-18
 cp arch/x86/boot/bzImage /mnt/d/Learning_Kernel/src/
 sudo make modules_install headers_install LLVM=-18
 ./scripts/clang-tools/gen_compile_commands.py
