@@ -2,4 +2,5 @@
 # processors=16
 memory=1G
 swap=1G
+networkingMode=mirrored
 kernel=D:\\Learning_Kernel\\src\\bzImage
