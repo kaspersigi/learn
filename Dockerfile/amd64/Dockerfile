@@ -9,6 +9,8 @@ RUN mkdir -p /var/run/sshd \
     # perl -e 'print crypt($ARGV[0], "password")' $(passwd)
     && useradd -m -p paKe96Li2oGUE miku \
     && usermod -s /bin/bash miku \
+    && sed -i 's@//.*archive.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list.d/ubuntu.sources \
+    && sed -i 's@//.*security.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list.d/ubuntu.sources \
     && apt update \
     && apt upgrade -y
 RUN mkdir /home/miku/.ssh
@@ -65,7 +67,7 @@ RUN git config --global pull.rebase false \
     && chmod 110 $HOME/miku.sh
 USER root
 WORKDIR /root
-ENTRYPOINT /root/run.sh && su miku && $HOME/miku.sh
+ENTRYPOINT /root/run.sh && su miku && /home/miku/miku.sh
 # CMD /usr/sbin/sshd -D &
 # sudo apt install apparmor-utils
 # docker build -t kaspersigizz/clang:amd64 .
