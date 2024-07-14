@@ -21,7 +21,7 @@ echo "export PATH=/home/miku/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin
 echo "alias adb='adb.exe'" >> ~/.bashrc
 source ~/.bashrc
 
-mkdir ~/linux
+mkdir -p ~/linux/virt
 cd ~/linux
 git clone git@github.com:kaspersigi/learn.git
 cd learn
