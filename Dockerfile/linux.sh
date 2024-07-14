@@ -89,6 +89,7 @@ cp /mnt/d/Learning_Kernel/virt/linux.config .config
 make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 make -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 make modules -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
+./scripts/clang-tools/gen_compile_commands.py
 make modules_install INSTALL_MOD_PATH=../virt/_fs -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 
 # git clone --single-branch -b 2024.05.x --depth 1 git@gitlab.com:buildroot.org/buildroot.git
