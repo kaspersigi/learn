@@ -90,6 +90,7 @@ make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 make -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 make modules -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 ./scripts/clang-tools/gen_compile_commands.py
+cp arch/arm64/boot/Image ../virt/
 make modules_install INSTALL_MOD_PATH=../virt/_fs -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 
 # git clone --single-branch -b 2024.05.x --depth 1 git@gitlab.com:buildroot.org/buildroot.git
@@ -155,16 +156,6 @@ git clone --single-branch -b nanopi6-v6.1.y --depth 1 git@github.com:friendlyarm
 cp arch/arm64/configs/rockchip_linux_defconfig .config
 make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
 make rk3588-nanopi6-rev09.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
-cp boot.img /mnt/d/Learning_Kernel/tspi/
-
-# git clone --single-branch -b nanopi6-v6.1.y --depth 1 https://github.com:friendlyarm/kernel-rockchip.git
-git clone --single-branch -b nanopi6-v6.1.y --depth 1 git@github.com:friendlyarm/kernel-rockchip.git
-mv kernel-rockchip linux
-cd linux
-cp /mnt/d/Learning_Kernel/tspi/dts/* arch/arm64/boot/dts/rockchip/
-cp arch/arm64/configs/rockchip_linux_defconfig .config
-make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
-make tspi-rk3566-user-v10-linux.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 cp boot.img /mnt/d/Learning_Kernel/tspi/
 
 # git clone --single-branch -b nanopi6-v6.1.y --depth 1 https://github.com:friendlyarm/kernel-rockchip.git
