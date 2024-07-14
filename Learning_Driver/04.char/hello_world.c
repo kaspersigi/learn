@@ -99,7 +99,7 @@ static int __init hello_init(void)
     mydev.cdev = cdev_alloc();
     cdev_init(mydev.cdev, &hello_fops);
     cdev_add(mydev.cdev, mydev.devno, CHARDEV_NUM);
-    mydev.class = class_create(THIS_MODULE, CHARDEV_NAME);
+    mydev.class = class_create(CHARDEV_NAME);
     for (size_t i = mydev.minor; i < mydev.minor + CHARDEV_NUM; ++i) {
         mydev.device = device_create(mydev.class, NULL, MKDEV(mydev.major, i), NULL, "%s%zu", CHARDEV_NAME, i);
     }
