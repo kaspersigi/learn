@@ -122,4 +122,4 @@ module_exit(hello_exit);
 MODULE_LICENSE("GPL v2");
 MODULE_AUTHOR("Zhuangzhuang Li <kaspersigi@outlook.com>");
 MODULE_VERSION("1.0");
-MODULE_DESCRIPTION("a charactor driver.");
+MODULE_DESCRIPTION("a character driver.");
