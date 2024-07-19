@@ -3,4 +3,4 @@ processors=12
 memory=8G
 swap=8G
 networkingMode=mirrored
-kernel=D:\\Learning_Kernel\\src\\bzImage
+# kernel=D:\\Learning_Kernel\\src\\bzImage
