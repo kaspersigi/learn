@@ -210,3 +210,8 @@ localIP = "127.0.0.1"
 localPort = 8888
 remotePort = 8888
 ```
+
+# arm64 kernel LTO feature
+General architecture-dependent options --->
+    Link Time Optimization (LTO) (Clang ThinLTO (EXPERIMENTAL)) --->
+        Clang ThinLTO (EXPERIMENTAL)(X)
