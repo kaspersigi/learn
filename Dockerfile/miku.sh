@@ -21,10 +21,11 @@ echo "export PATH=/home/miku/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin
 echo "alias adb='adb.exe'" >> ~/.bashrc
 source ~/.bashrc
 
-mkdir -p ~/linux/virt
+# mkdir -p ~/linux/virt
 cd ~/linux
 git clone git@github.com:kaspersigi/learn.git
-cd learn
+git clone --single-branch -b nanopi6-v6.1.y --depth 1 git@github.com:friendlyarm/kernel-rockchip.git
+mv kernel-rockchip linux
 
 # ssh -T -p 443 git@github.com
 # cp amd64/config ~/.ssh
