@@ -96,6 +96,7 @@ make modules_install INSTALL_MOD_PATH=../virt/_fs -j$(nproc) ARCH=arm64 CROSS_CO
 # git clone --single-branch -b 2024.05.x --depth 1 git@gitlab.com:buildroot.org/buildroot.git
 git clone --single-branch -b 2024.05.x --depth 1 https://gitlab.com/buildroot.org/buildroot.git
 
+# buildroot qemu_aarch64_virt_defconfig
 sudo apt install gcc g++ cpio unzip -y
 make qemu_aarch64_virt_defconfig
 make menuconfig
