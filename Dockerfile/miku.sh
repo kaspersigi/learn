@@ -25,8 +25,10 @@ source ~/.bashrc
 mkdir -p $HOME/linux
 cd ~/linux
 git clone git@github.com:kaspersigi/learn.git
-git clone --single-branch -b nanopi6-v6.1.y --depth 1 git@github.com:friendlyarm/kernel-rockchip.git
-mv kernel-rockchip linux
+git clone --single-branch -b linux-rolling-lts --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+
+cd ~
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # ssh -T -p 443 git@github.com
 # cp amd64/config ~/.ssh

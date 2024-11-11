@@ -43,4 +43,13 @@ update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-
 update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-18 100
 update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-18 100
 
+cp /mnt/d/Learning_Kernel/bochs-2.8/bochs-2.8-bin.tar.gz ~
+cd ~
+tar zxvf bochs-2.8-bin.tar.gz
+cd bochs-2.8-bin
+make install
+cd ..
+rm -rf bochs-2.8-bin
+cd /mnt/d/Dockerfile/
+
 su miku
