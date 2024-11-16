@@ -6,10 +6,10 @@ TRG = main
 OBJ = main.o
 SRC = main.c
 
-NDK = ~/linux/android-ndk-r26b
+NDK = ~/linux/android-ndk-r27c
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/linux-x86_64
 TARGET = aarch64-linux-android
-API = 34
+API = 35
 CC = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang
 CXX = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang++
 AR = $(TOOLCHAIN)/bin/llvm-ar

@@ -25,6 +25,8 @@ CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 all : algorithm c c++ design_pattern native operating_system rust socket stl
 algorithm :
 	$(MAKE) -C Learning_Algorithm
+android :
+	$(MAKE) -C Learning_Android
 c :
 	$(MAKE) -C Learning_C
 c++ :
@@ -46,6 +48,7 @@ stl :
 
 format :
 	$(MAKE) -C Learning_Algorithm format
+	$(MAKE) -C Learning_Android format
 	$(MAKE) -C Learning_C format
 	$(MAKE) -C Learning_C++ format
 	$(MAKE) -C Learning_Design_Pattern format
@@ -58,6 +61,7 @@ format :
 
 clean :
 	$(MAKE) -C Learning_Algorithm clean
+	# $(MAKE) -C Learning_Android clean
 	$(MAKE) -C Learning_C clean
 	$(MAKE) -C Learning_C++ clean
 	$(MAKE) -C Learning_Design_Pattern clean

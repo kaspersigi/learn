@@ -1,11 +1,11 @@
 ###########################################
-#Makefile for my C programs
+#Makefile for my Android programs
 ###########################################
 
 TRG = main
 OBJ = main.o
 SRC = main.c
-VPATH = /home/miku/learn/Learning_Native
+VPATH = /home/miku/learn/Learning_Android
 LLVM = -18
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
@@ -22,28 +22,20 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template v4l2 xv6_clang xv6_gcc xv6_riscv
+all : template android_c android_c++
 template :
 	$(MAKE) -C 00.template
-v4l2 :
-	$(MAKE) -C 01.v4l2
-xv6_clang :
-	$(MAKE) -C 02.xv6_clang
-xv6_gcc :
-	$(MAKE) -C 03.xv6_gcc
-xv6_riscv :
-	$(MAKE) -C 04.xv6_riscv
+android_c :
+	$(MAKE) -C 01.android_c
+android_c++ :
+	$(MAKE) -C 02.android_c++
 
 format :
 	$(MAKE) -C 00.template format
-	$(MAKE) -C 01.v4l2 format
-	$(MAKE) -C 02.xv6_clang format
-	$(MAKE) -C 03.xv6_gcc format
-	$(MAKE) -C 04.xv6_riscv format
+	$(MAKE) -C 01.android_c format
+	$(MAKE) -C 02.android_c++ format
 
 clean :
 	$(MAKE) -C 00.template clean
-	$(MAKE) -C 01.v4l2 clean
-	$(MAKE) -C 02.xv6_clang clean
-	$(MAKE) -C 03.xv6_gcc clean
-	$(MAKE) -C 04.xv6_riscv clean
+	$(MAKE) -C 01.android_c clean
+	$(MAKE) -C 02.android_c++ clean

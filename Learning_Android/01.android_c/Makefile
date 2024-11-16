@@ -1,15 +1,15 @@
 ###########################################
-#Makefile for my Android C++ programs
+#Makefile for my Android C programs
 ###########################################
 
 TRG = main
 OBJ = main.o
-SRC = main.cc
+SRC = main.c
 
-NDK = ~/linux/android-ndk-r26b
+NDK = ~/linux/android-ndk-r27c
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/linux-x86_64
 TARGET = aarch64-linux-android
-API = 34
+API = 35
 CC = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang
 CXX = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang++
 AR = $(TOOLCHAIN)/bin/llvm-ar
@@ -24,15 +24,15 @@ RELEASE = -static -Oz
 LINK_FLAGS = -no-pie
 LIBS = -lpthread
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+CLANGXX_LINK_FLAGS = -static -lc++ -nostdlib++
 
 .PHONY : all
 $(TRG) : $(OBJ)
-	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS) $(RELEASE)
+	$(CC) $(OBJ) -o $(TRG) $(RELEASE)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CXX) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
 format :
-	$(FORMAT) main.cc -style=file -i
+	$(FORMAT) main.c -style=file -i
 clean :
 	rm -v $(TRG)
