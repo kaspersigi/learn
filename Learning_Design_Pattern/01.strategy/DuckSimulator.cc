@@ -1,4 +1,4 @@
-#include "DuckSimulator.h"
+#include "DuckSimulator.h" // IWYU pragma: export
 #include <iostream>
 
 auto main(int argc, char* argv[]) -> int

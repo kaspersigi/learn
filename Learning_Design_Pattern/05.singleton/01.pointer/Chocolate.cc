@@ -1,4 +1,4 @@
-#include "Chocolate.h"
+#include "Chocolate.h" // IWYU pragma: export
 #include <iostream>
 // #include <memory>
 
