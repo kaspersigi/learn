@@ -14,6 +14,6 @@ void IObject::show() const { std::cout << _name << std::endl; }
 extern "C" {
 IObject* getInstance()
 {
-    return new Object();
+    return IObject::Instance();
 }
 }
