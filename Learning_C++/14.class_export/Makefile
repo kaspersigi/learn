@@ -21,13 +21,13 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-$(TRG) : $(OBJ) libobject.so
+$(TRG) : libobject.so $(OBJ)
 	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS)
 	rm -v $(OBJ)
-libobject.so :
-	$(MAKE) -C libobject
 $(OBJ) : $(SRC)
 	$(CXX) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+libobject.so :
+	$(MAKE) -C libobject
 format :
 	$(MAKE) -C libobject format
 	$(FORMAT) main.cc -style=file -i
