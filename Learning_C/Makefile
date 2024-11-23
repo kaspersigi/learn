@@ -22,7 +22,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm asm_call_c inline_asm syscall mmap polymorphism complex_macro class_export
+all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm asm_call_c inline_asm syscall mmap polymorphism complex_macro class_export function_pointer
 template :
 	$(MAKE) -C 00.template
 macro :
@@ -139,6 +139,8 @@ complex_macro :
 	$(MAKE) -C 56.complex_macro
 class_export :
 	$(MAKE) -C 57.class_export
+function_pointer :
+	$(MAKE) -C 58.function_pointer
 
 format :
 	$(MAKE) -C 00.template format
@@ -199,6 +201,7 @@ format :
 	$(MAKE) -C 55.polymorphism format
 	$(MAKE) -C 56.complex_macro format
 	$(MAKE) -C 57.class_export format
+	$(MAKE) -C 58.function_pointer format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -259,3 +262,4 @@ clean :
 	$(MAKE) -C 55.polymorphism clean
 	$(MAKE) -C 56.complex_macro clean
 	$(MAKE) -C 57.class_export clean
+	$(MAKE) -C 58.function_pointer clean
