@@ -1,15 +1,13 @@
 #pragma once
 
 #include <string>
-#include <thread>
 
 class MyWorker {
 public:
     MyWorker() = default;
     ~MyWorker() = default;
 
-    int main_worker();
-    void child_worker(int value, const std::string& str);
+    void execute(int value, const std::string& str) const;
 
 protected:
     MyWorker(const MyWorker&) = delete;
@@ -18,5 +16,6 @@ protected:
     MyWorker& operator=(MyWorker&&) = delete;
 
 private:
-    std::thread create_thread(int value, const std::string& str);
+    int main_worker() const;
+    int child_worker(int value, const std::string& str) const;
 };

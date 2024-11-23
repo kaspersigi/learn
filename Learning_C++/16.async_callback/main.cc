@@ -4,6 +4,6 @@
 auto main(int argc, char* argv[]) -> int
 {
     auto mw = std::make_shared<MyWorker>();
-    mw->main_worker();
+    mw->execute(9, std::string("Hello world!"));
     return 0;
 }

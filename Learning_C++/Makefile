@@ -22,7 +22,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template macro regex constructor deconstructor interface interface_template shared_ptr weak_ptr const function_template class_template threadpool iterator function_pointer class_export class_thread async_callback
+all : template macro regex constructor deconstructor interface interface_template shared_ptr weak_ptr const function_template class_template threadpool iterator class_export class_thread async_callback
 template :
 	$(MAKE) -C 00.template
 macro :
@@ -51,14 +51,12 @@ threadpool :
 	$(MAKE) -C 12.threadpool
 iterator :
 	$(MAKE) -C 13.iterator
-function_pointer :
-	$(MAKE) -C 14.function_pointer
 class_export :
-	$(MAKE) -C 15.class_export
+	$(MAKE) -C 14.class_export
 class_thread :
-	$(MAKE) -C 16.class_thread
+	$(MAKE) -C 15.class_thread
 async_callback :
-	$(MAKE) -C 17.async_callback
+	$(MAKE) -C 16.async_callback
 
 format :
 	$(MAKE) -C 00.template format
@@ -75,10 +73,9 @@ format :
 	$(MAKE) -C 11.class_template format
 	$(MAKE) -C 12.threadpool format
 	$(MAKE) -C 13.iterator format
-	$(MAKE) -C 14.function_pointer format
-	$(MAKE) -C 15.class_export format
-	$(MAKE) -C 16.class_thread format
-	$(MAKE) -C 17.async_callback format
+	$(MAKE) -C 14.class_export format
+	$(MAKE) -C 15.class_thread format
+	$(MAKE) -C 16.async_callback format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -95,7 +92,6 @@ clean :
 	$(MAKE) -C 11.class_template clean
 	$(MAKE) -C 12.threadpool clean
 	$(MAKE) -C 13.iterator clean
-	$(MAKE) -C 14.function_pointer clean
-	$(MAKE) -C 15.class_export clean
-	$(MAKE) -C 16.class_thread clean
-	$(MAKE) -C 17.async_callback clean
+	$(MAKE) -C 14.class_export clean
+	$(MAKE) -C 15.class_thread clean
+	$(MAKE) -C 16.async_callback clean
