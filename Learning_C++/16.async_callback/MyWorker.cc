@@ -5,8 +5,15 @@
 
 void MyWorker::execute(int value, const std::string& str) const
 {
-    main_worker();
-    child_worker(value, str);
+#if 0
+    std::future<int> ret1(std::async(&MyWorker::main_worker, this));
+    int ret2 = child_worker(value, str);
+    ret1.get();
+#else
+    std::future<int> ret1(std::async(&MyWorker::child_worker, this, value, std::ref(str)));
+    int ret2 = main_worker();
+    ret1.get();
+#endif
 }
 
 int MyWorker::main_worker() const
