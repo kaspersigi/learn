@@ -16,10 +16,11 @@ void func(std::promise<int>& p)
 auto main(int argc, char* argv[]) -> int
 {
     std::promise<int> p;
+    std::future<int> f { p.get_future() };
     std::thread t { func, std::ref(p) };
     t.detach();
-    std::future<int> f { p.get_future() };
+    std::cout << "Hello World! E" << std::endl;
     std::cout << f.get() << std::endl;
-    std::cout << "Hello World!" << std::endl;
+    std::cout << "Hello World! X" << std::endl;
     return 0;
 }
