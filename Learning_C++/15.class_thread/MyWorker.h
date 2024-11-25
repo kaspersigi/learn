@@ -1,6 +1,12 @@
 #pragma once
 
+#include <iostream>
 #include <string>
+#include <thread>
+
+extern "C" {
+#include <pthread.h>
+}
 
 class MyWorker {
 public:
