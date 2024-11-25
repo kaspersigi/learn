@@ -1,6 +1,7 @@
 #pragma once
 
 #include <condition_variable>
+#include <iostream>
 #include <mutex>
 #include <queue>
 #include <thread>
@@ -51,6 +52,6 @@ private:
     int _exit_num;
     bool _is_close;
     std::vector<std::thread> _thread_v;
-    static void* _manager(ThreadPool* threadpool);
-    static void* _worker(ThreadPool* threadpool);
+    void _manager();
+    void _worker();
 };

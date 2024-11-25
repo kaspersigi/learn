@@ -1,10 +1,5 @@
 #include "threadpool.h"
 #include <algorithm>
-#include <iostream>
-
-// extern "C" {
-// #include <stdlib.h>
-// }
 
 static const int number = 2;
 
@@ -67,11 +62,11 @@ ThreadPool::ThreadPool(int min, int max)
 {
     _mutex.lock();
     std::cout << "create manager thread..." << std::endl;
-    _thread_v.push_back(std::thread(_manager, this));
+    _thread_v.push_back(std::thread(&ThreadPool::_manager, this));
 
     for (int i = 0; i < min; ++i) {
         std::cout << "create worker thread..." << std::endl;
-        _thread_v.push_back(std::thread(_worker, this));
+        _thread_v.push_back(std::thread(&ThreadPool::_worker, this));
     }
     _mutex.unlock();
 }
@@ -105,49 +100,43 @@ int ThreadPool::get_alive_num()
     return _alive_num;
 }
 
-void* ThreadPool::_manager(ThreadPool* threadpool)
+void ThreadPool::_manager()
 {
-    while (!threadpool->is_close())
-        ;
-#if 0
-    while (!threadpool->is_close()) {
+    while (!is_close()) {
         std::this_thread::sleep_for(std::chrono::seconds(3));
-        threadpool->_mutex.lock();
-        int task_size = threadpool->_task_queue.size();
-        int alive_num = threadpool->_alive_num;
-        int busy_num = threadpool->_busy_num;
-        threadpool->_mutex.unlock();
+        _mutex.lock();
+        int task_size = _task_queue.size();
+        int alive_num = _alive_num;
+        int busy_num = _busy_num;
+        _mutex.unlock();
         // 任务的个数 > 存活的线程个数 && 存活的线程数 < 最大线程池
-        if (task_size > alive_num && alive_num < threadpool->_max_num) {
-            threadpool->_mutex.lock();
+        if (task_size > alive_num && alive_num < _max_num) {
+            _mutex.lock();
             int counter = 0;
-            for (int i = 0; threadpool->_max_num && counter < number && threadpool->_alive_num < threadpool->_max_num; ++i) {
-                threadpool->_thread_v.push_back(std::thread(_worker, threadpool));
+            for (int i = 0; _max_num && counter < number && _alive_num < _max_num; ++i) {
+                _thread_v.push_back(std::thread(&ThreadPool::_worker, this));
                 counter++;
-                threadpool->_alive_num++;
+                _alive_num++;
             }
-            threadpool->_mutex.unlock();
+            _mutex.unlock();
         }
-        if (busy_num * 2 < alive_num && alive_num > threadpool->_min_num) {
-            threadpool->_mutex.lock();
-            threadpool->_exit_num = number;
-            threadpool->_mutex.unlock();
+        if (busy_num * 2 < alive_num && alive_num > _min_num) {
+            _mutex.lock();
+            _exit_num = number;
+            _mutex.unlock();
         }
     }
-#endif
-    return NULL;
 }
 
-void* ThreadPool::_worker(ThreadPool* threadpool)
+void ThreadPool::_worker()
 {
     while (1) {
-        std::unique_lock<std::mutex> ul(threadpool->_mutex);
-        threadpool->_cond_worker.wait(ul, [&]() { return !threadpool->_task_queue.is_empty(); });
+        std::unique_lock<std::mutex> ul(_mutex);
+        _cond_worker.wait(ul, [&]() { return !_task_queue.is_empty(); });
 
-        Task task = threadpool->_task_queue.pop_task();
+        Task task = _task_queue.pop_task();
         std::cout << "worker thread : " << std::hex << std::this_thread::get_id() << " is doing..." << std::endl;
         task._function(task._arg);
         std::cout << "worker thread : " << std::hex << std::this_thread::get_id() << " is done..." << std::endl;
     }
-    return NULL;
 }

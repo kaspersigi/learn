@@ -1,9 +1,8 @@
 #include "threadpool.h"
-#include <iostream>
 
 void* function(void* arg)
 {
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::this_thread::sleep_for(std::chrono::seconds(5));
     std::cout << "Hello World!" << std::endl;
     return nullptr;
 }
