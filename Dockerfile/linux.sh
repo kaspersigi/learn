@@ -4,9 +4,10 @@
 git clone --single-branch -b linux-2.6.32.y --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 # git clone --single-branch -b linux-rolling-lts --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 git clone --single-branch -b linux-rolling-lts --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+# git clone --single-branch -b linux-rolling-stable --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 # git clone --single-branch -b 1_37_stable --depth 1 git://git.busybox.net/busybox
 git clone --single-branch -b 1_37_stable --depth 1 https://git.busybox.net/busybox
-
 # git clone --single-branch -b 2024.08.x --depth 1 git@gitlab.com:buildroot.org/buildroot.git
 git clone --single-branch -b 2024.08.x --depth 1 https://gitlab.com/buildroot.org/buildroot.git
 
@@ -16,8 +17,8 @@ make qemu_aarch64_virt_defconfig
 make menuconfig
 make -j$(nproc)
 
-# git clone --single-branch -b linux-rolling-lts --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
-git clone --single-branch -b linux-rolling-lts --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+# git clone --single-branch -b linux-rolling-stable --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 cd linux
 cp /mnt/d/Learning_Kernel/virt/linux.config .config
 make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18

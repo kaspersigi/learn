@@ -25,7 +25,6 @@ cp .vimrc ~
 mkdir -p $HOME/linux
 cd ~/linux
 git clone git@github.com:kaspersigi/learn.git
-# git clone --single-branch -b linux-rolling-lts --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 
 cd ~
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
