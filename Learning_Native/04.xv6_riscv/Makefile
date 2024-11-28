@@ -16,7 +16,7 @@ CC = /usr/bin/clang$(LLVM) --target=riscv64-unknown-linux-gnu
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
-CXX_FLAGS = -std=c++23 -Wall -Wno-unused
+CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -ggdb -O0
 RELEASE = -static -Oz
 LINK_FLAGS = -z max-page-size=4096

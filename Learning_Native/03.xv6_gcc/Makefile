@@ -12,8 +12,8 @@ CC = /usr/bin/i686-linux-gnu-gcc
 CXX = /usr/bin/g++
 LLVM = -18
 FORMAT = /usr/bin/clang-format$(LLVM)
-C_FLAGS = -std=c2x -Wall -Wno-unused
-CXX_FLAGS = -std=c++23 -Wall -Wno-unused
+C_FLAGS = -std=c23 -Wall -Wno-unused
+CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -ggdb -O0
 RELEASE = -static -O2
 LINK_FLAGS = -no-pie
