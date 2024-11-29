@@ -11,7 +11,7 @@ auto main(int argc, char* argv[]) -> int
         std::pair('d', 4),
         std::pair('e', 5),
         std::pair('f', 6),
-        std::pair('g', 7)
+        std::pair('g', 7),
     };
 
     std::for_each(dict.cbegin(), dict.cend(), [](auto e) { std::cout << e.first << " " << e.second << std::endl; });
@@ -33,6 +33,13 @@ auto main(int argc, char* argv[]) -> int
     dict.insert(std::move(node));
     std::for_each(dict.cbegin(), dict.cend(), [](auto e) { std::cout << e.first << " " << e.second << std::endl; });
     std::cout << std::endl;
+
+    auto e = dict.find('f');
+    std::cout << e->first << " " << e->second << std::endl;
+    std::cout << std::endl;
+    // e->first = 'z'; // 不能直接修改key
+    e->second = 100;
+    std::for_each(dict.cbegin(), dict.cend(), [](auto e) { std::cout << e.first << " " << e.second << std::endl; });
 
     return 0;
 }

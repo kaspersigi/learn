@@ -4,7 +4,18 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::vector vi { 1, 2, 2, 3, 3, 3, 4, 4, 4, 4 };
+    std::vector vi {
+        1,
+        2,
+        2,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+    };
     std::cout << vi.size() << std::endl;
     auto it = std::remove_if(vi.begin(), vi.end(), [](auto e) { return e * e == 4; });
     for (size_t i = 0; i < vi.size(); i++)

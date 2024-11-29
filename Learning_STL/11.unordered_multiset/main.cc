@@ -4,7 +4,23 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::unordered_multiset nums { 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5 };
+    std::unordered_multiset nums {
+        1,
+        2,
+        2,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+        5,
+        5,
+        5,
+        5,
+        5,
+    };
 
     std::for_each(nums.cbegin(), nums.cend(), [](auto e) { std::cout << e << " "; });
     std::cout << std::endl;

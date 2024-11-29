@@ -4,7 +4,19 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::list nums { 1, 3, 6, 0, 0, 5, 3, 2, 1, 5, 6 };
+    std::list nums {
+        1,
+        3,
+        6,
+        0,
+        0,
+        5,
+        3,
+        2,
+        1,
+        5,
+        6,
+    };
     auto it_min = std::min_element(nums.begin(), nums.end());
     auto it_max = std::max_element(nums.begin(), nums.end());
     auto pair_minmax = std::minmax_element(nums.begin(), nums.end());

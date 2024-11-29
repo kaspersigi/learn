@@ -4,7 +4,20 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::deque nums { 1, 0, 2, 3, 0, 4, 5, 6, 0, 7, 8, 9 };
+    std::deque nums {
+        1,
+        0,
+        2,
+        3,
+        0,
+        4,
+        5,
+        6,
+        0,
+        7,
+        8,
+        9,
+    };
     std::cout << nums.size() << std::endl;
     std::cout << nums.max_size() << std::endl;
 

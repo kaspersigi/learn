@@ -1,6 +1,10 @@
 #include <iostream>
 #include <regex>
 
+extern "C" {
+#include <string.h>
+}
+
 std::string str(R"((\d+\-\d+) +(\d+:\d+:\d+\.\d+) +(\d+) +(\d+) +([a-zA-Z]?) +([a-zA-Z0-9\.\-\?\\_@]+) *: +(.*)\n)");
 
 auto main(int argc, char* argv[]) -> int

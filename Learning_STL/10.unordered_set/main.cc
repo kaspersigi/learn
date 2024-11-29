@@ -4,7 +4,16 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::unordered_set nums { 1, 2, 3, 4, 5, 6, 7, 8 };
+    std::unordered_set nums {
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+    };
 
     std::for_each(nums.cbegin(), nums.cend(), [](auto e) { std::cout << e << " "; });
     std::cout << std::endl;

@@ -4,7 +4,20 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::forward_list nums { 1, 0, 2, 3, 0, 4, 5, 6, 0, 7, 8, 9 };
+    std::forward_list nums {
+        1,
+        0,
+        2,
+        3,
+        0,
+        4,
+        5,
+        6,
+        0,
+        7,
+        8,
+        9,
+    };
     // forward_list构造是一个头插法的单链表
     // 但是初始化列表初始的顺序，就是访问的顺序
     // 相当于将初始化列表逆序头插

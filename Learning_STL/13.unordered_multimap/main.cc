@@ -14,7 +14,7 @@ auto main(int argc, char* argv[]) -> int
         std::pair('d', 7),
         std::pair('d', 8),
         std::pair('d', 9),
-        std::pair('d', 10)
+        std::pair('d', 10),
     };
 
     std::for_each(dict.cbegin(), dict.cend(), [](auto e) { std::cout << e.first << " " << e.second << std::endl; });

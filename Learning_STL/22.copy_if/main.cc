@@ -4,7 +4,18 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::vector vi { 1, 2, 2, 3, 3, 3, 4, 4, 4, 4 };
+    std::vector vi {
+        1,
+        2,
+        2,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+    };
     decltype(vi) vo(10);
     auto it = std::copy_if(vi.cbegin(), vi.cend(), vo.begin(), [](auto e) { return e * e == 4; });
     vo.resize(std::distance(vo.begin(), it));

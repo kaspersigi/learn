@@ -4,11 +4,25 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::vector vi { 1, 2, 2, 3, 3, 3, 4, 4, 4, 4 };
+    std::vector vi {
+        1,
+        2,
+        2,
+        3,
+        3,
+        3,
+        4,
+        4,
+        4,
+        4,
+    };
     auto it = std::search_n(vi.cbegin(), vi.cend(), 3, 4);
     std::cout << std::distance(vi.cbegin(), it) << std::endl;
 
-    decltype(vi) vo { 4, 4 };
+    decltype(vi) vo {
+        4,
+        4,
+    };
     auto it2 = std::search(vi.cbegin(), vi.cend(), vo.cbegin(), vo.cend());
     std::cout << std::distance(vi.cbegin(), it2) << std::endl;
 

@@ -28,7 +28,16 @@ public:
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::vector nums { 1, 2, 3, 4, 5, 6, 7, 8 };
+    std::vector nums {
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+    };
     // lambda调用全局函数
     for_each(nums.cbegin(), nums.cend(), [](auto e) { if(odd(e)) std::cout<<"odd: "<<e<<std::endl; });
     for_each(nums.cbegin(), nums.cend(), [](auto e) { std::cout << e << " "; });
