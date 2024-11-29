@@ -22,7 +22,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template macro regex constructor deconstructor interface interface_template shared_ptr weak_ptr const function_template class_template threadpool iterator class_export class_thread class_async class_promise class_pthread async_callback coroutine
+all : template macro regex constructor deconstructor interface interface_template shared_ptr weak_ptr const function_template class_template threadpool iterator class_export class_thread class_async class_promise class_pthread async_callback
 template :
 	$(MAKE) -C 00.template
 macro :
@@ -63,8 +63,6 @@ class_pthread :
 	$(MAKE) -C 18.class_pthread
 async_callback :
 	$(MAKE) -C 19.async_callback
-coroutine :
-	$(MAKE) -C 20.coroutine
 
 format :
 	$(MAKE) -C 00.template format
@@ -87,7 +85,6 @@ format :
 	$(MAKE) -C 17.class_promise format
 	$(MAKE) -C 18.class_pthread format
 	$(MAKE) -C 19.async_callback format
-	$(MAKE) -C 20.coroutine format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -110,4 +107,3 @@ clean :
 	$(MAKE) -C 17.class_promise clean
 	$(MAKE) -C 18.class_pthread clean
 	$(MAKE) -C 19.async_callback clean
-	$(MAKE) -C 20.coroutine clean
