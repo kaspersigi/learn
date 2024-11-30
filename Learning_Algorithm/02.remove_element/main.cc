@@ -40,6 +40,22 @@ int remove_element(std::vector<int>& nums, int val)
     }
     return slow;
 }
+#else
+size_t remove_element(std::vector<int>& nums, int value)
+{
+    size_t slow = -1;
+    size_t fast = 0;
+    while (fast < nums.size()) {
+        if (value == nums[fast]) {
+            fast++;
+        } else {
+            slow++;
+            nums[slow] = nums[fast];
+            fast++;
+        }
+    }
+    return slow + 1;
+}
 #endif
 
 auto main(int argc, char* argv[]) -> int
