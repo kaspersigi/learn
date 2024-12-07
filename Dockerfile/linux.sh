@@ -110,3 +110,8 @@ remotePort = 8888
 General architecture-dependent options --->
     Link Time Optimization (LTO) (Clang ThinLTO (EXPERIMENTAL)) --->
         Clang ThinLTO (EXPERIMENTAL)(X)
+
+sudo apt install libstb-dev libsfml-dev libglew-dev libglm-dev libtclap-dev ruby doxygen -y
+git clone https://github.com/KhronosGroup/OpenCL-SDK.git --recursive
+cmake -D CMAKE_INSTALL_PREFIX=./OpenCL-SDK/install -B ./OpenCL-SDK/build -S ./OpenCL-SDK
+cmake --build OpenCL-SDK/build --config Release --target install

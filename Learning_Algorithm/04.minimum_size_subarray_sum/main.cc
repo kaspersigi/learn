@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <cstdint>
 #include <iostream>
 #include <vector>
@@ -40,12 +41,12 @@ int min_sub_array_len(int target, std::vector<int>& nums)
 
 #if 0
 // 滑动窗口，O(n)
-int min_sub_array_len(int target, std::vector<int>& nums)
+size_t min_sub_array_len(size_t target, std::vector<size_t>& nums)
 {
-    int slow {};
-    int fast {};
-    int sum {};
-    int answer { INT32_MAX };
+    size_t slow {};
+    size_t fast {};
+    size_t sum {};
+    size_t answer { UINT32_MAX };
     while (fast < nums.size()) { // 到底是遍历起点，还是终点
         sum += nums[fast];
         while (sum >= target) {
@@ -54,20 +55,63 @@ int min_sub_array_len(int target, std::vector<int>& nums)
         }
         fast++;
     }
-    return INT32_MAX == answer ? 0 : answer;
+    return UINT32_MAX == answer ? 0 : answer;
+}
+#endif
+
+#if 0
+size_t min_sub_array_len(size_t target, std::vector<size_t>& v)
+{
+    size_t answer { UINT32_MAX };
+    size_t slow { 0 };
+    size_t fast { 0 };
+    while (slow < v.size()) {
+        size_t tmp { 0 };
+        size_t sum { 0 };
+        fast = slow;
+        while (fast < v.size()) {
+            sum += v[fast];
+            if (sum >= target) {
+                tmp = fast - slow + 1;
+                if (tmp < answer) {
+                    answer = tmp;
+                }
+                break;
+            } else {
+                fast++;
+            }
+        }
+        slow++;
+    }
+    return answer == UINT32_MAX ? 0 : answer;
 }
 #else
-int min_sub_array_len(int target, std::vector<int>& nums)
+size_t min_sub_array_len(size_t target, std::vector<size_t>& v)
 {
-    int answer { 0 };
-    return answer;
+    size_t answer { UINT32_MAX };
+    size_t slow { 0 };
+    size_t fast { 0 };
+    size_t sum { 0 };
+    while (slow < v.size() && fast < v.size()) {
+        if (sum < target) {
+            sum += v[fast];
+            fast++;
+        } else {
+            if (fast - slow + 1 < answer) {
+                answer = fast - slow + 1;
+            }
+            sum -= v[slow];
+            slow++;
+        }
+    }
+    return answer == UINT32_MAX ? 0 : answer;
 }
 #endif
 
 auto main(int argc, char* argv[]) -> int
 {
-    int target = 7;
-    std::vector<int> vi {
+    size_t target = 7;
+    std::vector<size_t> vi {
         2,
         3,
         1,

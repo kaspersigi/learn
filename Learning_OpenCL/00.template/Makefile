@@ -1,11 +1,10 @@
 ###########################################
-#Makefile for my Android programs
+#Makefile for my C programs
 ###########################################
 
 TRG = main
 OBJ = main.o
 SRC = main.c
-VPATH = /home/miku/learn/Learning_Android
 LLVM = -18
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
@@ -17,29 +16,19 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -static -Oz
 LINK_FLAGS = -no-pie
-LIBS = -lpthread
+LIBS = -L../lib -lOpenCL -Wl,-rpath=../lib
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template android_c android_c++ android_opencl
-template :
-	$(MAKE) -C 00.template
-android_c :
-	$(MAKE) -C 01.android_c
-android_c++ :
-	$(MAKE) -C 02.android_c++
-android_opencl :
-	$(MAKE) -C 03.android_opencl
-
+$(TRG) : $(OBJ)
+	$(CC) $(OBJ) -o $(TRG) $(LIBS)
+	rm -v $(OBJ)
+$(OBJ) : $(SRC)
+	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG) -I../inc -DCL_TARGET_OPENCL_VERSION=200
 format :
-	$(MAKE) -C 00.template format
-	$(MAKE) -C 01.android_c format
-	$(MAKE) -C 02.android_c++ format
-	$(MAKE) -C 03.android_opencl format
-
+	$(FORMAT) main.c -style=file -i
 clean :
-	$(MAKE) -C 00.template clean
-	$(MAKE) -C 01.android_c clean
-	$(MAKE) -C 02.android_c++ clean
-	$(MAKE) -C 03.android_opencl clean
+	rm -v $(TRG)
+check :
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)
