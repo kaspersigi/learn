@@ -92,13 +92,13 @@ size_t min_sub_array_len(size_t target, std::vector<size_t>& v)
     size_t slow { 0 };
     size_t fast { 0 };
     size_t sum { 0 };
-    while (slow < v.size() && fast < v.size()) {
+    while (slow <= v.size() && fast <= v.size()) {
         if (sum < target) {
             sum += v[fast];
             fast++;
         } else {
-            if (fast - slow + 1 < answer) {
-                answer = fast - slow + 1;
+            if (fast - slow < answer) {
+                answer = fast - slow;
             }
             sum -= v[slow];
             slow++;
@@ -110,7 +110,7 @@ size_t min_sub_array_len(size_t target, std::vector<size_t>& v)
 
 auto main(int argc, char* argv[]) -> int
 {
-    size_t target = 7;
+    size_t target = 4;
     std::vector<size_t> vi {
         2,
         3,
