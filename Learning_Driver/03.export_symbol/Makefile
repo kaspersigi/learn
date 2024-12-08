@@ -13,7 +13,7 @@ FORMAT = /usr/bin/clang-format$(LLVM)
 
 all :
 	make $(C_FLAGS) -C $(KDIR) M=$(PWD)
-	rm -rfv *.o *.mod.c *.order *.mod .tmp_versions \.*.cmd \.*d
+	rm -fv *.o *.mod.c *.order *.mod .[!.]* ..[!.]*
 format :
 	$(FORMAT) $(SRC) -style=file -i
 clean :
