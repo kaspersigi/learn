@@ -63,6 +63,8 @@ class_pthread :
 	$(MAKE) -C 18.class_pthread
 async_callback :
 	$(MAKE) -C 19.async_callback
+condition_variable :
+	$(MAKE) -C 20.condition_variable
 
 format :
 	$(MAKE) -C 00.template format
