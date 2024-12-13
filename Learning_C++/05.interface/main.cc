@@ -7,7 +7,8 @@ auto main(int argc, char* argv[]) -> int
 {
     IObject* p_io1 = IObject::Instance();
     p_io1->show();
-    p_io1->destroy();
+    delete p_io1;
+    p_io1 = nullptr;
     std::cout << "--------------------" << std::endl;
     std::shared_ptr<IObject> p_io2 { IObject::Instance() };
     p_io2->show();
@@ -15,6 +16,7 @@ auto main(int argc, char* argv[]) -> int
     Object* p_o1 = new Object();
     p_o1->show();
     p_o1->deleter();
+    p_o1 = nullptr;
     std::cout << "--------------------" << std::endl;
     std::shared_ptr<Object> p_o2 { new Object(), [](auto e) { e->deleter(); } };
     p_o2->show();

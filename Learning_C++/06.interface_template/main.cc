@@ -14,7 +14,6 @@ protected:
 
 public:
     static IObject* Instance();
-    void destroy();
     virtual void show() const;
 
 private:
@@ -45,8 +44,6 @@ IObject::~IObject() { std::cout << __PRETTY_FUNCTION__ << "析构函数" << std:
 
 IObject* IObject::Instance() { return new Object(); }
 
-void IObject::destroy() { delete this; }
-
 void IObject::show() const { std::cout << _name << std::endl; }
 
 Object::Object() { std::cout << __PRETTY_FUNCTION__ << "构造函数" << std::endl; }
@@ -59,7 +56,8 @@ auto main(int argc, char* argv[]) -> int
 {
     IObject* p_io1 = IObject::Instance();
     p_io1->show();
-    p_io1->destroy();
+    delete p_io1;
+    p_io1 = nullptr;
     std::cout << "--------------------" << std::endl;
     std::shared_ptr<IObject> p_io2 { IObject::Instance() };
     p_io2->show();

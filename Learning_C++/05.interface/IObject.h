@@ -15,7 +15,6 @@ protected:
 
 public:
     static IObject* Instance();
-    void destroy();
     virtual void show() const;
 
 private:

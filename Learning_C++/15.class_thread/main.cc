@@ -3,7 +3,6 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    // auto tid = std::this_thread::get_id();
     pthread_t tid = pthread_self();
     std::string s;
     s = std::string(__PRETTY_FUNCTION__) + ": tid = " + std::to_string(tid);
