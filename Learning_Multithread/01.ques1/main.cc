@@ -1,29 +1,31 @@
+#include <atomic>
 #include <chrono>
-#include <condition_variable>
 #include <iostream>
 #include <mutex>
 #include <thread>
 
-static bool child_enable = true;
-std::condition_variable cv_m;
-std::condition_variable cv_c;
+// 假设主线程和子线程访问一个临界资源，主线程访问时，子线程不能访问，反之亦然
+// 争夺的的大概就是enable标志位
+static std::mutex m;
+static std::atomic<bool> is_block;
 
-void main_thread()
+auto func(const size_t& times, const std::string& name) -> void
 {
-    // while (true) {
-    std::cout << std::endl;
-    for (size_t i = 0; i < 100; ++i)
-        std::cout << 'a' << std::flush;
-    // }
-}
+    for (size_t i = 0; i < 50; ++i) {
+        const auto start = std::chrono::high_resolution_clock::now();
 
-void child_thread()
-{
-    // while (true) {
-    std::cout << std::endl;
-    for (size_t i = 0; i < 10; ++i)
-        std::cout << 'b' << std::flush;
-    // }
+        const auto end = std::chrono::high_resolution_clock::now();
+        const std::chrono::duration<double, std::milli> elapsed = end - start;
+        std::cout << "cost time " << elapsed << "." << std::endl;
+    }
+    while (true) {
+        m.lock();
+        for (size_t i = 0; i < times; ++i) {
+            std::cout << __PRETTY_FUNCTION__ << " " << name << ": " << std::endl;
+        }
+        m.unlock();
+        std::this_thread::yield();
+    }
 }
 
 #if 0
@@ -32,10 +34,9 @@ void child_thread()
 
 auto main(int argc, char* argv[]) -> int
 {
-    // std::thread c(child_thread);
-    // std::thread m(main_thread);
-    // c.join();
-    // m.join();
-    std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+    std::thread child(func, 10, std::string("child"));
+    child.join();
+    func(100, std::string("main"));
+
     return 0;
 }
