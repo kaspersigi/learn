@@ -22,36 +22,36 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template ques1 ques2 ques3 ques4 ques5 ques6
+all : template Q1 Q2 Q3 Q4 Q5 Q6
 template :
 	$(MAKE) -C 00.template
-ques1 :
-	$(MAKE) -C 01.ques1
-ques2 :
-	$(MAKE) -C 02.ques2
-ques3 :
-	$(MAKE) -C 03.ques3
-ques4 :
-	$(MAKE) -C 04.ques4
-ques5 :
-	$(MAKE) -C 05.ques5
-ques6 :
-	$(MAKE) -C 06.ques6
+Q1 :
+	$(MAKE) -C 01.Q1
+Q2 :
+	$(MAKE) -C 02.Q2
+Q3 :
+	$(MAKE) -C 03.Q3
+Q4 :
+	$(MAKE) -C 04.Q4
+Q5 :
+	$(MAKE) -C 05.Q5
+Q6 :
+	$(MAKE) -C 06.Q6
 
 format :
 	$(MAKE) -C 00.template format
-	$(MAKE) -C 01.ques1 format
-	$(MAKE) -C 02.ques2 format
-	$(MAKE) -C 03.ques3 format
-	$(MAKE) -C 04.ques4 format
-	$(MAKE) -C 05.ques5 format
-	$(MAKE) -C 06.ques6 format
+	$(MAKE) -C 01.Q1 format
+	$(MAKE) -C 02.Q2 format
+	$(MAKE) -C 03.Q3 format
+	$(MAKE) -C 04.Q4 format
+	$(MAKE) -C 05.Q5 format
+	$(MAKE) -C 06.Q6 format
 
 clean :
 	$(MAKE) -C 00.template clean
-	$(MAKE) -C 01.ques1 clean
-	$(MAKE) -C 02.ques2 clean
-	$(MAKE) -C 03.ques3 clean
-	$(MAKE) -C 04.ques4 clean
-	$(MAKE) -C 05.ques5 clean
-	$(MAKE) -C 06.ques6 clean
+	$(MAKE) -C 01.Q1 clean
+	$(MAKE) -C 02.Q2 clean
+	$(MAKE) -C 03.Q3 clean
+	$(MAKE) -C 04.Q4 clean
+	$(MAKE) -C 05.Q5 clean
+	$(MAKE) -C 06.Q6 clean
