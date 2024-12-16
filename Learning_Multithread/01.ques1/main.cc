@@ -1,6 +1,6 @@
+#include <atomic>
 #include <chrono>
 #include <iostream>
-#include <mutex>
 #include <thread>
 
 #if 0
@@ -10,8 +10,7 @@
 // 假设主线程和子线程访问一个临界资源，主线程访问时，子线程不能访问，反之亦然
 // 争夺的的大概就是enable标志位
 static const size_t count = 50;
-static size_t flag = 10;
-static std::mutex m;
+static std::atomic<size_t> flag = 10;
 
 auto func(const size_t& times, const std::string& name) -> void
 {
@@ -19,7 +18,6 @@ auto func(const size_t& times, const std::string& name) -> void
         while (times != flag) {
             std::this_thread::yield();
         }
-        m.lock();
         const auto start = std::chrono::high_resolution_clock::now();
         for (size_t k = 0; k < times; ++k) {
             std::cout << __PRETTY_FUNCTION__ << " " << name << ": " << i + 1 << std::endl;
@@ -29,7 +27,6 @@ auto func(const size_t& times, const std::string& name) -> void
         const std::chrono::duration<double, std::milli> elapsed = end - start;
         std::cout << "cost time " << elapsed << "." << std::endl;
         flag = (flag == 10 ? 100 : 10);
-        m.unlock();
     }
 }
 
