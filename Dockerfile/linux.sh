@@ -75,7 +75,10 @@ echo "" >> /etc/sudoers
 useradd -m miku
 usermod -s /bin/bash miku
 passwd miku
-arp -a
+# arp -a
+
+ip addr
+sudo dhclient usb0
 
 # code-server
 code-server

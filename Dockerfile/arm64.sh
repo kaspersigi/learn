@@ -9,12 +9,15 @@
 # passwd miku
 # arp -a
 
+# ip addr
+# sudo dhclient usb0
+
 sudo apt update
 sudo apt upgrade -y
 sudo apt install gcc gdb cgdb make clinfo valgrind clang-format-13 clangd-13 fonts-firacode -y
 
-update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-18 100
-update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-18 100
+update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-13 100
+update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-13 100
 
 su miku
 git config --global pull.rebase false
