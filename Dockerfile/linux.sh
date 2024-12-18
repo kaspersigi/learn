@@ -59,9 +59,22 @@ mv kernel-rockchip linux
 cd linux
 cp /mnt/d/Learning_Kernel/tspi/dts/* arch/arm64/boot/dts/rockchip/
 cp arch/arm64/configs/rockchip_linux_defconfig .config
+echo "CONFIG_USB_CONFIGFS_ECM=y" >> .config
+echo "CONFIG_USB_CONFIGFS_ECM_SUBSET=y" >> .config
+echo "CONFIG_USB_CONFIGFS_RNDIS=y" >> .config
+echo "CONFIG_USB_CONFIGFS_EEM=y" >> .config
+echo "CONFIG_USB_ETH=y" >> .config
 make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 make rk3566-tspi-v10-miku.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 cp boot.img /mnt/d/Learning_Kernel/tspi/
+
+echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+echo "" >> /etc/ssh/sshd_config
+echo "miku    ALL=(ALL:ALL) ALL" >> /etc/sudoers
+echo "" >> /etc/sudoers
+useradd -m miku
+usermod -s /bin/bash miku
+passwd miku
 
 # code-server
 code-server
