@@ -75,6 +75,7 @@ echo "" >> /etc/sudoers
 useradd -m miku
 usermod -s /bin/bash miku
 passwd miku
+arp -a
 
 # code-server
 code-server
