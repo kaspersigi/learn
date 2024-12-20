@@ -68,6 +68,7 @@ make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 make rk3566-tspi-v10-miku.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 cp boot.img /mnt/d/Learning_Kernel/tspi/
 
+# rndis
 echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
 echo "" >> /etc/ssh/sshd_config
 echo "miku    ALL=(ALL:ALL) ALL" >> /etc/sudoers
@@ -79,6 +80,30 @@ passwd miku
 
 ip addr
 sudo dhclient usb0
+
+# DVD
+# https://cdimage.debian.org/cdimage/archive/10.13.0/arm64/iso-dvd/
+adb push debian-10.13.0-arm64-DVD-1.iso userdata
+adb push SHA512SUMS.sign userdata
+adb shell
+cd /userdata
+date 122012402024.59
+hwclock --systohc
+gpg --verify SHA512SUMS.sign debian-10.13.0-arm64-DVD-1.iso
+mkdir dvd
+mount -o loop debian-10.13.0-arm64-DVD-1.iso dvd
+echo "deb file:///userdata/dvd/ buster main contrib" > /etc/apt/sources.list
+apt update --allow-insecure-repositories
+
+# /etc/apt/sources.list
+# deb http://mirrors.ustc.edu.cn/debian buster main contrib non-free
+# deb-src http://mirrors.ustc.edu.cn/debian buster main contrib non-free
+# deb http://mirrors.ustc.edu.cn/debian-security buster/updates main contrib non-free
+# deb-src http://mirrors.ustc.edu.cn/debian-security buster/updates main contrib non-free
+# deb http://mirrors.ustc.edu.cn/debian buster-updates main contrib non-free
+# deb-src http://mirrors.ustc.edu.cn/debian buster-updates main contrib non-free
+
+umount dvd
 
 # code-server
 code-server
