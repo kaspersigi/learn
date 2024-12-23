@@ -1,7 +1,6 @@
 FROM amd64/ubuntu:latest
 # FROM arm64v8/ubuntu:latest
-LABEL org.opencontainers.image.authors="kaspersigizz"
-MAINTAINER kaspersigizz "kaspersigi@outlook.com"
+LABEL org.opencontainers.image.authors="kaspersigi@outlook.com"
 WORKDIR /root
 EXPOSE 22
 USER root
