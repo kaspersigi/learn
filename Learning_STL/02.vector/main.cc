@@ -4,6 +4,7 @@
 
 auto main(int argc, char* argv[]) -> int
 {
+    [[maybe_unused]] std::vector vi(10, 0);
     std::vector nums {
         1,
         0,

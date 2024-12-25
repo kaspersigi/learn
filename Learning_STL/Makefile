@@ -22,7 +22,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template array vector deque list forward_list set multiset map multimap unordered_set unordered_multiset unordered_map unordered_multimap stack queue priority_queue count count_if find find_if copy_if remove_if transform bind lambda function_object minmax_element equal thread condition_variable async promise
+all : template array vector deque list forward_list set multiset map multimap unordered_set unordered_multiset unordered_map unordered_multimap stack queue priority_queue fill fill_n count count_if find find_if copy copy_n copy_if remove_if transform bind lambda function_object minmax_element equal thread condition_variable async promise
 template :
 	$(MAKE) -C 00.template
 array :
@@ -57,38 +57,46 @@ queue :
 	$(MAKE) -C 15.queue
 priority_queue :
 	$(MAKE) -C 16.priority_queue
+fill :
+	$(MAKE) -C 17.fill
+fill_n :
+	$(MAKE) -C 18.fill_n
 count :
-	$(MAKE) -C 17.count
+	$(MAKE) -C 19.count
 count_if :
-	$(MAKE) -C 18.count_if
+	$(MAKE) -C 20.count_if
 find :
-	$(MAKE) -C 19.find
+	$(MAKE) -C 21.find
 find_if :
-	$(MAKE) -C 20.find_if
+	$(MAKE) -C 22.find_if
+copy :
+	$(MAKE) -C 23.copy
+copy_n :
+	$(MAKE) -C 24.copy_n
 copy_if :
-	$(MAKE) -C 21.copy_if
+	$(MAKE) -C 25.copy_if
 remove_if :
-	$(MAKE) -C 22.remove_if
+	$(MAKE) -C 26.remove_if
 transform :
-	$(MAKE) -C 23.transform
+	$(MAKE) -C 27.transform
 bind :
-	$(MAKE) -C 24.bind
+	$(MAKE) -C 28.bind
 lambda :
-	$(MAKE) -C 25.lambda
+	$(MAKE) -C 29.lambda
 function_object :
-	$(MAKE) -C 26.function_object
+	$(MAKE) -C 30.function_object
 minmax_element :
-	$(MAKE) -C 27.minmax_element
+	$(MAKE) -C 31.minmax_element
 equal :
-	$(MAKE) -C 28.equal
+	$(MAKE) -C 32.equal
 thread :
-	$(MAKE) -C 29.thread
+	$(MAKE) -C 33.thread
 condition_variable :
-	$(MAKE) -C 30.condition_variable
+	$(MAKE) -C 34.condition_variable
 async :
-	$(MAKE) -C 31.async
+	$(MAKE) -C 35.async
 promise :
-	$(MAKE) -C 32.promise
+	$(MAKE) -C 36.promise
 
 format :
 	$(MAKE) -C 00.template format
@@ -108,22 +116,26 @@ format :
 	$(MAKE) -C 14.stack format
 	$(MAKE) -C 15.queue format
 	$(MAKE) -C 16.priority_queue format
-	$(MAKE) -C 17.count format
-	$(MAKE) -C 18.count_if format
-	$(MAKE) -C 19.find format
-	$(MAKE) -C 20.find_if format
-	$(MAKE) -C 21.copy_if format
-	$(MAKE) -C 22.remove_if format
-	$(MAKE) -C 23.transform format
-	$(MAKE) -C 24.bind format
-	$(MAKE) -C 25.lambda format
-	$(MAKE) -C 26.function_object format
-	$(MAKE) -C 27.minmax_element format
-	$(MAKE) -C 28.equal format
-	$(MAKE) -C 29.thread format
-	$(MAKE) -C 30.condition_variable format
-	$(MAKE) -C 31.async format
-	$(MAKE) -C 32.promise format
+	$(MAKE) -C 17.fill format
+	$(MAKE) -C 18.fill_n format
+	$(MAKE) -C 19.count format
+	$(MAKE) -C 20.count_if format
+	$(MAKE) -C 21.find format
+	$(MAKE) -C 22.find_if format
+	$(MAKE) -C 23.copy format
+	$(MAKE) -C 24.copy_n format
+	$(MAKE) -C 25.copy_if format
+	$(MAKE) -C 26.remove_if format
+	$(MAKE) -C 27.transform format
+	$(MAKE) -C 28.bind format
+	$(MAKE) -C 29.lambda format
+	$(MAKE) -C 30.function_object format
+	$(MAKE) -C 31.minmax_element format
+	$(MAKE) -C 32.equal format
+	$(MAKE) -C 33.thread format
+	$(MAKE) -C 34.condition_variable format
+	$(MAKE) -C 35.async format
+	$(MAKE) -C 36.promise format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -143,19 +155,23 @@ clean :
 	$(MAKE) -C 14.stack clean
 	$(MAKE) -C 15.queue clean
 	$(MAKE) -C 16.priority_queue clean
-	$(MAKE) -C 17.count clean
-	$(MAKE) -C 18.count_if clean
-	$(MAKE) -C 19.find clean
-	$(MAKE) -C 20.find_if clean
-	$(MAKE) -C 21.copy_if clean
-	$(MAKE) -C 22.remove_if clean
-	$(MAKE) -C 23.transform clean
-	$(MAKE) -C 24.bind clean
-	$(MAKE) -C 25.lambda clean
-	$(MAKE) -C 26.function_object clean
-	$(MAKE) -C 27.minmax_element clean
-	$(MAKE) -C 28.equal clean
-	$(MAKE) -C 29.thread clean
-	$(MAKE) -C 30.condition_variable clean
-	$(MAKE) -C 31.async clean
-	$(MAKE) -C 32.promise clean
+	$(MAKE) -C 17.fill clean
+	$(MAKE) -C 18.fill_n clean
+	$(MAKE) -C 19.count clean
+	$(MAKE) -C 20.count_if clean
+	$(MAKE) -C 21.find clean
+	$(MAKE) -C 22.find_if clean
+	$(MAKE) -C 23.copy clean
+	$(MAKE) -C 24.copy_n clean
+	$(MAKE) -C 25.copy_if clean
+	$(MAKE) -C 26.remove_if clean
+	$(MAKE) -C 27.transform clean
+	$(MAKE) -C 28.bind clean
+	$(MAKE) -C 29.lambda clean
+	$(MAKE) -C 30.function_object clean
+	$(MAKE) -C 31.minmax_element clean
+	$(MAKE) -C 32.equal clean
+	$(MAKE) -C 33.thread clean
+	$(MAKE) -C 34.condition_variable clean
+	$(MAKE) -C 35.async clean
+	$(MAKE) -C 36.promise clean
