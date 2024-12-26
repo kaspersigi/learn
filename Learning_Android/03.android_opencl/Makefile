@@ -31,7 +31,7 @@ $(TRG) : $(OBJ)
 	$(CC) $(OBJ) -o $(TRG) $(LIBS)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG) -I./inc -DCL_TARGET_OPENCL_VERSION=200
+	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG) -I./inc -DCL_TARGET_OPENCL_VERSION=300
 format :
 	$(FORMAT) inc/CL/cl.h -style=file -i
 	$(FORMAT) inc/CL/cl.h -style=file -i
