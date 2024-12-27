@@ -1,5 +1,5 @@
 [wsl2]
-processors=12
+# processors=12
 memory=4G
 # swap=4G
 networkingMode=mirrored
