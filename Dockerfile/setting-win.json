@@ -25,5 +25,17 @@
     "security.workspace.trust.untrustedFiles": "open",
     "accessibility.signals.terminalBell": {
         "sound": "on"
-    }
+    },
+    "C_Cpp.autocompleteAddParentheses": true,
+    "C_Cpp.default.cppStandard": "c++23",
+    "C_Cpp.default.cStandard": "c23",
+    "C_Cpp.inlayHints.autoDeclarationTypes.enabled": true,
+    "C_Cpp.inlayHints.autoDeclarationTypes.showOnLeft": true,
+    "C_Cpp.inlayHints.parameterNames.enabled": true,
+    "C_Cpp.inlayHints.referenceOperator.enabled": true,
+    "C_Cpp.inlayHints.referenceOperator.showSpace": true,
+    "C_Cpp.formatting": "clangFormat",
+    "C_Cpp.clang_format_fallbackStyle": "Webkit",
+    "C_Cpp.clang_format_style": "Webkit",
+    "notebook.defaultFormatter": "ms-vscode.cpptools"
 }
