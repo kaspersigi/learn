@@ -2,8 +2,6 @@
 #include <future>
 #include <iostream>
 
-using namespace std;
-
 struct Result {
     struct promise_type {
         Result get_return_object()
@@ -31,25 +29,19 @@ struct Awaiter {
 
     bool await_ready()
     {
-        // 协程挂起
         return false;
     }
 
     void await_suspend(std::coroutine_handle<> coroutine_handle)
     {
-        // 切换线程
         std::async([=]() {
-            using namespace std::chrono_literals;
-            // sleep 1s
-            std::this_thread::sleep_for(1s);
-            // 恢复协程
+            std::this_thread::sleep_for(std::chrono::seconds(1));
             coroutine_handle.resume();
         });
     }
 
     int await_resume()
     {
-        // value 将作为 co_await 表达式的值
         return value;
     }
 };
@@ -57,14 +49,14 @@ struct Awaiter {
 Result Coroutine()
 {
     std::cout << 1 << std::endl;
-    std::cout << co_await Awaiter { .value = 1000 } << std::endl; // 不知道value前“.”的含义，不过没有就会报错。
-    std::cout << 2 << std::endl; // 1 秒之后再执行
+    std::cout << co_await Awaiter { 1000 } << std::endl;
+    std::cout << 2 << std::endl;
 };
 
 int main(int argc, char* argv[])
 {
     std::cout << "start main" << std::endl;
-    Result x = Coroutine();
+    Result c = Coroutine();
     std::cout << "end main" << std::endl;
 
     return 0;
