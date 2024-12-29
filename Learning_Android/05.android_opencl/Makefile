@@ -28,7 +28,7 @@ CLANGXX_LINK_FLAGS = -static -lc++ -nostdlib++
 
 .PHONY : all
 $(TRG) : $(OBJ)
-	$(CC) $(OBJ) -o $(TRG) $(LIBS)
+	$(CC) $(OBJ) -o $(TRG) $(LIBS) $(DEBUG)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
 	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG) -I./inc -DCL_TARGET_OPENCL_VERSION=300
