@@ -22,7 +22,7 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -static -Oz
 LINK_FLAGS = -no-pie
-LIBS = -L./lib -lOpenCL
+LIBS = -llog -L./lib -lOpenCL
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -static -lc++ -nostdlib++
 
