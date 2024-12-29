@@ -39,7 +39,8 @@ int main(int argc, char* argv[])
         usleep(10000);
     }
     trace_end();
-
     close(g_trace_marker_fd);
+    usleep(10000);
+
     return 0;
 }
