@@ -20,10 +20,12 @@ int main(int argc, char* argv[])
 
     status = clGetPlatformIDs(0, NULL, &numPlatforms);
 
-    if (status == CL_SUCCESS)
+    if (status == CL_SUCCESS) {
         LOGI("%u platform(s) found", numPlatforms);
-    else
+    } else {
         LOGE("clGetPlatformIDs(%i)", status);
+        exit(-1);
+    }
 
     cl_platform_id* PlatformIDs = (cl_platform_id*)calloc(numPlatforms, sizeof(cl_platform_id));
     status = clGetPlatformIDs(numPlatforms, PlatformIDs, NULL);

@@ -4,10 +4,12 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    if (ATrace_isEnabled())
+    if (ATrace_isEnabled()) {
         std::cout << "ATrace is enable!" << std::endl;
-    else
+    } else {
         std::cout << "ATrace is disable!" << std::endl;
+        return -1;
+    }
 
     ATrace_beginSection("MyATrace");
     for (size_t i = 0; i < 500; ++i) {
