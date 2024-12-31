@@ -2,9 +2,9 @@
 #Makefile for my Android C programs
 ###########################################
 
-TRG = main
-OBJ = main.o
-SRC = main.c
+TRG = ftrace
+OBJ = ftrace.o
+SRC = ftrace.c
 
 NDK = ~/linux/android-ndk-r27c
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/linux-x86_64
@@ -33,6 +33,6 @@ $(TRG) : $(OBJ)
 $(OBJ) : $(SRC)
 	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
 format :
-	$(FORMAT) main.c -style=file -i
+	$(FORMAT) $(SRC) -style=file -i
 clean :
 	rm -v $(TRG)

@@ -52,7 +52,7 @@ format :
 	$(FORMAT) inc/CL/cl_va_api_media_sharing_intel.h -style=file -i
 	$(FORMAT) inc/CL/cl_version.h -style=file -i
 	$(FORMAT) inc/CL/opencl.h -style=file -i
-	$(FORMAT) main.c -style=file -i
+	$(FORMAT) $(SRC) -style=file -i
 clean :
 	rm -v $(TRG)
 check :

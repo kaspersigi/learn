@@ -33,6 +33,6 @@ $(TRG) : $(OBJ)
 $(OBJ) : $(SRC)
 	$(CXX) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
-	$(FORMAT) main.cc -style=file -i
+	$(FORMAT) $(SRC) -style=file -i
 clean :
 	rm -v $(TRG)

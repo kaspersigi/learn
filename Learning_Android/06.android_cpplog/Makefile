@@ -2,9 +2,9 @@
 #Makefile for my Android C++ programs
 ###########################################
 
-TRG = main
-OBJ = main.o
-SRC = main.cc
+TRG = cpplog
+OBJ = cpplog.o
+SRC = cpplog.cc
 
 NDK = ~/linux/android-ndk-r27c
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/linux-x86_64
@@ -34,6 +34,6 @@ $(TRG) : $(OBJ)
 $(OBJ) : $(SRC)
 	$(CXX) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
-	$(FORMAT) main.cc -style=file -i
+	$(FORMAT) $(SRC) -style=file -i
 clean :
 	rm -v $(TRG)

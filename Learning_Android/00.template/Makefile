@@ -33,6 +33,6 @@ $(TRG) : $(OBJ)
 $(OBJ) : $(SRC)
 	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
 format :
-	$(FORMAT) main.c -style=file -i
+	$(FORMAT) $(SRC) -style=file -i
 clean :
 	rm -v $(TRG)
