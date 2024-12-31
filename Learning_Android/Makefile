@@ -22,7 +22,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : template android_c android_c++ android_ftrace android_atrace android_clog android_c++log android_opencl
+all : template android_c android_c++ android_ftrace android_atrace android_clog android_c++log android_clinfo android_opencl
 template :
 	$(MAKE) -C 00.template
 android_c :
@@ -37,8 +37,10 @@ android_clog :
 	$(MAKE) -C 05.android_clog
 android_c++log :
 	$(MAKE) -C 06.android_c++log
+android_clinfo :
+	$(MAKE) -C 07.android_clinfo
 android_opencl :
-	$(MAKE) -C 07.android_opencl
+	$(MAKE) -C 08.android_opencl
 
 format :
 	$(MAKE) -C 00.template format
@@ -48,7 +50,8 @@ format :
 	$(MAKE) -C 04.android_atrace format
 	$(MAKE) -C 05.android_clog format
 	$(MAKE) -C 06.android_c++log format
-	$(MAKE) -C 07.android_opencl format
+	$(MAKE) -C 07.android_clinfo format
+	$(MAKE) -C 08.android_opencl format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -58,4 +61,5 @@ clean :
 	$(MAKE) -C 04.android_atrace clean
 	$(MAKE) -C 05.android_clog clean
 	$(MAKE) -C 06.android_c++log clean
-	$(MAKE) -C 07.android_opencl clean
+	$(MAKE) -C 07.android_clinfo clean
+	$(MAKE) -C 08.android_opencl clean
