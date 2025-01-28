@@ -14,17 +14,18 @@ ssh-keyscan github.com > $HOME/.ssh/known_hosts
 
 cp .wslconfig /mnt/c/Users/kaspe/
 cp .vimrc ~
-unzip /mnt/d/Learning_Kernel/tspi/platform-tools-latest-windows.zip -d /mnt/c/Users/kaspe/Downloads/
+mkdir -p $HOME/linux/virt
+unzip /mnt/d/Learning_Kernel/pixel8/android-ndk-r27c-linux.zip -d $HOME/linux
+unzip /mnt/d/Learning_Kernel/pixel8/platform-tools-latest-windows.zip -d /mnt/c/Users/kaspe/Downloads/
 echo "# Android Debug Bridge" >> ~/.bashrc
 # echo "export PATH=$PATH:/mnt/c/Users/kaspe/Downloads/platform-tools" >> ~/.bashrc
 echo "export PATH=/home/miku/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Users/kaspe/Downloads/platform-tools" >> ~/.bashrc
 echo "alias adb='adb.exe'" >> ~/.bashrc
 source ~/.bashrc
 
-mkdir -p $HOME/linux/virt
-# mkdir -p $HOME/linux
 cd ~/linux
 git clone git@github.com:kaspersigi/learn.git
+git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 
 # ssh -T -p 443 git@github.com
 # cp amd64/config ~/.ssh
