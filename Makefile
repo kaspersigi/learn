@@ -22,7 +22,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : algorithm c c++ coroutine design_pattern multithread native operating_system rust socket stl
+all : algorithm c c++ design_pattern multithread native operating_system socket stl
 algorithm :
 	$(MAKE) -C Learning_Algorithm
 android :
@@ -31,8 +31,6 @@ c :
 	$(MAKE) -C Learning_C
 c++ :
 	$(MAKE) -C Learning_C++
-coroutine :
-	$(MAKE) -C Learning_Coroutine
 design_pattern :
 	$(MAKE) -C Learning_Design_Pattern
 driver :
@@ -43,8 +41,6 @@ native :
 	$(MAKE) -C Learning_Native
 operating_system :
 	$(MAKE) -C Learning_Operating_System
-rust :
-	$(MAKE) -C Learning_Rust
 socket :
 	$(MAKE) -C Learning_Socket
 stl :
@@ -55,13 +51,11 @@ format :
 	$(MAKE) -C Learning_Android format
 	$(MAKE) -C Learning_C format
 	$(MAKE) -C Learning_C++ format
-	$(MAKE) -C Learning_Coroutine format
 	$(MAKE) -C Learning_Design_Pattern format
 	$(MAKE) -C Learning_Driver format
 	$(MAKE) -C Learning_Multithread format
 	$(MAKE) -C Learning_Native format
 	# $(MAKE) -C Learning_Operating_System format
-	$(MAKE) -C Learning_Rust format
 	$(MAKE) -C Learning_Socket format
 	$(MAKE) -C Learning_STL format
 
@@ -70,13 +64,11 @@ clean :
 	# $(MAKE) -C Learning_Android clean
 	$(MAKE) -C Learning_C clean
 	$(MAKE) -C Learning_C++ clean
-	$(MAKE) -C Learning_Coroutine clean
 	$(MAKE) -C Learning_Design_Pattern clean
 	# $(MAKE) -C Learning_Driver clean
 	$(MAKE) -C Learning_Multithread clean
 	$(MAKE) -C Learning_Native clean
 	$(MAKE) -C Learning_Operating_System clean
-	$(MAKE) -C Learning_Rust format clean
 	$(MAKE) -C Learning_Socket clean
 	$(MAKE) -C Learning_STL clean
 
