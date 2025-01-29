@@ -14,7 +14,8 @@ ssh-keyscan github.com > $HOME/.ssh/known_hosts
 
 cp .wslconfig /mnt/c/Users/kaspe/
 cp .vimrc ~
-mkdir -p $HOME/linux/virt
+mkdir -p $HOME/linux
+cp -R /mnt/d/Learning_Kernel/virt .
 unzip /mnt/d/Learning_Kernel/pixel8/android-ndk-r27c-linux.zip -d $HOME/linux
 unzip /mnt/d/Learning_Kernel/pixel8/platform-tools-latest-windows.zip -d /mnt/c/Users/kaspe/Downloads/
 echo "# Android Debug Bridge" >> ~/.bashrc
