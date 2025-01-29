@@ -10,13 +10,14 @@ git config --global pull.rebase false
 git config --global user.name kaspersigi
 git config --global user.email kaspersigi@outlook.com
 
-ssh-keyscan github.com > $HOME/.ssh/known_hosts
+ssh-keyscan github.com > ~/.ssh/known_hosts
 
 cp .wslconfig /mnt/c/Users/kaspe/
 cp .vimrc ~
-mkdir -p $HOME/linux
+mkdir -p ~/linux
+cd ~/linux
 cp -R /mnt/d/Learning_Kernel/virt .
-unzip /mnt/d/Learning_Kernel/pixel8/android-ndk-r27c-linux.zip -d $HOME/linux
+unzip /mnt/d/Learning_Kernel/pixel8/android-ndk-r27c-linux.zip -d ~/linux
 unzip /mnt/d/Learning_Kernel/pixel8/platform-tools-latest-windows.zip -d /mnt/c/Users/kaspe/Downloads/
 echo "# Android Debug Bridge" >> ~/.bashrc
 # echo "export PATH=$PATH:/mnt/c/Users/kaspe/Downloads/platform-tools" >> ~/.bashrc
@@ -24,7 +25,6 @@ echo "export PATH=/home/miku/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin
 echo "alias adb='adb.exe'" >> ~/.bashrc
 source ~/.bashrc
 
-cd ~/linux
 git clone git@github.com:kaspersigi/learn.git
 git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 
