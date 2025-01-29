@@ -16,7 +16,7 @@ cp .wslconfig /mnt/c/Users/kaspe/
 cp .vimrc ~
 mkdir -p ~/linux
 cd ~/linux
-cp -R /mnt/d/Learning_Kernel/virt .
+cp -R /mnt/d/Learning_Kernel/virt ~/linux/
 unzip /mnt/d/Learning_Kernel/pixel8/android-ndk-r27c-linux.zip -d ~/linux
 unzip /mnt/d/Learning_Kernel/pixel8/platform-tools-latest-windows.zip -d /mnt/c/Users/kaspe/Downloads/
 echo "# Android Debug Bridge" >> ~/.bashrc
