@@ -8,8 +8,8 @@ git clone --single-branch -b linux-rolling-lts --depth 1 https://git.kernel.org/
 git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 # git clone --single-branch -b 1_37_stable --depth 1 git://git.busybox.net/busybox
 git clone --single-branch -b 1_37_stable --depth 1 https://git.busybox.net/busybox
-# git clone --single-branch -b 2024.08.x --depth 1 git@gitlab.com:buildroot.org/buildroot.git
-git clone --single-branch -b 2024.08.x --depth 1 https://gitlab.com/buildroot.org/buildroot.git
+# git clone --single-branch -b 2024.11.x --depth 1 git@gitlab.com:buildroot.org/buildroot.git
+git clone --single-branch -b 2024.11.x --depth 1 https://gitlab.com/buildroot.org/buildroot.git
 
 # buildroot qemu_aarch64_virt_defconfig
 sudo apt install gcc g++ cpio unzip -y
