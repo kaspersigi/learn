@@ -3,8 +3,10 @@
 USRER_PATH=/mnt/c/Users/kaspe
 ADB_PATH=$USRER_PATH/Downloads/platform-tools
 TOP_PATH=/mnt/d/Learning_Kernel
+ROOT_PATH=/mnt/d/Dockerfile
 TOOL_PATH=$TOP_PATH/tools
 
+cd $ROOT_PATH
 mkdir ~/.ssh
 cp amd64/id_rsa ~/.ssh
 cp amd64/id_rsa.pub ~/.ssh
@@ -22,7 +24,7 @@ cp .vimrc ~
 mkdir -p ~/linux/virt
 cd ~/linux
 unzip $TOOL_PATH/android-ndk-r27c-linux.zip -d ~/linux
-rm -rf $ADB_PATH/platform-tools
+rm -rf $ADB_PATH
 unzip $TOOL_PATH/platform-tools-latest-windows.zip -d $USRER_PATH/Downloads
 echo "# Android Debug Bridge" >> ~/.bashrc
 # echo "export PATH=$PATH:$ADB_PATH" >> ~/.bashrc
@@ -33,7 +35,7 @@ source ~/.bashrc
 git clone git@github.com:kaspersigi/learn.git
 git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 
-cd linux
+cd ~/linux
 time make distclean ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 cp $TOOL_PATH/linux.config .config
 time make olddefconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
