@@ -13,8 +13,9 @@ sudo -s <<EOF
 cd $ROOT_PATH
 apt update
 apt upgrade -y
+apt autoremove -y
 
-apt install clang-18 clangd-18 clang-format-18 clang-tidy-18 lldb-18 libc++-18-dev libc++abi-18-dev lld-18 make bsdmainutils qemu-system-arm qemu-system-riscv qemu-system-x86 gdb cgdb valgrind libltdl7 libsdl2-2.0-0 libgtk2.0-0t64 binutils-i686-linux-gnu gcc-i686-linux-gnu fonts-firacode pigz binutils-riscv64-linux-gnu -y
+apt install clang-18 clangd-18 clang-format-18 clang-tidy-18 lldb-18 libc++-18-dev libc++abi-18-dev lld-18 make bsdmainutils qemu-system-arm qemu-system-misc qemu-system-x86 gdb cgdb valgrind libltdl7 libsdl2-2.0-0 libgtk2.0-0t64 binutils-i686-linux-gnu gcc-i686-linux-gnu fonts-firacode pigz binutils-riscv64-linux-gnu -y
 apt install bzip2 libssl-dev libncurses-dev libelf-dev flex bison bc dwarves lz4 cpio unzip xz-utils -y
 
 echo 'LANG="zh_CN.UTF-8"' > /etc/default/locale
