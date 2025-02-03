@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-# ubuntu 24.04
+# ubuntu 24.04.1
 
 # sed -i 's@//.*archive.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list.d/ubuntu.sources
 # sed -i 's@//.*security.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list.d/ubuntu.sources
@@ -43,13 +43,17 @@ update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-
 update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-18 100
 update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-18 100
 
-cp /mnt/d/Learning_Kernel/bochs-2.8/bochs-2.8-bin.tar.gz ~
+BOCHS_VERSION=2.8
+BOCHS_PATH=/mnt/d/Learning_Kernel/bochs-$BOCHS_VERSION
+ROOT_PATH=/mnt/d/Dockerfile
+
+cp $BOCHS_PATH/bochs-$BOCHS_VERSION-bin.tar.gz ~
 cd ~
-tar zxvf bochs-2.8-bin.tar.gz
-cd bochs-2.8-bin
+tar zxvf bochs-$BOCHS_VERSION-bin.tar.gz
+cd bochs-$BOCHS_VERSION-bin
 make install
 cd ..
-rm -rf bochs-2.8-bin
-cd /mnt/d/Dockerfile/
+rm -rf bochs-$BOCHS_VERSION-bin
+cd $ROOT_PATH
 
 su miku

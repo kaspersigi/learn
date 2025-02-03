@@ -22,7 +22,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 
 .PHONY : all
-all : algorithm android c c++ design_pattern multithread native operating_system socket stl
+all : algorithm android c c++ design_pattern driver multithread native operating_system socket stl
 algorithm :
 	$(MAKE) -C Learning_Algorithm
 android :
@@ -65,7 +65,7 @@ clean :
 	$(MAKE) -C Learning_C clean
 	$(MAKE) -C Learning_C++ clean
 	$(MAKE) -C Learning_Design_Pattern clean
-	# $(MAKE) -C Learning_Driver clean
+	$(MAKE) -C Learning_Driver clean
 	$(MAKE) -C Learning_Multithread clean
 	$(MAKE) -C Learning_Native clean
 	$(MAKE) -C Learning_Operating_System clean

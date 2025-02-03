@@ -61,7 +61,6 @@ RUN git config --global pull.rebase false \
     && ssh-keyscan github.com > $HOME/.ssh/known_hosts \
     && echo '' > $HOME/.ssh/authorized_keys \
     && mkdir $HOME/share \
-    && mkdir -p $HOME/linux/virt \
     && cd $HOME/linux \
     && git clone git@github.com:kaspersigi/learn.git \
     && echo 'code-server &> /dev/null &' > $HOME/miku.sh \
