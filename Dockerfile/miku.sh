@@ -1,12 +1,9 @@
 #!/usr/bin/bash
 
 USRER_PATH=/mnt/c/Users/kaspe
+TEMP_PATH=/mnt/c/Users/Public/Downloads
 ADB_PATH=$USRER_PATH/Downloads/platform-tools
-TOP_PATH=/mnt/d/Learning_Kernel
-ROOT_PATH=/mnt/d/Dockerfile
-TOOL_PATH=$TOP_PATH/tools
 
-cd $ROOT_PATH
 mkdir ~/.ssh
 cp amd64/id_rsa ~/.ssh
 cp amd64/id_rsa.pub ~/.ssh
@@ -22,16 +19,18 @@ ssh-keyscan github.com > ~/.ssh/known_hosts
 cp .wslconfig $USRER_PATH
 cp .vimrc ~
 mkdir -p ~/linux/virt
-unzip $TOOL_PATH/android-ndk-r27c-linux.zip -d ~/linux
+unzip $TEMP_PATH/android-ndk-r27c-linux.zip -d ~/linux
+rm -rf $TEMP_PATH/android-ndk-r27c-linux.zip
 
 echo "# Android Debug Bridge" >> ~/.bashrc
-# echo "export PATH=$PATH:$ADB_PATH" >> ~/.bashrc
-echo "export PATH=/home/miku/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:$ADB_PATH" >> ~/.bashrc
+echo "export PATH=$PATH:$ADB_PATH" >> ~/.bashrc
+# echo "export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:$ADB_PATH" >> ~/.bashrc
 echo "alias adb='adb.exe'" >> ~/.bashrc
 source ~/.bashrc
-adb kill-server
+$ADB_PATH/adb kill-server
 rm -rf $ADB_PATH
-unzip $TOOL_PATH/platform-tools-latest-windows.zip -d $USRER_PATH/Downloads
+unzip $TEMP_PATH/platform-tools-latest-windows.zip -d $USRER_PATH/Downloads
+rm -rf $TEMP_PATH/platform-tools-latest-windows.zip
 
 cd ~/linux
 git clone git@github.com:kaspersigi/learn.git
@@ -40,6 +39,8 @@ git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.o
 cd ~/linux/linux
 time make distclean ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 cp $TOOL_PATH/linux.config .config
+wget https://gitlab.com/buildroot.org/buildroot/-/raw/master/board/qemu/aarch64-virt/linux.config
+mv linux.config .config
 time make olddefconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 time make -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 time make modules -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
