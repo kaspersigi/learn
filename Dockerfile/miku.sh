@@ -6,6 +6,7 @@ ADB_PATH="$USRER_PATH/Downloads/platform-tools"
 KEY_PATH="/mnt/d/key"
 
 if [ -e "$KEY_PATH" ]; then
+    echo "key found"
     mkdir ~/.ssh
     cp $KEY_PATH/id_rsa ~/.ssh
     cp $KEY_PATH/id_rsa.pub ~/.ssh
@@ -19,10 +20,10 @@ git config --global pull.rebase false
 git config --global user.name kaspersigi
 git config --global user.email kaspersigi@outlook.com
 
-ssh -T -p 443 git@github.com
 cp config ~/.ssh
 chmod 644 ~/.ssh/config
-ssh-keyscan github.com > ~/.ssh/known_hosts
+ssh-keyscan -p 443 ssh.github.com >> ~/.ssh/known_hosts
+ssh -T -p 443 git@github.com
 
 cp .wslconfig $USRER_PATH
 cp .vimrc ~
