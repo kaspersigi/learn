@@ -1,7 +1,6 @@
 #!/usr/bin/bash
 
 TOP_PATH=/mnt/d/Learning_Kernel
-TOOL_PATH=$TOP_PATH/tools
 
 rm -rf ~/linux/virt
 cp -R $TOP_PATH/virt ~/linux/
@@ -9,7 +8,8 @@ cp -R $TOP_PATH/virt ~/linux/
 cd ~/linux/linux
 time make distclean ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 git pull
-cp $TOOL_PATH/linux.config .config
+wget https://gitlab.com/buildroot.org/buildroot/-/raw/master/board/qemu/aarch64-virt/linux.config
+mv linux.config .config
 time make olddefconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 time make -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 time make modules -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18

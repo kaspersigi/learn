@@ -11,6 +11,8 @@ if [ -e "$KEY_PATH" ]; then
     cp $KEY_PATH/id_rsa.pub ~/.ssh
     chmod 600 ~/.ssh/id_rsa
     chmod 644 ~/.ssh/id_rsa.pub
+else
+    echo "key not found"
 fi
 
 git config --global pull.rebase false
