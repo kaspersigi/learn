@@ -19,6 +19,9 @@ git config --global pull.rebase false
 git config --global user.name kaspersigi
 git config --global user.email kaspersigi@outlook.com
 
+ssh -T -p 443 git@github.com
+cp config ~/.ssh
+chmod 644 ~/.ssh/config
 ssh-keyscan github.com > ~/.ssh/known_hosts
 
 cp .wslconfig $USRER_PATH
@@ -51,7 +54,3 @@ time make olddefconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 time make -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 time make modules -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-18
 ./scripts/clang-tools/gen_compile_commands.py
-
-# ssh -T -p 443 git@github.com
-# cp amd64/config ~/.ssh
-# chmod 644 ~/.ssh/config
