@@ -15,11 +15,11 @@ RUN mkdir -p /var/run/sshd \
     && apt upgrade -y \
     && apt autoremove -y
 RUN mkdir /home/miku/.ssh
-COPY id_rsa /home/miku/.ssh
-COPY id_rsa.pub /home/miku/.ssh
-RUN chown miku:miku -R /home/miku/.ssh \
-    && chmod 600 /home/miku/.ssh/id_rsa \
-    && chmod 644 /home/miku/.ssh/id_rsa.pub
+# COPY id_rsa /home/miku/.ssh
+# COPY id_rsa.pub /home/miku/.ssh
+# RUN chown miku:miku -R /home/miku/.ssh \
+#     && chmod 600 /home/miku/.ssh/id_rsa \
+#     && chmod 644 /home/miku/.ssh/id_rsa.pub
 RUN apt install sudo -y \
     && apt install clang-18 clang-format-18 clang-tidy-18 lldb-18 libc++-18-dev libc++abi-18-dev clangd-18 lld-18 gdb cgdb qemu-system-arm qemu-system-misc qemu-system-x86 make git file wget curl vim openssh-server bsdmainutils valgrind binutils-i686-linux-gnu binutils-x86-64-linux-gnu gcc-i686-linux-gnu fonts-firacode pigz binutils-riscv64-linux-gnu -y \
     && apt install bzip2 libssl-dev libncurses-dev libelf-dev flex bison bc dwarves lz4 cpio unzip xz-utils -y
@@ -39,7 +39,7 @@ RUN git config --global pull.rebase false \
     && echo '' > $HOME/.ssh/authorized_keys \
     && mkdir $HOME/share \
     && cd $HOME/linux \
-    && git clone git@github.com:kaspersigi/learn.git \
+    && git clone https://github.com/kaspersigi/learn.git \
     && echo 'code-server &> /dev/null &' > $HOME/miku.sh \
     && chmod 110 $HOME/miku.sh
 USER root

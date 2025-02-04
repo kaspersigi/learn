@@ -38,7 +38,8 @@ unzip $TEMP_PATH/platform-tools-latest-windows.zip -d $USRER_PATH/Downloads
 rm -rf $TEMP_PATH/platform-tools-latest-windows.zip
 
 cd ~/linux
-git clone git@github.com:kaspersigi/learn.git
+# git clone git@github.com:kaspersigi/learn.git
+git clone https://github.com/kaspersigi/learn.git
 git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 
 cd ~/linux/linux
