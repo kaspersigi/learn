@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-TOP_PATH=/mnt/d/Learning_Kernel
+TOP_PATH="/mnt/d/Learning_Kernel"
 
 rm -rf ~/linux/virt
 cp -R $TOP_PATH/virt ~/linux/
