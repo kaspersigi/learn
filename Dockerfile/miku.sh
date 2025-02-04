@@ -5,11 +5,13 @@ TEMP_PATH=/mnt/c/Users/Public/Downloads
 ADB_PATH=$USRER_PATH/Downloads/platform-tools
 KEY_PATH=/mnt/d/key
 
-mkdir ~/.ssh
-cp $KEY_PATH/id_rsa ~/.ssh
-cp $KEY_PATH/id_rsa.pub ~/.ssh
-chmod 600 ~/.ssh/id_rsa
-chmod 644 ~/.ssh/id_rsa.pub
+if [ -e "$KEY_PATH" ]; then
+    mkdir ~/.ssh
+    cp $KEY_PATH/id_rsa ~/.ssh
+    cp $KEY_PATH/id_rsa.pub ~/.ssh
+    chmod 600 ~/.ssh/id_rsa
+    chmod 644 ~/.ssh/id_rsa.pub
+fi
 
 git config --global pull.rebase false
 git config --global user.name kaspersigi
@@ -28,7 +30,7 @@ echo "export PATH=$PATH:$ADB_PATH" >> ~/.bashrc
 # echo "export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:$ADB_PATH" >> ~/.bashrc
 echo "alias adb='adb.exe'" >> ~/.bashrc
 source ~/.bashrc
-$ADB_PATH/adb kill-server
+$ADB_PATH/adb.exe kill-server
 rm -rf $ADB_PATH
 unzip $TEMP_PATH/platform-tools-latest-windows.zip -d $USRER_PATH/Downloads
 rm -rf $TEMP_PATH/platform-tools-latest-windows.zip
