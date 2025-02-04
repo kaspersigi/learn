@@ -1,9 +1,9 @@
 #!/usr/bin/bash
 
-USRER_PATH=/mnt/c/Users/kaspe
-TEMP_PATH=/mnt/c/Users/Public/Downloads
-ADB_PATH=$USRER_PATH/Downloads/platform-tools
-KEY_PATH=/mnt/d/key
+USRER_PATH="/mnt/c/Users/kaspe"
+TEMP_PATH="/mnt/c/Users/Public/Downloads"
+ADB_PATH="$USRER_PATH/Downloads/platform-tools"
+KEY_PATH="/mnt/d/key"
 
 if [ -e "$KEY_PATH" ]; then
     mkdir ~/.ssh

@@ -29,16 +29,12 @@ wget -P $TEMP_PATH https://dl.google.com/android/repository/android-ndk-r27c-lin
 wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools-latest-windows.zip
 
 BOCHS_VERSION=2.8
-BOCHS_PATH=/mnt/d/Learning_Kernel/bochs-$BOCHS_VERSION
+BOCHS_PATH="/mnt/d/Learning_Kernel/bochs-$BOCHS_VERSION"
 if [ -e "$BOCHS_PATH" ]; then
     apt install libltdl7 libsdl2-2.0-0 libgtk2.0-0t64 -y
-    cp $BOCHS_PATH/bochs-$BOCHS_VERSION-bin.tar.gz ~
-    cd ~
-    tar zxvf bochs-$BOCHS_VERSION-bin.tar.gz
-    cd bochs-$BOCHS_VERSION-bin
+    tar zxvf $BOCHS_PATH/bochs-$BOCHS_VERSION-bin.tar.gz -C /tmp
+    cd /tmp/bochs-$BOCHS_VERSION-bin
     make install
-    cd ..
-    rm -rf bochs-$BOCHS_VERSION-bin
 fi
 
 su miku
