@@ -3,10 +3,11 @@
 USRER_PATH=/mnt/c/Users/kaspe
 TEMP_PATH=/mnt/c/Users/Public/Downloads
 ADB_PATH=$USRER_PATH/Downloads/platform-tools
+KEY_PATH=/mnt/d/key
 
 mkdir ~/.ssh
-cp amd64/id_rsa ~/.ssh
-cp amd64/id_rsa.pub ~/.ssh
+cp $KEY_PATH/id_rsa ~/.ssh
+cp $KEY_PATH/id_rsa.pub ~/.ssh
 chmod 600 ~/.ssh/id_rsa
 chmod 644 ~/.ssh/id_rsa.pub
 
