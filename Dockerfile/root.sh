@@ -1,7 +1,9 @@
 #!/usr/bin/bash
 # ubuntu 24.04.1
 
-TEMP_PATH=/mnt/c/Users/Public/Downloads
+TEMP_PATH="/mnt/c/Users/Public/Downloads"
+BOCHS_VERSION="2.8"
+BOCHS_PATH="/mnt/d/Learning_Kernel/bochs-$BOCHS_VERSION"
 
 # sed -i 's@//.*archive.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list.d/ubuntu.sources
 # sed -i 's@//.*security.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list.d/ubuntu.sources
@@ -28,8 +30,7 @@ update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy
 wget -P $TEMP_PATH https://dl.google.com/android/repository/android-ndk-r27c-linux.zip
 wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools-latest-windows.zip
 
-BOCHS_VERSION="2.8"
-BOCHS_PATH="/mnt/d/Learning_Kernel/bochs-$BOCHS_VERSION"
+# echo "BOCHS_PATH=$BOCHS_PATH"
 if [ -e "$BOCHS_PATH" ]; then
     echo "install bochs-$BOCHS_VERSION"
     apt install libltdl7 libsdl2-2.0-0 libgtk2.0-0t64 -y
