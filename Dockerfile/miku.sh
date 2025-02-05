@@ -8,10 +8,8 @@ KEY_PATH="/mnt/d/key"
 if [ -e "$KEY_PATH" ]; then
     echo "key found"
     mkdir ~/.ssh
-    cp $KEY_PATH/id_rsa ~/.ssh
-    cp $KEY_PATH/id_rsa.pub ~/.ssh
-    chmod 600 ~/.ssh/id_rsa
-    chmod 644 ~/.ssh/id_rsa.pub
+    cp $KEY_PATH/id_ed25519 ~/.ssh
+    chmod 600 ~/.ssh/id_ed25519
 else
     echo "key not found"
 fi
@@ -20,6 +18,10 @@ git config --global pull.rebase false
 git config --global user.name kaspersigi
 git config --global user.email kaspersigi@outlook.com
 
+# ssh
+# ssh-keyscan github.com > ~/.ssh/known_hosts
+
+# https
 cp config ~/.ssh
 chmod 644 ~/.ssh/config
 ssh-keyscan -p 443 ssh.github.com >> ~/.ssh/known_hosts
