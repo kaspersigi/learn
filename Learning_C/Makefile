@@ -5,7 +5,6 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
-VPATH = /home/miku/learn/Learning_C
 LLVM = -19
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
@@ -15,11 +14,12 @@ FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
-RELEASE = -static -Oz
-LINK_FLAGS = -no-pie
+RELEASE = -static -flto -O3
 LIBS = -lpthread
+CLANG_FLAGS = -nostdlib
+CLANG_LINK_FLAGS = -lllvmlibc
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm asm_call_c inline_asm syscall mmap polymorphism complex_macro class_export function_pointer mirrorrotate stringize

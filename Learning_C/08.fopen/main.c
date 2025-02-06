@@ -24,10 +24,10 @@ int main(int argc, char* argv[])
     FILE* fp;
     fp = fopen("./a.txt", "w+"); // 如果文件不存在，则创建，读写方式打开
     if (fp == NULL) {
-        printf("creat file failure\n");
+        printf("create file failure\n");
         return -1;
     }
-    printf("creat file success\n");
+    printf("create file success\n");
     fclose(fp);
 
     return 0;

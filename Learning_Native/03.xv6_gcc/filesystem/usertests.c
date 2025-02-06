@@ -138,9 +138,9 @@ void writetest(void)
     printf(stdout, "small file test\n");
     fd = open("small", O_CREATE | O_RDWR);
     if (fd >= 0) {
-        printf(stdout, "creat small succeeded; ok\n");
+        printf(stdout, "create small succeeded; ok\n");
     } else {
-        printf(stdout, "error: creat small failed!\n");
+        printf(stdout, "error: create small failed!\n");
         exit();
     }
     for (i = 0; i < 100; i++) {
@@ -186,7 +186,7 @@ void writetest1(void)
 
     fd = open("big", O_CREATE | O_RDWR);
     if (fd < 0) {
-        printf(stdout, "error: creat big failed!\n");
+        printf(stdout, "error: create big failed!\n");
         exit();
     }
 

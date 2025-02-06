@@ -526,7 +526,7 @@ void writetest(char* s)
 
     fd = open("small", O_CREATE | O_RDWR);
     if (fd < 0) {
-        printf("%s: error: creat small failed!\n", s);
+        printf("%s: error: create small failed!\n", s);
         exit(1);
     }
     for (i = 0; i < N; i++) {
@@ -564,7 +564,7 @@ void writebig(char* s)
 
     fd = open("big", O_CREATE | O_RDWR);
     if (fd < 0) {
-        printf("%s: error: creat big failed!\n", s);
+        printf("%s: error: create big failed!\n", s);
         exit(1);
     }
 

@@ -18,13 +18,13 @@
 int main(int argc, char* argv[])
 {
     FILE* fp;
-    // fp = fopen("./a.txt", "w+"); //如果文件不存在，则创建，读写方式打开
+    // fp = fopen("./a.txt", "w"); //如果文件不存在，则创建，读写方式打开
     fp = fopen("./a.txt", "r");
     if (fp == NULL) {
-        printf("creat file failure\n");
+        printf("open file failure\n");
         return -1;
     }
-    printf("creat file success\n");
+    printf("open file success\n");
 
     // char write_buff[12] = "Hello Linux!";
     // int ret_write = fwrite(write_buff, 1, 12, fp);

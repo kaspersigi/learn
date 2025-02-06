@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-# ubuntu 24.04.1
+# ubuntu 24.04.2
 
 TEMP_PATH="/mnt/c/Users/Public/Downloads"
 BOCHS_VERSION="2.8"

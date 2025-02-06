@@ -14,18 +14,19 @@ FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
-RELEASE = -static -Oz
-LINK_FLAGS = -no-pie
-LIBS = -lpthread
+RELEASE = -static -flto -O3
+LIBS = -L ./lib -lexif -Wl,-rpath=./lib
+CLANG_FLAGS = -nostdlib
+CLANG_LINK_FLAGS = -lllvmlibc
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 $(TRG) : $(OBJ)
-	$(CC) $(OBJ) -o $(TRG) -L ./lib -lexif -Wl,-rpath=./lib $(DEBUG)
+	$(CC) $(OBJ) -o $(TRG) $(CLANG_LINK_FLAGS) $(LIBS) $(DEBUG)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG) -I ./inc
+	$(CC) $(SRC) -c $(C_FLAGS) $(CLANG_FLAGS) $(DEBUG) -I ./inc
 format :
 	$(FORMAT) inc/libexif/exif-byte-order.h -style=file -i
 	$(FORMAT) inc/libexif/exif-content.h -style=file -i
@@ -44,7 +45,7 @@ format :
 	$(FORMAT) inc/libexif/exif-tag.h -style=file -i
 	$(FORMAT) inc/libexif/exif-utils.h -style=file -i
 	$(FORMAT) inc/libexif/exif.h -style=file -i
-	$(FORMAT) main.c -style=file -i
+	$(FORMAT) $(SRC) -style=file -i
 clean :
 	rm -v $(TRG)
 check :
