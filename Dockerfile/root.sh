@@ -26,7 +26,7 @@ wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools-lates
 # echo "BOCHS_PATH=$BOCHS_PATH"
 if [ -e "$BOCHS_PATH" ]; then
     echo "install bochs-$BOCHS_VERSION"
-    apt install libltdl7 libsdl2-2.0-0 libgtk-3-0t64 -y
+    apt install libltdl7 libsdl2-2.0-0 libgtk2.0-0t64 -y
     tar zxvf $BOCHS_PATH/bochs-$BOCHS_VERSION-bin.tar.gz -C /tmp
     cd /tmp/bochs-$BOCHS_VERSION-bin
     make install
