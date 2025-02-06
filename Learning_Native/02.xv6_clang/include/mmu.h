@@ -46,19 +46,17 @@ struct segdesc {
 };
 
 // Normal segment
-#define SEG(type, base, lim, dpl)                             \
-    (struct segdesc)                                          \
-    {                                                         \
-        ((lim) >> 12) & 0xffff, (uint)(base) & 0xffff,        \
-            ((uint)(base) >> 16) & 0xff, type, 1, dpl, 1,     \
-            (uint)(lim) >> 28, 0, 0, 1, 1, (uint)(base) >> 24 \
+#define SEG(type, base, lim, dpl)                         \
+    (struct segdesc) {                                    \
+        ((lim) >> 12) & 0xffff, (uint)(base) & 0xffff,    \
+        ((uint)(base) >> 16) & 0xff, type, 1, dpl, 1,     \
+        (uint)(lim) >> 28, 0, 0, 1, 1, (uint)(base) >> 24 \
     }
-#define SEG16(type, base, lim, dpl)                           \
-    (struct segdesc)                                          \
-    {                                                         \
-        (lim) & 0xffff, (uint)(base) & 0xffff,                \
-            ((uint)(base) >> 16) & 0xff, type, 1, dpl, 1,     \
-            (uint)(lim) >> 16, 0, 0, 1, 0, (uint)(base) >> 24 \
+#define SEG16(type, base, lim, dpl)                       \
+    (struct segdesc) {                                    \
+        (lim) & 0xffff, (uint)(base) & 0xffff,            \
+        ((uint)(base) >> 16) & 0xff, type, 1, dpl, 1,     \
+        (uint)(lim) >> 16, 0, 0, 1, 0, (uint)(base) >> 24 \
     }
 #endif
 

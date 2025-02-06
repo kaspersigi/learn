@@ -13,9 +13,9 @@ public:
     T& operator*() const;
     T* operator->() const;
     Iterator& operator++();
-    Iterator operator++(int) const;
+    Iterator operator++(int);
     Iterator& operator--();
-    Iterator operator--(int) const;
+    Iterator operator--(int);
     T& operator[](int n) const;
     Iterator& operator+=(int n);
     Iterator operator+(int n) const;
@@ -79,7 +79,7 @@ Iterator<T>& Iterator<T>::operator++()
 }
 
 template <typename T>
-Iterator<T> Iterator<T>::operator++(int) const
+Iterator<T> Iterator<T>::operator++(int)
 {
     return Iterator(++_current);
 }
@@ -92,7 +92,7 @@ Iterator<T>& Iterator<T>::operator--()
 }
 
 template <typename T>
-Iterator<T> Iterator<T>::operator--(int) const
+Iterator<T> Iterator<T>::operator--(int)
 {
     return Iterator(--_current);
 }
