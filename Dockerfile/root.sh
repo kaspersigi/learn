@@ -11,7 +11,7 @@ apt update
 apt upgrade -y
 apt autoremove -y
 
-apt install clang-19 clangd-19 clang-format-19 lldb-19 libllvmlibc-19-dev libc++-19-dev lld-19 binutils-i686-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu bsdmainutils make gdb cgdb qemu-system-arm qemu-system-misc qemu-system-x86 -y
+apt install clang-19 clangd-19 clang-format-19 lldb-19 libllvmlibc-19-dev libc++-19-dev lld-19 binutils-i686-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu bsdmainutils make gdb cgdb valgrind qemu-system-arm qemu-system-misc qemu-system-x86 -y
 apt install libncurses-dev flex bison bc dwarves libssl-dev libelf-dev python-is-python3 bzip2 unzip xz-utils lz4 cpio -y
 
 echo 'LANG="zh_CN.UTF-8"' > /etc/default/locale
