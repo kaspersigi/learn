@@ -7,7 +7,7 @@ OBJ = main.o
 SRC = main.cc
 VPATH = /home/miku/learn/Learning_Design_Pattern
 ARCH = $(shell llvm-config --host-target)
-LLVM = -18
+LLVM = -19
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)

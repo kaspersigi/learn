@@ -8,7 +8,7 @@ OBJ = mbr.o kernel.o
 SRC = mbr.s kernel.s
 AS = /usr/bin/x86_64-linux-gnu-as
 LD = /usr/bin/x86_64-linux-gnu-ld
-LLVM = -18
+LLVM = -19
 CONFIG = llvm-config$(LLVM)
 ARCH = x86_64-unknown-linux-gnu
 CC = /usr/bin/clang$(LLVM) --target=x86_64-unknown-linux-gnu

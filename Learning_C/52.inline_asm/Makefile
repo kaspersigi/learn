@@ -7,7 +7,7 @@ OBJ = main.o
 SRC = main.c
 AS = /usr/bin/i686-linux-gnu-as
 LD = /usr/bin/i686-linux-gnu-ld
-LLVM = -18
+LLVM = -19
 CONFIG = llvm-config$(LLVM)
 ARCH = i686-unknown-linux-gnu
 CC = /usr/bin/clang$(LLVM) --target=i686-unknown-linux-gnu

@@ -5,27 +5,20 @@ TEMP_PATH="/mnt/c/Users/Public/Downloads"
 BOCHS_VERSION="2.8"
 BOCHS_PATH="/mnt/d/Learning_Kernel/bochs-$BOCHS_VERSION"
 
-# sed -i 's@//.*archive.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list.d/ubuntu.sources
-# sed -i 's@//.*security.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list.d/ubuntu.sources
-# sed -i 's@//.*ports.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list.d/ubuntu.sources
-
 sudo -s <<EOF
 
 apt update
 apt upgrade -y
 apt autoremove -y
 
-apt install clang-18 clangd-18 clang-format-18 clang-tidy-18 lldb-18 libc++-18-dev libc++abi-18-dev lld-18 make bsdmainutils qemu-system-arm qemu-system-misc qemu-system-x86 gdb cgdb binutils-i686-linux-gnu gcc-i686-linux-gnu fonts-firacode pigz binutils-riscv64-linux-gnu -y
-apt install bzip2 libssl-dev libncurses-dev libelf-dev flex bison bc dwarves lz4 cpio unzip xz-utils -y
+apt install clang-19 clangd-19 clang-format-19 lldb-19 libllvmlibc-19-dev libc++-19-dev lld-19 binutils-i686-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu bsdmainutils make gdb cgdb qemu-system-arm qemu-system-misc qemu-system-x86 -y
+apt install libncurses-dev flex bison bc dwarves libssl-dev libelf-dev python-is-python3 bzip2 unzip xz-utils lz4 cpio -y
 
 echo 'LANG="zh_CN.UTF-8"' > /etc/default/locale
 source /etc/default/locale
 
-update-alternatives --install /usr/bin/python python /usr/bin/python3 100
-update-alternatives --install /usr/bin/cc cc /usr/bin/clang-18 100
-update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-18 100
-update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-18 100
-update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-18 100
+update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-19 100
+update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-19 100
 
 wget -P $TEMP_PATH https://dl.google.com/android/repository/android-ndk-r27c-linux.zip
 wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools-latest-windows.zip
@@ -33,7 +26,7 @@ wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools-lates
 # echo "BOCHS_PATH=$BOCHS_PATH"
 if [ -e "$BOCHS_PATH" ]; then
     echo "install bochs-$BOCHS_VERSION"
-    apt install libltdl7 libsdl2-2.0-0 libgtk2.0-0t64 -y
+    apt install libltdl7 libsdl2-2.0-0 libgtk-3-0t64 -y
     tar zxvf $BOCHS_PATH/bochs-$BOCHS_VERSION-bin.tar.gz -C /tmp
     cd /tmp/bochs-$BOCHS_VERSION-bin
     make install

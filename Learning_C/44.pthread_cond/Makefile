@@ -5,7 +5,7 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
-LLVM = -18
+LLVM = -19
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
