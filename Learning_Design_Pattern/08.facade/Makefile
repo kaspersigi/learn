@@ -14,16 +14,17 @@ FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
-RELEASE = -static -Oz
-LINK_FLAGS = -no-pie
+RELEASE = -flto -O3
 LIBS = -lpthread
+CLANG_FLAGS = -nostdlib
+CLANG_LINK_FLAGS = -lllvmlibc
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 all : HomeTheater
 HomeTheater : HomeTheater.o devices.o facade.o
-	$(CXX) HomeTheater.o devices/*.o facade/*.o -o HomeTheater $(CLANGXX_LINK_FLAGS)
+	$(CXX) HomeTheater.o devices/*.o facade/*.o -o HomeTheater $(CLANGXX_LINK_FLAGS) $(DEBUG)
 	rm -v HomeTheater.o
 	$(MAKE) -C devices clean
 	$(MAKE) -C facade clean

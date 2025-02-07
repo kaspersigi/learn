@@ -14,16 +14,17 @@ FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
-RELEASE = -static -Oz
-LINK_FLAGS = -no-pie
+RELEASE = -flto -O3
 LIBS = -lpthread
+CLANG_FLAGS = -nostdlib
+CLANG_LINK_FLAGS = -lllvmlibc
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 all : WeatherStation
 WeatherStation : WeatherStation.o subjects.o observers.o
-	$(CXX) WeatherStation.o subjects/*.o observers/*.o -o WeatherStation $(CLANGXX_LINK_FLAGS)
+	$(CXX) WeatherStation.o subjects/*.o observers/*.o -o WeatherStation $(CLANGXX_LINK_FLAGS) $(DEBUG)
 	rm -v WeatherStation.o
 	$(MAKE) -C subjects clean
 	$(MAKE) -C observers clean
