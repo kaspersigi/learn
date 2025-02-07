@@ -5,7 +5,6 @@
 TRG = main
 OBJ = main.o
 SRC = main.cc
-VPATH = /home/miku/learn/Learning_STL
 LLVM = -19
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
@@ -15,11 +14,12 @@ FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
-RELEASE = -static -Oz
-LINK_FLAGS = -no-pie
+RELEASE = -flto -O3
 LIBS = -lpthread
+CLANG_FLAGS = -nostdlib
+CLANG_LINK_FLAGS = -lllvmlibc
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 all : template array vector deque list forward_list set multiset map multimap unordered_set unordered_multiset unordered_map unordered_multimap stack queue priority_queue fill fill_n count count_if find find_if copy copy_n copy_if remove_if transform bind lambda function_object minmax_element equal thread condition_variable async promise

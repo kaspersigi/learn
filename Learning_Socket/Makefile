@@ -15,11 +15,12 @@ FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
-RELEASE = -static -Oz
-LINK_FLAGS = -no-pie
+RELEASE = -flto -O3
 LIBS = -lpthread
+CLANG_FLAGS = -nostdlib
+CLANG_LINK_FLAGS = -lllvmlibc
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 all : template hton inet_pton socket listen accept connect recv send server client threadpool select multithread poll epoll level_triggered edge_triggered edge_triggered_nonblock multithread_epoll threadpool_epoll myhttpd
