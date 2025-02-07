@@ -11,7 +11,7 @@ LD = /usr/bin/riscv64-linux-gnu-ld
 OBJCOPY = /usr/bin/riscv64-linux-gnu-objcopy
 LLVM = -19
 CONFIG = llvm-config$(LLVM)
-ARCH = i386-unknown-linux-gnu
+ARCH = i686-unknown-linux-gnu
 CC = /usr/bin/clang$(LLVM) --target=riscv64-unknown-linux-gnu
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
 FORMAT = /usr/bin/clang-format$(LLVM)
@@ -21,6 +21,8 @@ DEBUG = -ggdb -O0
 RELEASE = -static -Oz
 LINK_FLAGS = -z max-page-size=4096
 LIBS = -lpthread
+CLANG_FLAGS = -nostdlib
+CLANG_LINK_FLAGS = -lllvmlibc
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 KERNEL_FLAGS = -nostdinc -fno-builtin -fno-omit-frame-pointer -ffreestanding -fno-common -fno-pic -fno-pie -static -mno-relax -mcmodel=medany

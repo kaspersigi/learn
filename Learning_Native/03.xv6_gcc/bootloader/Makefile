@@ -15,9 +15,10 @@ FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c2x -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -ggdb -O0
-RELEASE = -static -O2
-LINK_FLAGS = -no-pie
+RELEASE = -static -Oz
 LIBS = -lpthread
+CLANG_FLAGS = -nostdlib
+CLANG_LINK_FLAGS = -lllvmlibc
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
 ARCH = -m32
@@ -34,7 +35,7 @@ bootblock.o : bootasm.o bootmain.o
 bootasm.o : bootasm.S
 	$(CC) bootasm.S -c $(C_FLAGS) $(KERNEL_FLAGS) $(RELEASE) $(ARCH)
 bootmain.o : bootmain.c
-	$(CC) bootmain.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(ARCH) -ggdb -O1
+	$(CC) bootmain.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(ARCH) -ggdb -Oz
 format :
 	$(FORMAT) bootmain.c -style=file -i
 clean :
