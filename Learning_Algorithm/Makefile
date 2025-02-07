@@ -15,11 +15,12 @@ FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
-RELEASE = -static -Oz
-LINK_FLAGS = -no-pie
+RELEASE = -flto -O3
 LIBS = -lpthread
+CLANG_FLAGS = -nostdlib
+CLANG_LINK_FLAGS = -lllvmlibc
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 all : template binary_search remove_element squares_of_a_sorted_array minimum_size_subarray_sum spiral_matrix_ii remove_linked_list_elements design_linked_list reverse_linked_list swap_nodes_in_pairs remove_nth_node_from_end_of_list intersection_of_two_linked_lists_lcci linked_list_cycle_ii valid_anagram intersection_of_two_arrays happy_number two_sum 4sum_ii ransom_note 3sum

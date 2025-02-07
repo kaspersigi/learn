@@ -15,7 +15,7 @@ FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
-RELEASE = -static -flto -O3
+RELEASE = -flto -O3
 LIBS = -lpthread
 CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = -lllvmlibc
