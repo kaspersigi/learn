@@ -8,17 +8,23 @@ RUN mkdir -p /var/run/sshd \
     # perl -e 'print crypt($ARGV[0], "password")' $(passwd)
     && useradd -m -p paKe96Li2oGUE miku \
     && usermod -s /bin/bash miku \
-    && wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/llvm-archive-keyring.gpg \
-    && echo "deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/jammy/ llvm-toolchain-jammy-20 main" | sudo tee /etc/apt/sources.list.d/llvm.list \
     && apt update \
     && apt upgrade -y \
-    && apt autoremove -y
+    && apt autoremove -y \
+    && apt install wget gnupg -y
 RUN mkdir /home/miku/.ssh
 COPY id_ed25519 /home/miku/.ssh
 RUN chown miku:miku -R /home/miku/.ssh \
     && chmod 600 /home/miku/.ssh/id_ed25519
-RUN apt install clang-20 clangd-20 clang-format-20 lldb-20 libllvmlibc-20-dev libc++-20-dev lld-20 binutils-i686-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu binutils-x86-64-linux-gnu bsdmainutils make gdb cgdb valgrind qemu-system-arm qemu-system-misc qemu-system-x86 openssh-server -y \
-    && apt install libncurses-dev flex bison bc dwarves libssl-dev libelf-dev python-is-python3 bzip2 unzip xz-utils lz4 cpio -y
+RUN wget https://apt.llvm.org/llvm-snapshot.gpg.key -O /tmp/key \
+    && gpg --dearmor -o /usr/share/keyrings/llvm-archive-keyring.gpg /tmp/key \
+    && echo "deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/jammy/ llvm-toolchain-jammy-20 main" | tee /etc/apt/sources.list.d/llvm.list
+RUN apt update \
+    && apt upgrade -y \
+    && apt autoremove -y
+RUN apt install sudo curl git vim openssh-server -y
+RUN apt install clang-20 clangd-20 clang-format-20 lldb-20 libllvmlibc-20-dev libc++-20-dev lld-20 binutils-i686-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu binutils-x86-64-linux-gnu bsdmainutils make gdb cgdb valgrind qemu-system-arm qemu-system-misc qemu-system-x86 -y
+RUN apt install libncurses-dev flex bison bc dwarves libssl-dev libelf-dev python-is-python3 bzip2 unzip xz-utils lz4 cpio -y
 RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-20 100 \
     && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-20 100 \
     && echo 'miku    ALL=(ALL:ALL) ALL' >> /etc/sudoers \
@@ -31,6 +37,7 @@ RUN git config --global pull.rebase false \
     && ssh-keyscan github.com > $HOME/.ssh/known_hosts \
     && echo '' > $HOME/.ssh/authorized_keys \
     && mkdir $HOME/share \
+    && mkdir $HOME/linux \
     && cd $HOME/linux \
     && git clone https://github.com/kaspersigi/learn.git \
     && echo 'code-server &> /dev/null &' > $HOME/miku.sh \
