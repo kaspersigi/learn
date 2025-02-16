@@ -5,7 +5,7 @@ TEMP_PATH="/mnt/c/Users/Public/Downloads"
 BOCHS_VERSION="2.8"
 BOCHS_PATH="/mnt/d/Learning_Kernel/bochs-$BOCHS_VERSION"
 LLVM_VERSION="19"
-LLVM="-$VERSION"
+LLVM="-$LLVM_VERSION"
 
 sudo -s <<EOF
 

@@ -5,7 +5,7 @@ TEMP_PATH="/mnt/c/Users/Public/Downloads"
 ADB_PATH="$USRER_PATH/Downloads/platform-tools"
 KEY_PATH="/mnt/d/key"
 LLVM_VERSION="19"
-LLVM="-$VERSION"
+LLVM="-$LLVM_VERSION"
 
 if [ -e "$KEY_PATH" ]; then
     echo "key found"
