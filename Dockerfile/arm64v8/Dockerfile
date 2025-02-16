@@ -1,5 +1,5 @@
-# FROM amd64/ubuntu:latest
-FROM arm64v8/ubuntu:latest
+# FROM amd64/ubuntu:22.04
+FROM arm64v8/ubuntu:22.04
 LABEL org.opencontainers.image.authors="kaspersigi@outlook.com"
 WORKDIR /root
 EXPOSE 22
@@ -8,17 +8,19 @@ RUN mkdir -p /var/run/sshd \
     # perl -e 'print crypt($ARGV[0], "password")' $(passwd)
     && useradd -m -p paKe96Li2oGUE miku \
     && usermod -s /bin/bash miku \
+    && wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/llvm-archive-keyring.gpg \
+    && echo "deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/jammy/ llvm-toolchain-jammy-20 main" | sudo tee /etc/apt/sources.list.d/llvm.list \
     && apt update \
     && apt upgrade -y \
     && apt autoremove -y
 RUN mkdir /home/miku/.ssh
-# COPY id_ed25519 /home/miku/.ssh
-# RUN chown miku:miku -R /home/miku/.ssh \
-#     && chmod 600 /home/miku/.ssh/id_ed25519
-RUN apt install clang-19 clangd-19 clang-format-19 lldb-19 libllvmlibc-19-dev libc++-19-dev lld-19 binutils-i686-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu binutils-x86-64-linux-gnu bsdmainutils make gdb cgdb valgrind qemu-system-arm qemu-system-misc qemu-system-x86 openssh-server -y \
+COPY id_ed25519 /home/miku/.ssh
+RUN chown miku:miku -R /home/miku/.ssh \
+    && chmod 600 /home/miku/.ssh/id_ed25519
+RUN apt install clang-20 clangd-20 clang-format-20 lldb-20 libllvmlibc-20-dev libc++-20-dev lld-20 binutils-i686-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu binutils-x86-64-linux-gnu bsdmainutils make gdb cgdb valgrind qemu-system-arm qemu-system-misc qemu-system-x86 openssh-server -y \
     && apt install libncurses-dev flex bison bc dwarves libssl-dev libelf-dev python-is-python3 bzip2 unzip xz-utils lz4 cpio -y
-RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-19 100 \
-    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-19 100 \
+RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-20 100 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-20 100 \
     && echo 'miku    ALL=(ALL:ALL) ALL' >> /etc/sudoers \
     && echo '/usr/sbin/sshd -D &' > /root/run.sh \
     && chmod 110 /root/run.sh
