@@ -4,6 +4,8 @@ USRER_PATH="/mnt/c/Users/kaspe"
 TEMP_PATH="/mnt/c/Users/Public/Downloads"
 ADB_PATH="$USRER_PATH/Downloads/platform-tools"
 KEY_PATH="/mnt/d/key"
+LLVM_VERSION="19"
+LLVM="-$VERSION"
 
 if [ -e "$KEY_PATH" ]; then
     echo "key found"
@@ -49,11 +51,11 @@ git clone https://github.com/kaspersigi/learn.git
 git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 
 cd ~/linux/linux
-time make distclean ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-19
+time make distclean ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=$LLVM
 cp $TOOL_PATH/linux.config .config
 wget https://gitlab.com/buildroot.org/buildroot/-/raw/master/board/qemu/aarch64-virt/linux.config
 mv linux.config .config
-time make olddefconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-19
-time make -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-19
-time make modules -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-19
+time make olddefconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=$LLVM
+time make -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=$LLVM
+time make modules -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=$LLVM
 ./scripts/clang-tools/gen_compile_commands.py
