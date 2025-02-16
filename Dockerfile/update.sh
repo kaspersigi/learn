@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 
-TOP_PATH="/mnt/d/Learning_Kernel"
-LLVM_VERSION="19"
+LLVM_VERSION="20"
 LLVM="-$LLVM_VERSION"
+TOP_PATH="/mnt/d/Learning_Kernel"
 
 rm -rf ~/linux/virt
 cp -R $TOP_PATH/virt ~/linux/

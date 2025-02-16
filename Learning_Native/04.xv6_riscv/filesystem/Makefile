@@ -9,7 +9,7 @@ SRC = main.s
 AS = /usr/bin/riscv64-linux-gnu-as
 LD = /usr/bin/riscv64-linux-gnu-ld
 OBJCOPY = /usr/bin/riscv64-linux-gnu-objcopy
-LLVM = -19
+LLVM = -20
 CONFIG = llvm-config$(LLVM)
 ARCH = i686-unknown-linux-gnu
 CC = /usr/bin/clang$(LLVM) --target=riscv64-unknown-linux-gnu

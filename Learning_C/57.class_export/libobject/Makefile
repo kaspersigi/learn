@@ -5,7 +5,7 @@
 TRG = libobject.so
 OBJ = IObject.o Object.o
 SRC = IObject.cc Object.cc
-LLVM = -19
+LLVM = -20
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)

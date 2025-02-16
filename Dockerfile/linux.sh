@@ -21,12 +21,12 @@ make -j$(nproc)
 git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 cd linux
 cp /mnt/d/Learning_Kernel/virt/linux.config .config
-make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-19
-make -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-19
-make modules -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-19
+make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-20
+make -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-20
+make modules -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-20
 ./scripts/clang-tools/gen_compile_commands.py
 cp arch/arm64/boot/Image ../virt/
-make modules_install INSTALL_MOD_PATH=../virt/_fs -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-19
+make modules_install INSTALL_MOD_PATH=../virt/_fs -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-20
 
 sudo apt install git make openjdk-8-jdk git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev libgl1-mesa-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev libxml2-utils xsltproc unzip bc imagemagick ccache schedtool libssl-dev libncursesw5-dev libncurses5 libncursesw5 libncurses5-dev libncurses-dev libncurses-gst libncurses5-dev device-tree-compiler lz4 python3 python-is-python3 -y
 
@@ -77,8 +77,8 @@ echo "CONFIG_USB_CONFIGFS_ECM_SUBSET=y" >> .config
 echo "CONFIG_USB_CONFIGFS_RNDIS=y" >> .config
 echo "CONFIG_USB_CONFIGFS_EEM=y" >> .config
 echo "CONFIG_USB_ETH=y" >> .config
-make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-19
-make rk3566-tspi-v10-miku.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-19
+make menuconfig ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-20
+make rk3566-tspi-v10-miku.img -j$(nproc) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=-20
 cp boot.img /mnt/d/Learning_Kernel/tspi/
 
 # rndis

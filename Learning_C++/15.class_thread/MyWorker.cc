@@ -1,4 +1,5 @@
 #include "MyWorker.h"
+#include <functional>
 #include <string>
 
 void MyWorker::execute(int value, const std::string& str) const

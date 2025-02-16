@@ -1,11 +1,12 @@
 #!/usr/bin/bash
 
+LLVM_VERSION="20"
+LLVM="-$LLVM_VERSION"
+TOP_PATH="/mnt/d/Learning_Kernel"
 USRER_PATH="/mnt/c/Users/kaspe"
 TEMP_PATH="/mnt/c/Users/Public/Downloads"
 ADB_PATH="$USRER_PATH/Downloads/platform-tools"
-KEY_PATH="/mnt/d/key"
-LLVM_VERSION="19"
-LLVM="-$LLVM_VERSION"
+KEY_PATH="$TOP_PATH/key"
 
 if [ -e "$KEY_PATH" ]; then
     echo "key found"
