@@ -5,7 +5,7 @@ LLVM_VERSION="20"
 LLVM="-$LLVM_VERSION"
 TOP_PATH="/mnt/d/Learning_Kernel"
 TEMP_PATH="/mnt/c/Users/Public/Downloads"
-BOCHS_VERSION="2.8"
+BOCHS_VERSION="3.0"
 BOCHS_PATH="$TOP_PATH/bochs-$BOCHS_VERSION"
 
 sudo -s <<EOF
