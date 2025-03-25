@@ -7,6 +7,7 @@ USRER_PATH="/mnt/c/Users/kaspe"
 TEMP_PATH="/mnt/c/Users/Public/Downloads"
 ADB_PATH="$USRER_PATH/Downloads/platform-tools"
 KEY_PATH="$TOP_PATH/key"
+PLATFORM="windows"
 
 if [ -e "$KEY_PATH" ]; then
     echo "key found"
@@ -33,8 +34,9 @@ ssh -T -p 443 git@github.com
 cp .wslconfig $USRER_PATH
 cp .vimrc ~
 mkdir -p ~/linux/virt
-unzip $TEMP_PATH/android-ndk-r27c-linux.zip -d ~/linux
-rm -rf $TEMP_PATH/android-ndk-r27c-linux.zip
+unzip $TEMP_PATH/android-ndk-r27c-$PLATFORM.zip -d ~/linux
+chmod -R a+x ~/linux/android-ndk-r27c
+rm -rf $TEMP_PATH/android-ndk-r27c-$PLATFORM.zip
 
 echo "# Android Debug Bridge" >> ~/.bashrc
 echo "export PATH=$PATH:$ADB_PATH" >> ~/.bashrc
@@ -43,8 +45,8 @@ echo "alias adb='adb.exe'" >> ~/.bashrc
 source ~/.bashrc
 $ADB_PATH/adb.exe kill-server
 rm -rf $ADB_PATH
-unzip $TEMP_PATH/platform-tools-latest-windows.zip -d $USRER_PATH/Downloads
-rm -rf $TEMP_PATH/platform-tools-latest-windows.zip
+unzip $TEMP_PATH/platform-tools-latest-$PLATFORM.zip -d $USRER_PATH/Downloads
+rm -rf $TEMP_PATH/platform-tools-latest-$PLATFORM.zip
 
 cd ~/linux
 git clone git@github.com:kaspersigi/learn.git
