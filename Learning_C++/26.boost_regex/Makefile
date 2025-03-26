@@ -15,7 +15,7 @@ C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
-LIBS = -L. -lboost_regex
+LIBS = -L$(shell uname -m) -lboost_regex
 CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = -lllvmlibc
 CLANGXX_FLAGS = -stdlib=libc++
@@ -23,7 +23,7 @@ CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 $(TRG) : $(OBJ)
-	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS) $(LIBS) $(DEBUG)
+	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS) $(DEBUG)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
 	$(CXX) $(SRC) -c $(CXX_FLAGS) -I. $(CLANGXX_FLAGS) $(DEBUG)

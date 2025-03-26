@@ -15,7 +15,7 @@ C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
-LIBS = -L ./lib -lexif -Wl,-rpath=./lib
+LIBS = -L$(shell uname -m) -lexif -Wl,-rpath=$(shell uname -m)
 CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = -lllvmlibc
 CLANGXX_FLAGS = -stdlib=libc++
