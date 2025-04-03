@@ -43,17 +43,34 @@ void* func(void* arg)
 {
     trace_begin("CHildThread");
     LOGI("child thread nice = %d -- lzz", nice(0));
-    sleep(1);
 
-    int new_nice = nice(-10);
-    if (-1 == new_nice && 0 != errno) {
-        LOGE("child thread nice() failed -- lzz");
+    pthread_t tid = pthread_self();
+    int old_prio, new_prio, current_prio;
+    int old_policy, new_policy, current_policy;
+    struct sched_param old_param, new_param, current_param;
+
+    if (pthread_getschedparam(tid, &old_policy, &old_param) != 0) {
+        LOGE("pthread_getschedparam -- lzz");
+        return (void*)-1;
     } else {
-        LOGI("child thread new_nice = %d -- lzz", new_nice);
+        LOGI("old_policy = %d, old_prio = %d -- lzz", old_policy, old_param.sched_priority);
     }
     sleep(1);
 
-    LOGI("child thread nice = %d -- lzz", nice(0));
+    new_policy = SCHED_RR;
+    new_param.sched_priority = sched_get_priority_min(SCHED_RR);
+    if (pthread_setschedparam(tid, new_policy, &new_param) != 0) {
+        LOGE("pthread_setschedparam -- lzz");
+        return (void*)-1;
+    }
+    sleep(1);
+
+    if (pthread_getschedparam(tid, &current_policy, &current_param) != 0) {
+        LOGE("pthread_getschedparam -- lzz");
+        return (void*)-1;
+    } else {
+        LOGI("current_policy = %d, current_prio = %d -- lzz", current_policy, current_param.sched_priority);
+    }
     sleep(1);
     trace_end();
 
