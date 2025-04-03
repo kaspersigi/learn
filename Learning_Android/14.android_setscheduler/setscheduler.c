@@ -41,34 +41,31 @@ void trace_end()
 void* func(void* arg)
 {
     trace_begin("CHildThread");
-    LOGI("child thread nice = %d -- lzz", nice(0));
-
-    pthread_t tid = pthread_self();
-    int old_prio, new_prio, current_prio;
-    int old_policy, new_policy, current_policy;
-    struct sched_param old_param, new_param, current_param;
-
-    if (pthread_getschedparam(tid, &old_policy, &old_param) != 0) {
-        LOGE("pthread_getschedparam -- lzz");
+    pid_t tid = gettid();
+    int old_sched = sched_getscheduler(tid);
+    if (-1 == old_sched) {
+        LOGE("sched_getscheduler -- lzz");
         return (void*)-1;
     } else {
-        LOGI("old_policy = %d, old_prio = %d -- lzz", old_policy, old_param.sched_priority);
+        LOGI("old_sched = %d -- lzz", old_sched);
     }
     sleep(1);
 
-    new_policy = SCHED_RR;
+    int new_policy = SCHED_RR;
+    struct sched_param new_param;
     new_param.sched_priority = sched_get_priority_min(new_policy);
-    if (pthread_setschedparam(tid, new_policy, &new_param) != 0) {
-        LOGE("pthread_setschedparam -- lzz");
+    if (-1 == sched_setscheduler(tid, new_policy, &new_param)) {
+        LOGE("sched_setscheduler -- lzz");
         return (void*)-1;
     }
     sleep(1);
 
-    if (pthread_getschedparam(tid, &current_policy, &current_param) != 0) {
-        LOGE("pthread_getschedparam -- lzz");
+    int new_sched = sched_getscheduler(tid);
+    if (-1 == new_sched) {
+        LOGE("sched_getscheduler -- lzz");
         return (void*)-1;
     } else {
-        LOGI("current_policy = %d, current_prio = %d -- lzz", current_policy, current_param.sched_priority);
+        LOGI("new_sched = %d -- lzz", new_sched);
     }
     sleep(1);
     trace_end();

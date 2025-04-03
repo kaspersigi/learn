@@ -18,7 +18,7 @@ void* func(void* arg)
     }
 
     new_policy = SCHED_RR;
-    new_param.sched_priority = sched_get_priority_min(SCHED_RR);
+    new_param.sched_priority = sched_get_priority_min(new_policy);
     if (pthread_setschedparam(tid, new_policy, &new_param) != 0) {
         perror("pthread_setschedparam");
         return (void*)-1;
