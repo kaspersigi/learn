@@ -22,7 +22,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
-all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm asm_call_c inline_asm syscall mmap polymorphism complex_macro class_export function_pointer mirrorrotate stringize setpriority
+all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm asm_call_c inline_asm syscall mmap polymorphism complex_macro class_export function_pointer mirrorrotate stringize setpriority nice
 template :
 	$(MAKE) -C 00.template
 macro :
@@ -147,6 +147,8 @@ stringize :
 	$(MAKE) -C 60.stringize
 setpriority :
 	$(MAKE) -C 61.setpriority
+nice :
+	$(MAKE) -C 62.nice
 
 format :
 	$(MAKE) -C 00.template format
@@ -211,6 +213,7 @@ format :
 	$(MAKE) -C 59.mirrorrotate format
 	$(MAKE) -C 60.stringize format
 	$(MAKE) -C 61.setpriority format
+	$(MAKE) -C 62.nice format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -275,3 +278,4 @@ clean :
 	$(MAKE) -C 59.mirrorrotate clean
 	$(MAKE) -C 60.stringize clean
 	$(MAKE) -C 61.setpriority clean
+	$(MAKE) -C 62.nice clean

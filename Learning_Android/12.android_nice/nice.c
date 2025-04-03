@@ -6,7 +6,6 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/resource.h>
 #include <unistd.h>
 
 #ifdef LOG_TAG
@@ -43,31 +42,18 @@ void trace_end()
 void* func(void* arg)
 {
     trace_begin("CHildThread");
-    pid_t tid = gettid();
-    int current_nice, new_nice;
-    current_nice = getpriority(PRIO_PROCESS, tid);
-    if (-1 == current_nice && 0 != errno) {
-        LOGE("getpriority failed -- lzz");
+    LOGI("child thread nice = %d\n", nice(0));
+    sleep(1);
+
+    int new_nice = nice(-10);
+    if (-1 == new_nice && 0 != errno) {
+        LOGE("child thread nice() failed");
     } else {
-        LOGI("tid = %d, current_nice = %d -- lzz", tid, current_nice);
+        LOGI("child thread new_nice = %d\n", new_nice);
     }
     sleep(1);
 
-    new_nice = -10;
-    int ret = setpriority(PRIO_PROCESS, tid, new_nice);
-    if (ret < 0) {
-        LOGE("setpriority failed -- lzz");
-    } else {
-        LOGI("tid = %d, new_nice = %d -- lzz", tid, new_nice);
-    }
-    sleep(1);
-
-    current_nice = getpriority(PRIO_PROCESS, tid);
-    if (-1 == current_nice && 0 != errno) {
-        LOGE("getpriority failed -- lzz");
-    } else {
-        LOGI("tid = %d, current_nice = %d -- lzz", tid, current_nice);
-    }
+    LOGI("child thread nice = %d\n", nice(0));
     sleep(1);
     trace_end();
 
@@ -90,6 +76,7 @@ int main(int argc, char* argv[])
     }
 
     trace_begin("MainThread");
+    LOGI("main thread nice = %d\n", nice(0));
     pthread_t tid;
     int ret = pthread_create(&tid, NULL, func, NULL);
     if (0 != ret) {
@@ -99,6 +86,7 @@ int main(int argc, char* argv[])
 
     pthread_join(tid, NULL);
     close(g_trace_marker_fd);
+    LOGI("main thread nice = %d\n", nice(0));
     trace_end();
 
     return 0;
