@@ -42,6 +42,7 @@ RUN git config --global pull.rebase false \
     && git clone git@github.com:kaspersigi/learn.git \
     && wget https://dl.google.com/android/repository/android-ndk-r27c-linux.zip \
     && unzip android-ndk-r27c-linux.zip \
+    && rm -v android-ndk-r27c-linux.zip \
     && git clone --single-branch -b oppo/sm8750_v_15.0.1_find_n5 --depth 1 git@github.com:oppo-source/android_kernel_oppo_sm8750.git \
     && git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git \
     && echo 'code-server &> /dev/null &' > $HOME/miku.sh \
