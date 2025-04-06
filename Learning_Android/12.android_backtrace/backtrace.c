@@ -54,9 +54,8 @@ typedef struct {
 } Dl_info;
 #endif
 
-void func(int signum)
+void backtrace()
 {
-    LOGI("backtrace receive signal %d -- lzz", signum);
     void* buffer[30];
     void* addr;
     int count = _fill_backtraces_buffer(buffer, 30);
@@ -64,9 +63,23 @@ void func(int signum)
         addr = buffer[index];
         Dl_info info;
         if (dladdr(addr, &info)) {
-            LOGE("# %d: pc:%p offset:0x%lx\t%s(%s) -- lzz", index, addr, addr - info.dli_fbase, info.dli_fname, info.dli_sname);
+            LOGE("# %d: pc:%p offset:[0x%-8lx] %s(%s) -- lzz",
+                index - 2,
+                addr,
+                addr - info.dli_fbase,
+                info.dli_fname,
+                info.dli_sname);
         }
     }
+}
+
+void func(int signum)
+{
+    LOGI("backtrace receive signal %d -- lzz", signum);
+    LOGI("backtrace E -- lzz");
+    backtrace();
+    LOGI("backtrace X -- lzz");
+    return;
 }
 
 int main(int argc, char* argv[])

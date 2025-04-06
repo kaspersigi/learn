@@ -35,3 +35,5 @@ format :
 	$(FORMAT) $(SRC) -style=file -i
 clean :
 	rm -v $(TRG)
+addr2line :
+	$(NDK)/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-addr2line -Cie $(TRG) 0x3e84
