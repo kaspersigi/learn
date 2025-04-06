@@ -21,9 +21,9 @@ int main(int argc, char* argv[])
     err = clGetPlatformIDs(0, NULL, &numPlatforms);
 
     if (err == CL_SUCCESS) {
-        LOGI("%u platform(s) found", numPlatforms);
+        LOGI("%u platform(s) found -- lzz", numPlatforms);
     } else {
-        LOGE("clGetPlatformIDs(%i)", err);
+        LOGE("clGetPlatformIDs(%i) -- lzz", err);
         exit(-1);
     }
 
@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
         char* name = calloc(size + 1, sizeof(char));
 
         err = clGetPlatformInfo(platformID, CL_PLATFORM_NAME, size, name, NULL);
-        LOGI("platformID name: %s", name);
+        LOGI("platformID name: %s -- lzz", name);
         free(name);
         name = NULL;
     }
@@ -45,9 +45,9 @@ int main(int argc, char* argv[])
     cl_uint numCPUDevices = 0;
     cl_uint numGPUDevices = 0;
     err = clGetDeviceIDs(PlatformIDs[0], CL_DEVICE_TYPE_CPU, 0, NULL, &numCPUDevices);
-    LOGI("platformIDs[0] %u cpu device(s) found", numCPUDevices);
+    LOGI("platformIDs[0] %u cpu device(s) found -- lzz", numCPUDevices);
     err = clGetDeviceIDs(PlatformIDs[0], CL_DEVICE_TYPE_GPU, 0, NULL, &numGPUDevices);
-    LOGI("platformIDs[0] %u gpu device(s) found", numGPUDevices);
+    LOGI("platformIDs[0] %u gpu device(s) found -- lzz", numGPUDevices);
 
     free(PlatformIDs);
     PlatformIDs = NULL;
