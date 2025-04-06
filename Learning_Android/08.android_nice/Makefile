@@ -2,11 +2,11 @@
 #Makefile for my Android C programs
 ###########################################
 
-TRG = setpriority
-OBJ = setpriority.o
-SRC = setpriority.c
+TRG = nice
+OBJ = nice.o
+SRC = nice.c
 NDK = $(HOME)/linux/android-ndk-r27c
-PLATFORM = windows
+PLATFORM = linux
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/$(PLATFORM)-x86_64
 TARGET = aarch64-linux-android
 API = 35

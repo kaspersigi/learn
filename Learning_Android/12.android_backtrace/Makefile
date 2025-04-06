@@ -2,11 +2,11 @@
 #Makefile for my Android C programs
 ###########################################
 
-TRG = setschedparam
-OBJ = setschedparam.o
-SRC = setschedparam.c
+TRG = backtrace
+OBJ = backtrace.o
+SRC = backtrace.c
 NDK = $(HOME)/linux/android-ndk-r27c
-PLATFORM = windows
+PLATFORM = linux
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/$(PLATFORM)-x86_64
 TARGET = aarch64-linux-android
 API = 35
@@ -27,10 +27,10 @@ CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 $(TRG) : $(OBJ)
-	$(CC) $(OBJ) -o $(TRG) $(LIBS) $(RELEASE)
+	$(CC) $(OBJ) -o $(TRG) $(LIBS) $(DEBUG)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(RELEASE)
+	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
 format :
 	$(FORMAT) $(SRC) -style=file -i
 clean :

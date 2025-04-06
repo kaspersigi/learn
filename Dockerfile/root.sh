@@ -7,7 +7,7 @@ TOP_PATH="/mnt/d/Learning_Kernel"
 TEMP_PATH="/mnt/c/Users/Public/Downloads"
 BOCHS_VERSION="3.0"
 BOCHS_PATH="$TOP_PATH/bochs-$BOCHS_VERSION"
-PLATFORM="windows"
+PLATFORM="linux"
 ARCH=$(uname -m)
 
 sudo -s <<EOF

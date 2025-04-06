@@ -2,11 +2,11 @@
 #Makefile for my Android C programs
 ###########################################
 
-TRG = main
-OBJ = main.o
-SRC = main.c
+TRG = clinfo
+OBJ = clinfo.o
+SRC = clinfo.c
 NDK = $(HOME)/linux/android-ndk-r27c
-PLATFORM = windows
+PLATFORM = linux
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/$(PLATFORM)-x86_64
 TARGET = aarch64-linux-android
 API = 35
@@ -19,7 +19,7 @@ C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
-LIBS = -L./lib -lOpenCL -llog
+LIBS = -L./lib -lOpenCL
 CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = -lllvmlibc
 CLANGXX_FLAGS = -stdlib=libc++
@@ -30,7 +30,7 @@ $(TRG) : $(OBJ)
 	$(CC) $(OBJ) -o $(TRG) $(LIBS) $(RELEASE)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(RELEASE) -I./inc -DCL_TARGET_OPENCL_VERSION=300
+	$(CC) $(SRC) -c $(C_FLAGS) $(RELEASE) -I./inc
 format :
 	$(FORMAT) inc/CL/cl.h -style=file -i
 	$(FORMAT) inc/CL/cl.h -style=file -i
@@ -51,6 +51,16 @@ format :
 	$(FORMAT) inc/CL/cl_va_api_media_sharing_intel.h -style=file -i
 	$(FORMAT) inc/CL/cl_version.h -style=file -i
 	$(FORMAT) inc/CL/opencl.h -style=file -i
+	$(FORMAT) inc/ctx_prop.h -style=file -i
+	$(FORMAT) inc/error.h -style=file -i
+	$(FORMAT) inc/ext.h -style=file -i
+	$(FORMAT) inc/fmtmacros.h -style=file -i
+	$(FORMAT) inc/info_loc.h -style=file -i
+	$(FORMAT) inc/info_ret.h -style=file -i
+	$(FORMAT) inc/memory.h -style=file -i
+	$(FORMAT) inc/ms_support.h -style=file -i
+	$(FORMAT) inc/opt_out.h -style=file -i
+	$(FORMAT) inc/strbuf.h -style=file -i
 	$(FORMAT) $(SRC) -style=file -i
 clean :
 	rm -v $(TRG)

@@ -2,11 +2,11 @@
 #Makefile for my Android C programs
 ###########################################
 
-TRG = native_buf
-OBJ = native_buf.o
-SRC = native_buf.c
+TRG = setscheduler
+OBJ = setscheduler.o
+SRC = setscheduler.c
 NDK = $(HOME)/linux/android-ndk-r27c
-PLATFORM = windows
+PLATFORM = linux
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/$(PLATFORM)-x86_64
 TARGET = aarch64-linux-android
 API = 35
@@ -27,10 +27,10 @@ CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 $(TRG) : $(OBJ)
-	$(CC) $(OBJ) -o $(TRG) $(LIBS) $(DEBUG)
+	$(CC) $(OBJ) -o $(TRG) $(LIBS) $(RELEASE)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
+	$(CC) $(SRC) -c $(C_FLAGS) $(RELEASE)
 format :
 	$(FORMAT) $(SRC) -style=file -i
 clean :
