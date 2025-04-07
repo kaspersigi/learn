@@ -29,9 +29,9 @@ update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-
 update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd$LLVM 100
 
 wget -P $TEMP_PATH https://dl.google.com/android/repository/android-ndk-r27c-$PLATFORM.zip
-wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools-latest-$PLATFORM.zip
+wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools-latest-windows.zip
 # systrace
-# wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools_r33.0.0-$PLATFORM.zip
+# wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools_r33.0.0-windows.zip
 
 # echo "BOCHS_PATH=$BOCHS_PATH"
 if [ -e "$BOCHS_PATH" ]; then
