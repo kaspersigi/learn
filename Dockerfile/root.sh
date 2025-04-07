@@ -3,7 +3,7 @@
 
 LLVM_VERSION="20"
 LLVM="-$LLVM_VERSION"
-TOP_PATH="/mnt/d/Learning_Kernel"
+TOP_PATH="/mnt/d/learn"
 TEMP_PATH="/mnt/c/Users/Public/Downloads"
 BOCHS_VERSION="3.0"
 BOCHS_PATH="$TOP_PATH/bochs-$BOCHS_VERSION"
