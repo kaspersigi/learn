@@ -59,12 +59,12 @@ void backtrace()
     void* buffer[30];
     void* addr;
     int count = _fill_backtraces_buffer(buffer, 30);
-    for (int index = 2; index < count; ++index) {
+    for (int index = 0; index < count; ++index) {
         addr = buffer[index];
         Dl_info info;
         if (dladdr(addr, &info)) {
             LOGE("# %d: pc:%p offset:[0x%-8lx] %s(%s) -- lzz",
-                index - 2,
+                index,
                 addr,
                 addr - info.dli_fbase,
                 info.dli_fname,
