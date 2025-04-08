@@ -2,7 +2,7 @@
 
 LLVM_VERSION="20"
 LLVM="-$LLVM_VERSION"
-TOP_PATH="/mnt/d/Learning_Kernel"
+TOP_PATH="/mnt/d/learn"
 
 rm -rf ~/linux/virt
 cp -R $TOP_PATH/virt ~/linux/
