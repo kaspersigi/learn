@@ -1,57 +1,35 @@
+#include <condition_variable>
 #include <mutex>
 #include <print>
 #include <thread>
 
-std::mutex mutex;
+static std::mutex mutex;
+static std::condition_variable cv;
 static int i = 0;
 
-#if 0
 void func1()
 {
     while (i < 100) {
-        if (0 == i % 2) {
-            mutex.lock();
-            std::print("a");
-            i++;
-            mutex.unlock();
-        }
+        std::unique_lock<std::mutex> ul(mutex);
+        cv.wait(ul, []() { return 0 == i % 2; });
+        std::print("a");
+        i++;
+        ul.unlock();
+        cv.notify_one();
     }
 }
 
 void func2()
 {
     while (i < 100) {
-        if (1 == i % 2) {
-            mutex.lock();
-            std::print("b");
-            i++;
-            mutex.unlock();
-        }
+        std::unique_lock<std::mutex> ul(mutex);
+        cv.wait(ul, []() { return 1 == i % 2; });
+        std::print("b");
+        i++;
+        ul.unlock();
+        cv.notify_one();
     }
 }
-#else
-void func1()
-{
-    while (i < 100) {
-        if (0 == i % 2) {
-            std::lock_guard<std::mutex> lk(mutex);
-            std::print("a");
-            i++;
-        }
-    }
-}
-
-void func2()
-{
-    while (i < 100) {
-        if (1 == i % 2) {
-            std::lock_guard<std::mutex> lk(mutex);
-            std::print("b");
-            i++;
-        }
-    }
-}
-#endif
 
 auto main(int argc, char* argv[]) -> int
 {

@@ -2,7 +2,7 @@
 #include <print>
 #include <thread>
 
-std::mutex mutex;
+static std::mutex mutex;
 static int i = 0;
 
 #if 0
@@ -34,7 +34,7 @@ void func1()
 {
     while (i < 100) {
         if (0 == i % 2) {
-            std::lock_guard<std::mutex> lk(mutex);
+            std::lock_guard<std::mutex> lg(mutex);
             std::print("a");
             i++;
         }
@@ -45,7 +45,7 @@ void func2()
 {
     while (i < 100) {
         if (1 == i % 2) {
-            std::lock_guard<std::mutex> lk(mutex);
+            std::lock_guard<std::mutex> lg(mutex);
             std::print("b");
             i++;
         }

@@ -2,7 +2,7 @@
 #include <print>
 #include <thread>
 
-std::atomic<int> i(0);
+static std::atomic<int> i(0);
 
 void func1()
 {
