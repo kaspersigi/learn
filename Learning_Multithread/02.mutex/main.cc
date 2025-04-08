@@ -14,6 +14,8 @@ void func1()
             std::print("a");
             i++;
             mutex.unlock();
+        } else {
+            std::this_thread::yield();
         }
     }
 }
@@ -26,6 +28,8 @@ void func2()
             std::print("b");
             i++;
             mutex.unlock();
+        } else {
+            std::this_thread::yield();
         }
     }
 }
@@ -37,6 +41,8 @@ void func1()
             std::lock_guard<std::mutex> lg(mutex);
             std::print("a");
             i++;
+        } else {
+            std::this_thread::yield();
         }
     }
 }
@@ -48,6 +54,8 @@ void func2()
             std::lock_guard<std::mutex> lg(mutex);
             std::print("b");
             i++;
+        } else {
+            std::this_thread::yield();
         }
     }
 }

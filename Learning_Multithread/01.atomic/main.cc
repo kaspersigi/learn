@@ -7,9 +7,12 @@ static std::atomic<int> i(0);
 void func1()
 {
     while (i < 100) {
-        if (0 == i % 2) {
+        int current = i.load();
+        if (current < 100 && 0 == current % 2) {
             std::print("a");
-            i++;
+            i.fetch_add(1);
+        } else {
+            std::this_thread::yield();
         }
     }
 }
@@ -17,14 +20,17 @@ void func1()
 void func2()
 {
     while (i < 100) {
-        if (1 == i % 2) {
+        int current = i.load();
+        if (current < 100 && 1 == current % 2) {
             std::print("b");
-            i++;
+            i.fetch_add(1);
+        } else {
+            std::this_thread::yield();
         }
     }
 }
 
-auto main(int argc, char* argv[]) -> int
+int main(int argc, char* argv[])
 {
     std::thread t1(func1);
     std::thread t2(func2);
