@@ -22,24 +22,36 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
-all : template atomic mutex condition_variable
+all : template Q1 Q2 Q3 Q4 Q5 Q6
 template :
 	$(MAKE) -C 00.template
-atomic :
-	$(MAKE) -C 01.atomic
-mutex :
-	$(MAKE) -C 02.mutex
-condition_variable :
-	$(MAKE) -C 03.condition_variable
+Q1 :
+	$(MAKE) -C 01.Q1
+Q2 :
+	$(MAKE) -C 02.Q2
+Q3 :
+	$(MAKE) -C 03.Q3
+Q4 :
+	$(MAKE) -C 04.Q4
+Q5 :
+	$(MAKE) -C 05.Q5
+Q6 :
+	$(MAKE) -C 06.Q6
 
 format :
 	$(MAKE) -C 00.template format
-	$(MAKE) -C 01.atomic format
-	$(MAKE) -C 02.mutex format
-	$(MAKE) -C 03.condition_variable format
+	$(MAKE) -C 01.Q1 format
+	$(MAKE) -C 02.Q2 format
+	$(MAKE) -C 03.Q3 format
+	$(MAKE) -C 04.Q4 format
+	$(MAKE) -C 05.Q5 format
+	$(MAKE) -C 06.Q6 format
 
 clean :
 	$(MAKE) -C 00.template clean
-	$(MAKE) -C 01.atomic clean
-	$(MAKE) -C 02.mutex clean
-	$(MAKE) -C 03.condition_variable clean
+	$(MAKE) -C 01.Q1 clean
+	$(MAKE) -C 02.Q2 clean
+	$(MAKE) -C 03.Q3 clean
+	$(MAKE) -C 04.Q4 clean
+	$(MAKE) -C 05.Q5 clean
+	$(MAKE) -C 06.Q6 clean

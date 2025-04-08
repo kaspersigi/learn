@@ -22,24 +22,14 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
-all : template atomic mutex condition_variable
-template :
-	$(MAKE) -C 00.template
-atomic :
-	$(MAKE) -C 01.atomic
-mutex :
-	$(MAKE) -C 02.mutex
-condition_variable :
-	$(MAKE) -C 03.condition_variable
-
+$(TRG) : $(OBJ)
+	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS) $(DEBUG)
+	rm -v $(OBJ)
+$(OBJ) : $(SRC)
+	$(CXX) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
-	$(MAKE) -C 00.template format
-	$(MAKE) -C 01.atomic format
-	$(MAKE) -C 02.mutex format
-	$(MAKE) -C 03.condition_variable format
-
+	$(FORMAT) $(SRC) -style=file -i
 clean :
-	$(MAKE) -C 00.template clean
-	$(MAKE) -C 01.atomic clean
-	$(MAKE) -C 02.mutex clean
-	$(MAKE) -C 03.condition_variable clean
+	rm -v $(TRG)
+check :
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)
