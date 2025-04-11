@@ -1,3 +1,4 @@
+#include <android/trace.h>
 #include <condition_variable>
 #include <mutex>
 #include <print>
@@ -50,7 +51,7 @@ void Singleton::wait()
 void Singleton::doing()
 {
     std::println("{}: process E", __func__);
-    std::this_thread::sleep_for(std::chrono::seconds(5));
+    std::this_thread::sleep_for(std::chrono::seconds(3));
     _mutex.lock();
     is_finish = true;
     _mutex.unlock();
@@ -59,29 +60,42 @@ void Singleton::doing()
 
 void func1()
 {
+    ATrace_beginSection("ChildThread1");
     std::println("{}: process E", __func__);
     auto& s = Singleton::GetInstance();
     s.doing();
     s.notify();
     std::println("{}: process X", __func__);
+    ATrace_endSection();
 }
 
 void func2()
 {
+    ATrace_beginSection("ChildThread2");
     std::println("{}: process E", __func__);
     auto& s = Singleton::GetInstance();
     s.wait();
     std::println("{}: process X", __func__);
+    ATrace_endSection();
 }
 
 auto main(int argc, char* argv[]) -> int
 {
+    if (ATrace_isEnabled()) {
+        std::println("ATrace is enable!");
+    } else {
+        std::println("ATrace is disable!");
+        return -1;
+    }
+
+    ATrace_beginSection("MainThread");
     std::println("{}: process E", __func__);
     std::thread t1(func1);
     std::thread t2(func2);
     t1.detach();
     t2.join();
     std::println("{}: process X", __func__);
+    ATrace_endSection();
 
     return 0;
 }
