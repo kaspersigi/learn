@@ -33,5 +33,6 @@ $(OBJ) : $(SRC)
 	$(CC) $(SRC) -c $(C_FLAGS) $(RELEASE)
 format :
 	$(FORMAT) $(SRC) -style=file -i
+	$(FORMAT) ftrace.h -style=file -i
 clean :
 	rm -v $(TRG)

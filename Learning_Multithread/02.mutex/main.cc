@@ -1,3 +1,4 @@
+#include "ftrace.h"
 #include <mutex>
 #include <print>
 #include <thread>
@@ -8,6 +9,7 @@ static int i = 0;
 #if 0
 void func1()
 {
+    Ftrace::trace_dur_begin("ChildThread1");
     while (i < 100) {
         if (0 == i % 2) {
             mutex.lock();
@@ -18,10 +20,12 @@ void func1()
             std::this_thread::yield();
         }
     }
+    Ftrace::trace_dur_end();
 }
 
 void func2()
 {
+    Ftrace::trace_dur_begin("ChildThread2");
     while (i < 100) {
         if (1 == i % 2) {
             mutex.lock();
@@ -32,10 +36,12 @@ void func2()
             std::this_thread::yield();
         }
     }
+    Ftrace::trace_dur_end();
 }
 #else
 void func1()
 {
+    Ftrace::trace_dur_begin("ChildThread1");
     while (i < 100) {
         if (0 == i % 2) {
             std::lock_guard<std::mutex> lg(mutex);
@@ -45,10 +51,12 @@ void func1()
             std::this_thread::yield();
         }
     }
+    Ftrace::trace_dur_end();
 }
 
 void func2()
 {
+    Ftrace::trace_dur_begin("ChildThread2");
     while (i < 100) {
         if (1 == i % 2) {
             std::lock_guard<std::mutex> lg(mutex);
@@ -58,15 +66,18 @@ void func2()
             std::this_thread::yield();
         }
     }
+    Ftrace::trace_dur_end();
 }
 #endif
 
 auto main(int argc, char* argv[]) -> int
 {
+    Ftrace::trace_dur_begin("MainThread");
     std::thread t1(func1);
     std::thread t2(func2);
     t1.join();
     t2.join();
+    Ftrace::trace_dur_end();
 
     return 0;
 }

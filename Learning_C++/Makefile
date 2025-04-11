@@ -23,7 +23,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
-all : template macro regex constructor deconstructor interface interface_template shared_ptr weak_ptr const function_template class_template threadpool iterator class_export class_thread class_async class_promise class_pthread async_callback print_format print path filesystem ifstream ofstream boost_regex static_local_variable singleton coroutine
+all : template macro regex constructor deconstructor interface interface_template shared_ptr weak_ptr const function_template class_template threadpool iterator class_export class_thread class_async class_promise class_pthread async_callback print_format print path filesystem ifstream ofstream boost_regex static_local_variable singleton ftrace coroutine
 template :
 	$(MAKE) -C 00.template
 macro :
@@ -82,8 +82,10 @@ static_local_variable :
 	$(MAKE) -C 27.static_local_variable
 singleton :
 	$(MAKE) -C 28.singleton
+ftrace :
+	$(MAKE) -C 29.ftrace
 coroutine :
-	$(MAKE) -C 29.coroutine
+	$(MAKE) -C 30.coroutine
 
 format :
 	$(MAKE) -C 00.template format
@@ -115,7 +117,8 @@ format :
 	$(MAKE) -C 26.boost_regex format
 	$(MAKE) -C 27.static_local_variable format
 	$(MAKE) -C 28.singleton format
-	$(MAKE) -C 29.coroutine format
+	$(MAKE) -C 29.ftrace format
+	$(MAKE) -C 30.coroutine format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -147,4 +150,5 @@ clean :
 	$(MAKE) -C 26.boost_regex clean
 	$(MAKE) -C 27.static_local_variable clean
 	$(MAKE) -C 28.singleton clean
-	$(MAKE) -C 29.coroutine clean
+	$(MAKE) -C 29.ftrace clean
+	$(MAKE) -C 30.coroutine clean

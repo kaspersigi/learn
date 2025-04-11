@@ -22,7 +22,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
-all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm asm_call_c inline_asm syscall mmap polymorphism complex_macro class_export function_pointer mirrorrotate stringize setpriority nice pthread_setschedparam sched_setscheduler static_local_variable
+all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm asm_call_c inline_asm syscall mmap polymorphism complex_macro class_export function_pointer mirrorrotate stringize setpriority nice pthread_setschedparam sched_setscheduler static_local_variable ftrace
 template :
 	$(MAKE) -C 00.template
 macro :
@@ -155,6 +155,8 @@ sched_setscheduler :
 	$(MAKE) -C 64.sched_setscheduler
 static_local_variable :
 	$(MAKE) -C 65.static_local_variable
+ftrace :
+	$(MAKE) -C 66.ftrace
 
 format :
 	$(MAKE) -C 00.template format
@@ -223,6 +225,7 @@ format :
 	$(MAKE) -C 63.pthread_setschedparam format
 	$(MAKE) -C 64.sched_setscheduler format
 	$(MAKE) -C 65.static_local_variable format
+	$(MAKE) -C 66.ftrace format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -291,3 +294,4 @@ clean :
 	$(MAKE) -C 63.pthread_setschedparam clean
 	$(MAKE) -C 64.sched_setscheduler clean
 	$(MAKE) -C 65.static_local_variable clean
+	$(MAKE) -C 66.ftrace clean

@@ -1,10 +1,10 @@
 ###########################################
-#Makefile for my C++ programs
+#Makefile for my C programs
 ###########################################
 
 TRG = main
-OBJ = main.o ftrace.o
-SRC = main.cc ftrace.cc
+OBJ = main.o
+SRC = main.c
 LLVM = -20
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
@@ -23,15 +23,12 @@ CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 $(TRG) : $(OBJ)
-	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS) $(DEBUG)
+	$(CC) $(OBJ) -o $(TRG) $(CLANG_LINK_FLAGS) $(DEBUG)
 	rm -v $(OBJ)
-main.o : main.cc
-	$(CXX) main.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
-ftrace.o : ftrace.cc
-	$(CXX) ftrace.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+$(OBJ) : $(SRC)
+	$(CC) $(SRC) -c $(C_FLAGS) $(CLANG_FLAGS) $(DEBUG)
 format :
 	$(FORMAT) $(SRC) -style=file -i
-	$(FORMAT) ftrace.cc -style=file -i
 	$(FORMAT) ftrace.h -style=file -i
 clean :
 	rm -v $(TRG)

@@ -1,3 +1,4 @@
+#include "ftrace.h"
 #include <chrono>
 #include <functional>
 #include <print>
@@ -77,14 +78,17 @@ public:
 
 auto Child::doing(int sleep, int& value) -> void
 {
+    Ftrace::trace_dur_begin("ChildThread");
     std::println("{}: process E", __PRETTY_FUNCTION__);
     std::this_thread::sleep_for(std::chrono::seconds(sleep));
     value = sleep;
     std::println("{}: process X", __PRETTY_FUNCTION__);
+    Ftrace::trace_dur_end();
 }
 
 auto main(int argc, char* argv[]) -> int
 {
+    Ftrace::trace_dur_begin("MainThread");
     std::println("{}: process E", __PRETTY_FUNCTION__);
     Child child;
     int value = 0;
@@ -97,6 +101,7 @@ auto main(int argc, char* argv[]) -> int
     t.join();
     std::println("value = {}", value);
     std::println("{}: process X", __PRETTY_FUNCTION__);
+    Ftrace::trace_dur_end();
 
     return 0;
 }
