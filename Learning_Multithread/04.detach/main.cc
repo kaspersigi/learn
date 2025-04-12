@@ -4,6 +4,8 @@
 #include <print>
 #include <thread>
 
+// 最好改成回调，当callback为ok时，继续执行，否则阻塞至ok
+
 class Singleton {
 public:
     ~Singleton() = default;
@@ -49,9 +51,10 @@ void Singleton::doing()
     std::println("{}: process E", __func__);
     std::this_thread::sleep_for(std::chrono::seconds(5));
     std::println("{}: process X", __func__);
-    _mutex.lock();
-    is_finish = true;
-    _mutex.unlock();
+    {
+        std::lock_guard<std::mutex> lg(_mutex);
+        is_finish = true;
+    }
 }
 
 void func1()
