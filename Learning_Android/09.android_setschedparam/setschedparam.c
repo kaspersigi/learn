@@ -1,6 +1,7 @@
 #define _POSIX_C_SOURCE 200809L
 #define _GNU_SOURCE
 #include "ftrace.h"
+#include "unistd.h"
 #include <android/log.h>
 #include <stdlib.h>
 
@@ -15,7 +16,7 @@
 
 void* func(void* arg)
 {
-    trace_dur_begin("ChildThread");
+    ftrace_duration_begin("ChildThread");
     LOGI("child thread nice = %d -- lzz", nice(0));
 
     pthread_t tid = pthread_self();
@@ -46,22 +47,17 @@ void* func(void* arg)
         LOGI("current_policy = %d, current_prio = %d -- lzz", current_policy, current_param.sched_priority);
     }
     sleep(1);
-    trace_dur_end();
+    ftrace_close();
 
     return (void*)0;
 }
 
 int main(int argc, char* argv[])
 {
-    if (!trace_open()) {
-        LOGE("trace_open filed! -- lzz");
+    int ret = 0;
+    if (!ftrace_init())
         return -1;
-    }
-    int ret = trace_dur_begin("MainThread");
-    if (ret <= 0) {
-        LOGE("trace_dur_begin filed!");
-        return -1;
-    }
+    ret = ftrace_duration_begin("MainThread");
 
     pthread_t tid;
     ret = pthread_create(&tid, NULL, func, NULL);
@@ -71,12 +67,8 @@ int main(int argc, char* argv[])
     }
 
     pthread_join(tid, NULL);
-    ret = trace_dur_end();
-    if (ret <= 0) {
-        LOGE("trace_dur_end filed! -- lzz");
-        return -1;
-    }
-    trace_close();
+    ret = ftrace_duration_end();
+    ftrace_close();
 
     return 0;
 }

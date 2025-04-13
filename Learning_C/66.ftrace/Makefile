@@ -3,8 +3,8 @@
 ###########################################
 
 TRG = main
-OBJ = main.o
-SRC = main.c
+OBJ = main.o ftrace.o
+SRC = main.c ftrace.c
 LLVM = -20
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
@@ -25,10 +25,13 @@ CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 $(TRG) : $(OBJ)
 	$(CC) $(OBJ) -o $(TRG) $(CLANG_LINK_FLAGS) $(DEBUG)
 	rm -v $(OBJ)
-$(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(CLANG_FLAGS) $(DEBUG)
+main.o : main.c
+	$(CC) main.c -c $(C_FLAGS) $(CLANG_FLAGS) $(DEBUG)
+ftrace.o : ftrace.c
+	$(CC) ftrace.c -c $(C_FLAGS) $(CLANG_FLAGS) $(DEBUG)
 format :
 	$(FORMAT) $(SRC) -style=file -i
+	$(FORMAT) ftrace.c -style=file -i
 	$(FORMAT) ftrace.h -style=file -i
 clean :
 	rm -v $(TRG)

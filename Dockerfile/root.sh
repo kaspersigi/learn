@@ -9,6 +9,11 @@ BOCHS_VERSION="3.0"
 BOCHS_PATH="$TOP_PATH/bochs-$BOCHS_VERSION"
 PLATFORM="linux"
 ARCH=$(uname -m)
+if [ "$ARCH" = "x86_64" ]; then
+    PLATFORM="linux"
+elif [ "$ARCH" = "aarch64" ]; then
+    PLATFORM="windows"
+fi
 
 sudo -s <<EOF
 

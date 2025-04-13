@@ -2,11 +2,13 @@
 #define _GNU_SOURCE
 #include "ftrace.h"
 #include <errno.h>
+#include <stdio.h>
 #include <sys/resource.h>
+#include <unistd.h>
 
 void* func(void* arg)
 {
-    trace_dur_begin("ChildThread");
+    ftrace_duration_begin("ChildThread");
     pid_t tid = gettid();
     int current_nice, new_nice;
     current_nice = getpriority(PRIO_PROCESS, tid);
@@ -30,22 +32,18 @@ void* func(void* arg)
     } else {
         printf("tid = %d, current_nice = %d\n", tid, current_nice);
     }
-    trace_dur_end();
+    ftrace_duration_end();
 
     return (void*)0;
 }
 
 int main(int argc, char* argv[])
 {
-    if (!trace_open()) {
-        printf("%s: trace_open filed!\n", __PRETTY_FUNCTION__);
+    if (!ftrace_init()) {
+        printf("%s: ftrace_init filed!\n", __PRETTY_FUNCTION__);
         return -1;
     }
-    int ret = trace_dur_begin("MyFtrace");
-    if (ret <= 0) {
-        printf("%s: trace_dur_begin filed!\n", __PRETTY_FUNCTION__);
-        return -1;
-    }
+    int ret = ftrace_duration_begin("MyFtrace");
 
     pthread_t tid;
     ret = pthread_create(&tid, NULL, func, NULL);
@@ -55,12 +53,8 @@ int main(int argc, char* argv[])
     }
     pthread_join(tid, NULL);
 
-    ret = trace_dur_end();
-    if (ret <= 0) {
-        printf("%s: trace_dur_end filed!\n", __PRETTY_FUNCTION__);
-        return -1;
-    }
-    trace_close();
+    ret = ftrace_duration_end();
+    ftrace_close();
 
     return 0;
 }

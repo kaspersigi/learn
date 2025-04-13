@@ -6,7 +6,13 @@ TRG = clog
 OBJ = clog.o
 SRC = clog.c
 NDK = $(HOME)/linux/android-ndk-r27c
+ARCH = $(shell uname -m)
 PLATFORM = linux
+ifeq ($(ARCH), x86_64)
+	PLATFORM = linux
+else ifeq ($(ARCH), aarch64)
+	PLATFORM = windows
+endif
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/$(PLATFORM)-x86_64
 TARGET = aarch64-linux-android
 API = 35

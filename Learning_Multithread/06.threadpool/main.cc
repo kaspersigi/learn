@@ -59,35 +59,35 @@ void Singleton::doing()
 
 void func1()
 {
-    Ftrace::trace_dur_begin("ChildThread1");
+    Ftrace::ftrace_duration_begin("ChildThread1");
     std::println("{}: process E", __func__);
     auto& s = Singleton::GetInstance();
     s.doing();
     s.notify();
     std::println("{}: process X", __func__);
-    Ftrace::trace_dur_end();
+    Ftrace::ftrace_duration_end();
 }
 
 void func2()
 {
-    Ftrace::trace_dur_begin("ChildThread2");
+    Ftrace::ftrace_duration_begin("ChildThread2");
     std::println("{}: process E", __func__);
     auto& s = Singleton::GetInstance();
     s.wait();
     std::println("{}: process X", __func__);
-    Ftrace::trace_dur_end();
+    Ftrace::ftrace_duration_end();
 }
 
 auto main(int argc, char* argv[]) -> int
 {
-    Ftrace::trace_dur_begin("MainThread");
+    Ftrace::ftrace_duration_begin("MainThread");
     std::println("{}: process E", __func__);
     std::thread t1(func1);
     std::thread t2(func2);
     t1.detach();
     t2.join();
     std::println("{}: process X", __func__);
-    Ftrace::trace_dur_end();
+    Ftrace::ftrace_duration_end();
 
     return 0;
 }

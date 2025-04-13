@@ -2,10 +2,12 @@
 #define _GNU_SOURCE
 #include "ftrace.h"
 #include <errno.h>
+#include <stdio.h>
+#include <unistd.h>
 
 void* func(void* arg)
 {
-    trace_dur_begin("ChildThread");
+    ftrace_duration_begin("ChildThread");
     printf("child thread nice = %d\n", nice(0));
     int new_nice = nice(-10);
     if (-1 == new_nice && 0 != errno) {
@@ -15,22 +17,18 @@ void* func(void* arg)
         printf("child thread new_nice = %d\n", new_nice);
     }
     printf("child thread nice = %d\n", nice(0));
-    trace_dur_end();
+    ftrace_duration_end();
 
     return (void*)0;
 }
 
 int main(int argc, char* argv[])
 {
-    if (!trace_open()) {
-        printf("%s: trace_open filed!\n", __PRETTY_FUNCTION__);
+    if (!ftrace_init()) {
+        printf("%s: ftrace_init filed!\n", __PRETTY_FUNCTION__);
         return -1;
     }
-    int ret = trace_dur_begin("MyFtrace");
-    if (ret <= 0) {
-        printf("%s: trace_dur_begin filed!\n", __PRETTY_FUNCTION__);
-        return -1;
-    }
+    int ret = ftrace_duration_begin("MyFtrace");
 
     pthread_t tid;
     printf("main thread nice = %d\n", nice(0));
@@ -42,12 +40,8 @@ int main(int argc, char* argv[])
     pthread_join(tid, NULL);
     printf("main thread nice = %d\n", nice(0));
 
-    ret = trace_dur_end();
-    if (ret <= 0) {
-        printf("%s: trace_dur_end filed!\n", __PRETTY_FUNCTION__);
-        return -1;
-    }
-    trace_close();
+    ret = ftrace_duration_end();
+    ftrace_close();
 
     return 0;
 }

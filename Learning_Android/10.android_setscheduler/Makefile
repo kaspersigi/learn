@@ -3,10 +3,16 @@
 ###########################################
 
 TRG = setscheduler
-OBJ = setscheduler.o
-SRC = setscheduler.c
+OBJ = setscheduler.o ftrace.o
+SRC = setscheduler.c ftrace.c
 NDK = $(HOME)/linux/android-ndk-r27c
+ARCH = $(shell uname -m)
 PLATFORM = linux
+ifeq ($(ARCH), x86_64)
+	PLATFORM = linux
+else ifeq ($(ARCH), aarch64)
+	PLATFORM = windows
+endif
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/$(PLATFORM)-x86_64
 TARGET = aarch64-linux-android
 API = 35
@@ -29,10 +35,13 @@ CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 $(TRG) : $(OBJ)
 	$(CC) $(OBJ) -o $(TRG) $(LIBS) $(RELEASE)
 	rm -v $(OBJ)
-$(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(RELEASE)
+setscheduler.o : setscheduler.c
+	$(CC) setscheduler.c -c $(C_FLAGS) $(CLANG_FLAGS) $(DEBUG)
+ftrace.o : ftrace.c
+	$(CC) ftrace.c -c $(C_FLAGS) $(CLANG_FLAGS) $(DEBUG)
 format :
 	$(FORMAT) $(SRC) -style=file -i
+	$(FORMAT) ftrace.c -style=file -i
 	$(FORMAT) ftrace.h -style=file -i
 clean :
 	rm -v $(TRG)
