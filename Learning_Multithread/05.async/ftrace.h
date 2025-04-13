@@ -4,7 +4,7 @@
 
 class Ftrace {
 public:
-    static int trace_dur_begin(const char* message);
+    static int trace_dur_begin(const std::string& message);
     static int trace_dur_end();
 
 private:

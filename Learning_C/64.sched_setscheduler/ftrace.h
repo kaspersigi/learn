@@ -40,8 +40,8 @@ int trace_dur_begin(const char* message)
     size_t len = sprintf(buf, "B|%d|%s", getpid(), message);
     pthread_mutex_lock(&g_mutex);
     int ret = write(g_trace_marker_fd, buf, len);
-    printf("%s: write %d bytes!\n", __PRETTY_FUNCTION__, ret);
     pthread_mutex_unlock(&g_mutex);
+    printf("%s: write %d bytes!\n", __PRETTY_FUNCTION__, ret);
     return ret;
 }
 
@@ -51,7 +51,7 @@ int trace_dur_end()
     size_t len = sprintf(buf, "E|%d", getpid());
     pthread_mutex_lock(&g_mutex);
     int ret = write(g_trace_marker_fd, buf, len);
-    printf("%s: write %d bytes!\n", __PRETTY_FUNCTION__, ret);
     pthread_mutex_unlock(&g_mutex);
+    printf("%s: write %d bytes!\n", __PRETTY_FUNCTION__, ret);
     return ret;
 }

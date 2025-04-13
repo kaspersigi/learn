@@ -1,24 +1,24 @@
 #include "ftrace.h"
-#include <fcntl.h>
-#include <print>
-#include <string.h>
-#include <unistd.h>
 
-static const int WRITE_OFFSET = 32;
+#include <format>
+#include <print>
+
+extern "C" {
+#include <fcntl.h>
+#include <unistd.h>
+}
 
 int Ftrace::_fd = -1;
 std::mutex Ftrace::_mutex;
 
-int Ftrace::trace_dur_begin(const char* message)
+int Ftrace::trace_dur_begin(const std::string& message)
 {
     if (trace_enable()) {
-        int length = strlen(message);
-        char buf[length + WRITE_OFFSET];
-        size_t len = sprintf(buf, "B|%d|%s", getpid(), message);
+        const std::string str = std::format("{}|{}|{}", 'B', getpid(), message);
         _mutex.lock();
-        int ret = write(_fd, buf, len);
-        std::println("{}: write {} bytes!", __PRETTY_FUNCTION__, ret);
+        int ret = write(_fd, str.c_str(), str.size());
         _mutex.unlock();
+        std::println("{}: write {} bytes!", __PRETTY_FUNCTION__, ret);
         return ret;
     } else {
         return 0;
@@ -28,12 +28,11 @@ int Ftrace::trace_dur_begin(const char* message)
 int Ftrace::trace_dur_end()
 {
     if (trace_enable()) {
-        char buf[WRITE_OFFSET];
-        size_t len = sprintf(buf, "E|%d", getpid());
+        const std::string str = std::format("{}|{}", 'E', getpid());
         _mutex.lock();
-        int ret = write(_fd, buf, len);
-        std::println("{}: write {} bytes!", __PRETTY_FUNCTION__, ret);
+        int ret = write(_fd, str.c_str(), str.size());
         _mutex.unlock();
+        std::println("{}: write {} bytes!", __PRETTY_FUNCTION__, ret);
         return ret;
     } else {
         return 0;
@@ -53,6 +52,7 @@ bool Ftrace::trace_enable()
         }
     } else {
         enable = true;
+        std::println("{}: open trace_marker already!\n", __PRETTY_FUNCTION__);
     }
     return enable;
 }

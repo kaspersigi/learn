@@ -22,7 +22,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
-all : template atomic mutex condition_variable detach async
+all : template atomic mutex condition_variable detach async threadpool
 template :
 	$(MAKE) -C 00.template
 atomic :
@@ -35,6 +35,8 @@ detach :
 	$(MAKE) -C 04.detach
 async :
 	$(MAKE) -C 05.async
+threadpool :
+	$(MAKE) -C 06.threadpool
 
 format :
 	$(MAKE) -C 00.template format
@@ -43,6 +45,7 @@ format :
 	$(MAKE) -C 03.condition_variable format
 	$(MAKE) -C 04.detach format
 	$(MAKE) -C 05.async format
+	$(MAKE) -C 06.threadpool format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -51,3 +54,4 @@ clean :
 	$(MAKE) -C 03.condition_variable clean
 	$(MAKE) -C 04.detach clean
 	$(MAKE) -C 05.async clean
+	$(MAKE) -C 06.threadpool clean
