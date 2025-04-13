@@ -26,7 +26,7 @@ bool ftrace_init(void)
     if (g_ftrace_fd >= 0)
         return true;
 
-    g_ftrace_fd = open("/sys/kernel/tracing/trace_marker", O_WRONLY);
+    g_ftrace_fd = open("/sys/kernel/tracing/trace_marker", O_CLOEXEC | O_WRONLY);
     if (g_ftrace_fd < 0) {
         perror("Failed to open trace_marker");
         return false;
