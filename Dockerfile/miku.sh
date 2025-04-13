@@ -1,13 +1,15 @@
 #!/usr/bin/bash
+# ubuntu 22.04.5
 
 LLVM_VERSION="20"
 LLVM="-$LLVM_VERSION"
+USER=$(cmd.exe /c echo %USERNAME%)
 TOP_PATH="/mnt/d/learn"
-USRER_PATH="/mnt/c/Users/kaspe"
+USER_PATH="/mnt/c/Users/$USER"
 TEMP_PATH="/mnt/c/Users/Public/Downloads"
-ADB_PATH="$USRER_PATH/Downloads/platform-tools"
+ADB_PATH="$USER_PATH/Downloads/platform-tools"
 KEY_PATH="$TOP_PATH/key"
-PLATFORM="linux"
+PLATFORM="darwin"
 ARCH=$(uname -m)
 if [ "$ARCH" = "x86_64" ]; then
     PLATFORM="linux"
@@ -37,7 +39,7 @@ chmod 644 ~/.ssh/config
 ssh-keyscan -p 443 ssh.github.com >> ~/.ssh/known_hosts
 ssh -T -p 443 git@github.com
 
-cp .wslconfig $USRER_PATH
+cp .wslconfig $USER_PATH
 cp .vimrc ~
 mkdir -p ~/linux/virt
 unzip $TEMP_PATH/android-ndk-r27c-$PLATFORM.zip -d ~/linux
@@ -51,7 +53,7 @@ echo "alias adb='adb.exe'" >> ~/.bashrc
 source ~/.bashrc
 $ADB_PATH/adb.exe kill-server
 rm -rf $ADB_PATH
-unzip $TEMP_PATH/platform-tools-latest-windows.zip -d $USRER_PATH/Downloads
+unzip $TEMP_PATH/platform-tools-latest-windows.zip -d $USER_PATH/Downloads
 rm -rf $TEMP_PATH/platform-tools-latest-windows.zip
 
 cd ~/linux

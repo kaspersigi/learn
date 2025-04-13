@@ -1,4 +1,5 @@
 #!/usr/bin/bash
+# ubuntu 22.04.5
 
 LLVM_VERSION="20"
 LLVM="-$LLVM_VERSION"

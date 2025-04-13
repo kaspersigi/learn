@@ -7,7 +7,7 @@ TOP_PATH="/mnt/d/learn"
 TEMP_PATH="/mnt/c/Users/Public/Downloads"
 BOCHS_VERSION="3.0"
 BOCHS_PATH="$TOP_PATH/bochs-$BOCHS_VERSION"
-PLATFORM="linux"
+PLATFORM="darwin"
 ARCH=$(uname -m)
 if [ "$ARCH" = "x86_64" ]; then
     PLATFORM="linux"
@@ -36,7 +36,7 @@ update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd$LLVM 100
 wget -P $TEMP_PATH https://dl.google.com/android/repository/android-ndk-r27c-$PLATFORM.zip
 wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools-latest-windows.zip
 # systrace
-# wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools_r33.0.0-windows.zip
+# wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools_r33.0.0-$PLATFORM.zip
 
 # echo "BOCHS_PATH=$BOCHS_PATH"
 if [ -e "$BOCHS_PATH" ]; then

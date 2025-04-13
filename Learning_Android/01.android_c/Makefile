@@ -7,7 +7,7 @@ OBJ = main.o
 SRC = main.c
 NDK = $(HOME)/linux/android-ndk-r27c
 ARCH = $(shell uname -m)
-PLATFORM = linux
+PLATFORM = darwin
 ifeq ($(ARCH), x86_64)
 	PLATFORM = linux
 else ifeq ($(ARCH), aarch64)
