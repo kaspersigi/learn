@@ -116,7 +116,7 @@ bool Ftrace::ftrace_enable()
 {
     if (_fd >= 0)
         return true;
-    _fd = open("/sys/kernel/tracing/trace_marker", O_CLOEXEC | O_WRONLY);
+    _fd = open("/sys/kernel/tracing/trace_marker", O_WRONLY);
     if (_fd < 0) {
         std::println("Failed to open trace_marker!");
         return false;
