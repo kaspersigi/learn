@@ -3,7 +3,7 @@
 
 LLVM_VERSION="20"
 LLVM="-$LLVM_VERSION"
-USER=$(cmd.exe /c echo %USERNAME%)
+USER=$(cmd.exe /c echo %USERNAME% | tr -d '\r')
 TOP_PATH="/mnt/d/learn"
 USER_PATH="/mnt/c/Users/$USER"
 TEMP_PATH="/mnt/c/Users/Public/Downloads"
