@@ -2,9 +2,9 @@
 #Makefile for my Android C programs
 ###########################################
 
-TRG = backtrace
-OBJ = backtrace.o
-SRC = backtrace.c
+TRG = main
+OBJ = main.o backtrace.o
+SRC = main.c backtrace.c
 NDK = $(HOME)/linux/android-ndk-r27c
 ARCH = $(shell uname -m)
 PLATFORM = darwin
@@ -35,10 +35,14 @@ CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 $(TRG) : $(OBJ)
 	$(CC) $(OBJ) -o $(TRG) $(LIBS) $(DEBUG)
 	rm -v $(OBJ)
-$(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
+main.o : main.c
+	$(CC) main.c -c $(C_FLAGS) $(DEBUG)
+backtrace.o : backtrace.c
+	$(CC) backtrace.c -c $(C_FLAGS) $(DEBUG)
 format :
-	$(FORMAT) $(SRC) -style=file -i
+	$(FORMAT) main.c -style=file -i
+	$(FORMAT) backtrace.c -style=file -i
+	$(FORMAT) backtrace.h -style=file -i
 clean :
 	rm -v $(TRG)
 addr2line :
