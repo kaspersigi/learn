@@ -8,7 +8,7 @@ public:
     // Duration Events (B/E or X)
     static int ftrace_duration_begin(const std::string& message);
     static int ftrace_duration_end();
-    static int ftrace_duration_complete(const std::string& message, uint64_t duration_ns);
+    static int ftrace_duration_complete(const std::string& message, uint64_t duration_us);
 
     // Instant Events (i or I)
     static int ftrace_instant(const std::string& message);
@@ -18,8 +18,8 @@ public:
     static int ftrace_counter_zero(const std::string& message);
 
     // Async Events (b/n/e or S/T/F)
-    static int ftrace_async_begin(const std::string& message, const std::string& id);
-    static int ftrace_async_instant(const std::string& message, const std::string& id);
+    static int ftrace_async_start(const std::string& message, const std::string& id);
+    static int ftrace_async_step(const std::string& message, const std::string& id);
     static int ftrace_async_end(const std::string& message, const std::string& id);
 
     // Flow Events (s/t/f)

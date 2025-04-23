@@ -20,9 +20,9 @@ void threeA(size_t req)
     Ftrace::ftrace_duration_end();
 }
 
-void tfe(size_t req)
+void sensor(size_t req)
 {
-    std::string str("tfe:");
+    std::string str("Sensor:");
     Ftrace::ftrace_duration_begin(str + std::to_string(req));
     std::this_thread::sleep_for(std::chrono::milliseconds(70));
     Ftrace::ftrace_duration_end();
@@ -50,9 +50,9 @@ void vsync(double fps, double offset)
 
 void frame_capture(size_t req)
 {
-    Ftrace::ftrace_async_begin("frame capture", std::to_string(req));
+    Ftrace::ftrace_async_start("frame capture", std::to_string(req));
     threeA(req);
-    tfe(req);
+    sensor(req);
     offline(req);
     Ftrace::ftrace_async_end("frame capture", std::to_string(req));
 }

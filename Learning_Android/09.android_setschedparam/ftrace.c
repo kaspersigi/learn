@@ -58,14 +58,14 @@ int ftrace_duration_end(void)
     return _ftrace_write(buf);
 }
 
-int ftrace_duration_complete(const char* message, uint64_t duration_ns)
+int ftrace_duration_complete(const char* message, uint64_t duration_us)
 {
     char buf[256];
-    snprintf(buf, sizeof(buf), "X|%d|%s|%lu", getpid(), message, duration_ns);
+    snprintf(buf, sizeof(buf), "X|%d|%s|%lu", getpid(), message, duration_us);
     return _ftrace_write(buf);
 }
 
-//----- Instant Events (i) -----
+//----- Instant Events (I) -----
 int ftrace_instant(const char* message)
 {
     char buf[256];
@@ -86,47 +86,47 @@ int ftrace_counter_zero(const char* message)
     return ftrace_counter_set(message, 0);
 }
 
-//----- Async Events (b/n/e) -----
-int ftrace_async_begin(const char* id, const char* message)
+//----- Async Events (b/n/e or S/T/F) -----
+int ftrace_async_start(const char* message, const char* id)
 {
     char buf[256];
-    snprintf(buf, sizeof(buf), "b|%d|%s|%s", getpid(), id, message);
+    snprintf(buf, sizeof(buf), "S|%d|%s|%s", getpid(), message, id);
     return _ftrace_write(buf);
 }
 
-int ftrace_async_instant(const char* id, const char* message)
+int ftrace_async_step(const char* message, const char* id)
 {
     char buf[256];
-    snprintf(buf, sizeof(buf), "n|%d|%s|%s", getpid(), id, message);
+    snprintf(buf, sizeof(buf), "T|%d|%s|%s", getpid(), message, id);
     return _ftrace_write(buf);
 }
 
-int ftrace_async_end(const char* id)
+int ftrace_async_end(const char* message, const char* id)
 {
     char buf[256];
-    snprintf(buf, sizeof(buf), "e|%d|%s", getpid(), id);
+    snprintf(buf, sizeof(buf), "F|%d|%s|%s", getpid(), message, id);
     return _ftrace_write(buf);
 }
 
 //----- Flow Events (s/t/f) -----
-int ftrace_flow_start(const char* flow_id, const char* message)
+int ftrace_flow_start(const char* message, const char* id)
 {
     char buf[256];
-    snprintf(buf, sizeof(buf), "s|%d|%s|%s", getpid(), flow_id, message);
+    snprintf(buf, sizeof(buf), "s|%d|%s|%s", getpid(), message, id);
     return _ftrace_write(buf);
 }
 
-int ftrace_flow_step(const char* flow_id, const char* message)
+int ftrace_flow_step(const char* message, const char* id)
 {
     char buf[256];
-    snprintf(buf, sizeof(buf), "t|%d|%s|%s", getpid(), flow_id, message);
+    snprintf(buf, sizeof(buf), "t|%d|%s|%s", getpid(), message, id);
     return _ftrace_write(buf);
 }
 
-int ftrace_flow_end(const char* flow_id)
+int ftrace_flow_end(const char* message, const char* id)
 {
     char buf[256];
-    snprintf(buf, sizeof(buf), "f|%d|%s", getpid(), flow_id);
+    snprintf(buf, sizeof(buf), "f|%d|%s|%s", getpid(), message, id);
     return _ftrace_write(buf);
 }
 
