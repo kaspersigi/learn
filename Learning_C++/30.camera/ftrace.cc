@@ -34,7 +34,7 @@ int Ftrace::ftrace_duration_complete(const std::string& message, uint64_t durati
     return _write_to_ftrace(std::format("X|{}|{}|{}", getpid(), message, duration_ns));
 }
 
-//----- Instant Events (i/I) -----
+//----- Instant Events (i or I) -----
 int Ftrace::ftrace_instant(const std::string& message)
 {
     return _write_to_ftrace(std::format("I|{}|{}", getpid(), message));
@@ -51,20 +51,20 @@ int Ftrace::ftrace_counter_zero(const std::string& message)
     return ftrace_counter_set(message, 0);
 }
 
-//----- Async Events (b/n/e) -----
+//----- Async Events (b/n/e or S/T/F) -----
 int Ftrace::ftrace_async_begin(const std::string& message, const std::string& id)
 {
-    return _write_to_ftrace(std::format("b|{}|{}|{}", getpid(), message, id));
+    return _write_to_ftrace(std::format("S|{}|{}|{}", getpid(), message, id));
 }
 
 int Ftrace::ftrace_async_instant(const std::string& message, const std::string& id)
 {
-    return _write_to_ftrace(std::format("n|{}|{}|{}", getpid(), message, id));
+    return _write_to_ftrace(std::format("T|{}|{}|{}", getpid(), message, id));
 }
 
 int Ftrace::ftrace_async_end(const std::string& message, const std::string& id)
 {
-    return _write_to_ftrace(std::format("e|{}|{}|{}", getpid(), message, id));
+    return _write_to_ftrace(std::format("F|{}|{}|{}", getpid(), message, id));
 }
 
 //----- Flow Events (s/t/f) -----
