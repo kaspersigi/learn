@@ -31,6 +31,7 @@ ftrace.o : ftrace.cc
 	$(CXX) ftrace.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
 	$(FORMAT) $(SRC) -style=file -i
+	$(FORMAT) threadpool.hpp -style=file -i
 	$(FORMAT) ftrace.cc -style=file -i
 	$(FORMAT) ftrace.h -style=file -i
 clean :
