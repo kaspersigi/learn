@@ -2,10 +2,16 @@
 #include "threadpool.hpp"
 #include <chrono>
 #include <cmath>
+#include <condition_variable>
+#include <cstddef>
+#include <mutex>
 #include <string>
 #include <thread>
 
 std::atomic<size_t> vsync_id(0);
+std::atomic<size_t> wait_id(0);
+std::mutex mtx;
+std::condition_variable cv;
 
 size_t ms2ns(double milliseconds)
 {
@@ -16,7 +22,7 @@ void threeA(size_t req)
 {
     std::string str("3A:");
     Ftrace::ftrace_duration_begin(str + std::to_string(req));
-    std::this_thread::sleep_for(std::chrono::milliseconds(30));
+    std::this_thread::sleep_for(std::chrono::milliseconds(20));
     Ftrace::ftrace_duration_end();
 }
 
@@ -52,14 +58,14 @@ void eof(size_t req)
     Ftrace::ftrace_duration_end();
 }
 
-void sensor(size_t req)
+void sensor(size_t req, size_t id)
 {
     std::string str("Sensor:");
     Ftrace::ftrace_duration_begin(str + std::to_string(req));
+    std::unique_lock<std::mutex> ul(mtx);
+    cv.wait(ul, [=]() { return id == vsync_id; });
     exposure(req);
     readout(req);
-    sof(req);
-    eof(req);
     Ftrace::ftrace_duration_end();
 }
 
@@ -73,9 +79,23 @@ void ife(size_t req)
 
 void realtime(size_t req)
 {
+    std::string str("realtime:");
+    Ftrace::ftrace_duration_begin(str + std::to_string(req));
     threeA(req);
-    sensor(req);
+    size_t expose_id = 0;
+    if (wait_id <= vsync_id) {
+        expose_id = vsync_id + 1;
+        wait_id = expose_id;
+    } else {
+        expose_id = wait_id + 1;
+        wait_id.fetch_add(1);
+    }
+    Ftrace::ftrace_instant("expose vsync: " + std::to_string(expose_id));
+    sensor(req, expose_id);
+    sof(req);
+    eof(req);
     ife(req);
+    Ftrace::ftrace_duration_end();
 }
 
 void offline(size_t req)
@@ -93,6 +113,9 @@ void vsync(double fps, double offset)
     while (true) {
         Ftrace::ftrace_counter_set("Vsync", 1);
         vsync_id.fetch_add(1);
+        cv.notify_all();
+        Ftrace::ftrace_counter_set("Vsync id", vsync_id);
+        Ftrace::ftrace_counter_zero("Vsync id");
         Ftrace::ftrace_counter_zero("Vsync");
         std::this_thread::sleep_for(std::chrono::nanoseconds(interval));
     }
