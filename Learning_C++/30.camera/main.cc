@@ -7,7 +7,7 @@
 
 std::atomic<size_t> vsync_id(0);
 
-long long ms2ns(double milliseconds)
+size_t ms2ns(double milliseconds)
 {
     return std::llround(milliseconds * 1000000);
 }
@@ -20,12 +20,62 @@ void threeA(size_t req)
     Ftrace::ftrace_duration_end();
 }
 
+void exposure(size_t req)
+{
+    std::string str("Exp:");
+    Ftrace::ftrace_duration_begin(str + std::to_string(req));
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    Ftrace::ftrace_duration_end();
+}
+
+void readout(size_t req)
+{
+    std::string str("Readout:");
+    Ftrace::ftrace_duration_begin(str + std::to_string(req));
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    Ftrace::ftrace_duration_end();
+}
+
+void sof(size_t req)
+{
+    std::string str("SOF:");
+    Ftrace::ftrace_duration_begin(str + std::to_string(req));
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    Ftrace::ftrace_duration_end();
+}
+
+void eof(size_t req)
+{
+    std::string str("EOF:");
+    Ftrace::ftrace_duration_begin(str + std::to_string(req));
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    Ftrace::ftrace_duration_end();
+}
+
 void sensor(size_t req)
 {
     std::string str("Sensor:");
     Ftrace::ftrace_duration_begin(str + std::to_string(req));
-    std::this_thread::sleep_for(std::chrono::milliseconds(70));
+    exposure(req);
+    readout(req);
+    sof(req);
+    eof(req);
     Ftrace::ftrace_duration_end();
+}
+
+void ife(size_t req)
+{
+    std::string str("IFE:");
+    Ftrace::ftrace_duration_begin(str + std::to_string(req));
+    std::this_thread::sleep_for(std::chrono::milliseconds(30));
+    Ftrace::ftrace_duration_end();
+}
+
+void realtime(size_t req)
+{
+    threeA(req);
+    sensor(req);
+    ife(req);
 }
 
 void offline(size_t req)
@@ -38,7 +88,7 @@ void offline(size_t req)
 
 void vsync(double fps, double offset)
 {
-    long long interval = ms2ns(1000.0 / fps);
+    size_t interval = ms2ns(1000.0 / fps);
     std::this_thread::sleep_for(std::chrono::nanoseconds(ms2ns(offset)));
     while (true) {
         Ftrace::ftrace_counter_set("Vsync", 1);
@@ -51,8 +101,7 @@ void vsync(double fps, double offset)
 void frame_capture(size_t req)
 {
     Ftrace::ftrace_async_start("frame capture", std::to_string(req));
-    threeA(req);
-    sensor(req);
+    realtime(req);
     offline(req);
     Ftrace::ftrace_async_end("frame capture", std::to_string(req));
 }
@@ -60,7 +109,7 @@ void frame_capture(size_t req)
 void thread_loop(size_t threads, double delay)
 {
     ThreadPool pool(6);
-    long long interval = ms2ns(delay);
+    size_t interval = ms2ns(delay);
     size_t req = 0;
     while (true) {
         auto future = pool.enqueue(frame_capture, req);
