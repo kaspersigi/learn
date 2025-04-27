@@ -50,14 +50,6 @@ void sof(size_t req)
     Ftrace::ftrace_duration_end();
 }
 
-void eof(size_t req)
-{
-    std::string str("EOF:");
-    Ftrace::ftrace_duration_begin(str + std::to_string(req));
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
-    Ftrace::ftrace_duration_end();
-}
-
 void sensor(size_t req, size_t id)
 {
     std::string str("Sensor:");
@@ -73,7 +65,7 @@ void ife(size_t req)
 {
     std::string str("IFE:");
     Ftrace::ftrace_duration_begin(str + std::to_string(req));
-    std::this_thread::sleep_for(std::chrono::milliseconds(30));
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
     Ftrace::ftrace_duration_end();
 }
 
@@ -93,7 +85,6 @@ void realtime(size_t req)
     Ftrace::ftrace_instant("expose vsync: " + std::to_string(expose_id));
     sensor(req, expose_id);
     sof(req);
-    eof(req);
     ife(req);
     Ftrace::ftrace_duration_end();
 }
