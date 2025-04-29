@@ -3,8 +3,8 @@
 ###########################################
 
 TRG = main
-OBJ = main.o
-SRC = main.c
+OBJ = main.o ftrace.o
+SRC = main.c ftrace.c
 NDK = $(HOME)/linux/android-ndk-r27c
 ARCH = $(shell uname -m)
 PLATFORM = darwin
@@ -35,8 +35,10 @@ CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 $(TRG) : $(OBJ)
 	$(CC) $(OBJ) -o $(TRG) $(LIBS) $(RELEASE)
 	rm -v $(OBJ)
-$(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(RELEASE) -I./inc -DCL_TARGET_OPENCL_VERSION=300
+main.o : main.c
+	$(CC) main.c -c $(C_FLAGS) $(RELEASE) -I./inc -DCL_TARGET_OPENCL_VERSION=300
+ftrace.o : ftrace.c
+	$(CC) ftrace.c -c $(C_FLAGS) $(RELEASE)
 format :
 	$(FORMAT) inc/CL/cl.h -style=file -i
 	$(FORMAT) inc/CL/cl.h -style=file -i
@@ -57,7 +59,9 @@ format :
 	$(FORMAT) inc/CL/cl_va_api_media_sharing_intel.h -style=file -i
 	$(FORMAT) inc/CL/cl_version.h -style=file -i
 	$(FORMAT) inc/CL/opencl.h -style=file -i
-	$(FORMAT) $(SRC) -style=file -i
+	$(FORMAT) ftrace.c -style=file -i
+	$(FORMAT) ftrace.h -style=file -i
+	$(FORMAT) main.c -style=file -i
 clean :
 	rm -v $(TRG)
 check :
