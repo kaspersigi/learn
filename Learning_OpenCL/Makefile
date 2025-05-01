@@ -1,10 +1,10 @@
 ###########################################
-#Makefile for my C++ programs
+#Makefile for my OpenCL programs
 ###########################################
 
 TRG = main
-OBJ = main.o ftrace.o
-SRC = main.cc ftrace.cc
+OBJ = main.o
+SRC = main.c
 LLVM = -20
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
@@ -15,25 +15,23 @@ C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
-LIBS = -lpthread
+LIBS = -L../lib/$(shell uname -m) -lOpenCL
 CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = -lllvmlibc
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
-$(TRG) : $(OBJ)
-	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS) $(DEBUG)
-	rm -v $(OBJ)
-main.o : main.cc
-	$(CXX) main.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
-ftrace.o : ftrace.cc
-	$(CXX) ftrace.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+all : clinfo demo
+clinfo :
+	$(MAKE) -C 00.clinfo
+demo :
+	$(MAKE) -C 01.demo
+
 format :
-	$(FORMAT) $(SRC) -style=file -i
-	$(FORMAT) ftrace.cc -style=file -i
-	$(FORMAT) ftrace.h -style=file -i
+	$(MAKE) -C 00.clinfo format
+	$(MAKE) -C 01.demo format
+
 clean :
-	rm -v $(TRG)
-check :
-	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)
+	$(MAKE) -C 00.clinfo clean
+	$(MAKE) -C 01.demo clean

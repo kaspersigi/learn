@@ -39,7 +39,6 @@ $(OBJ) : $(SRC)
 	$(CC) $(SRC) -c $(C_FLAGS) $(RELEASE) -I./inc
 format :
 	$(FORMAT) inc/CL/cl.h -style=file -i
-	$(FORMAT) inc/CL/cl.h -style=file -i
 	$(FORMAT) inc/CL/cl_d3d10.h -style=file -i
 	$(FORMAT) inc/CL/cl_d3d11.h -style=file -i
 	$(FORMAT) inc/CL/cl_dx9_media_sharing.h -style=file -i

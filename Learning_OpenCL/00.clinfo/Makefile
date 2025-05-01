@@ -1,31 +1,21 @@
 ###########################################
-#Makefile for my Android C programs
+#Makefile for my C programs
 ###########################################
 
-TRG = main
-OBJ = main.o ftrace.o
-SRC = main.c ftrace.c
-NDK = $(HOME)/linux/android-ndk-r27c
-ARCH = $(shell uname -m)
-PLATFORM = darwin
-ifeq ($(ARCH), x86_64)
-	PLATFORM = linux
-else ifeq ($(ARCH), aarch64)
-	PLATFORM = windows
-endif
-TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/$(PLATFORM)-x86_64
-TARGET = aarch64-linux-android
-API = 35
-CC = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang
-CXX = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang++
-AR = $(TOOLCHAIN)/bin/llvm-ar
+TRG = clinfo
+OBJ = clinfo.o
+SRC = clinfo.c
 LLVM = -20
+CONFIG = llvm-config$(LLVM)
+ARCH = $(shell $(CONFIG) --host-target)
+CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
+CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
-LIBS = -L./lib -lOpenCL -llog
+LIBS = -L../lib/$(shell uname -m) -lOpenCL
 CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = -lllvmlibc
 CLANGXX_FLAGS = -stdlib=libc++
@@ -33,12 +23,10 @@ CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 $(TRG) : $(OBJ)
-	$(CC) $(OBJ) -o $(TRG) $(LIBS) $(RELEASE)
+	$(CC) $(OBJ) -o $(TRG) $(CLANG_LINK_FLAGS) $(LIBS) $(DEBUG)
 	rm -v $(OBJ)
-main.o : main.c
-	$(CC) main.c -c $(C_FLAGS) $(RELEASE) -I./inc -DCL_TARGET_OPENCL_VERSION=300
-ftrace.o : ftrace.c
-	$(CC) ftrace.c -c $(C_FLAGS) $(RELEASE)
+$(OBJ) : $(SRC)
+	$(CC) $(SRC) -c $(C_FLAGS) $(CLANG_FLAGS) $(DEBUG) -I./inc
 format :
 	$(FORMAT) inc/CL/cl.h -style=file -i
 	$(FORMAT) inc/CL/cl_d3d10.h -style=file -i
@@ -58,9 +46,17 @@ format :
 	$(FORMAT) inc/CL/cl_va_api_media_sharing_intel.h -style=file -i
 	$(FORMAT) inc/CL/cl_version.h -style=file -i
 	$(FORMAT) inc/CL/opencl.h -style=file -i
-	$(FORMAT) ftrace.c -style=file -i
-	$(FORMAT) ftrace.h -style=file -i
-	$(FORMAT) main.c -style=file -i
+	$(FORMAT) inc/ctx_prop.h -style=file -i
+	$(FORMAT) inc/error.h -style=file -i
+	$(FORMAT) inc/ext.h -style=file -i
+	$(FORMAT) inc/fmtmacros.h -style=file -i
+	$(FORMAT) inc/info_loc.h -style=file -i
+	$(FORMAT) inc/info_ret.h -style=file -i
+	$(FORMAT) inc/memory.h -style=file -i
+	$(FORMAT) inc/ms_support.h -style=file -i
+	$(FORMAT) inc/opt_out.h -style=file -i
+	$(FORMAT) inc/strbuf.h -style=file -i
+	$(FORMAT) $(SRC) -style=file -i
 clean :
 	rm -v $(TRG)
 check :
