@@ -31,6 +31,10 @@ apt install clang$LLVM clangd$LLVM clang-format$LLVM lldb$LLVM libllvmlibc$LLVM-
 apt install libncurses-dev flex bison bc dwarves libssl-dev libelf-dev python-is-python3 bzip2 unzip xz-utils lz4 cpio -y
 apt install libze-intel-gpu1 libze1 intel-opencl-icd libze-dev intel-ocloc intel-level-zero-gpu-raytracing clinfo -y
 
+apt update
+apt upgrade -y
+apt autoremove -y
+
 echo 'LANG="zh_CN.UTF-8"' > /etc/default/locale
 source /etc/default/locale
 
