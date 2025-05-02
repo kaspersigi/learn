@@ -5,26 +5,11 @@
 
 #define DATA_SIZE 10
 
-void printDeviceInfo(cl_device_id device)
+int main(int argc, char* argv[])
 {
     int ret = 0;
     char device_name[128];
     char vendor_name[128];
-
-    ret = ftrace_duration_begin("clGetDeviceInfo");
-    clGetDeviceInfo(device, CL_DEVICE_NAME, sizeof(device_name), device_name, NULL);
-    ret = ftrace_duration_end();
-
-    ret = ftrace_duration_begin("clGetDeviceInfo");
-    clGetDeviceInfo(device, CL_DEVICE_VENDOR, sizeof(vendor_name), vendor_name, NULL);
-    ret = ftrace_duration_end();
-
-    printf("Device: %s, Vendor: %s\n", device_name, vendor_name);
-}
-
-int my_cl_program()
-{
-    int ret = 0;
 
     cl_int err;
     cl_platform_id platform;
@@ -34,6 +19,11 @@ int my_cl_program()
     cl_program program;
     cl_kernel kernel;
     cl_mem a_mem, b_mem, result_mem;
+
+    if (!ftrace_init())
+        return -1;
+
+    ret = ftrace_duration_begin("MainThread");
 
     // 输入数据和输出数据
     float a[DATA_SIZE], b[DATA_SIZE], results[DATA_SIZE];
@@ -51,7 +41,15 @@ int my_cl_program()
     err = clGetDeviceIDs(platform, CL_DEVICE_TYPE_GPU, 1, &device, NULL);
     ret = ftrace_duration_end();
 
-    printDeviceInfo(device);
+    ret = ftrace_duration_begin("clGetDeviceInfo");
+    clGetDeviceInfo(device, CL_DEVICE_NAME, sizeof(device_name), device_name, NULL);
+    ret = ftrace_duration_end();
+
+    ret = ftrace_duration_begin("clGetDeviceInfo");
+    clGetDeviceInfo(device, CL_DEVICE_VENDOR, sizeof(vendor_name), vendor_name, NULL);
+    ret = ftrace_duration_end();
+
+    printf("Device: %s, Vendor: %s\n", device_name, vendor_name);
 
     // 2. 创建OpenCL上下文和命令队列
     ret = ftrace_duration_begin("clCreateContext");
@@ -171,17 +169,6 @@ int my_cl_program()
     clReleaseContext(context);
     ret = ftrace_duration_end();
 
-    return 0;
-}
-
-int main(void)
-{
-    int ret = 0;
-    if (!ftrace_init())
-        return -1;
-
-    ret = ftrace_duration_begin("MainThread");
-    ret = my_cl_program();
     ret = ftrace_duration_end();
 
     ftrace_close();
