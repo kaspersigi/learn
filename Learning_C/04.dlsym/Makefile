@@ -30,12 +30,11 @@ $(OBJ) : $(SRC)
 libfunc.so : func.o
 	$(CC) func.o -o libfunc.so $(DEBUG) -shared
 	rm -v func.o
-func.o : func.c func.h
+func.o : func.c
 	$(CC) func.c -c $(C_FLAGS) $(DEBUG) -fPIC
 format :
 	$(FORMAT) $(SRC) -style=file -i
 	$(FORMAT) func.c -style=file -i
-	$(FORMAT) func.h -style=file -i
 clean :
 	rm -v $(TRG) libfunc.so
 check :
