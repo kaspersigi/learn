@@ -3,7 +3,7 @@
 
 LLVM_VERSION="20"
 LLVM="-$LLVM_VERSION"
-TOP_PATH="/mnt/d/learn"
+TOP_PATH="/mnt/d/Learning_Perf/learn"
 TEMP_PATH="/mnt/c/Users/Public/Downloads"
 BOCHS_VERSION="3.0"
 BOCHS_PATH="$TOP_PATH/bochs-$BOCHS_VERSION"
@@ -18,7 +18,7 @@ fi
 sudo -s <<EOF
 
 wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/llvm-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/jammy/ llvm-toolchain-jammy$LLVM main" | sudo tee /etc/apt/sources.list.d/llvm.list
+echo "deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] https://apt.llvm.org/jammy/ llvm-toolchain-jammy$LLVM main" | sudo tee /etc/apt/sources.list.d/llvm.list
 
 wget -qO - https://repositories.intel.com/gpu/intel-graphics.key | sudo gpg --yes --dearmor --output /usr/share/keyrings/intel-graphics.gpg
 echo "deb [arch=amd64,i386 signed-by=/usr/share/keyrings/intel-graphics.gpg] https://repositories.intel.com/gpu/ubuntu jammy unified" | sudo tee /etc/apt/sources.list.d/intel-gpu-jammy.list

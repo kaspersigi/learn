@@ -4,7 +4,7 @@
 LLVM_VERSION="20"
 LLVM="-$LLVM_VERSION"
 USER=$(cmd.exe /c echo %USERNAME% | tr -d '\r')
-TOP_PATH="/mnt/d/learn"
+TOP_PATH="/mnt/d/Learning_Perf/learn"
 USER_PATH="/mnt/c/Users/$USER"
 TEMP_PATH="/mnt/c/Users/Public/Downloads"
 ADB_PATH="$USER_PATH/Downloads/platform-tools"
