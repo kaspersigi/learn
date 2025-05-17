@@ -61,8 +61,8 @@ git clone git@github.com:kaspersigi/learn.git
 # git clone https://github.com/kaspersigi/learn.git
 git clone git@github.com:kaspersigi/perf_tools.git
 # git clone https://github.com/kaspersigi/perf_tools.git
-git clone --single-branch -b oppo/sm8750_v_15.0.1_find_n5 --depth 1 git@github.com:oppo-source/android_kernel_oppo_sm8750.git
-# git clone --single-branch -b oppo/sm8750_v_15.0.1_find_n5 --depth 1 https://github.com/oppo-source/android_kernel_oppo_sm8750.git
+git clone --single-branch -b oppo/sm8750_v_15.0.1_find_x8_ultra --depth 1 git@github.com:oppo-source/android_kernel_oppo_sm8750.git
+# git clone --single-branch -b oppo/sm8750_v_15.0.1_find_x8_ultra --depth 1 https://github.com/oppo-source/android_kernel_oppo_sm8750.git
 git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 
 cd ~/linux/linux
