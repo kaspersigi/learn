@@ -58,3 +58,5 @@ else
 fi
 
 su miku
+
+EOF
