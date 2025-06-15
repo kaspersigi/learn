@@ -1634,14 +1634,14 @@ void identify_device_extensions(const char* extensions, struct device_info_check
         _GET_VAL_ARRAY(ret, (loc)) \
     } while (0)
 
-#define DEFINE_DEVINFO_FETCH(type, field)                                             \
-    type                                                                              \
-        device_fetch_##type(struct device_info_ret* ret,                              \
-            const struct info_loc* loc, const struct device_info_checks* UNUSED(chk), \
-            const struct opt_out* output)                                             \
-    {                                                                                 \
-        GET_VAL(ret, loc, field);                                                     \
-        return ret->value.field;                                                      \
+#define DEFINE_DEVINFO_FETCH(type, field)                                         \
+    type                                                                          \
+    device_fetch_##type(struct device_info_ret* ret,                              \
+        const struct info_loc* loc, const struct device_info_checks* UNUSED(chk), \
+        const struct opt_out* output)                                             \
+    {                                                                             \
+        GET_VAL(ret, loc, field);                                                 \
+        return ret->value.field;                                                  \
     }
 
 DEFINE_DEVINFO_FETCH(size_t, s)
@@ -1671,15 +1671,15 @@ DEFINE_DEVINFO_FETCH(cl_device_terminate_capability_khr, termcap)
     if (!ret->err)                  \
     strbuf_append(loc->pname, &ret->str, fmt, val)
 
-#define DEFINE_DEVINFO_SHOW(how, type, field, fmt)                            \
-    void                                                                      \
-        device_info_##how(struct device_info_ret* ret,                        \
-            const struct info_loc* loc, const struct device_info_checks* chk, \
-            const struct opt_out* output)                                     \
-    {                                                                         \
-        DEV_FETCH(type, val);                                                 \
-        if (!ret->err)                                                        \
-            FMT_VAL(loc, ret, fmt, val);                                      \
+#define DEFINE_DEVINFO_SHOW(how, type, field, fmt)                        \
+    void                                                                  \
+    device_info_##how(struct device_info_ret* ret,                        \
+        const struct info_loc* loc, const struct device_info_checks* chk, \
+        const struct opt_out* output)                                     \
+    {                                                                     \
+        DEV_FETCH(type, val);                                             \
+        if (!ret->err)                                                    \
+            FMT_VAL(loc, ret, fmt, val);                                  \
     }
 
 DEFINE_DEVINFO_SHOW(int, cl_uint, u32, "%" PRIu32)
