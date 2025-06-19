@@ -16,6 +16,8 @@
 
 const char dev[] = "/dev/video0";
 const size_t buf_count = 4;
+const int PIX_WIDTH = 1920;
+const int PIX_HEIGHT = 1080;
 
 // 用户层缓冲区保存结构体
 typedef struct buf_type {
@@ -111,6 +113,7 @@ int main(int argc, char* argv[])
     }
 
     release_camera(fd);
+
     return 0;
 }
 
@@ -150,12 +153,62 @@ int init_camera(const char* dev)
         exit(-1);
     }
 
+    // 枚举所有支持的分辨率
     struct v4l2_fmtdesc fmtdesc;
+    memset(&fmtdesc, 0, sizeof(fmtdesc));
+    fmtdesc.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+
+    printf("Supported resolutions for each format:\n");
+
+    // 遍历所有支持的像素格式
+    while (ioctl(fd, VIDIOC_ENUM_FMT, &fmtdesc) == 0) {
+        printf("\nFormat %d: %s (0x%08X)\n",
+            fmtdesc.index, fmtdesc.description, fmtdesc.pixelformat);
+
+        // 枚举此格式支持的分辨率
+        struct v4l2_frmsizeenum frmsize;
+        memset(&frmsize, 0, sizeof(frmsize));
+        frmsize.pixel_format = fmtdesc.pixelformat;
+        frmsize.index = 0;
+
+        while (ioctl(fd, VIDIOC_ENUM_FRAMESIZES, &frmsize) == 0) {
+            switch (frmsize.type) {
+            case V4L2_FRMSIZE_TYPE_DISCRETE:
+                printf("  %dx%d\n",
+                    frmsize.discrete.width,
+                    frmsize.discrete.height);
+                break;
+
+            case V4L2_FRMSIZE_TYPE_STEPWISE:
+                printf("  %dx%d to %dx%d (step %d/%d)\n",
+                    frmsize.stepwise.min_width,
+                    frmsize.stepwise.min_height,
+                    frmsize.stepwise.max_width,
+                    frmsize.stepwise.max_height,
+                    frmsize.stepwise.step_width,
+                    frmsize.stepwise.step_height);
+                break;
+
+            case V4L2_FRMSIZE_TYPE_CONTINUOUS:
+                printf("  Continuous range: %dx%d to %dx%d\n",
+                    frmsize.stepwise.min_width,
+                    frmsize.stepwise.min_height,
+                    frmsize.stepwise.max_width,
+                    frmsize.stepwise.max_height);
+                break;
+            }
+            frmsize.index++;
+        }
+        fmtdesc.index++;
+    }
+    printf("\n");
+
+    memset(&fmtdesc, 0, sizeof(fmtdesc));
     fmtdesc.index = 0;
     fmtdesc.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     printf("supported video format:\n");
     while (ioctl(fd, VIDIOC_ENUM_FMT, &fmtdesc) == 0) {
-        printf("\t%d.%s\n", fmtdesc.index + 1, fmtdesc.description);
+        printf("\t%d.%s\n", fmtdesc.index, fmtdesc.description);
         fmtdesc.index++;
     }
 
@@ -169,13 +222,35 @@ int init_camera(const char* dev)
     // 设置格式
     struct v4l2_format fmt;
     fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-    fmt.fmt.pix.width = 640;
-    fmt.fmt.pix.height = 480;
+    fmt.fmt.pix.width = PIX_WIDTH;
+    fmt.fmt.pix.height = PIX_HEIGHT;
+#if 1
+    fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_MJPEG;
+    if (ioctl(fd, VIDIOC_S_FMT, &fmt) < 0) {
+        perror("set format: V4L2_PIX_FMT_MJPEG");
+        exit(-1);
+    }
+#else
     fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_YUYV;
     if (ioctl(fd, VIDIOC_S_FMT, &fmt) < 0) {
         perror("set format: V4L2_PIX_FMT_YUYV");
         exit(-1);
     }
+#endif
+    // 在init_camera的设置格式后添加
+    struct v4l2_format actual_fmt;
+    actual_fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    if (ioctl(fd, VIDIOC_G_FMT, &actual_fmt) == 0) {
+        printf("Actual format set: %c%c%c%c\n",
+            actual_fmt.fmt.pix.pixelformat & 0xFF,
+            (actual_fmt.fmt.pix.pixelformat >> 8) & 0xFF,
+            (actual_fmt.fmt.pix.pixelformat >> 16) & 0xFF,
+            (actual_fmt.fmt.pix.pixelformat >> 24) & 0xFF);
+        printf("Actual resolution: %dx%d\n",
+            actual_fmt.fmt.pix.width,
+            actual_fmt.fmt.pix.height);
+    }
+    printf("\n");
 
     return fd;
 }
@@ -250,6 +325,7 @@ int write_frame(int fd, buf_type* usr_buf)
     struct v4l2_buffer v4l2_buf;
     v4l2_buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
     v4l2_buf.memory = V4L2_MEMORY_MMAP;
+
     // 内核缓冲区出队列
     if (ioctl(fd, VIDIOC_DQBUF, &v4l2_buf) < 0) {
         perror("VIDIOC_DQBUF");
@@ -258,7 +334,11 @@ int write_frame(int fd, buf_type* usr_buf)
 
     // 因为内核缓冲区与用户缓冲区建立的映射，所以可以通过用户空间缓冲区直接访问这个缓冲区的数据
     char buffer[256] = {};
+#if 1
+    sprintf(buffer, "./%d.jpg", v4l2_buf.index);
+#else
     sprintf(buffer, "./%d.yuv", v4l2_buf.index);
+#endif
     int file_fd = open(buffer, O_RDWR | O_CREAT, 0644); // 若打开失败则不存储该帧图像
     memset(buffer, 0, 256);
     if (file_fd < 0) {
@@ -275,6 +355,7 @@ int write_frame(int fd, buf_type* usr_buf)
         perror("VIDIOC_QBUF again");
         exit(-1);
     }
+
     return v4l2_buf.index;
 }
 
