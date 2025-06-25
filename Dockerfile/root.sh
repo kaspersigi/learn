@@ -29,7 +29,7 @@ apt autoremove -y
 
 apt install clang$LLVM clangd$LLVM clang-format$LLVM lldb$LLVM libllvmlibc$LLVM-dev libc++$LLVM-dev lld$LLVM binutils-i686-linux-gnu binutils-x86-64-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu bsdmainutils make gdb cgdb valgrind qemu-system-arm qemu-system-misc qemu-system-x86 -y
 apt install libncurses-dev flex bison bc dwarves libssl-dev libelf-dev python-is-python3 pbzip2 bzip2 zip unzip xz-utils lz4 cpio -y
-apt install libze-intel-gpu1 libze1 intel-opencl-icd libze-dev intel-ocloc intel-level-zero-gpu-raytracing clinfo -y
+# apt install libze-intel-gpu1 libze1 intel-opencl-icd libze-dev intel-ocloc intel-level-zero-gpu-raytracing clinfo -y
 
 apt update
 apt upgrade -y

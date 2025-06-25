@@ -65,8 +65,11 @@ git clone git@github.com:kaspersigi/perf_tools.git
 # git clone https://github.com/kaspersigi/CameraX.git
 # git clone git@github.com:kaspersigi/Camera2.git
 # git clone https://github.com/kaspersigi/Camera2.git
-git clone --single-branch -b oppo/sm8750_v_15.0.1_find_x8_ultra --depth 1 git@github.com:oppo-source/android_kernel_oppo_sm8750.git
+# git clone --single-branch -b oppo/sm8750_v_15.0.1_find_x8_ultra --depth 1 git@github.com:oppo-source/android_kernel_oppo_sm8750.git
 # git clone --single-branch -b oppo/sm8750_v_15.0.1_find_x8_ultra --depth 1 https://github.com/oppo-source/android_kernel_oppo_sm8750.git
+git clone --single-branch -b nanopi6-v6.1.y --depth 1 git@github.com:friendlyarm/kernel-rockchip.git
+# git clone --single-branch -b nanopi6-v6.1.y --depth 1 https://github.com:friendlyarm/kernel-rockchip.git
+# git clone --single-branch -b linux-rolling-stable --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 
 cd ~/linux/linux
