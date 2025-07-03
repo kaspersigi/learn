@@ -122,7 +122,7 @@ void frame_capture(size_t req)
 
 void thread_loop(size_t threads, double delay)
 {
-    ThreadPool pool(6);
+    ThreadPool pool(threads);
     size_t interval = ms2ns(delay);
     size_t req = 0;
     while (true) {

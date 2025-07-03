@@ -57,10 +57,10 @@ unzip $TEMP_PATH/platform-tools-latest-windows.zip -d $USER_PATH/Downloads
 rm -rf $TEMP_PATH/platform-tools-latest-windows.zip
 
 cd ~/linux
-git clone git@github.com:kaspersigi/learn.git
-# git clone https://github.com/kaspersigi/learn.git
-git clone git@github.com:kaspersigi/perf_tools.git
-# git clone https://github.com/kaspersigi/perf_tools.git
+# git clone git@github.com:kaspersigi/learn.git
+git clone https://github.com/kaspersigi/learn.git
+# git clone git@github.com:kaspersigi/perf_tools.git
+git clone https://github.com/kaspersigi/perf_tools.git
 # git clone git@github.com:kaspersigi/CameraX.git
 # git clone https://github.com/kaspersigi/CameraX.git
 # git clone git@github.com:kaspersigi/Camera2.git
@@ -71,10 +71,10 @@ git clone git@github.com:kaspersigi/perf_tools.git
 # git clone --single-branch -b nanopi6-v6.1.y --depth 1 https://github.com:friendlyarm/kernel-rockchip.git
 # git clone --single-branch -b linux-rolling-stable --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
-git clone --single-branch -b v0.5.0+rpt20250429 --depth 1 git@github.com:raspberrypi/libcamera.git
-# git clone --single-branch -b v0.5.0+rpt20250429 --depth 1 https://github.com/raspberrypi/libcamera.git
-git clone --single-branch -b v1.7.0 --depth 1 git@github.com:raspberrypi/rpicam-apps.git
-# git clone --single-branch -b v1.7.0 --depth 1 https://github.com/raspberrypi/rpicam-apps.git
+# git clone --single-branch -b v0.5.0+rpt20250429 --depth 1 git@github.com:raspberrypi/libcamera.git
+git clone --single-branch -b v0.5.0+rpt20250429 --depth 1 https://github.com/raspberrypi/libcamera.git
+# git clone --single-branch -b v1.7.0 --depth 1 git@github.com:raspberrypi/rpicam-apps.git
+git clone --single-branch -b v1.7.0 --depth 1 https://github.com/raspberrypi/rpicam-apps.git
 
 cd ~/linux/linux
 time make distclean ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=$LLVM
