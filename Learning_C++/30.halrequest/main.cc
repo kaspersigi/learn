@@ -9,7 +9,7 @@
 #include <thread>
 
 const int frame_rate = 30;
-const int max_hal_request = 6;
+const int thread_count = 6;
 
 std::atomic<size_t> vsync_id(0);
 std::atomic<size_t> wait_id(0);
@@ -140,7 +140,7 @@ auto main(int argc, char* argv[]) -> int
     Ftrace::ftrace_duration_begin("MainThread");
     std::thread v(vsync, frame_rate, 22);
     v.detach();
-    std::thread l(repeat_request, max_hal_request, 1);
+    std::thread l(repeat_request, thread_count, 1);
     l.detach();
     std::this_thread::sleep_for(std::chrono::seconds(5));
     Ftrace::ftrace_duration_end();

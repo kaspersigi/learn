@@ -9,10 +9,10 @@
 #include <thread>
 
 const size_t frame_rate = 30;
-const size_t max_hal_request = 6;
+const size_t thread_count = 6;
 const size_t max_frames = 100;
-
-const size_t bufferQ = 5;
+const size_t max_livepending_requests = 5;
+const size_t bufferQ = max_livepending_requests;
 size_t consumerQ = 0;
 std::mutex mtx_bufferQ;
 std::condition_variable cv_consumer;
@@ -22,7 +22,7 @@ std::atomic<size_t> wait_id(0);
 std::mutex mtx_vsync;
 std::condition_variable cv_vsync;
 
-ThreadPool halpool(max_hal_request);
+ThreadPool halpool(thread_count);
 ThreadPool framworkpool(bufferQ);
 
 size_t ms2ns(double milliseconds)
