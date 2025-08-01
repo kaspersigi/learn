@@ -61,6 +61,8 @@ cd ~/linux
 git clone https://github.com/kaspersigi/learn.git
 # git clone git@github.com:kaspersigi/perf_tools.git
 git clone https://github.com/kaspersigi/perf_tools.git
+# git clone git@github.com:kaspersigi/Camera.git
+# git clone https://github.com/kaspersigi/Camera.git
 # git clone git@github.com:kaspersigi/CameraX.git
 # git clone https://github.com/kaspersigi/CameraX.git
 # git clone git@github.com:kaspersigi/Camera2.git
