@@ -16,15 +16,16 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
 LIBS = -lpthread
+LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
-CLANG_LINK_FLAGS = -lllvmlibc
+CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 all : Remote
 Remote : Remote.o commands.o control.o devices.o
-	$(CXX) Remote.o commands/*.o control/*.o devices/*.o -o Remote $(CLANGXX_LINK_FLAGS) $(DEBUG)
+	$(CXX) Remote.o commands/*.o control/*.o devices/*.o -o Remote $(CLANGXX_LINK_FLAGS)
 	rm -v Remote.o
 	$(MAKE) -C commands clean
 	$(MAKE) -C control clean

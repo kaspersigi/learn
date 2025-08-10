@@ -26,17 +26,18 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
 LIBS = -lpthread
+LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
-CLANG_LINK_FLAGS = -lllvmlibc
+CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 $(TRG) : $(OBJ)
-	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS) $(RELEASE) -static
+	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CXX) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(RELEASE)
+	$(CXX) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
 	$(FORMAT) $(SRC) -style=file -i
 clean :

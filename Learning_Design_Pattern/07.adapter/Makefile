@@ -16,15 +16,16 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
 LIBS = -lpthread
+LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
-CLANG_LINK_FLAGS = -lllvmlibc
+CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 all : Adapter
 Adapter : Adapter.o interface.o ducks.o turkeys.o flyBehaviors.o quackBehaviors.o adapters.o
-	$(CXX) Adapter.o interface/*.o ducks/*.o turkeys/*.o flyBehaviors/*.o quackBehaviors/*.o adapters/*.o -o Adapter $(CLANGXX_LINK_FLAGS) $(DEBUG)
+	$(CXX) Adapter.o interface/*.o ducks/*.o turkeys/*.o flyBehaviors/*.o quackBehaviors/*.o adapters/*.o -o Adapter $(CLANGXX_LINK_FLAGS)
 	rm -v Adapter.o
 	$(MAKE) -C interface clean
 	$(MAKE) -C ducks clean

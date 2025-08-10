@@ -19,10 +19,11 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -ggdb -O0
 RELEASE = -static -Oz
 LIBS = -lpthread
+LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
-CLANG_LINK_FLAGS = -lllvmlibc
+CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-pointer -fno-stack-protector -fno-pic -fno-pie -static
 
 .PHONY : all
@@ -34,7 +35,7 @@ printf.o : printf.c
 umalloc.o : umalloc.c
 	$(CC) umalloc.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 usys.o : usys.S
-	$(CC) usys.S -c -gdwarf-2
+	$(CC) usys.S -c -gdwarf-2 -g
 format :
 	$(FORMAT) ulib.c -style=file -i
 	$(FORMAT) printf.c -style=file -i

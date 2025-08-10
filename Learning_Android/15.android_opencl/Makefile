@@ -26,19 +26,20 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
 LIBS = -L./lib -lOpenCL -llog
+LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
-CLANG_LINK_FLAGS = -lllvmlibc
+CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 $(TRG) : $(OBJ)
-	$(CC) $(OBJ) -o $(TRG) $(LIBS) $(RELEASE)
+	$(CC) $(OBJ) -o $(TRG) $(LIBS)
 	rm -v $(OBJ)
 main.o : main.c
-	$(CC) main.c -c $(C_FLAGS) $(RELEASE) -I./inc -DCL_TARGET_OPENCL_VERSION=300
+	$(CC) main.c -c $(C_FLAGS) $(DEBUG) -I./inc -DCL_TARGET_OPENCL_VERSION=300
 ftrace.o : ftrace.c
-	$(CC) ftrace.c -c $(C_FLAGS) $(RELEASE)
+	$(CC) ftrace.c -c $(C_FLAGS) $(DEBUG)
 format :
 	$(FORMAT) inc/CL/cl.h -style=file -i
 	$(FORMAT) inc/CL/cl_d3d10.h -style=file -i

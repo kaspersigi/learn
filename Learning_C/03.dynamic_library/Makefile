@@ -16,22 +16,23 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
 LIBS = -ldl -L. -lfunc -Wl,-rpath=.
+LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
-CLANG_LINK_FLAGS = -lllvmlibc
+CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 $(TRG) : $(OBJ) libfunc.so
-	$(CC) $(OBJ) -o $(TRG) $(CLANG_LINK_FLAGS) $(LIBS) $(DEBUG)
+	$(CC) $(OBJ) -o $(TRG) $(LIBS)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(CLANG_FLAGS) $(DEBUG)
+	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
 libfunc.so : func.o
-	$(CC) func.o -o libfunc.so $(CLANG_LINK_FLAGS) $(DEBUG) -shared
+	$(CC) func.o -o libfunc.so -shared $(DEBUG)
 	rm -v func.o
 func.o : func.c func.h
-	$(CC) func.c -c $(C_FLAGS) $(CLANG_FLAGS) $(DEBUG) -fPIC
+	$(CC) func.c -c $(C_FLAGS) $(DEBUG) -fPIC
 format :
 	$(FORMAT) $(SRC) -style=file -i
 	$(FORMAT) func.c -style=file -i

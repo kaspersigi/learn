@@ -16,15 +16,16 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
 LIBS = -lpthread
+LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
-CLANG_LINK_FLAGS = -lllvmlibc
+CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 all : Starbuzz
 Starbuzz : Starbuzz.o interface.o components.o decorators.o
-	$(CXX) Starbuzz.o interface/*.o components/*.o decorators/*.o -o Starbuzz $(CLANGXX_LINK_FLAGS) $(DEBUG)
+	$(CXX) Starbuzz.o interface/*.o components/*.o decorators/*.o -o Starbuzz $(CLANGXX_LINK_FLAGS)
 	rm -v Starbuzz.o
 	$(MAKE) -C interface clean
 	$(MAKE) -C components clean

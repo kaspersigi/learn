@@ -21,10 +21,11 @@ DEBUG = -ggdb -O0
 RELEASE = -static -Oz
 LINK_FLAGS = -z max-page-size=4096
 LIBS = -lpthread
+LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
-CLANG_LINK_FLAGS = -lllvmlibc
+CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 KERNEL_FLAGS = -nostdinc -fno-builtin -fno-omit-frame-pointer -ffreestanding -fno-common -fno-pic -fno-pie -static -mno-relax -mcmodel=medany
 
 .PHONY : all
@@ -79,13 +80,13 @@ virtio_disk.o : virtio_disk.c
 vm.o : vm.c
 	$(CC) vm.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 entry.o : entry.S
-	$(CC) entry.S -c -gdwarf-2
+	$(CC) entry.S -c -gdwarf-2 -g
 kernelvec.o : kernelvec.S
-	$(CC) kernelvec.S -c -gdwarf-2
+	$(CC) kernelvec.S -c -gdwarf-2 -g
 swtch.o : swtch.S
-	$(CC) swtch.S -c -gdwarf-2
+	$(CC) swtch.S -c -gdwarf-2 -g
 trampoline.o : trampoline.S
-	$(CC) trampoline.S -c -gdwarf-2
+	$(CC) trampoline.S -c -gdwarf-2 -g
 initcode : initcode.bin
 	$(OBJCOPY) -S -O binary initcode.bin initcode
 	rm -v initcode.bin
@@ -93,7 +94,7 @@ initcode.bin : initcode.o
 	$(LD) -N -e start -Ttext 0 -o initcode.bin initcode.o $(LINK_FLAGS)
 	rm -v initcode.o
 initcode.o : initcode.S
-	$(CC) initcode.S -c -gdwarf-2
+	$(CC) initcode.S -c -gdwarf-2 -g
 format :
 	$(FORMAT) bio.c -style=file -i
 	$(FORMAT) console.c -style=file -i

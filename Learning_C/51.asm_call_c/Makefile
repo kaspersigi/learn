@@ -18,8 +18,9 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
 LIBS = -lpthread
+LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
-CLANG_LINK_FLAGS = -lllvmlibc
+CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
@@ -29,9 +30,9 @@ $(TRG) : $(OBJ)
 	rm -v $(OBJ)
 main.o : main.s
 	# $(AS) main.s -o main.o --32
-	$(CC) main.s -c $(C_FLAGS) $(CLANG_FLAGS)
+	$(CC) main.s -c $(C_FLAGS) -g
 func.o : func.c
-	$(CC) func.c -c $(C_FLAGS) $(CLANG_FLAGS) $(DEBUG)
+	$(CC) func.c -c $(C_FLAGS) $(DEBUG)
 format :
 	$(FORMAT) func.c -style=file -i
 clean :

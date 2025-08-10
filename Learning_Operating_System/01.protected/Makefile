@@ -19,10 +19,11 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -static -O3
 LIBS = -lpthread
+LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
-CLANG_LINK_FLAGS = -lllvmlibc
+CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 $(TRG) : $(BIN) boot.img
@@ -35,7 +36,7 @@ $(BIN) : $(OBJ)
 	rm -v $(OBJ)
 $(OBJ) : main.s
 	# $(AS) $(SRC) -o $(OBJ) --32
-	$(CC) $(SRC) -c
+	$(CC) $(SRC) -c -g
 clean :
 	rm -v boot.img
 qemu :

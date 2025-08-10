@@ -18,8 +18,9 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
 LIBS = -lpthread
+LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
-CLANG_LINK_FLAGS = -lllvmlibc
+CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
@@ -28,7 +29,7 @@ $(TRG) : $(OBJ)
 	$(LD) $(OBJ) -o $(TRG) -m elf_i386 --entry=main
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(CLANG_FLAGS) $(DEBUG)
+	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG)
 format :
 	$(FORMAT) $(SRC) -style=file -i
 clean :

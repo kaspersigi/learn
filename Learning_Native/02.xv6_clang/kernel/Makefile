@@ -19,10 +19,11 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -ggdb -O0
 RELEASE = -static -Oz
 LIBS = -lpthread
+LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
-CLANG_LINK_FLAGS = -lllvmlibc
+CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -lc++ -nostdlib++
+CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-pointer -fno-stack-protector -fno-pic -fno-pie -static
 
 .PHONY : all
@@ -81,14 +82,14 @@ uart.o : uart.c
 vm.o : vm.c
 	$(CC) vm.c -c $(C_FLAGS) $(KERNEL_FLAGS) $(DEBUG)
 entry.o : entry.S
-	$(CC) entry.S -c -gdwarf-2
+	$(CC) entry.S -c -gdwarf-2 -g
 swtch.o : swtch.S
-	$(CC) swtch.S -c -gdwarf-2
+	$(CC) swtch.S -c -gdwarf-2 -g
 trapasm.o : trapasm.S
-	$(CC) trapasm.S -c -gdwarf-2
+	$(CC) trapasm.S -c -gdwarf-2 -g
 vectors.o : vectors.pl
 	./vectors.pl > vectors.S
-	$(CC) vectors.S -c -gdwarf-2
+	$(CC) vectors.S -c -gdwarf-2 -g
 	rm -v vectors.S
 initcode : initcode.bin
 	i686-linux-gnu-objcopy initcode.bin -S -O binary initcode

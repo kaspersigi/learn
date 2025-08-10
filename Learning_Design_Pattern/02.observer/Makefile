@@ -16,15 +16,16 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
 LIBS = -lpthread
+LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
-CLANG_LINK_FLAGS = -lllvmlibc
+CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 all : WeatherStation
 WeatherStation : WeatherStation.o subjects.o observers.o
-	$(CXX) WeatherStation.o subjects/*.o observers/*.o -o WeatherStation $(CLANGXX_LINK_FLAGS) $(DEBUG)
+	$(CXX) WeatherStation.o subjects/*.o observers/*.o -o WeatherStation $(CLANGXX_LINK_FLAGS)
 	rm -v WeatherStation.o
 	$(MAKE) -C subjects clean
 	$(MAKE) -C observers clean

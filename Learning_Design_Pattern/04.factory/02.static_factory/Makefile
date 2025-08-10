@@ -16,15 +16,16 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
 LIBS = -lpthread
+LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
-CLANG_LINK_FLAGS = -lllvmlibc
+CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 all : Pizza
 Pizza : Pizza.o interface.o factory.o pizzas.o store.o
-	$(CXX) Pizza.o interface/*.o factory/*.o pizzas/*.o store/*.o -o Pizza $(CLANGXX_LINK_FLAGS) $(DEBUG)
+	$(CXX) Pizza.o interface/*.o factory/*.o pizzas/*.o store/*.o -o Pizza $(CLANGXX_LINK_FLAGS)
 	rm -v Pizza.o
 	$(MAKE) -C interface clean
 	$(MAKE) -C factory clean
