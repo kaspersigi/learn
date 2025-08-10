@@ -2,12 +2,16 @@
 #include <CL/cl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #define DATA_SIZE 10
 
 int main(int argc, char* argv[])
 {
     int ret = 0;
+
+    sleep(10);
+
     char device_name[128];
     char vendor_name[128];
 
@@ -172,6 +176,8 @@ int main(int argc, char* argv[])
     ret = ftrace_duration_end();
 
     ftrace_close();
+
+    sleep(3);
 
     return 0;
 }

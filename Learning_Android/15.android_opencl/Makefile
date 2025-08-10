@@ -2,9 +2,9 @@
 #Makefile for my Android C programs
 ###########################################
 
-TRG = main
-OBJ = main.o ftrace.o
-SRC = main.c ftrace.c
+TRG = opencl
+OBJ = opencl.o ftrace.o
+SRC = opencl.c ftrace.c
 NDK = $(HOME)/linux/android-ndk-r27c
 ARCH = $(shell uname -m)
 PLATFORM = darwin
@@ -36,8 +36,8 @@ CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 $(TRG) : $(OBJ)
 	$(CC) $(OBJ) -o $(TRG) $(LIBS)
 	rm -v $(OBJ)
-main.o : main.c
-	$(CC) main.c -c $(C_FLAGS) $(DEBUG) -I./inc -DCL_TARGET_OPENCL_VERSION=300
+opencl.o : opencl.c
+	$(CC) opencl.c -c $(C_FLAGS) $(DEBUG) -I./inc -DCL_TARGET_OPENCL_VERSION=300
 ftrace.o : ftrace.c
 	$(CC) ftrace.c -c $(C_FLAGS) $(DEBUG)
 format :
@@ -61,7 +61,7 @@ format :
 	$(FORMAT) inc/CL/opencl.h -style=file -i
 	$(FORMAT) ftrace.c -style=file -i
 	$(FORMAT) ftrace.h -style=file -i
-	$(FORMAT) main.c -style=file -i
+	$(FORMAT) opencl.c -style=file -i
 clean :
 	rm -v $(TRG)
 check :
