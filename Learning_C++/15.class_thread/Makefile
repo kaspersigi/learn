@@ -24,7 +24,7 @@ CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
 $(TRG) : $(OBJ)
-	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS) $(LIBS) $(DEBUG)
+	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS) $(LIBS)
 	rm -v $(OBJ)
 main.o : main.cc
 	$(CXX) main.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
