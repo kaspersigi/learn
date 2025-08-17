@@ -24,7 +24,7 @@ RUN apt update \
     && apt autoremove -y
 RUN apt install sudo git vim openssh-server -y
 RUN apt install clang-20 clangd-20 clang-format-20 lldb-20 libllvmlibc-20-dev libc++-20-dev lld-20 binutils-i686-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu bsdmainutils make gdb cgdb valgrind qemu-system-arm qemu-system-misc qemu-system-x86 -y
-RUN apt install libncurses-dev flex bison bc dwarves libssl-dev libelf-dev python-is-python3 python3-pip python3-virtualenv pbzip2 bzip2 zip unzip xz-utils lz4 cpio -y
+RUN apt install libncurses5 libncurses-dev flex bison bc dwarves libssl-dev libelf-dev python-is-python3 python3-pip python3-virtualenv pbzip2 bzip2 zip unzip xz-utils lz4 cpio rsync -y
 RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-20 100 \
     && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-20 100 \
     && echo 'miku    ALL=(ALL:ALL) ALL' >> /etc/sudoers \
