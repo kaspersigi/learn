@@ -6,7 +6,7 @@ TRG = main
 OBJ = main.o
 SRC = main.c
 VPATH = /home/miku/learn/Learning_Android
-NDK = $(HOME)/linux/android-ndk-r27c
+NDK = $(HOME)/linux/android-ndk-r27d
 ARCH = $(shell uname -m)
 PLATFORM = darwin
 ifeq ($(ARCH), x86_64)

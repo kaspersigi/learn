@@ -42,9 +42,9 @@ RUN git config --global pull.rebase false \
     && git clone git@github.com:kaspersigi/learn.git \
     && git clone git@github.com:kaspersigi/perf_tools.git \
     && git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git \
-    && wget https://dl.google.com/android/repository/android-ndk-r27c-linux.zip \
-    && unzip android-ndk-r27c-linux.zip \
-    && rm -v android-ndk-r27c-linux.zip \
+    && wget https://dl.google.com/android/repository/android-ndk-r27d-linux.zip \
+    && unzip android-ndk-r27d-linux.zip \
+    && rm -v android-ndk-r27d-linux.zip \
     && echo 'code-server &> /dev/null &' > $HOME/miku.sh \
     && chmod 110 $HOME/miku.sh
 USER root

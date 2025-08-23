@@ -5,7 +5,7 @@
 TRG = setpriority
 OBJ = setpriority.o ftrace.o
 SRC = setpriority.c ftrace.c
-NDK = $(HOME)/linux/android-ndk-r27c
+NDK = $(HOME)/linux/android-ndk-r27d
 ARCH = $(shell uname -m)
 PLATFORM = darwin
 ifeq ($(ARCH), x86_64)

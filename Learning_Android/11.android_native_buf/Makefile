@@ -5,7 +5,7 @@
 TRG = native_buf
 OBJ = native_buf.o
 SRC = native_buf.c
-NDK = $(HOME)/linux/android-ndk-r27c
+NDK = $(HOME)/linux/android-ndk-r27d
 ARCH = $(shell uname -m)
 PLATFORM = darwin
 ifeq ($(ARCH), x86_64)

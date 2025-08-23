@@ -5,7 +5,7 @@
 TRG = atrace
 OBJ = atrace.o
 SRC = atrace.cc
-NDK = $(HOME)/linux/android-ndk-r27c
+NDK = $(HOME)/linux/android-ndk-r27d
 ARCH = $(shell uname -m)
 PLATFORM = darwin
 ifeq ($(ARCH), x86_64)
@@ -26,7 +26,7 @@ CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
 # LIBS = -L $(TOOLCHAIN)/sysroot/usr/lib/$(TARGET)/$(API)/ -landroid
-# adb push ~/linux/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/libc++_shared.so /data/local/tmp/
+# adb push ~/linux/android-ndk-r27d/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/libc++_shared.so /data/local/tmp/
 LIBS = -L $(TOOLCHAIN)/sysroot/usr/lib/$(TARGET)/$(API)/ -landroid -L. -lc++_shared -Wl,-rpath=.
 LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib

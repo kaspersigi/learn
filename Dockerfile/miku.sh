@@ -42,9 +42,9 @@ ssh -T -p 443 git@github.com
 cp .wslconfig $USER_PATH
 cp .vimrc ~
 mkdir -p ~/linux/virt
-unzip $TEMP_PATH/android-ndk-r27c-$PLATFORM.zip -d ~/linux
-chmod -R a+x ~/linux/android-ndk-r27c
-rm -rf $TEMP_PATH/android-ndk-r27c-$PLATFORM.zip
+unzip $TEMP_PATH/android-ndk-r27d-$PLATFORM.zip -d ~/linux
+chmod -R a+x ~/linux/android-ndk-r27d
+rm -rf $TEMP_PATH/android-ndk-r27d-$PLATFORM.zip
 
 echo "# Android Debug Bridge" >> ~/.bashrc
 echo "export PATH=$PATH:$ADB_PATH" >> ~/.bashrc

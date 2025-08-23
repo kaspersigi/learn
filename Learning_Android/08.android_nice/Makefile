@@ -5,7 +5,7 @@
 TRG = nice
 OBJ = nice.o ftrace.o
 SRC = nice.c ftrace.c
-NDK = $(HOME)/linux/android-ndk-r27c
+NDK = $(HOME)/linux/android-ndk-r27d
 ARCH = $(shell uname -m)
 PLATFORM = darwin
 ifeq ($(ARCH), x86_64)

@@ -5,7 +5,7 @@
 TRG = cpplog
 OBJ = cpplog.o
 SRC = cpplog.cc
-NDK = $(HOME)/linux/android-ndk-r27c
+NDK = $(HOME)/linux/android-ndk-r27d
 ARCH = $(shell uname -m)
 PLATFORM = darwin
 ifeq ($(ARCH), x86_64)
@@ -25,7 +25,7 @@ C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
-# adb push ~/linux/android-ndk-r27c/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/libc++_shared.so /data/local/tmp/
+# adb push ~/linux/android-ndk-r27d/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/libc++_shared.so /data/local/tmp/
 LIBS = -llog -L. -lc++_shared -Wl,-rpath=.
 LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
