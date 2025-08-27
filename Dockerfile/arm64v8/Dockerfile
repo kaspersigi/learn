@@ -35,12 +35,18 @@ RUN git config --global pull.rebase false \
     && git config --global user.name kaspersigi \
     && git config --global user.email kaspersigi@outlook.com \
     && ssh-keyscan github.com > $HOME/.ssh/known_hosts \
+    && echo 'Host github.com' >> $HOME/.ssh/config \
+    && echo 'Hostname ssh.github.com' >> $HOME/.ssh/config \
+    && echo 'Port 443' >> $HOME/.ssh/config \
+    && echo 'User git' >> $HOME/.ssh/config \
+    && chmod 644 $HOME/.ssh/config \
+    && ssh -T -p 443 git@github.com \
     && echo '' > $HOME/.ssh/authorized_keys \
     && mkdir $HOME/share \
     && mkdir $HOME/linux \
     && cd $HOME/linux \
-    && git clone git@github.com:kaspersigi/learn.git \
-    && git clone git@github.com:kaspersigi/perf_tools.git \
+    && git clone https://github.com/kaspersigi/learn.git \
+    && git clone https://github.com/kaspersigi/perf_tools.git \
     && git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git \
     && wget https://dl.google.com/android/repository/android-ndk-r27d-linux.zip \
     && unzip android-ndk-r27d-linux.zip \
