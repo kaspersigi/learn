@@ -65,6 +65,8 @@ git clone https://github.com/kaspersigi/perf_tools.git
 # git clone https://github.com/kaspersigi/Camera.git
 # git clone git@github.com:kaspersigi/Camera2.git
 # git clone https://github.com/kaspersigi/Camera2.git
+# git clone git@github.com:kaspersigi/OnlySnapshot.git
+# git clone https://github.com/kaspersigi/OnlySnapshot.git
 # git clone git@github.com:kaspersigi/MyCamera.git
 # git clone https://github.com/kaspersigi/MyCamera.git
 # git clone --single-branch -b oppo/sm8750_v_15.0.1_find_x8_ultra --depth 1 git@github.com:oppo-source/android_kernel_oppo_sm8750.git
