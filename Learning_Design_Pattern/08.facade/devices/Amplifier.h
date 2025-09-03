@@ -7,7 +7,8 @@ class Tuner;
 class DvdPlayer;
 class CdPlayer;
 
-class Amplifier {
+class Amplifier
+{
 public:
     explicit Amplifier(std::string description);
     ~Amplifier() = default;
@@ -25,8 +26,8 @@ public:
 protected:
     Amplifier(const Amplifier&) = delete;
     Amplifier(Amplifier&&) = delete;
-    Amplifier& operator=(const Amplifier&) = delete;
-    Amplifier& operator=(Amplifier&&) = delete;
+    Amplifier& operator = (const Amplifier&) = delete;
+    Amplifier& operator = (Amplifier&&) = delete;
 
 private:
     std::string _description {};

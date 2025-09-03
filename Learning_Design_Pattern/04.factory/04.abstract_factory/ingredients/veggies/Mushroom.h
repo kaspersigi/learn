@@ -2,7 +2,8 @@
 
 #include "../../interface/Veggies.h"
 
-class Mushroom : public Veggies {
+class Mushroom : public Veggies
+{
 public:
     Mushroom() = default;
     virtual ~Mushroom() = default;
@@ -12,6 +13,6 @@ public:
 protected:
     Mushroom(const Mushroom&) = delete;
     Mushroom(Mushroom&&) = delete;
-    Mushroom& operator=(const Mushroom&) = delete;
-    Mushroom& operator=(Mushroom&&) = delete;
+    Mushroom& operator = (const Mushroom&) = delete;
+    Mushroom& operator = (Mushroom&&) = delete;
 };

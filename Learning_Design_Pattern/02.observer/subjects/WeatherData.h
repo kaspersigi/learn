@@ -3,13 +3,14 @@
 #include "../interface/Subject.h"
 #include <list>
 
-class WeatherData : public Subject {
+class WeatherData : public Subject
+{
 public:
     WeatherData() = default;
     virtual ~WeatherData() = default;
 
-    virtual void registerObserver(Observer* observer) override;
-    virtual void removeObserver(Observer* observer) override;
+    virtual void registerObserver(Observer * observer) override;
+    virtual void removeObserver(Observer * observer) override;
     virtual void notifyObservers() const override;
     void measurementsChanged();
     void setMeasurements(float temperature, float humidity, float pressure);
@@ -20,8 +21,8 @@ public:
 protected:
     WeatherData(const WeatherData&) = delete;
     WeatherData(WeatherData&&) = delete;
-    WeatherData& operator=(const WeatherData&) = delete;
-    WeatherData& operator=(WeatherData&&) = delete;
+    WeatherData& operator = (const WeatherData&) = delete;
+    WeatherData& operator = (WeatherData&&) = delete;
 
 private:
     std::list<Observer*> _observers {};

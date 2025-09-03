@@ -2,7 +2,8 @@
 
 #include <string>
 
-class Dough {
+class Dough
+{
 public:
     virtual ~Dough() = default;
 
@@ -12,6 +13,6 @@ protected:
     Dough() = default;
     Dough(const Dough&) = delete;
     Dough(Dough&&) = delete;
-    Dough& operator=(const Dough&) = delete;
-    Dough& operator=(Dough&&) = delete;
+    Dough& operator = (const Dough&) = delete;
+    Dough& operator = (Dough&&) = delete;
 };

@@ -2,7 +2,8 @@
 
 #include <string>
 
-class Hottub {
+class Hottub
+{
 public:
     Hottub() = default;
     ~Hottub() = default;
@@ -23,8 +24,8 @@ public:
 protected:
     Hottub(const Hottub&) = delete;
     Hottub(Hottub&&) = delete;
-    Hottub& operator=(const Hottub&) = delete;
-    Hottub& operator=(Hottub&&) = delete;
+    Hottub& operator = (const Hottub&) = delete;
+    Hottub& operator = (Hottub&&) = delete;
 
 private:
     mutable State _state { State::OFF };

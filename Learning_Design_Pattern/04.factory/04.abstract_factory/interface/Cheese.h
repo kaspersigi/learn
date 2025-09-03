@@ -2,7 +2,8 @@
 
 #include <string>
 
-class Cheese {
+class Cheese
+{
 public:
     virtual ~Cheese() = default;
 
@@ -12,6 +13,6 @@ protected:
     Cheese() = default;
     Cheese(const Cheese&) = delete;
     Cheese(Cheese&&) = delete;
-    Cheese& operator=(const Cheese&) = delete;
-    Cheese& operator=(Cheese&&) = delete;
+    Cheese& operator = (const Cheese&) = delete;
+    Cheese& operator = (Cheese&&) = delete;
 };

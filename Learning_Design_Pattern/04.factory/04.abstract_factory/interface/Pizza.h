@@ -11,7 +11,8 @@
 #include "Sauce.h"
 #include "Veggies.h"
 
-class Pizza {
+class Pizza
+{
 public:
     virtual ~Pizza();
 
@@ -27,8 +28,8 @@ protected:
     Pizza() = default;
     Pizza(const Pizza&) = delete;
     Pizza(Pizza&&) = delete;
-    Pizza& operator=(const Pizza&) = delete;
-    Pizza& operator=(Pizza&&) = delete;
+    Pizza& operator = (const Pizza&) = delete;
+    Pizza& operator = (Pizza&&) = delete;
 
     mutable std::shared_ptr<Cheese> _cheese {};
     mutable std::shared_ptr<Clams> _clam {};

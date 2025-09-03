@@ -1,6 +1,7 @@
 #pragma once
 
-class GarageDoor {
+class GarageDoor
+{
 public:
     GarageDoor() = default;
     ~GarageDoor() = default;
@@ -14,6 +15,6 @@ public:
 protected:
     GarageDoor(const GarageDoor&) = delete;
     GarageDoor(GarageDoor&&) = delete;
-    GarageDoor& operator=(const GarageDoor&) = delete;
-    GarageDoor& operator=(GarageDoor&&) = delete;
+    GarageDoor& operator = (const GarageDoor&) = delete;
+    GarageDoor& operator = (GarageDoor&&) = delete;
 };

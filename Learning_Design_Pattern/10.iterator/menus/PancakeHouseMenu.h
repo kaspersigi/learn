@@ -4,7 +4,8 @@
 #include <string>
 #include <vector>
 
-class PancakeHouseMenu : public Menu {
+class PancakeHouseMenu : public Menu
+{
 public:
     PancakeHouseMenu();
     virtual ~PancakeHouseMenu() = default;
@@ -17,8 +18,8 @@ public:
 protected:
     PancakeHouseMenu(const PancakeHouseMenu&) = delete;
     PancakeHouseMenu(PancakeHouseMenu&&) = delete;
-    PancakeHouseMenu& operator=(const PancakeHouseMenu&) = delete;
-    PancakeHouseMenu& operator=(PancakeHouseMenu&&) = delete;
+    PancakeHouseMenu& operator = (const PancakeHouseMenu&) = delete;
+    PancakeHouseMenu& operator = (PancakeHouseMenu&&) = delete;
 
 private:
     std::vector<std::shared_ptr<MenuItem>> _menuItems {};

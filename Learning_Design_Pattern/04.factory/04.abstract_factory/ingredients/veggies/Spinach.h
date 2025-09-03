@@ -2,7 +2,8 @@
 
 #include "../../interface/Veggies.h"
 
-class Spinach : public Veggies {
+class Spinach : public Veggies
+{
 public:
     Spinach() = default;
     virtual ~Spinach() = default;
@@ -12,6 +13,6 @@ public:
 protected:
     Spinach(const Spinach&) = delete;
     Spinach(Spinach&&) = delete;
-    Spinach& operator=(const Spinach&) = delete;
-    Spinach& operator=(Spinach&&) = delete;
+    Spinach& operator = (const Spinach&) = delete;
+    Spinach& operator = (Spinach&&) = delete;
 };

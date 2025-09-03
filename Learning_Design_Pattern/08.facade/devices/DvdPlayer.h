@@ -5,7 +5,8 @@
 
 class Amplifier;
 
-class DvdPlayer {
+class DvdPlayer
+{
 public:
     DvdPlayer(std::string description, std::shared_ptr<Amplifier> amplifier);
     ~DvdPlayer() = default;
@@ -24,8 +25,8 @@ public:
 protected:
     DvdPlayer(const DvdPlayer&) = delete;
     DvdPlayer(DvdPlayer&&) = delete;
-    DvdPlayer& operator=(const DvdPlayer&) = delete;
-    DvdPlayer& operator=(DvdPlayer&&) = delete;
+    DvdPlayer& operator = (const DvdPlayer&) = delete;
+    DvdPlayer& operator = (DvdPlayer&&) = delete;
 
 private:
     std::string _description {};

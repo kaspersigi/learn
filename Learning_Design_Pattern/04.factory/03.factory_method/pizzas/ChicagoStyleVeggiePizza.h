@@ -2,7 +2,8 @@
 
 #include "../interface/Pizza.h"
 
-class ChicagoStyleVeggiePizza : public Pizza {
+class ChicagoStyleVeggiePizza : public Pizza
+{
 public:
     ChicagoStyleVeggiePizza();
     virtual ~ChicagoStyleVeggiePizza() = default;
@@ -12,6 +13,6 @@ public:
 protected:
     ChicagoStyleVeggiePizza(const ChicagoStyleVeggiePizza&) = delete;
     ChicagoStyleVeggiePizza(ChicagoStyleVeggiePizza&&) = delete;
-    ChicagoStyleVeggiePizza& operator=(const ChicagoStyleVeggiePizza&) = delete;
-    ChicagoStyleVeggiePizza& operator=(ChicagoStyleVeggiePizza&&) = delete;
+    ChicagoStyleVeggiePizza& operator = (const ChicagoStyleVeggiePizza&) = delete;
+    ChicagoStyleVeggiePizza& operator = (ChicagoStyleVeggiePizza&&) = delete;
 };

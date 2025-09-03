@@ -4,9 +4,10 @@
 #include "../interface/Observer.h"
 #include "../interface/Subject.h"
 
-class StatisticsDisplay : public Observer, public DisplayElement {
+class StatisticsDisplay : public Observer, public DisplayElement
+{
 public:
-    explicit StatisticsDisplay(Subject* weatherData);
+    explicit StatisticsDisplay(Subject * weatherData);
     virtual ~StatisticsDisplay();
 
     virtual void update(float temperature, float humidity, float pressure) override;
@@ -15,8 +16,8 @@ public:
 protected:
     StatisticsDisplay(const StatisticsDisplay&) = delete;
     StatisticsDisplay(StatisticsDisplay&&) = delete;
-    StatisticsDisplay& operator=(const StatisticsDisplay&) = delete;
-    StatisticsDisplay& operator=(StatisticsDisplay&&) = delete;
+    StatisticsDisplay& operator = (const StatisticsDisplay&) = delete;
+    StatisticsDisplay& operator = (StatisticsDisplay&&) = delete;
 
 private:
     Subject* _weatherData {};

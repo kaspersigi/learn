@@ -2,7 +2,8 @@
 
 #include <string>
 
-class Pepperoni {
+class Pepperoni
+{
 public:
     virtual ~Pepperoni() = default;
 
@@ -12,6 +13,6 @@ protected:
     Pepperoni() = default;
     Pepperoni(const Pepperoni&) = delete;
     Pepperoni(Pepperoni&&) = delete;
-    Pepperoni& operator=(const Pepperoni&) = delete;
-    Pepperoni& operator=(Pepperoni&&) = delete;
+    Pepperoni& operator = (const Pepperoni&) = delete;
+    Pepperoni& operator = (Pepperoni&&) = delete;
 };

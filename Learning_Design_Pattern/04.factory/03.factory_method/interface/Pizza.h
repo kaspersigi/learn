@@ -3,7 +3,8 @@
 #include <iostream>
 #include <list>
 
-class Pizza {
+class Pizza
+{
 public:
     virtual ~Pizza() = default;
 
@@ -18,8 +19,8 @@ protected:
     Pizza() = default;
     Pizza(const Pizza&) = delete;
     Pizza(Pizza&&) = delete;
-    Pizza& operator=(const Pizza&) = delete;
-    Pizza& operator=(Pizza&&) = delete;
+    Pizza& operator = (const Pizza&) = delete;
+    Pizza& operator = (Pizza&&) = delete;
 
     std::string _name {};
     std::string _dough {};

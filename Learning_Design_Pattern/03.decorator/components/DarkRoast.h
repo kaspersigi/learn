@@ -2,7 +2,8 @@
 
 #include "../interface/Beverage.h"
 
-class DarkRoast : public Beverage {
+class DarkRoast : public Beverage
+{
 public:
     DarkRoast();
     virtual ~DarkRoast() = default;
@@ -12,6 +13,6 @@ public:
 protected:
     DarkRoast(const DarkRoast&) = delete;
     DarkRoast(DarkRoast&&) = delete;
-    DarkRoast& operator=(const DarkRoast&) = delete;
-    DarkRoast& operator=(DarkRoast&&) = delete;
+    DarkRoast& operator = (const DarkRoast&) = delete;
+    DarkRoast& operator = (DarkRoast&&) = delete;
 };

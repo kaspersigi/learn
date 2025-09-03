@@ -3,7 +3,8 @@
 #include "../../interface/Pepperoni.h"
 #include <string>
 
-class SlicedPepperoni : public Pepperoni {
+class SlicedPepperoni : public Pepperoni
+{
 public:
     SlicedPepperoni() = default;
     virtual ~SlicedPepperoni() = default;
@@ -13,6 +14,6 @@ public:
 protected:
     SlicedPepperoni(const SlicedPepperoni&) = delete;
     SlicedPepperoni(SlicedPepperoni&&) = delete;
-    SlicedPepperoni& operator=(const SlicedPepperoni&) = delete;
-    SlicedPepperoni& operator=(SlicedPepperoni&&) = delete;
+    SlicedPepperoni& operator = (const SlicedPepperoni&) = delete;
+    SlicedPepperoni& operator = (SlicedPepperoni&&) = delete;
 };

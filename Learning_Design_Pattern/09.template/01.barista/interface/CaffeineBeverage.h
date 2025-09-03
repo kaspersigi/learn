@@ -1,6 +1,7 @@
 #pragma once
 
-class CaffeineBeverage {
+class CaffeineBeverage
+{
 public:
     CaffeineBeverage() = default;
 
@@ -10,8 +11,8 @@ protected:
     virtual ~CaffeineBeverage() = default;
     CaffeineBeverage(const CaffeineBeverage&) = delete;
     CaffeineBeverage(CaffeineBeverage&&) = delete;
-    CaffeineBeverage& operator=(const CaffeineBeverage&) = delete;
-    CaffeineBeverage& operator=(CaffeineBeverage&&) = delete;
+    CaffeineBeverage& operator = (const CaffeineBeverage&) = delete;
+    CaffeineBeverage& operator = (CaffeineBeverage&&) = delete;
 
     virtual void brew() const = 0;
     virtual void addCondiments() const = 0;

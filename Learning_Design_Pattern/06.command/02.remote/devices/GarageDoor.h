@@ -2,7 +2,8 @@
 
 #include <string>
 
-class GarageDoor {
+class GarageDoor
+{
 public:
     explicit GarageDoor(const std::string location);
     ~GarageDoor() = default;
@@ -16,8 +17,8 @@ public:
 protected:
     GarageDoor(const GarageDoor&) = delete;
     GarageDoor(GarageDoor&&) = delete;
-    GarageDoor& operator=(const GarageDoor&) = delete;
-    GarageDoor& operator=(GarageDoor&&) = delete;
+    GarageDoor& operator = (const GarageDoor&) = delete;
+    GarageDoor& operator = (GarageDoor&&) = delete;
 
 private:
     std::string _location {};

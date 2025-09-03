@@ -4,7 +4,8 @@
 #include <memory>
 #include <string>
 
-class RemoteControlWithUndo {
+class RemoteControlWithUndo
+{
 public:
     RemoteControlWithUndo();
     ~RemoteControlWithUndo() = default;
@@ -18,8 +19,8 @@ public:
 protected:
     RemoteControlWithUndo(const RemoteControlWithUndo&) = delete;
     RemoteControlWithUndo(RemoteControlWithUndo&&) = delete;
-    RemoteControlWithUndo& operator=(const RemoteControlWithUndo&) = delete;
-    RemoteControlWithUndo& operator=(RemoteControlWithUndo&&) = delete;
+    RemoteControlWithUndo& operator = (const RemoteControlWithUndo&) = delete;
+    RemoteControlWithUndo& operator = (RemoteControlWithUndo&&) = delete;
 
 private:
     static const int SLOTS = 7;

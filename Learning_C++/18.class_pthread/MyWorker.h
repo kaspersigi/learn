@@ -2,7 +2,8 @@
 
 #include <memory>
 
-class ChildWorker {
+class ChildWorker
+{
 public:
     ChildWorker() = default;
     ~ChildWorker() = default;
@@ -13,11 +14,12 @@ protected:
     ChildWorker(const ChildWorker&)
         = delete;
     ChildWorker(ChildWorker&&) = delete;
-    ChildWorker& operator=(const ChildWorker&) = delete;
-    ChildWorker& operator=(ChildWorker&&) = delete;
+    ChildWorker& operator = (const ChildWorker&) = delete;
+    ChildWorker& operator = (ChildWorker&&) = delete;
 };
 
-class MainWorker {
+class MainWorker
+{
 public:
     MainWorker() = default;
     ~MainWorker() = default;
@@ -27,8 +29,8 @@ public:
 protected:
     MainWorker(const MainWorker&) = delete;
     MainWorker(MainWorker&&) = delete;
-    MainWorker& operator=(const MainWorker&) = delete;
-    MainWorker& operator=(MainWorker&&) = delete;
+    MainWorker& operator = (const MainWorker&) = delete;
+    MainWorker& operator = (MainWorker&&) = delete;
 
 private:
     static void* main_worker(void*);

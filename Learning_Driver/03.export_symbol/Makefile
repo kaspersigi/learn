@@ -6,7 +6,7 @@ obj-m := $(TRG).o
 else
 PWD := $(shell pwd)
 KDIR := ~/linux/linux
-LLVM := -20
+LLVM := -21
 ARCH := arm64
 C_FLAGS := LLVM=$(LLVM) ARCH=$(ARCH)
 FORMAT = /usr/bin/clang-format$(LLVM)

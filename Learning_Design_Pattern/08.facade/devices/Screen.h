@@ -2,7 +2,8 @@
 
 #include <string>
 
-class Screen {
+class Screen
+{
 public:
     explicit Screen(std::string description);
     ~Screen() = default;
@@ -14,8 +15,8 @@ public:
 protected:
     Screen(const Screen&) = delete;
     Screen(Screen&&) = delete;
-    Screen& operator=(const Screen&) = delete;
-    Screen& operator=(Screen&&) = delete;
+    Screen& operator = (const Screen&) = delete;
+    Screen& operator = (Screen&&) = delete;
 
 private:
     std::string _description {};

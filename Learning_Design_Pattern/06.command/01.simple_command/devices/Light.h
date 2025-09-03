@@ -1,6 +1,7 @@
 #pragma once
 
-class Light {
+class Light
+{
 public:
     Light() = default;
     ~Light() = default;
@@ -11,6 +12,6 @@ public:
 protected:
     Light(const Light&) = delete;
     Light(Light&&) = delete;
-    Light& operator=(const Light&) = delete;
-    Light& operator=(Light&&) = delete;
+    Light& operator = (const Light&) = delete;
+    Light& operator = (Light&&) = delete;
 };

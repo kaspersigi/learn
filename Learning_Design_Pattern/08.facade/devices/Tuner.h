@@ -5,7 +5,8 @@
 
 class Amplifier;
 
-class Tuner {
+class Tuner
+{
 public:
     Tuner(std::string description, std::shared_ptr<Amplifier> amplifier);
     ~Tuner() = default;
@@ -20,8 +21,8 @@ public:
 protected:
     Tuner(const Tuner&) = delete;
     Tuner(Tuner&&) = delete;
-    Tuner& operator=(const Tuner&) = delete;
-    Tuner& operator=(Tuner&&) = delete;
+    Tuner& operator = (const Tuner&) = delete;
+    Tuner& operator = (Tuner&&) = delete;
 
 private:
     std::string _description {};

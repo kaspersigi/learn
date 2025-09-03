@@ -2,7 +2,8 @@
 
 #include <string>
 
-class TheaterLights {
+class TheaterLights
+{
 public:
     explicit TheaterLights(std::string description);
     ~TheaterLights() = default;
@@ -15,8 +16,8 @@ public:
 protected:
     TheaterLights(const TheaterLights&) = delete;
     TheaterLights(TheaterLights&&) = delete;
-    TheaterLights& operator=(const TheaterLights&) = delete;
-    TheaterLights& operator=(TheaterLights&&) = delete;
+    TheaterLights& operator = (const TheaterLights&) = delete;
+    TheaterLights& operator = (TheaterLights&&) = delete;
 
 private:
     std::string _description {};

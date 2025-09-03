@@ -3,7 +3,8 @@
 #include "../pizzas/pizzas.h"
 #include <memory>
 
-class SimplePizzaFactory {
+class SimplePizzaFactory
+{
 public:
     SimplePizzaFactory() = default;
     ~SimplePizzaFactory() = default;
@@ -13,6 +14,6 @@ public:
 protected:
     SimplePizzaFactory(const SimplePizzaFactory&) = delete;
     SimplePizzaFactory(SimplePizzaFactory&&) = delete;
-    SimplePizzaFactory& operator=(const SimplePizzaFactory&) = delete;
-    SimplePizzaFactory& operator=(SimplePizzaFactory&&) = delete;
+    SimplePizzaFactory& operator = (const SimplePizzaFactory&) = delete;
+    SimplePizzaFactory& operator = (SimplePizzaFactory&&) = delete;
 };

@@ -3,7 +3,8 @@
 #include "../../interface/Sauce.h"
 #include <string>
 
-class PlumTomatoSauce : public Sauce {
+class PlumTomatoSauce : public Sauce
+{
 public:
     PlumTomatoSauce() = default;
     virtual ~PlumTomatoSauce() = default;
@@ -13,6 +14,6 @@ public:
 protected:
     PlumTomatoSauce(const PlumTomatoSauce&) = delete;
     PlumTomatoSauce(PlumTomatoSauce&&) = delete;
-    PlumTomatoSauce& operator=(const PlumTomatoSauce&) = delete;
-    PlumTomatoSauce& operator=(PlumTomatoSauce&&) = delete;
+    PlumTomatoSauce& operator = (const PlumTomatoSauce&) = delete;
+    PlumTomatoSauce& operator = (PlumTomatoSauce&&) = delete;
 };

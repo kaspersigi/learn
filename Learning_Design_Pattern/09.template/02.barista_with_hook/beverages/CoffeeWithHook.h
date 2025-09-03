@@ -2,7 +2,8 @@
 
 #include "../interface/CaffeineBeverageWithHook.h"
 
-class CoffeeWithHook : public CaffeineBeverageWithHook {
+class CoffeeWithHook : public CaffeineBeverageWithHook
+{
 public:
     CoffeeWithHook() = default;
     virtual ~CoffeeWithHook() = default;
@@ -15,6 +16,6 @@ public:
 protected:
     CoffeeWithHook(const CoffeeWithHook&) = delete;
     CoffeeWithHook(CoffeeWithHook&&) = delete;
-    CoffeeWithHook& operator=(const CoffeeWithHook&) = delete;
-    CoffeeWithHook& operator=(CoffeeWithHook&&) = delete;
+    CoffeeWithHook& operator = (const CoffeeWithHook&) = delete;
+    CoffeeWithHook& operator = (CoffeeWithHook&&) = delete;
 };

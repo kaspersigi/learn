@@ -2,7 +2,8 @@
 
 #include "../interface/Beverage.h"
 
-class HouseBlend : public Beverage {
+class HouseBlend : public Beverage
+{
 public:
     HouseBlend();
     virtual ~HouseBlend() = default;
@@ -12,6 +13,6 @@ public:
 protected:
     HouseBlend(const HouseBlend&) = delete;
     HouseBlend(HouseBlend&&) = delete;
-    HouseBlend& operator=(const HouseBlend&) = delete;
-    HouseBlend& operator=(HouseBlend&&) = delete;
+    HouseBlend& operator = (const HouseBlend&) = delete;
+    HouseBlend& operator = (HouseBlend&&) = delete;
 };

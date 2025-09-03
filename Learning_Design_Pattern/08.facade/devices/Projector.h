@@ -5,7 +5,8 @@
 
 class DvdPlayer;
 
-class Projector {
+class Projector
+{
 public:
     Projector(std::string description, std::shared_ptr<DvdPlayer> dvdPlayer);
     ~Projector() = default;
@@ -19,8 +20,8 @@ public:
 protected:
     Projector(const Projector&) = delete;
     Projector(Projector&&) = delete;
-    Projector& operator=(const Projector&) = delete;
-    Projector& operator=(Projector&&) = delete;
+    Projector& operator = (const Projector&) = delete;
+    Projector& operator = (Projector&&) = delete;
 
 private:
     std::string _description {};

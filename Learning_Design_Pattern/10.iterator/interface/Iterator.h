@@ -2,8 +2,9 @@
 
 #include <memory>
 
-template <class T>
-class Iterator {
+template<class T>
+    class Iterator
+{
 
 public:
     virtual ~Iterator() = default;
@@ -15,6 +16,6 @@ protected:
     Iterator() = default;
     Iterator(const Iterator&) = delete;
     Iterator(Iterator&&) = delete;
-    Iterator& operator=(const Iterator&) = delete;
-    Iterator& operator=(Iterator&&) = delete;
+    Iterator& operator = (const Iterator&) = delete;
+    Iterator& operator = (Iterator&&) = delete;
 };

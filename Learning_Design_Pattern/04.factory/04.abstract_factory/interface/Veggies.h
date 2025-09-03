@@ -2,7 +2,8 @@
 
 #include <string>
 
-class Veggies {
+class Veggies
+{
 public:
     virtual ~Veggies() = default;
 
@@ -12,6 +13,6 @@ protected:
     Veggies() = default;
     Veggies(const Veggies&) = delete;
     Veggies(Veggies&&) = delete;
-    Veggies& operator=(const Veggies&) = delete;
-    Veggies& operator=(Veggies&&) = delete;
+    Veggies& operator = (const Veggies&) = delete;
+    Veggies& operator = (Veggies&&) = delete;
 };

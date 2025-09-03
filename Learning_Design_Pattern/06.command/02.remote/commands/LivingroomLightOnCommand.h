@@ -3,7 +3,8 @@
 #include "../interface/Command.h"
 #include <memory>
 
-class LivingroomLightOnCommand : public Command {
+class LivingroomLightOnCommand : public Command
+{
 public:
     explicit LivingroomLightOnCommand(std::shared_ptr<const Light> light);
     explicit LivingroomLightOnCommand(std::nullptr_t) = delete;
@@ -14,8 +15,8 @@ protected:
     virtual ~LivingroomLightOnCommand() = default;
     LivingroomLightOnCommand(const LivingroomLightOnCommand&) = delete;
     LivingroomLightOnCommand(LivingroomLightOnCommand&&) = delete;
-    LivingroomLightOnCommand& operator=(const LivingroomLightOnCommand&) = delete;
-    LivingroomLightOnCommand& operator=(LivingroomLightOnCommand&&) = delete;
+    LivingroomLightOnCommand& operator = (const LivingroomLightOnCommand&) = delete;
+    LivingroomLightOnCommand& operator = (LivingroomLightOnCommand&&) = delete;
 
 private:
     std::weak_ptr<const Light> _light {};

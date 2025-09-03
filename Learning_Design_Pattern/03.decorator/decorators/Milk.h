@@ -3,7 +3,8 @@
 #include "../interface/CondimentDecorator.h"
 #include <memory>
 
-class Milk : public CondimentDecorator {
+class Milk : public CondimentDecorator
+{
 public:
     explicit Milk(const Beverage* beverage);
     virtual ~Milk() = default;
@@ -14,8 +15,8 @@ public:
 protected:
     Milk(const Milk&) = delete;
     Milk(Milk&&) = delete;
-    Milk& operator=(const Milk&) = delete;
-    Milk& operator=(Milk&&) = delete;
+    Milk& operator = (const Milk&) = delete;
+    Milk& operator = (Milk&&) = delete;
 
 private:
     std::shared_ptr<const Beverage> _beverage {};

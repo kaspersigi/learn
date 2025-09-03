@@ -2,7 +2,8 @@
 
 #include <memory>
 
-class ChocolateBoiler {
+class ChocolateBoiler
+{
 public:
     ~ChocolateBoiler();
     static std::shared_ptr<ChocolateBoiler> getInstance();
@@ -17,8 +18,8 @@ protected:
     ChocolateBoiler() = default;
     ChocolateBoiler(const ChocolateBoiler&) = delete;
     ChocolateBoiler(ChocolateBoiler&&) = delete;
-    ChocolateBoiler& operator=(const ChocolateBoiler&) = delete;
-    ChocolateBoiler& operator=(ChocolateBoiler&&) = delete;
+    ChocolateBoiler& operator = (const ChocolateBoiler&) = delete;
+    ChocolateBoiler& operator = (ChocolateBoiler&&) = delete;
 
 private:
     static std::shared_ptr<ChocolateBoiler> _uniqueInstance;

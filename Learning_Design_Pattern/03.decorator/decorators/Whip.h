@@ -3,7 +3,8 @@
 #include "../interface/CondimentDecorator.h"
 #include <memory>
 
-class Whip : public CondimentDecorator {
+class Whip : public CondimentDecorator
+{
 public:
     explicit Whip(const Beverage* beverage);
     virtual ~Whip() = default;
@@ -14,8 +15,8 @@ public:
 protected:
     Whip(const Whip&) = delete;
     Whip(Whip&&) = delete;
-    Whip& operator=(const Whip&) = delete;
-    Whip& operator=(Whip&&) = delete;
+    Whip& operator = (const Whip&) = delete;
+    Whip& operator = (Whip&&) = delete;
 
 private:
     std::shared_ptr<const Beverage> _beverage {};

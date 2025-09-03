@@ -2,7 +2,8 @@
 
 #include <string>
 
-class PopcornPopper {
+class PopcornPopper
+{
 public:
     explicit PopcornPopper(std::string description);
     ~PopcornPopper() = default;
@@ -15,8 +16,8 @@ public:
 protected:
     PopcornPopper(const PopcornPopper&) = delete;
     PopcornPopper(PopcornPopper&&) = delete;
-    PopcornPopper& operator=(const PopcornPopper&) = delete;
-    PopcornPopper& operator=(PopcornPopper&&) = delete;
+    PopcornPopper& operator = (const PopcornPopper&) = delete;
+    PopcornPopper& operator = (PopcornPopper&&) = delete;
 
 private:
     std::string _description {};

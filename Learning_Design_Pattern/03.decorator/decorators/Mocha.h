@@ -3,7 +3,8 @@
 #include "../interface/CondimentDecorator.h"
 #include <memory>
 
-class Mocha : public CondimentDecorator {
+class Mocha : public CondimentDecorator
+{
 public:
     explicit Mocha(const Beverage* beverage);
     virtual ~Mocha() = default;
@@ -14,8 +15,8 @@ public:
 protected:
     Mocha(const Mocha&) = delete;
     Mocha(Mocha&&) = delete;
-    Mocha& operator=(const Mocha&) = delete;
-    Mocha& operator=(Mocha&&) = delete;
+    Mocha& operator = (const Mocha&) = delete;
+    Mocha& operator = (Mocha&&) = delete;
 
 private:
     std::shared_ptr<const Beverage> _beverage {};

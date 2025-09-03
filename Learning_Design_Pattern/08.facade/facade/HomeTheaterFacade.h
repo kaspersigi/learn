@@ -12,7 +12,8 @@ class TheaterLights;
 class Screen;
 class PopcornPopper;
 
-class HomeTheaterFacade {
+class HomeTheaterFacade
+{
 public:
     HomeTheaterFacade(std::shared_ptr<Amplifier> amp, std::shared_ptr<Tuner> tuner, std::shared_ptr<DvdPlayer> dvd, std::shared_ptr<CdPlayer> cd, std::shared_ptr<Projector> projector, std::shared_ptr<TheaterLights> lights, std::shared_ptr<Screen> screen, std::shared_ptr<PopcornPopper> popper);
     ~HomeTheaterFacade() = default;
@@ -27,8 +28,8 @@ public:
 protected:
     HomeTheaterFacade(const HomeTheaterFacade&) = delete;
     HomeTheaterFacade(HomeTheaterFacade&&) = delete;
-    HomeTheaterFacade& operator=(const HomeTheaterFacade&) = delete;
-    HomeTheaterFacade& operator=(HomeTheaterFacade&&) = delete;
+    HomeTheaterFacade& operator = (const HomeTheaterFacade&) = delete;
+    HomeTheaterFacade& operator = (HomeTheaterFacade&&) = delete;
 
 private:
     std::weak_ptr<Amplifier> _amp {};

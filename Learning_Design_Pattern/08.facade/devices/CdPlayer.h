@@ -5,7 +5,8 @@
 
 class Amplifier;
 
-class CdPlayer {
+class CdPlayer
+{
 public:
     CdPlayer(std::string description, std::shared_ptr<Amplifier> amplifier);
     ~CdPlayer() = default;
@@ -22,8 +23,8 @@ public:
 protected:
     CdPlayer(const CdPlayer&) = delete;
     CdPlayer(CdPlayer&&) = delete;
-    CdPlayer& operator=(const CdPlayer&) = delete;
-    CdPlayer& operator=(CdPlayer&&) = delete;
+    CdPlayer& operator = (const CdPlayer&) = delete;
+    CdPlayer& operator = (CdPlayer&&) = delete;
 
 private:
     std::string _description {};

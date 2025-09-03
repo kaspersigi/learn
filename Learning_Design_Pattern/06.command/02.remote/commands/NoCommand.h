@@ -2,7 +2,8 @@
 #include "../interface/Command.h"
 #include <memory>
 
-class NoCommand : public Command {
+class NoCommand : public Command
+{
 public:
     NoCommand() = default;
     virtual ~NoCommand() = default;
@@ -12,6 +13,6 @@ public:
 protected:
     NoCommand(const NoCommand&) = delete;
     NoCommand(NoCommand&&) = delete;
-    NoCommand& operator=(const NoCommand&) = delete;
-    NoCommand& operator=(NoCommand&&) = delete;
+    NoCommand& operator = (const NoCommand&) = delete;
+    NoCommand& operator = (NoCommand&&) = delete;
 };

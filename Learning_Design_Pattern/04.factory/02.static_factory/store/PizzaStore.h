@@ -3,7 +3,8 @@
 #include "../interface/Pizza.h"
 #include <memory>
 
-class PizzaStore {
+class PizzaStore
+{
 public:
     explicit PizzaStore() = default;
     ~PizzaStore() = default;
@@ -13,6 +14,6 @@ public:
 protected:
     PizzaStore(const PizzaStore&) = delete;
     PizzaStore(PizzaStore&&) = delete;
-    PizzaStore& operator=(const PizzaStore&) = delete;
-    PizzaStore& operator=(PizzaStore&&) = delete;
+    PizzaStore& operator = (const PizzaStore&) = delete;
+    PizzaStore& operator = (PizzaStore&&) = delete;
 };

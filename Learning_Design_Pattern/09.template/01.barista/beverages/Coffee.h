@@ -2,7 +2,8 @@
 
 #include "../interface/CaffeineBeverage.h"
 
-class Coffee : public CaffeineBeverage {
+class Coffee : public CaffeineBeverage
+{
 public:
     Coffee() = default;
     virtual ~Coffee() = default;
@@ -13,6 +14,6 @@ public:
 protected:
     Coffee(const Coffee&) = delete;
     Coffee(Coffee&&) = delete;
-    Coffee& operator=(const Coffee&) = delete;
-    Coffee& operator=(Coffee&&) = delete;
+    Coffee& operator = (const Coffee&) = delete;
+    Coffee& operator = (Coffee&&) = delete;
 };

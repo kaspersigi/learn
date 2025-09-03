@@ -2,7 +2,8 @@
 
 #include "../../interface/Veggies.h"
 
-class Onion : public Veggies {
+class Onion : public Veggies
+{
 public:
     Onion() = default;
     virtual ~Onion() = default;
@@ -12,6 +13,6 @@ public:
 protected:
     Onion(const Onion&) = delete;
     Onion(Onion&&) = delete;
-    Onion& operator=(const Onion&) = delete;
-    Onion& operator=(Onion&&) = delete;
+    Onion& operator = (const Onion&) = delete;
+    Onion& operator = (Onion&&) = delete;
 };

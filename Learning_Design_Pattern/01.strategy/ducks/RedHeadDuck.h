@@ -2,7 +2,8 @@
 
 #include "../interface/Duck.h"
 
-class RedHeadDuck : public Duck {
+class RedHeadDuck : public Duck
+{
 public:
     RedHeadDuck();
     virtual ~RedHeadDuck() = default;
@@ -12,6 +13,6 @@ public:
 protected:
     RedHeadDuck(const RedHeadDuck&) = delete;
     RedHeadDuck(RedHeadDuck&&) = delete;
-    RedHeadDuck& operator=(const RedHeadDuck&) = delete;
-    RedHeadDuck& operator=(RedHeadDuck&&) = delete;
+    RedHeadDuck& operator = (const RedHeadDuck&) = delete;
+    RedHeadDuck& operator = (RedHeadDuck&&) = delete;
 };

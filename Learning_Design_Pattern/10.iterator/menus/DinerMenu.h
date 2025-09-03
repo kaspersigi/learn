@@ -3,7 +3,8 @@
 #include "../interface/Menu.h"
 #include <string>
 
-class DinerMenu : public Menu {
+class DinerMenu : public Menu
+{
 public:
     DinerMenu();
     virtual ~DinerMenu();
@@ -15,8 +16,8 @@ public:
 protected:
     DinerMenu(const DinerMenu&) = delete;
     DinerMenu(DinerMenu&&) = delete;
-    DinerMenu& operator=(const DinerMenu&) = delete;
-    DinerMenu& operator=(DinerMenu&&) = delete;
+    DinerMenu& operator = (const DinerMenu&) = delete;
+    DinerMenu& operator = (DinerMenu&&) = delete;
 
 private:
     static const int MAX_ITEMS { 6 };

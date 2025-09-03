@@ -3,7 +3,8 @@
 #include "../../interface/Clams.h"
 #include <string>
 
-class FreshClams : public Clams {
+class FreshClams : public Clams
+{
 public:
     FreshClams() = default;
     virtual ~FreshClams() = default;
@@ -13,6 +14,6 @@ public:
 protected:
     FreshClams(const FreshClams&) = delete;
     FreshClams(FreshClams&&) = delete;
-    FreshClams& operator=(const FreshClams&) = delete;
-    FreshClams& operator=(FreshClams&&) = delete;
+    FreshClams& operator = (const FreshClams&) = delete;
+    FreshClams& operator = (FreshClams&&) = delete;
 };

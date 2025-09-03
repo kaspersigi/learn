@@ -2,7 +2,8 @@
 
 #include <string>
 
-class Sauce {
+class Sauce
+{
 public:
     virtual ~Sauce() = default;
 
@@ -12,6 +13,6 @@ protected:
     Sauce() = default;
     Sauce(const Sauce&) = delete;
     Sauce(Sauce&&) = delete;
-    Sauce& operator=(const Sauce&) = delete;
-    Sauce& operator=(Sauce&&) = delete;
+    Sauce& operator = (const Sauce&) = delete;
+    Sauce& operator = (Sauce&&) = delete;
 };

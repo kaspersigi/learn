@@ -9,7 +9,8 @@ class Pepperoni;
 class Sauce;
 class Veggies;
 
-class PizzaIngredientFactory {
+class PizzaIngredientFactory
+{
 public:
     virtual ~PizzaIngredientFactory() = default;
 
@@ -24,6 +25,6 @@ protected:
     PizzaIngredientFactory() = default;
     PizzaIngredientFactory(const PizzaIngredientFactory&) = delete;
     PizzaIngredientFactory(PizzaIngredientFactory&&) = delete;
-    PizzaIngredientFactory& operator=(const PizzaIngredientFactory&) = delete;
-    PizzaIngredientFactory& operator=(PizzaIngredientFactory&&) = delete;
+    PizzaIngredientFactory& operator = (const PizzaIngredientFactory&) = delete;
+    PizzaIngredientFactory& operator = (PizzaIngredientFactory&&) = delete;
 };

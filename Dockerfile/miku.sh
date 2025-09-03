@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 # ubuntu 22.04.5
 
-LLVM_VERSION="20"
+LLVM_VERSION="21"
 LLVM="-$LLVM_VERSION"
 USER=$(cmd.exe /c echo %USERNAME% | tr -d '\r')
 TOP_PATH="/mnt/d/Learning_Camera/learn"
@@ -61,6 +61,8 @@ cd ~/linux
 git clone https://github.com/kaspersigi/learn.git
 # git clone git@github.com:kaspersigi/perf_tools.git
 git clone https://github.com/kaspersigi/perf_tools.git
+# git clone git@github.com:kaspersigi/CAMERA.LA.5.0.r1-03800-pakala.0-1.git
+git clone https://github.com/kaspersigi/CAMERA.LA.5.0.r1-03800-pakala.0-1.git
 # git clone git@github.com:kaspersigi/Camera.git
 # git clone https://github.com/kaspersigi/Camera.git
 # git clone git@github.com:kaspersigi/Camera2.git

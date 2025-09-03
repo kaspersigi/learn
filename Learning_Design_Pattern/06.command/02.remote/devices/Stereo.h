@@ -2,7 +2,8 @@
 
 #include <string>
 
-class Stereo {
+class Stereo
+{
 public:
     explicit Stereo(const std::string location);
     ~Stereo() = default;
@@ -17,8 +18,8 @@ public:
 protected:
     Stereo(const Stereo&) = delete;
     Stereo(Stereo&&) = delete;
-    Stereo& operator=(const Stereo&) = delete;
-    Stereo& operator=(Stereo&&) = delete;
+    Stereo& operator = (const Stereo&) = delete;
+    Stereo& operator = (Stereo&&) = delete;
 
 private:
     std::string _location {};

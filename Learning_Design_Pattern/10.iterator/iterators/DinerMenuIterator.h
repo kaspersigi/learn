@@ -2,9 +2,10 @@
 
 #include "../interface/Menu.h"
 
-class DinerMenuIterator : public Iterator<MenuItem> {
+class DinerMenuIterator : public Iterator<MenuItem>
+{
 public:
-    explicit DinerMenuIterator(std::shared_ptr<MenuItem>* items);
+    explicit DinerMenuIterator(std::shared_ptr<MenuItem> * items);
     explicit DinerMenuIterator(std::nullptr_t) = delete;
     virtual ~DinerMenuIterator() = default;
 
@@ -14,8 +15,8 @@ public:
 protected:
     DinerMenuIterator(const DinerMenuIterator&) = delete;
     DinerMenuIterator(DinerMenuIterator&&) = delete;
-    DinerMenuIterator& operator=(const DinerMenuIterator&) = delete;
-    DinerMenuIterator& operator=(DinerMenuIterator&&) = delete;
+    DinerMenuIterator& operator = (const DinerMenuIterator&) = delete;
+    DinerMenuIterator& operator = (DinerMenuIterator&&) = delete;
 
 private:
     std::shared_ptr<MenuItem>* _items { nullptr };

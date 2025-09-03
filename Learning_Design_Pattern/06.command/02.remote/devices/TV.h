@@ -2,7 +2,8 @@
 
 #include <string>
 
-class TV {
+class TV
+{
 public:
     explicit TV(const std::string location);
     ~TV() = default;
@@ -14,8 +15,8 @@ public:
 protected:
     TV(const TV&) = delete;
     TV(TV&&) = delete;
-    TV& operator=(const TV&) = delete;
-    TV& operator=(TV&&) = delete;
+    TV& operator = (const TV&) = delete;
+    TV& operator = (TV&&) = delete;
 
 private:
     std::string _location {};

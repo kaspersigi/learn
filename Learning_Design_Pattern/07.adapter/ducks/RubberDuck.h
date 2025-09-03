@@ -2,7 +2,8 @@
 
 #include "../interface/Duck.h"
 
-class RubberDuck : public Duck {
+class RubberDuck : public Duck
+{
 public:
     RubberDuck();
     virtual ~RubberDuck() = default;
@@ -12,6 +13,6 @@ public:
 protected:
     RubberDuck(const RubberDuck&) = delete;
     RubberDuck(RubberDuck&&) = delete;
-    RubberDuck& operator=(const RubberDuck&) = delete;
-    RubberDuck& operator=(RubberDuck&&) = delete;
+    RubberDuck& operator = (const RubberDuck&) = delete;
+    RubberDuck& operator = (RubberDuck&&) = delete;
 };

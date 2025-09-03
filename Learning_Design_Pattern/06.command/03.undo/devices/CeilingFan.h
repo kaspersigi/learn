@@ -2,7 +2,8 @@
 
 #include <string>
 
-class CeilingFan {
+class CeilingFan
+{
 public:
     explicit CeilingFan(const std::string location);
     ~CeilingFan() = default;
@@ -21,8 +22,8 @@ public:
 protected:
     CeilingFan(const CeilingFan&) = delete;
     CeilingFan(CeilingFan&&) = delete;
-    CeilingFan& operator=(const CeilingFan&) = delete;
-    CeilingFan& operator=(CeilingFan&&) = delete;
+    CeilingFan& operator = (const CeilingFan&) = delete;
+    CeilingFan& operator = (CeilingFan&&) = delete;
 
 private:
     std::string _location {};

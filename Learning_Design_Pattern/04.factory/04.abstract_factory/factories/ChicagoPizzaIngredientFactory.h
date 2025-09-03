@@ -2,7 +2,8 @@
 
 #include "../interface/PizzaIngredientFactory.h"
 
-class ChicagoPizzaIngredientFactory : public PizzaIngredientFactory {
+class ChicagoPizzaIngredientFactory : public PizzaIngredientFactory
+{
 public:
     ChicagoPizzaIngredientFactory() = default;
     virtual ~ChicagoPizzaIngredientFactory() = default;
@@ -17,6 +18,6 @@ public:
 protected:
     ChicagoPizzaIngredientFactory(const ChicagoPizzaIngredientFactory&) = delete;
     ChicagoPizzaIngredientFactory(ChicagoPizzaIngredientFactory&&) = delete;
-    ChicagoPizzaIngredientFactory& operator=(const ChicagoPizzaIngredientFactory&) = delete;
-    ChicagoPizzaIngredientFactory& operator=(ChicagoPizzaIngredientFactory&&) = delete;
+    ChicagoPizzaIngredientFactory& operator = (const ChicagoPizzaIngredientFactory&) = delete;
+    ChicagoPizzaIngredientFactory& operator = (ChicagoPizzaIngredientFactory&&) = delete;
 };

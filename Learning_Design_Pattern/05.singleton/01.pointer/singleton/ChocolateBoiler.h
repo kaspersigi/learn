@@ -1,6 +1,7 @@
 #pragma once
 
-class ChocolateBoiler {
+class ChocolateBoiler
+{
 public:
     ~ChocolateBoiler();
     static ChocolateBoiler* getInstance();
@@ -15,8 +16,8 @@ protected:
     ChocolateBoiler() = default;
     ChocolateBoiler(const ChocolateBoiler&) = delete;
     ChocolateBoiler(ChocolateBoiler&&) = delete;
-    ChocolateBoiler& operator=(const ChocolateBoiler&) = delete;
-    ChocolateBoiler& operator=(ChocolateBoiler&&) = delete;
+    ChocolateBoiler& operator = (const ChocolateBoiler&) = delete;
+    ChocolateBoiler& operator = (ChocolateBoiler&&) = delete;
 
 private:
     static ChocolateBoiler* _uniqueInstance;

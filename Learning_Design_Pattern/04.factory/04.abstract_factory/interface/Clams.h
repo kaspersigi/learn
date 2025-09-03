@@ -2,7 +2,8 @@
 
 #include <string>
 
-class Clams {
+class Clams
+{
 public:
     virtual ~Clams() = default;
 
@@ -12,6 +13,6 @@ protected:
     Clams() = default;
     Clams(const Clams&) = delete;
     Clams(Clams&&) = delete;
-    Clams& operator=(const Clams&) = delete;
-    Clams& operator=(Clams&&) = delete;
+    Clams& operator = (const Clams&) = delete;
+    Clams& operator = (Clams&&) = delete;
 };

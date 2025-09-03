@@ -18,15 +18,15 @@ RUN chown miku:miku -R /home/miku/.ssh \
     && chmod 600 /home/miku/.ssh/id_ed25519
 RUN wget https://apt.llvm.org/llvm-snapshot.gpg.key -O /tmp/key \
     && gpg --dearmor -o /usr/share/keyrings/llvm-archive-keyring.gpg /tmp/key \
-    && echo "deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/jammy/ llvm-toolchain-jammy-20 main" | tee /etc/apt/sources.list.d/llvm.list
+    && echo "deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/jammy/ llvm-toolchain-jammy-21 main" | tee /etc/apt/sources.list.d/llvm.list
 RUN apt update \
     && apt upgrade -y \
     && apt autoremove -y
 RUN apt install sudo curl git vim openssh-server -y
-RUN apt install clang-20 clangd-20 clang-format-20 lldb-20 libllvmlibc-20-dev libc++-20-dev lld-20 binutils-i686-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu binutils-x86-64-linux-gnu bsdmainutils make gdb cgdb valgrind qemu-system-arm qemu-system-misc qemu-system-x86 -y
+RUN apt install clang-21 clangd-21 clang-format-21 lldb-21 libllvmlibc-21-dev libc++-21-dev lld-21 binutils-i686-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu binutils-x86-64-linux-gnu bsdmainutils make gdb cgdb valgrind qemu-system-arm qemu-system-misc qemu-system-x86 -y
 RUN apt install libncurses5 libncurses-dev flex bison bc dwarves libssl-dev libelf-dev python-is-python3 python3-pip python3-virtualenv pbzip2 bzip2 zip unzip xz-utils lz4 cpio rsync -y
-RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-20 100 \
-    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-20 100 \
+RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-21 100 \
+    && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-21 100 \
     && echo 'miku    ALL=(ALL:ALL) ALL' >> /etc/sudoers \
     && echo '/usr/sbin/sshd -D &' > /root/run.sh \
     && chmod 110 /root/run.sh

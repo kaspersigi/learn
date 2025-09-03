@@ -1,6 +1,7 @@
 #pragma once
 
-class CaffeineBeverageWithHook {
+class CaffeineBeverageWithHook
+{
 public:
     CaffeineBeverageWithHook() = default;
 
@@ -10,8 +11,8 @@ protected:
     virtual ~CaffeineBeverageWithHook() = default;
     CaffeineBeverageWithHook(const CaffeineBeverageWithHook&) = delete;
     CaffeineBeverageWithHook(CaffeineBeverageWithHook&&) = delete;
-    CaffeineBeverageWithHook& operator=(const CaffeineBeverageWithHook&) = delete;
-    CaffeineBeverageWithHook& operator=(CaffeineBeverageWithHook&&) = delete;
+    CaffeineBeverageWithHook& operator = (const CaffeineBeverageWithHook&) = delete;
+    CaffeineBeverageWithHook& operator = (CaffeineBeverageWithHook&&) = delete;
 
     virtual void brew() const = 0;
     virtual void addCondiments() const = 0;

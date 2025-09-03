@@ -4,7 +4,8 @@
 #include <memory>
 #include <string>
 
-class RemoteControl {
+class RemoteControl
+{
 public:
     RemoteControl();
     ~RemoteControl() = default;
@@ -17,8 +18,8 @@ public:
 protected:
     RemoteControl(const RemoteControl&) = delete;
     RemoteControl(RemoteControl&&) = delete;
-    RemoteControl& operator=(const RemoteControl&) = delete;
-    RemoteControl& operator=(RemoteControl&&) = delete;
+    RemoteControl& operator = (const RemoteControl&) = delete;
+    RemoteControl& operator = (RemoteControl&&) = delete;
 
 private:
     static const int SLOTS = 7;

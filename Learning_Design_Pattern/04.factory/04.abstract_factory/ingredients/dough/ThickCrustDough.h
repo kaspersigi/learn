@@ -3,7 +3,8 @@
 #include "../../interface/Dough.h"
 #include <string>
 
-class ThickCrustDough : public Dough {
+class ThickCrustDough : public Dough
+{
 public:
     ThickCrustDough() = default;
     virtual ~ThickCrustDough() = default;
@@ -13,6 +14,6 @@ public:
 protected:
     ThickCrustDough(const ThickCrustDough&) = delete;
     ThickCrustDough(ThickCrustDough&&) = delete;
-    ThickCrustDough& operator=(const ThickCrustDough&) = delete;
-    ThickCrustDough& operator=(ThickCrustDough&&) = delete;
+    ThickCrustDough& operator = (const ThickCrustDough&) = delete;
+    ThickCrustDough& operator = (ThickCrustDough&&) = delete;
 };

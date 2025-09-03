@@ -3,7 +3,8 @@
 #include "../../interface/Cheese.h"
 #include <string>
 
-class ReggianoCheese : public Cheese {
+class ReggianoCheese : public Cheese
+{
 public:
     ReggianoCheese() = default;
     virtual ~ReggianoCheese() = default;
@@ -13,6 +14,6 @@ public:
 protected:
     ReggianoCheese(const ReggianoCheese&) = delete;
     ReggianoCheese(ReggianoCheese&&) = delete;
-    ReggianoCheese& operator=(const ReggianoCheese&) = delete;
-    ReggianoCheese& operator=(ReggianoCheese&&) = delete;
+    ReggianoCheese& operator = (const ReggianoCheese&) = delete;
+    ReggianoCheese& operator = (ReggianoCheese&&) = delete;
 };

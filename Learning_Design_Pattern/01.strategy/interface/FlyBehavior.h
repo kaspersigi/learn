@@ -1,6 +1,7 @@
 #pragma once
 
-class FlyBehavior {
+class FlyBehavior
+{
 public:
     virtual ~FlyBehavior() = default;
 
@@ -10,6 +11,6 @@ protected:
     FlyBehavior() = default;
     FlyBehavior(const FlyBehavior&) = delete;
     FlyBehavior(FlyBehavior&&) = delete;
-    FlyBehavior& operator=(const FlyBehavior&) = delete;
-    FlyBehavior& operator=(FlyBehavior&&) = delete;
+    FlyBehavior& operator = (const FlyBehavior&) = delete;
+    FlyBehavior& operator = (FlyBehavior&&) = delete;
 };

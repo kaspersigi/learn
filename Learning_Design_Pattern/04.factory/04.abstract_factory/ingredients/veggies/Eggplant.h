@@ -2,7 +2,8 @@
 
 #include "../../interface/Veggies.h"
 
-class Eggplant : public Veggies {
+class Eggplant : public Veggies
+{
 public:
     Eggplant() = default;
     virtual ~Eggplant() = default;
@@ -12,6 +13,6 @@ public:
 protected:
     Eggplant(const Eggplant&) = delete;
     Eggplant(Eggplant&&) = delete;
-    Eggplant& operator=(const Eggplant&) = delete;
-    Eggplant& operator=(Eggplant&&) = delete;
+    Eggplant& operator = (const Eggplant&) = delete;
+    Eggplant& operator = (Eggplant&&) = delete;
 };

@@ -8,7 +8,8 @@
 
 typedef void* (*callback)(void* arg);
 
-class Task {
+class Task
+{
 public:
     Task();
     Task(callback function, void* arg);
@@ -17,7 +18,8 @@ public:
     void* _arg;
 };
 
-class TaskQueue {
+class TaskQueue
+{
 public:
     TaskQueue();
     ~TaskQueue();
@@ -31,7 +33,8 @@ private:
     std::mutex _mutex;
 };
 
-class ThreadPool {
+class ThreadPool
+{
 public:
     ThreadPool(int min = 5, int max = 10);
     ~ThreadPool();

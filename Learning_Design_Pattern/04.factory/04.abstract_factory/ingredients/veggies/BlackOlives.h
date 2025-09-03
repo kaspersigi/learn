@@ -2,7 +2,8 @@
 
 #include "../../interface/Veggies.h"
 
-class BlackOlives : public Veggies {
+class BlackOlives : public Veggies
+{
 public:
     BlackOlives() = default;
     virtual ~BlackOlives() = default;
@@ -12,6 +13,6 @@ public:
 protected:
     BlackOlives(const BlackOlives&) = delete;
     BlackOlives(BlackOlives&&) = delete;
-    BlackOlives& operator=(const BlackOlives&) = delete;
-    BlackOlives& operator=(BlackOlives&&) = delete;
+    BlackOlives& operator = (const BlackOlives&) = delete;
+    BlackOlives& operator = (BlackOlives&&) = delete;
 };

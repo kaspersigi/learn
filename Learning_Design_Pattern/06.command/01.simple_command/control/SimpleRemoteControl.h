@@ -2,7 +2,8 @@
 #include "../interface/Command.h"
 #include <memory>
 
-class SimpleRemoteControl {
+class SimpleRemoteControl
+{
 public:
     SimpleRemoteControl() = default;
     virtual ~SimpleRemoteControl() = default;
@@ -13,8 +14,8 @@ public:
 protected:
     SimpleRemoteControl(const SimpleRemoteControl&) = delete;
     SimpleRemoteControl(SimpleRemoteControl&&) = delete;
-    SimpleRemoteControl& operator=(const SimpleRemoteControl&) = delete;
-    SimpleRemoteControl& operator=(SimpleRemoteControl&&) = delete;
+    SimpleRemoteControl& operator = (const SimpleRemoteControl&) = delete;
+    SimpleRemoteControl& operator = (SimpleRemoteControl&&) = delete;
 
 private:
     std::shared_ptr<const Command> _slot {};

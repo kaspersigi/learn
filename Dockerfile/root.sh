@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 # ubuntu 22.04.5
 
-LLVM_VERSION="20"
+LLVM_VERSION="21"
 LLVM="-$LLVM_VERSION"
 TOP_PATH="/mnt/d/Learning_Camera/learn"
 TEMP_PATH="/mnt/c/Users/Public/Downloads"

@@ -19,7 +19,7 @@ API = 35
 CC = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang
 CXX = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang++
 AR = $(TOOLCHAIN)/bin/llvm-ar
-LLVM = -20
+LLVM = -21
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
