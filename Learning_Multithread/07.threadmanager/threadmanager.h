@@ -1,14 +1,7 @@
-// ============================
-// file: threadmanager.h
-// ============================
 #pragma once
 
-// 学习友好版线程池（最小修改补丁版）：
-// 1) 修复 Flush 计数与等待的竞态，保证不死等；
-// 2) 修复“家族不存在/Flush 中/过期”路径的计数与取消；
-// 3) 统一计数类型为 size_t，避免截断；
-// 4) 回调在锁外执行；
-// 5) 有序家族不阻塞队列头：未到序转 pending，顺延放行。
+// 学习友好版线程池（最小修改补丁版）
+// 改动点：优先级入队、队列上限、析构期软Flush、旧序号取消、通知优化、拒绝即回收
 
 #include <atomic>
 #include <chrono>
@@ -17,6 +10,7 @@
 #include <cstdint>
 #include <deque>
 #include <functional>
+#include <limits>
 #include <map>
 #include <mutex>
 #include <string>
@@ -65,7 +59,6 @@ public:
 
     // 等待某家族完成（队列+缓存+执行中全部清空）
     void Sync(Handle h);
-
     // 限时等待：true=完成，false=超时或家族不存在
     [[nodiscard]] bool SyncFor(Handle h, std::chrono::milliseconds timeout);
 
