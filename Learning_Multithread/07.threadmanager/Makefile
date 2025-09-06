@@ -3,8 +3,8 @@
 ###########################################
 
 TRG = main
-OBJ = main.o threadmanager.o
-SRC = main.cc threadmanager.cc
+OBJ = main.o threadmanager.o ftrace.o
+SRC = main.cc threadmanager.cc ftrace.cc
 LLVM = -21
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
@@ -28,11 +28,15 @@ $(TRG) : $(OBJ)
 	rm -v $(OBJ)
 threadmanager.o : threadmanager.cc threadmanager.h
 	$(CXX) threadmanager.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+ftrace.o : ftrace.cc ftrace.h
+	$(CXX) ftrace.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 main.o : main.cc
 	$(CXX) main.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
 	$(FORMAT) threadmanager.h -style=file -i
 	$(FORMAT) threadmanager.cc -style=file -i
+	$(FORMAT) ftrace.h -style=file -i
+	$(FORMAT) ftrace.cc -style=file -i
 	$(FORMAT) main.cc -style=file -i
 clean :
 	rm -v $(TRG)

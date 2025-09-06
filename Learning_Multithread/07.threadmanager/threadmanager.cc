@@ -4,19 +4,59 @@
 // ============================
 
 #include "threadmanager.h"
+#include "ftrace.h"
 #include <cassert>
 
-ThreadManager::ThreadManager(std::size_t threadCount)
-    : m_stop(false)
-    , m_nextHandle(1)
+// `Create` 方法：静态方法，用于创建 `ThreadManager` 实例并进行初始化
+bool ThreadManager::Create(ThreadManager** ppInstance, const std::string& name, std::size_t numThreads)
 {
+    bool ret = true;
+
+    // 检查输入参数
+    if (ppInstance == nullptr) {
+        ret = false;
+        return ret;
+    }
+
+    Ftrace::ftrace_duration_begin("ThreadManager::Create " + name);
+
+    // 创建 ThreadManager 实例
+    *ppInstance = new ThreadManager(numThreads);
+    if (nullptr != *ppInstance) {
+        // 调用 Initialize 进行进一步初始化
+        ret = (*ppInstance)->Initialize(name);
+    }
+
+    Ftrace::ftrace_duration_end();
+    return ret;
+}
+
+void ThreadManager::Destroy()
+{
+    delete this;
+}
+
+// `Initialize` 方法：用于设置线程池名称等初始化操作
+bool ThreadManager::Initialize(const std::string& name)
+{
+    m_name = name; // 设置线程池名称
+
     // 至少创建 1 个 worker
-    if (threadCount == 0)
-        threadCount = 1;
-    m_workers.reserve(threadCount);
-    for (std::size_t i = 0; i < threadCount; ++i) {
+    if (m_numThreads == 0)
+        m_numThreads = 1;
+    m_workers.reserve(m_numThreads);
+    for (std::size_t i = 0; i < m_numThreads; ++i) {
         m_workers.emplace_back([this] { workerLoop(); });
     }
+
+    return true; // 如果初始化成功，返回 true
+}
+
+ThreadManager::ThreadManager(std::size_t threadCount)
+    : m_numThreads(threadCount)
+    , m_stop(false)
+    , m_nextHandle(1)
+{
 }
 
 ThreadManager::~ThreadManager()

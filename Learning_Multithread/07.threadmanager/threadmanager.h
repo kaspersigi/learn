@@ -55,11 +55,15 @@ public:
     // 供外部调用者使用的“无限等待”占位常量（本类内部未直接使用）
     static constexpr std::uint64_t kWaitForever = std::numeric_limits<std::uint64_t>::max();
 
-    // 构造：创建指定数量 worker（最少 1 个）
-    explicit ThreadManager(std::size_t threadCount = std::thread::hardware_concurrency());
+    // 创建线程池实例的方法
+    // - ppInstance: 输出参数，指向创建的 ThreadManager 实例
+    // - name: 线程池名称，用于日志和调试
+    // - numThreads: 线程池大小，默认为硬件核心数
+    [[nodiscard]] static bool Create(ThreadManager * *ppInstance, const std::string& name = "ThreadManager", std::size_t numThreads = std::thread::hardware_concurrency());
 
-    // 析构：执行“软 Flush”，使所有未执行任务走取消回调，并回收线程
-    ~ThreadManager();
+    // 销毁线程池并清理资源
+    // - 在析构时调用，确保线程池停止并回收资源
+    void Destroy();
 
     // 注册一个作业家族
     // - fn：家族统一的执行函数
@@ -139,22 +143,44 @@ private:
     };
 
 private:
+    // 构造：创建指定数量 worker（最少 1 个）
+    // - threadCount: 线程池大小（默认为硬件核心数）
+    explicit ThreadManager(std::size_t threadCount);
+
+    // 析构：执行“软 Flush”，使所有未执行任务走取消回调，并回收线程
+    ~ThreadManager();
+
+    // 初始化方法，用于设置线程池的名称等初始化操作
+    // - name: 线程池的名称（用于日志和调试）
+    // 该方法将在构造函数中调用，确保线程池在启动前完成初始化
+    [[nodiscard]] bool Initialize(const std::string& name);
+
     // worker 主循环：从全局队列取任务 → 判断可执行/缓存/取消 → 调用回调 → 推进 nextSeq
+    // 每个 worker 会从队列中取任务，判断是否可以执行并进行回调，执行完后更新状态
     void workerLoop();
 
     // 在已持有 m_mtx 的前提下，将任务放入全局队列（处理优先级并通知）
+    // 该方法保证线程安全地将任务加入全局队列
     void enqueueNoLock(QItem && it);
 
 private:
+    // 线程池的名称，用于日志、诊断等
+    // - m_name：保存线程池的名称，用于调试和日志输出，帮助区分不同线程池实例
+    std::string m_name;
+
+    std::size_t m_numThreads { 0 };
+
     // 线程与队列
     std::vector<std::thread> m_workers; // 工作线程
     std::deque<QItem> m_queue; // 全局任务队列（单把大锁保护）
     std::size_t m_queueCap { 0 }; // 队列上限（0 不限制）
 
     // 家族表：句柄到 Family 的映射
+    // - m_families：存储作业家族的元数据和统计信息
     std::unordered_map<Handle, Family> m_families;
 
     // 互斥与条件变量
+    // - m_mtx：保护任务队列和家族数据的互斥锁
     std::mutex m_mtx; // 统一大锁，保护队列与家族元数据
     std::condition_variable m_cv; // worker 等待“有任务或停止”
     std::condition_variable m_doneCv; // Sync/Flush 等待“家族 outstanding==0”
