@@ -16,7 +16,7 @@ struct Payload {
 };
 
 // 执行体：模拟工作并打印；仅对“已执行”的任务释放资源
-static void myJob(void* p)
+auto myJob(void* p) -> void
 {
     auto* pl = static_cast<Payload*>(p);
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
@@ -24,7 +24,7 @@ static void myJob(void* p)
     delete pl; // 被取消的任务资源由 cancel 回调释放
 }
 
-int main()
+auto main(int argc, char* argv[]) -> int
 {
     // 创建 4 个 worker
     ThreadManager tm(4);
