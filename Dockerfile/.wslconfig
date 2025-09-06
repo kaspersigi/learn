@@ -1,6 +1,6 @@
 [wsl2]
-processors=12
-memory=24G
-swap=24G
+processors=8
+memory=4G
+swap=0G
 networkingMode=mirrored
 # kernel=D:\\Learning_Kernel\\src\\bzImage
