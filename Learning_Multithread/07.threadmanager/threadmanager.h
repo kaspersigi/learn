@@ -103,7 +103,7 @@ public:
 
     // 设置全局队列上限（0 不限制）
     // 说明：仅限制“进入全局队列”的数量；pending（未来序号）不受限
-    void SetQueueCap(std::size_t cap) { m_queueCap = cap; }
+    void SetQueueCap(std::size_t cap);
 
 private:
     // 全局队列元素：记录家族/序号/优先级/过期时间等

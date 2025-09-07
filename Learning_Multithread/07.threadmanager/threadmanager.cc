@@ -6,6 +6,7 @@
 #include "threadmanager.h"
 #include "ftrace.h"
 #include <cassert>
+#include <print>
 
 // `Create` 方法：静态方法，用于创建 `ThreadManager` 实例并进行初始化
 bool ThreadManager::Create(ThreadManager** ppInstance, const std::string& name, std::size_t numThreads)
@@ -150,7 +151,10 @@ bool ThreadManager::RegisterJobFamily(const JobFunc& fn,
     // 分配新的家族句柄并初始化元数据
     Handle h = m_nextHandle++;
     auto [it, inserted] = m_families.try_emplace(h);
-    (void)inserted;
+    if (!inserted) {
+        // 如果家族已经存在，可能想输出日志、抛出异常或做其他处理
+        std::println("Family with handle {} already exists!", h);
+    }
     Family& fam = it->second;
     fam.func = fn;
     fam.cancel = cancel;
@@ -339,6 +343,8 @@ bool ThreadManager::Flush(Handle h)
     fam.canceled.fetch_add(to_cancel.size(), std::memory_order_relaxed);
     return true;
 }
+
+void ThreadManager::SetQueueCap(std::size_t cap) { m_queueCap = cap; }
 
 void ThreadManager::WorkerLoop()
 {

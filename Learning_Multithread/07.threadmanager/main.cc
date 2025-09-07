@@ -19,7 +19,7 @@ struct Payload {
 auto myJob(void* p) -> void
 {
     auto* pl = static_cast<Payload*>(p);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
     std::println("[{}] job {} done", pl->tag, pl->v);
     delete pl; // 被取消的任务资源由 cancel 回调释放
 }
@@ -60,6 +60,7 @@ auto main(int argc, char* argv[]) -> int
     // 演示 Flush：提交 6、7 后立即 Flush，未执行的会被取消
     pPerfThreadPool->PostJob(hA, new Payload { 6, "A" }, 6);
     pPerfThreadPool->PostJob(hA, new Payload { 7, "A" }, 7);
+
     pPerfThreadPool->Flush(hA);
     std::println("[A] flush done");
 
