@@ -19,7 +19,7 @@ struct Payload {
 auto myJob(void* p) -> void
 {
     auto* pl = static_cast<Payload*>(p);
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     std::println("[{}] job {} done", pl->tag, pl->v);
     delete pl; // 被取消的任务资源由 cancel 回调释放
 }

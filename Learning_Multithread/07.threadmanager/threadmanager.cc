@@ -46,7 +46,7 @@ bool ThreadManager::Initialize(const std::string& name)
         m_numThreads = 1;
     m_workers.reserve(m_numThreads);
     for (std::size_t i = 0; i < m_numThreads; ++i) {
-        m_workers.emplace_back([this] { workerLoop(); });
+        m_workers.emplace_back([this] { WorkerLoop(); });
     }
 
     return true; // 如果初始化成功，返回 true
@@ -217,7 +217,7 @@ bool ThreadManager::PostJob(Handle h,
                 fam.outstanding.fetch_sub(1, std::memory_order_acq_rel);
                 return reject_and_maybe_cancel(userData);
             }
-            enqueueNoLock(std::move(item));
+            EnqueueNoLock(std::move(item));
         } else {
             // 未来序号：放入 pending（pending 不受队列上限限制）
             fam.pending[sequence].emplace_back(std::move(item));
@@ -228,12 +228,12 @@ bool ThreadManager::PostJob(Handle h,
             fam.outstanding.fetch_sub(1, std::memory_order_acq_rel);
             return reject_and_maybe_cancel(userData);
         }
-        enqueueNoLock(std::move(item));
+        EnqueueNoLock(std::move(item));
     }
     return true;
 }
 
-void ThreadManager::enqueueNoLock(QItem&& it)
+void ThreadManager::EnqueueNoLock(QItem&& it)
 {
     // 要求：调用方已持有 m_mtx
     // 行为：根据优先级决定插入队列头/尾，并唤醒一个 worker
@@ -340,7 +340,7 @@ bool ThreadManager::Flush(Handle h)
     return true;
 }
 
-void ThreadManager::workerLoop()
+void ThreadManager::WorkerLoop()
 {
     // 不断从全局队列取任务并处理：
     // - Flush 状态：直接取消

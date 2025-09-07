@@ -157,11 +157,11 @@ private:
 
     // worker 主循环：从全局队列取任务 → 判断可执行/缓存/取消 → 调用回调 → 推进 nextSeq
     // 每个 worker 会从队列中取任务，判断是否可以执行并进行回调，执行完后更新状态
-    void workerLoop();
+    void WorkerLoop();
 
     // 在已持有 m_mtx 的前提下，将任务放入全局队列（处理优先级并通知）
     // 该方法保证线程安全地将任务加入全局队列
-    void enqueueNoLock(QItem && it);
+    void EnqueueNoLock(QItem && it);
 
 private:
     // 线程池的名称，用于日志、诊断等
