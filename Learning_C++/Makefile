@@ -24,7 +24,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
-all : template macro regex constructor deconstructor interface interface_template shared_ptr weak_ptr const function_template class_template threadpool iterator class_export class_thread class_async class_promise class_pthread async_callback print_format print path filesystem ifstream ofstream boost_regex static_local_variable singleton ftrace halrequest framecapture
+all : template macro regex constructor deconstructor interface interface_template shared_ptr weak_ptr const function_template class_template threadpool iterator class_export class_thread class_async class_promise class_pthread async_callback print_format print path filesystem ifstream ofstream boost_regex static_local_variable singleton ftrace halrequest framecapture spdlog
 template :
 	$(MAKE) -C 00.template
 macro :
@@ -89,6 +89,8 @@ halrequest :
 	$(MAKE) -C 30.halrequest
 framecapture :
 	$(MAKE) -C 31.framecapture
+spdlog :
+	$(MAKE) -C 32.spdlog
 
 format :
 	$(MAKE) -C 00.template format
@@ -123,7 +125,7 @@ format :
 	$(MAKE) -C 29.ftrace format
 	$(MAKE) -C 30.halrequest format
 	$(MAKE) -C 31.framecapture format
-
+	$(MAKE) -C 32.spdlog format
 clean :
 	$(MAKE) -C 00.template clean
 	$(MAKE) -C 01.macro clean
@@ -157,3 +159,4 @@ clean :
 	$(MAKE) -C 29.ftrace clean
 	$(MAKE) -C 30.halrequest clean
 	$(MAKE) -C 31.framecapture clean
+	$(MAKE) -C 32.spdlog clean
