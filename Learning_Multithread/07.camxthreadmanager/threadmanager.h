@@ -1,6 +1,7 @@
 /// @file threadmanager.h
 #pragma once
 
+#include "def.h"
 #include "imonitorclient.h"
 #include "types.h"
 
@@ -21,26 +22,6 @@ enum struct JobPriority {
 
 // Invalid thread handle
 static const JobHandle InvalidJobHandle = 0;
-
-/// @brief Define Default maximum execution time for a job
-static const uint64_t MaxExecutionTimeMilliseconds = 66; ///< Maxtime of execution in 30FPS case and considering SBM delays
-static const uint64_t MaxConfigureExecutionTimeMs = 300; ///< Max time of execution for feature2 or configureTIme jobs
-static const uint64_t MaxExecutionTimeForCSLMs = 90; ///< Max Execution time for CSL thread
-static const uint64_t MaxExecutionTimeForResultMs = 200; ///< Maximum execution time for camxsession result processing
-static const uint32_t DefaultMaxDelayCount = 1; ///< Default Mas Delay count used in case it is not set explicitly
-
-// Default max number of threads per pool
-static const uint32_t MaxThreadsPerPool = 15;
-// Max registered jobs in a pool
-static const uint32_t MaxNameLength = 128;
-// Max data partitions allowed inside a job
-static const uint32_t MaxDataPartition = 3;
-// Max registered jobs in a pool
-static const uint32_t MaxRuntimeJobs = 4096;
-// Max registered jobs in a pool (64 per camera)
-static const uint32_t MaxRegisteredJobs = 512;
-// One queue per priority level
-static const unsigned int MaxNumQueues = static_cast<unsigned int>(JobPriority::Invalid);
 
 // Forward declaration of implementation classes
 class JobRegistry;
