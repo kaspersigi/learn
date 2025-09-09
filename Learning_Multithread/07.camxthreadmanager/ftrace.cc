@@ -1,7 +1,8 @@
+/// @file ftrace.cc
 #include "ftrace.h"
+#include "spdlog/spdlog.h"
 #include <fcntl.h>
 #include <format>
-#include <print>
 #include <unistd.h>
 
 int Ftrace::_fd = -1;
@@ -118,7 +119,7 @@ bool Ftrace::ftrace_enable()
         return true;
     _fd = open("/sys/kernel/tracing/trace_marker", O_WRONLY);
     if (_fd < 0) {
-        std::println("Failed to open trace_marker!");
+        spdlog::error("Failed to open trace_marker!");
         return false;
     }
     return true;

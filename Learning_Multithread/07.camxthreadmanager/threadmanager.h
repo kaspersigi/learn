@@ -1,193 +1,144 @@
-// ============================
-// file: threadmanager.h
-// 说明：轻量线程池/任务调度器
-// - “作业家族”（Family）概念：同一家族共享执行函数与统计数据
-// - 可选按序放行：基于 sequence 与 nextSeq 实现严格顺序
-// - 乱序窗口：限制未来可缓存的最大“序号间隙”
-// - 优先级：High 插队到全局队列头部，Default 进入队列尾部
-// - 队列上限：仅限制外部 Post 进入全局队列的数量（pending 不受限）
-// - 超时/过期：deadline 超过当前时间的任务会被取消（走 cancel 回调）
-// - Flush：丢弃队列与 pending 中未执行任务，等待运行中任务结束
-// - Sync/SyncFor：等待指定家族 outstanding（在途计数）归零
-// 线程安全：对外 API 除构造/析构外均内部加锁；回调在锁外执行
-// ============================
-
+/// @file threadmanager.h
 #pragma once
 
-#include <atomic>
-#include <chrono>
-#include <condition_variable>
-#include <cstddef>
-#include <cstdint>
-#include <deque>
-#include <functional>
-#include <limits>
-#include <map>
-#include <mutex>
-#include <string>
-#include <thread>
-#include <unordered_map>
-#include <utility>
-#include <vector>
+#include "imonitorclient.h"
+#include "types.h"
 
-class ThreadManager
+/// @brief Opaque handle to a job
+typedef uint64_t JobHandle;
+/// @brief Function pointer type for a job function
+typedef void* (*JobFunc)(void* pArg);
+/// @brief Function pointer type for a job callback function
+typedef void (*JobCb)(void* pUserData);
+
+/// @brief Relative priority of a job submitted
+enum struct JobPriority {
+    Critical = 0, ///< Critical (highest) priority job in Camx
+    High = 1, ///< Next to Critical priority in Camx
+    Normal = 2, ///< Next to High priority in Camx
+    Invalid = 3 ///< Invalid priority
+};
+
+// Invalid thread handle
+static const JobHandle InvalidJobHandle = 0;
+
+/// @brief Define Default maximum execution time for a job
+static const uint64_t MaxExecutionTimeMilliseconds = 66; ///< Maxtime of execution in 30FPS case and considering SBM delays
+static const uint64_t MaxConfigureExecutionTimeMs = 300; ///< Max time of execution for feature2 or configureTIme jobs
+static const uint64_t MaxExecutionTimeForCSLMs = 90; ///< Max Execution time for CSL thread
+static const uint64_t MaxExecutionTimeForResultMs = 200; ///< Maximum execution time for camxsession result processing
+static const uint32_t DefaultMaxDelayCount = 1; ///< Default Mas Delay count used in case it is not set explicitly
+
+// Default max number of threads per pool
+static const uint32_t MaxThreadsPerPool = 15;
+// Max registered jobs in a pool
+static const uint32_t MaxNameLength = 128;
+// Max data partitions allowed inside a job
+static const uint32_t MaxDataPartition = 3;
+// Max registered jobs in a pool
+static const uint32_t MaxRuntimeJobs = 4096;
+// Max registered jobs in a pool (64 per camera)
+static const uint32_t MaxRegisteredJobs = 512;
+// One queue per priority level
+static const unsigned int MaxNumQueues = static_cast<unsigned int>(JobPriority::Invalid);
+
+// Forward declaration of implementation classes
+class JobRegistry;
+class JobList;
+class ThreadCore;
+struct RuntimeJob;
+
+/// @brief Thread Library API
+class ThreadManager : public IMonitorClient
 {
 public:
-    // 任务优先级：High 将进入全局队列头部，Default 进入尾部
-    enum class Priority { High,
-        Default };
+    /// @brief Static method to create an instance of ThreadManager
+    static Result Create(
+        ThreadManager * *ppInstance,
+        const char* pName,
+        uint32_t numThreads,
+        bool enableHMS = false,
+        uint32_t maxDelayedJobCount = DefaultMaxDelayCount);
 
-    // 家族句柄类型（0 作为非法句柄）
-    using Handle = std::uint32_t;
-
-    // 任务函数签名：入参为用户自定义的指针（由提交者负责语义）
-    using JobFunc = std::function<void(void*)>;
-
-    // 取消回调：任务被拒绝/过期/Flush 时用于回收资源（可为空）
-    using CancelFunc = std::function<void(void*)>;
-
-    // 工具：返回一个把 void* 当作 T* delete 的取消回调
-    template<class T> static inline CancelFunc DeleteAs()
-    {
-        return [](void* p) noexcept { delete static_cast<T*>(p); };
-    }
-
-    // 供外部调用者使用的“无限等待”占位常量（本类内部未直接使用）
-    static constexpr std::uint64_t kWaitForever = std::numeric_limits<std::uint64_t>::max();
-
-    // 创建线程池实例的方法
-    // - ppInstance: 输出参数，指向创建的 ThreadManager 实例
-    // - name: 线程池名称，用于日志和调试
-    // - numThreads: 线程池大小，默认为硬件核心数
-    [[nodiscard]] static bool Create(ThreadManager * *ppInstance, const std::string& name = "ThreadManager", std::size_t numThreads = std::thread::hardware_concurrency());
-
-    // 销毁线程池并清理资源
-    // - 在析构时调用，确保线程池停止并回收资源
+    /// @brief Method to delete an instance of ThreadManager
     void Destroy();
 
-    // 注册一个作业家族
-    // - fn：家族统一的执行函数
-    // - name：家族名（用于诊断/统计）
-    // - outHandle：输出家族句柄（必需）
-    // - addInOrder：是否按序放行（基于 seq/nextSeq）
-    // - maxOutOfOrderWindow：当 addInOrder=true 时，允许的“未来序号”窗口，0 表示不限制
-    // - cancel：取消回调（可为空）
-    [[nodiscard]] bool RegisterJobFamily(const JobFunc& fn,
-        const std::string& name,
-        Handle* outHandle,
-        bool addInOrder = false,
-        std::size_t maxOutOfOrderWindow = 0,
-        CancelFunc cancel = nullptr);
+    /// @brief Register a job family to the thread library. A job family is the set of jobs with the same function name and address, and priority
+    Result RegisterJobFamily(
+        JobFunc jobFuncAddr,
+        const char* pJobFuncName,
+        JobCb flushDoneCb,
+        JobPriority priority,
+        bool isSerialize,
+        JobHandle* phJob,
+        uint32_t cameraId = InvalidCameraId);
 
-    // 提交任务
-    // - h：目标家族
-    // - userData：用户数据指针（执行或取消时由回调消费）
-    // - sequence：任务序号（用于按序放行；无序家族忽略）
-    // - prio：优先级
-    // - deadline：过期时间点（默认 0 表示无期限）
-    [[nodiscard]] bool PostJob(Handle h,
-        void* userData,
-        std::uint64_t sequence = 0,
-        Priority prio = Priority::Default,
-        std::chrono::steady_clock::time_point deadline = {});
+    /// @brief Un-register a job family from the thread library.
+    Result UnregisterJobFamily(JobHandle hJob);
 
-    // 阻塞等待：指定家族在途任务（队列+pending+执行中）清零
-    void Sync(Handle h);
+    /// @brief Post a job, which may belong to a previously registered family
+    Result PostJob(
+        JobHandle hJob,
+        JobCb stoppedCb,
+        void** ppData,
+        bool isSplitable,
+        bool isBlocking,
+        uint64_t maxExecTime = MaxExecutionTimeMilliseconds,
+        const char* pJobName = nullptr);
 
-    // 限时等待：true 表示在超时前完成；false 表示超时或家族不存在
-    [[nodiscard]] bool SyncFor(Handle h, std::chrono::milliseconds timeout);
+    /// @brief Resume job after flush
+    Result ResumeJobFamily(JobHandle hJob);
 
-    // Flush：拒绝新任务，丢弃队列与 pending 中未执行项，等待正在执行的任务结束
-    // 返回 false 表示家族不存在
-    [[nodiscard]] bool Flush(Handle h);
+    /// @brief Flush a registered family of job
+    Result FlushJobFamily(
+        JobHandle hJob,
+        void* pUserData,
+        bool isBlocking);
 
-    // 设置全局队列上限（0 不限制）
-    // 说明：仅限制“进入全局队列”的数量；pending（未来序号）不受限
-    void SetQueueCap(std::size_t cap);
+    /// @brief Sync a registered family of job
+    Result SyncJobFamily(JobHandle hJob);
 
-private:
-    // 全局队列元素：记录家族/序号/优先级/过期时间等
-    struct QItem {
-        Handle h;
-        JobFunc func;
-        void* data;
-        std::uint64_t seq;
-        Priority prio;
-        std::chrono::steady_clock::time_point deadline;
-    };
+    /// @brief Retrieve current job count of a registered job
+    uint32_t GetJobCount(JobHandle hJob) const;
 
-    // 家族元数据与统计
-    struct Family {
-        JobFunc func; // 家族统一执行函数
-        CancelFunc cancel; // 取消回调
-        std::string name; // 家族名（仅供诊断）
-        bool addInOrder = false; // 是否按序放行
-        std::size_t maxWindow = 0; // 乱序窗口（addInOrder 时有效）
-        std::uint64_t nextSeq = 0; // 期望下一个可执行的序号
+    /// @brief Retrieve number of jobs currently executing
+    uint32_t GetInFlightCount(JobHandle hJob) const;
 
-        // 待放行缓存：sequence -> 该序号对应的一批任务（通常只有 1 个，使用 vector 更通用）
-        std::map<std::uint64_t, std::vector<QItem>> pending;
+    /// @brief  Scan all the jobs of the subscribed client
+    Result OnScanAllJobs(std::vector<HMSJobFailedStatus> & rStatus);
 
-        // 原子统计：
-        // outstanding：在途计数（队列 + pending + 执行中）；归零意味着该家族“空闲”
-        // enqueued：累计提交计数
-        // canceled：累计取消计数（包含过期、Flush、被拒等）
-        // exceptions：执行阶段抛异常的累计计数
-        std::atomic<std::size_t> outstanding { 0 };
-        std::atomic<std::size_t> enqueued { 0 };
-        std::atomic<std::size_t> canceled { 0 };
-        std::atomic<std::size_t> exceptions { 0 };
+    /// @brief  Method to call by HMS to pause the monitoring of a job
+    void OnPauseMonitoringJob(void* pJob, uint64_t pauseTime);
 
-        // Flush 标记：true 时拒绝新任务，且队列/pending 中的该家族任务被剔除
-        bool flushReq = false;
-    };
+    /// @brief  Method to call by HMS to resume the monitoring of a job if paused////////////////////////////////////////////////
+    void OnResumeMonitoringJob(void* pJob);
 
-private:
-    // 构造：创建指定数量 worker（最少 1 个）
-    // - threadCount: 线程池大小（默认为硬件核心数）
-    explicit ThreadManager(std::size_t threadCount);
+protected:
+    uint32_t m_numThreads; ///< suggested number of threads in this pool
+    JobRegistry* m_pJobRegistry; ///< Pointer to job registry
+    JobList* m_pJobList; ///< Pointer to job list
+    ThreadCore* m_pCore; ///< Pointer to thread core
+    bool m_enableHealthMonitor; ///< Flag to indicate if health monitor is enabled
+    bool m_maxDelayedJobCount; ///< Max delayed job count for HMS
 
-    // 析构：执行“软 Flush”，使所有未执行任务走取消回调，并回收线程
+    /// @brief Initialize a newly created ThreadManager object
+    Result Initialize(const char* pName);
+
+    /// @brief Constructor for ThreadManager object.
+    ThreadManager(
+        uint32_t numThreads,
+        bool enableHMS,
+        uint32_t maxDelayedJobCount);
+
+    /// @brief Default constructor for ThreadManager object.
+    ThreadManager();
+
+    /// @brief Destructor for ThreadManager object.
     ~ThreadManager();
 
-    // 初始化方法，用于设置线程池的名称等初始化操作
-    // - name: 线程池的名称（用于日志和调试）
-    // 该方法将在构造函数中调用，确保线程池在启动前完成初始化
-    [[nodiscard]] bool Initialize(const std::string& name);
-
-    // worker 主循环：从全局队列取任务 → 判断可执行/缓存/取消 → 调用回调 → 推进 nextSeq
-    // 每个 worker 会从队列中取任务，判断是否可以执行并进行回调，执行完后更新状态
-    void WorkerLoop();
-
-    // 在已持有 m_mtx 的前提下，将任务放入全局队列（处理优先级并通知）
-    // 该方法保证线程安全地将任务加入全局队列
-    void EnqueueNoLock(QItem && it);
-
-private:
-    // 线程池的名称，用于日志、诊断等
-    // - m_name：保存线程池的名称，用于调试和日志输出，帮助区分不同线程池实例
-    std::string m_name;
-
-    std::size_t m_numThreads { 0 };
-
-    // 线程与队列
-    std::vector<std::thread> m_workers; // 工作线程
-    std::deque<QItem> m_queue; // 全局任务队列（单把大锁保护）
-    std::size_t m_queueCap { 0 }; // 队列上限（0 不限制）
-
-    // 家族表：句柄到 Family 的映射
-    // - m_families：存储作业家族的元数据和统计信息
-    std::unordered_map<Handle, Family> m_families;
-
-    // 互斥与条件变量
-    // - m_mtx：保护任务队列和家族数据的互斥锁
-    std::mutex m_mtx; // 统一大锁，保护队列与家族元数据
-    std::condition_variable m_cv; // worker 等待“有任务或停止”
-    std::condition_variable m_doneCv; // Sync/Flush 等待“家族 outstanding==0”
-
-    // 停止标志：true 时 worker 在队列耗尽后退出
-    std::atomic<bool> m_stop { false };
-
-    // 家族句柄自增分配（0 保留为非法句柄）
-    Handle m_nextHandle { 1 };
+    // Disable copy constructor and assignment operator
+    ThreadManager(const ThreadManager&) = delete;
+    ThreadManager(ThreadManager&&) = delete;
+    ThreadManager& operator = (const ThreadManager&) = delete;
+    ThreadManager& operator = (ThreadManager&&) = delete;
 };

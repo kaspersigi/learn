@@ -27,7 +27,7 @@ $(TRG) : $(OBJ)
 	$(CC) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS) $(LIBS)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(CLANGXX_FLAGS) $(DEBUG) -I ./inc
+	$(CC) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG) -I ./inc
 format :
 	$(FORMAT) $(SRC) -style=file -i
 clean :
