@@ -31,7 +31,7 @@ RUN apt update && apt upgrade -y && \
         python-is-python3 python3-pip python3-virtualenv pbzip2 bzip2 zip unzip xz-utils lz4 cpio rsync \
     && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-21 100 \
     && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-21 100 \
-    && echo 'miku ALL=(ALL:ALL) ALL' >> /etc/sudoers \
+    && echo 'miku ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
     && apt autoremove -y && apt clean && rm -rf /var/lib/apt/lists/*
 
 # ========== 4. 安装 code-server ==========

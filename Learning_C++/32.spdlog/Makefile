@@ -15,7 +15,7 @@ C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
 RELEASE = -flto -O3
-LIBS = -L$(shell uname -m) -lspdlog
+LIBS = -L$(shell uname -m) -lspdlog -lm
 LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
