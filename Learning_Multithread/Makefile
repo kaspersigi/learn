@@ -23,7 +23,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
-all : template atomic mutex condition_variable detach async coroutine camxthreadmanager chithreadmanager threadmanager
+all : template atomic mutex condition_variable detach async coroutine threadmanager
 template :
 	$(MAKE) -C 00.template
 atomic :
@@ -38,12 +38,8 @@ async :
 	$(MAKE) -C 05.async
 coroutine :
 	$(MAKE) -C 06.coroutine
-camxthreadmanager :
-	$(MAKE) -C 07.camxthreadmanager
-chithreadmanager :
-	$(MAKE) -C 08.chithreadmanager
 threadmanager :
-	$(MAKE) -C 09.threadmanager
+	$(MAKE) -C 07.threadmanager
 
 format :
 	$(MAKE) -C 00.template format
@@ -53,9 +49,7 @@ format :
 	$(MAKE) -C 04.detach format
 	$(MAKE) -C 05.async format
 	$(MAKE) -C 06.coroutine format
-	$(MAKE) -C 07.camxthreadmanager format
-	$(MAKE) -C 08.chithreadmanager format
-	$(MAKE) -C 09.threadmanager format
+	$(MAKE) -C 07.threadmanager format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -65,6 +59,4 @@ clean :
 	$(MAKE) -C 04.detach clean
 	$(MAKE) -C 05.async clean
 	$(MAKE) -C 06.coroutine clean
-	$(MAKE) -C 07.camxthreadmanager clean
-	$(MAKE) -C 08.chithreadmanager clean
-	$(MAKE) -C 09.threadmanager clean
+	$(MAKE) -C 07.threadmanager clean
