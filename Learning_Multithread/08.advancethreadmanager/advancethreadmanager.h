@@ -36,8 +36,10 @@ class AdvanceThreadManager
 {
 public:
     // 任务优先级：High 将进入队列头部，Default 进入尾部
-    enum class Priority { High,
-        Default };
+    enum class Priority {
+        High,
+        Default,
+    };
 
     // 家族句柄类型（0 作为非法句柄）
     using Handle = std::uint32_t;
@@ -54,7 +56,8 @@ public:
     // 构造函数：创建并启动线程池
     // - name: 线程池名称，用于日志和调试
     // - numThreads: 线程池大小，默认为硬件核心数
-    explicit AdvanceThreadManager(const std::string& name = "AdvanceThreadManager", std::size_t numThreads = std::thread::hardware_concurrency());
+    explicit AdvanceThreadManager(const std::string& name = "AdvanceThreadManager",
+        std::size_t numThreads = std::thread::hardware_concurrency());
 
     // 析构函数：安全地停止并清理所有资源
     ~AdvanceThreadManager();

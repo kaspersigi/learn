@@ -29,10 +29,13 @@
 class ThreadManager
 {
 public:
-    enum class Priority { High,
-        Default };
-    using Handle = std::uint32_t;
+    enum class Priority {
+        High,
+        Default,
+    };
 
+    // 家族句柄类型（0 作为非法句柄）
+    using Handle = std::uint32_t;
     // 现代化的任务函数签名，无参数，通过 lambda 捕获上下文
     using JobFunc = std::function<void()>;
     // 现代化的取消回调签名
@@ -45,9 +48,11 @@ public:
     // 析构函数：自动停止并清理所有线程和任务
     ~ThreadManager();
 
-    // 禁止拷贝和赋值
+    // 禁止拷贝与移动
     ThreadManager(const ThreadManager&) = delete;
     ThreadManager& operator = (const ThreadManager&) = delete;
+    ThreadManager(ThreadManager&&) = delete;
+    ThreadManager& operator = (ThreadManager&&) = delete;
 
     // 注册一个作业家族
     [[nodiscard]] bool RegisterJobFamily(const std::string& name,
