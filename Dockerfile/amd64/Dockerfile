@@ -7,8 +7,6 @@ EXPOSE 22 8888
 USER root
 
 # ========== 1. 创建用户 + SSH 目录 ==========
-# - 禁用密码登录（-p '*'），仅允许密钥登录
-# - .ssh 目录由运行时挂载，不构建私钥进镜像
 RUN mkdir -p /var/run/sshd \
     && useradd -m -s /bin/bash -p '*' miku \
     && mkdir -p /home/miku/.ssh \
@@ -43,7 +41,6 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh
 USER miku
 WORKDIR /home/miku
 
-# 设置 Git、SSH 配置
 RUN git config --global pull.rebase false \
     && git config --global user.name kaspersigi \
     && git config --global user.email kaspersigi@outlook.com \
@@ -52,57 +49,57 @@ RUN git config --global pull.rebase false \
     && chmod 644 ~/.ssh/config \
     && mkdir -p share linux
 
-# ========== 6. 创建 miku.sh：首次运行初始化 + 启动 code-server（带密码） ==========
-# 密码通过环境变量 CODESERVER_PASSWORD 传入，安全不硬编码
-RUN echo '#!/bin/bash
-echo ">>> [miku.sh] Initializing development environment..."
-
-# Clone repos if not exist
-if [ ! -d "linux/learn" ]; then
-    echo ">>> Cloning learn repo..."
-    git clone https://github.com/kaspersigi/learn.git linux/learn
-fi
-
-if [ ! -d "linux/perf_tools" ]; then
-    echo ">>> Cloning perf_tools repo..."
-    git clone https://github.com/kaspersigi/perf_tools.git linux/perf_tools
-fi
-
-if [ ! -d "linux/linux" ]; then
-    echo ">>> Cloning Linux kernel (stable)..."
-    git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git linux/linux
-fi
-
-# Download and extract NDK if not exist
-if [ ! -d "linux/android-ndk-r27d" ]; then
-    echo ">>> Downloading Android NDK r27d..."
-    cd linux && wget -q https://dl.google.com/android/repository/android-ndk-r27d-linux.zip && unzip -q android-ndk-r27d-linux.zip && rm android-ndk-r27d-linux.zip
-    echo ">>> Android NDK installed."
-fi
-
-echo ">>> Starting code-server on :8888 (password auth)..."
-# 从环境变量读取密码，若未设置则默认 "miku"（仅用于 fallback，强烈建议运行时指定）
-PASSWORD=\${CODESERVER_PASSWORD:-miku}
-code-server --bind-addr 0.0.0.0:8888 --auth password --password "\$PASSWORD" /home/miku &
-
-echo ">>> [miku.sh] Initialization complete. code-server running in background."
-' > /home/miku/miku.sh \
+# ========== 6. 创建 miku.sh ==========
+RUN printf '%s\n' \
+    '#!/bin/bash' \
+    'echo ">>> [miku.sh] Initializing development environment..."' \
+    '' \
+    '# Clone repos if not exist' \
+    'if [ ! -d "linux/learn" ]; then' \
+    '    echo ">>> Cloning learn repo..."' \
+    '    git clone https://github.com/kaspersigi/learn.git linux/learn' \
+    'fi' \
+    '' \
+    'if [ ! -d "linux/perf_tools" ]; then' \
+    '    echo ">>> Cloning perf_tools repo..."' \
+    '    git clone https://github.com/kaspersigi/perf_tools.git linux/perf_tools' \
+    'fi' \
+    '' \
+    'if [ ! -d "linux/linux" ]; then' \
+    '    echo ">>> Cloning Linux kernel (stable)..."' \
+    '    git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git linux/linux' \
+    'fi' \
+    '' \
+    '# Download and extract NDK if not exist' \
+    'if [ ! -d "linux/android-ndk-r27d" ]; then' \
+    '    echo ">>> Downloading Android NDK r27d..."' \
+    '    cd linux && wget -q https://dl.google.com/android/repository/android-ndk-r27d-linux.zip && unzip -q android-ndk-r27d-linux.zip && rm android-ndk-r27d-linux.zip' \
+    '    echo ">>> Android NDK installed."' \
+    'fi' \
+    '' \
+    'echo ">>> Starting code-server on :8888 (password auth)..."' \
+    'PASSWORD=${CODESERVER_PASSWORD:-MyCodeServer}' \
+    'PASSWORD="$PASSWORD" code-server --bind-addr 0.0.0.0:8888 --auth password /home/miku &' \
+    '' \
+    'echo ">>> [miku.sh] Initialization complete. code-server running in background."' \
+    > /home/miku/miku.sh \
     && chmod +x /home/miku/miku.sh
 
-# ========== 7. 切回 root，创建内联启动脚本 ==========
+# ========== 7. 切回 root ==========
 USER root
 
-# ========== 8. 内联启动脚本（启动 SSH + 切用户执行 miku.sh） ==========
-RUN echo '#!/bin/bash
-echo ">>> [start.sh] Starting SSH daemon..."
-/usr/sbin/sshd -D &
-
-echo ">>> [start.sh] Switching to user miku and running miku.sh..."
-su - miku -c "/home/miku/miku.sh"
-
-echo ">>> [start.sh] All services started. Container running..."
-wait
-' > /root/start.sh \
+# ========== 8. 创建 start.sh ==========
+RUN printf '%s\n' \
+    '#!/bin/bash' \
+    'echo ">>> [start.sh] Starting SSH daemon..."' \
+    '/usr/sbin/sshd -D &' \
+    '' \
+    'echo ">>> [start.sh] Switching to user miku and running miku.sh..."' \
+    'su - miku -c "/home/miku/miku.sh"' \
+    '' \
+    'echo ">>> [start.sh] All services started. Container running..."' \
+    'wait' \
+    > /root/start.sh \
     && chmod +x /root/start.sh
 
 # ========== 9. 设置入口点 ==========
