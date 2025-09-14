@@ -3,8 +3,8 @@
 ###########################################
 
 TRG = main
-OBJ = main.o threadmanager.o
-SRC = main.cc threadmanager.cc
+OBJ = main.o advancethreadmanager.o
+SRC = main.cc advancethreadmanager.cc
 LLVM = -21
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
@@ -26,13 +26,13 @@ CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 $(TRG) : $(OBJ)
 	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS) $(LIBS)
 	rm -v $(OBJ)
-threadmanager.o : threadmanager.cc threadmanager.h
-	$(CXX) threadmanager.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+advancethreadmanager.o : advancethreadmanager.cc advancethreadmanager.h
+	$(CXX) advancethreadmanager.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 main.o : main.cc
 	$(CXX) main.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
-	$(FORMAT) threadmanager.h -style=file -i
-	$(FORMAT) threadmanager.cc -style=file -i
+	$(FORMAT) advancethreadmanager.h -style=file -i
+	$(FORMAT) advancethreadmanager.cc -style=file -i
 	$(FORMAT) main.cc -style=file -i
 clean :
 	rm -v $(TRG)

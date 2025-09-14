@@ -4,7 +4,6 @@
 // ============================
 
 #include "threadmanager.h"
-#include "ftrace.h"
 #include <cassert>
 #include <print>
 
@@ -19,8 +18,6 @@ bool ThreadManager::Create(ThreadManager** ppInstance, const std::string& name, 
         return ret;
     }
 
-    Ftrace::ftrace_duration_begin("ThreadManager::Create " + name);
-
     // 创建 ThreadManager 实例
     *ppInstance = new ThreadManager(numThreads);
     if (nullptr != *ppInstance) {
@@ -28,7 +25,6 @@ bool ThreadManager::Create(ThreadManager** ppInstance, const std::string& name, 
         ret = (*ppInstance)->Initialize(name);
     }
 
-    Ftrace::ftrace_duration_end();
     return ret;
 }
 
@@ -182,9 +178,13 @@ bool ThreadManager::PostJob(Handle h,
 
     // 统计累计提交
     fam.enqueued.fetch_add(1, std::memory_order_relaxed);
+    // 预先增加在途计数；如果之后任务被拒绝，将在 reject lambda 中减回
+    fam.outstanding.fetch_add(1, std::memory_order_release);
 
     // 本地工具：拒绝并在锁外执行取消回调
     auto reject_and_maybe_cancel = [&](void* p) {
+        // BUG FIX: 任何拒绝路径都必须回收 outstanding 计数
+        fam.outstanding.fetch_sub(1, std::memory_order_acq_rel);
         fam.canceled.fetch_add(1, std::memory_order_relaxed);
         CancelFunc cancel = fam.cancel;
         lk.unlock(); // cancel 必须在锁外执行
@@ -209,16 +209,12 @@ bool ThreadManager::PostJob(Handle h,
         return reject_and_maybe_cancel(userData);
     }
 
-    // 通过基本检查，计入在途
-    fam.outstanding.fetch_add(1, std::memory_order_release);
-
     QItem item { h, fam.func, userData, sequence, prio, deadline };
 
     if (fam.addInOrder) {
         if (sequence == fam.nextSeq) {
             // 立即可执行：检查全局队列上限
             if (m_queueCap && m_queue.size() >= m_queueCap) {
-                fam.outstanding.fetch_sub(1, std::memory_order_acq_rel);
                 return reject_and_maybe_cancel(userData);
             }
             EnqueueNoLock(std::move(item));
@@ -229,7 +225,6 @@ bool ThreadManager::PostJob(Handle h,
     } else {
         // 无序家族：仅受全局队列上限限制
         if (m_queueCap && m_queue.size() >= m_queueCap) {
-            fam.outstanding.fetch_sub(1, std::memory_order_acq_rel);
             return reject_and_maybe_cancel(userData);
         }
         EnqueueNoLock(std::move(item));
@@ -389,21 +384,24 @@ void ThreadManager::WorkerLoop()
                     // Flush 中：离开锁后做取消
                     break;
                 }
+
+                // ==================== BUG FIX START ====================
                 if (fam.addInOrder) {
-                    if (job.seq == fam.nextSeq) {
-                        break; // 正好是期望序号，可执行
-                    } else if (job.seq > fam.nextSeq) {
-                        // 未来序号：入 pending，继续从队列取下一条
+                    // 对于有序任务，如果它的序列号大于当前期望的序列号，
+                    // 说明它是一个“未来”的任务，需要被放回 pending 队列，
+                    // 然后 worker 应该尝试处理主队列的下一个任务，以避免阻塞。
+                    if (job.seq > fam.nextSeq) {
                         fam.pending[job.seq].emplace_back(std::move(job));
-                        continue;
-                    } else {
-                        // 旧序号：标记为“需要取消”，离开锁后执行取消
-                        cancelForOldSeq = true;
-                        break;
+                        continue; // 继续取下一个任务
                     }
+                    // 如果 job.seq <= fam.nextSeq，说明这是一个已到期或正在执行批次的任务。
+                    // 这种情况是合法的，因为 nextSeq 可能被其他线程提前推进了。
+                    // 任务应该被执行，而不是被取消。
+                    break; // 任务可以执行
                 } else {
                     break; // 无序家族：直接执行
                 }
+                // ===================== BUG FIX END =====================
             }
         }
 
@@ -470,19 +468,19 @@ void ThreadManager::WorkerLoop()
                 Family& fam = it->second;
                 if (job.seq == fam.nextSeq) {
                     ++fam.nextSeq;
-                    // 只要存在“下一个连续序号”的 pending，就回放到全局队列
-                    while (true) {
-                        auto itVec = fam.pending.find(fam.nextSeq);
-                        if (itVec == fam.pending.end() || itVec->second.empty())
-                            break;
+                    // ==================== LOGIC CHANGE START ====================
+                    // 修正：不再使用 while 循环批量放行，而是只放行下一个任务，
+                    // 以保证严格的“按序执行完成”。
+                    auto itVec = fam.pending.find(fam.nextSeq);
+                    if (itVec != fam.pending.end()) {
+                        // 释放下一个序号的所有任务（通常只有一个）
                         auto vec = std::move(itVec->second);
                         fam.pending.erase(itVec);
                         for (auto& qi : vec) {
-                            m_queue.emplace_back(std::move(qi));
+                            EnqueueNoLock(std::move(qi));
                         }
-                        m_cv.notify_all();
-                        ++fam.nextSeq;
                     }
+                    // ===================== LOGIC CHANGE END =====================
                 }
             }
         }
