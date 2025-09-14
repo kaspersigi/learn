@@ -1,65 +1,109 @@
+# 使用 Ubuntu 22.04 amd64 基础镜像
 FROM amd64/ubuntu:22.04
-# FROM arm64v8/ubuntu:22.04
 LABEL org.opencontainers.image.authors="kaspersigi@outlook.com"
+
 WORKDIR /root
-EXPOSE 22
+EXPOSE 22 8888
 USER root
+
+# ========== 1. 创建用户 + SSH 目录 ==========
+# - 禁用密码登录（-p '*'），仅允许密钥登录
+# - .ssh 目录由运行时挂载，不构建私钥进镜像
 RUN mkdir -p /var/run/sshd \
-    # perl -e 'print crypt($ARGV[0], "password")' $(passwd)
-    && useradd -m -p paKe96Li2oGUE miku \
-    && usermod -s /bin/bash miku \
-    && apt update \
-    && apt upgrade -y \
-    && apt autoremove -y \
-    && apt install wget gnupg -y
-RUN mkdir /home/miku/.ssh
-COPY id_ed25519 /home/miku/.ssh
-RUN chown miku:miku -R /home/miku/.ssh \
-    && chmod 600 /home/miku/.ssh/id_ed25519
-RUN wget https://apt.llvm.org/llvm-snapshot.gpg.key -O /tmp/key \
-    && gpg --dearmor -o /usr/share/keyrings/llvm-archive-keyring.gpg /tmp/key \
-    && echo "deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/jammy/ llvm-toolchain-jammy-21 main" | tee /etc/apt/sources.list.d/llvm.list
-RUN apt update \
-    && apt upgrade -y \
-    && apt autoremove -y
-RUN apt install sudo git vim openssh-server -y
-RUN apt install clang-21 clangd-21 clang-format-21 lldb-21 libllvmlibc-21-dev libc++-21-dev lld-21 binutils-i686-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu bsdmainutils make gdb cgdb valgrind qemu-system-arm qemu-system-misc qemu-system-x86 -y
-RUN apt install libncurses5 libncurses-dev flex bison bc dwarves libssl-dev libelf-dev python-is-python3 python3-pip python3-virtualenv pbzip2 bzip2 zip unzip xz-utils lz4 cpio rsync -y
-RUN update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-21 100 \
+    && useradd -m -s /bin/bash -p '*' miku \
+    && mkdir -p /home/miku/.ssh \
+    && chown miku:miku /home/miku/.ssh \
+    && chmod 700 /home/miku/.ssh \
+    && touch /home/miku/.ssh/authorized_keys \
+    && chmod 600 /home/miku/.ssh/authorized_keys
+
+# ========== 2. 安装基础工具 + 添加 LLVM 21 源 ==========
+RUN apt update && apt upgrade -y && \
+    apt install -y wget gnupg sudo git vim openssh-server curl ca-certificates \
+    && wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | gpg --dearmor -o /usr/share/keyrings/llvm-archive-keyring.gpg \
+    && echo "deb [signed-by=/usr/share/keyrings/llvm-archive-keyring.gpg] http://apt.llvm.org/jammy/ llvm-toolchain-jammy-21 main" > /etc/apt/sources.list.d/llvm.list
+
+# ========== 3. 安装所有开发工具 + 清理缓存 ==========
+RUN apt update && apt upgrade -y && \
+    apt install -y \
+        clang-21 clangd-21 clang-format-21 lldb-21 libllvmlibc-21-dev libc++-21-dev lld-21 \
+        binutils-i686-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu \
+        bsdmainutils make gdb cgdb valgrind qemu-system-arm qemu-system-misc qemu-system-x86 \
+        libncurses5 libncurses-dev flex bison bc dwarves libssl-dev libelf-dev \
+        python-is-python3 python3-pip python3-virtualenv pbzip2 bzip2 zip unzip xz-utils lz4 cpio rsync \
+    && update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-21 100 \
     && update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-21 100 \
-    && echo 'miku    ALL=(ALL:ALL) ALL' >> /etc/sudoers \
-    && echo '/usr/sbin/sshd -D &' > /root/run.sh \
-    && chmod 110 /root/run.sh
+    && echo 'miku ALL=(ALL:ALL) ALL' >> /etc/sudoers \
+    && apt autoremove -y && apt clean && rm -rf /var/lib/apt/lists/*
+
+# ========== 4. 安装 code-server ==========
+RUN curl -fsSL https://code-server.dev/install.sh | sh
+
+# ========== 5. 配置 miku 用户环境 ==========
 USER miku
+WORKDIR /home/miku
+
+# 设置 Git、SSH 配置
 RUN git config --global pull.rebase false \
     && git config --global user.name kaspersigi \
     && git config --global user.email kaspersigi@outlook.com \
-    && ssh-keyscan github.com > $HOME/.ssh/known_hosts \
-    && echo 'Host github.com' >> $HOME/.ssh/config \
-    && echo 'Hostname ssh.github.com' >> $HOME/.ssh/config \
-    && echo 'Port 443' >> $HOME/.ssh/config \
-    && echo 'User git' >> $HOME/.ssh/config \
-    && chmod 644 $HOME/.ssh/config \
-    && ssh -T -p 443 git@github.com \
-    && echo '' > $HOME/.ssh/authorized_keys \
-    && mkdir $HOME/share \
-    && mkdir $HOME/linux \
-    && cd $HOME/linux \
-    && git clone https://github.com/kaspersigi/learn.git \
-    && git clone https://github.com/kaspersigi/perf_tools.git \
-    && git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git \
-    && wget https://dl.google.com/android/repository/android-ndk-r27d-linux.zip \
-    && unzip android-ndk-r27d-linux.zip \
-    && rm -v android-ndk-r27d-linux.zip \
-    && echo 'code-server &> /dev/null &' > $HOME/miku.sh \
-    && chmod 110 $HOME/miku.sh
+    && ssh-keyscan github.com > ~/.ssh/known_hosts \
+    && echo -e "Host github.com\n    Hostname ssh.github.com\n    Port 443\n    User git" > ~/.ssh/config \
+    && chmod 644 ~/.ssh/config \
+    && mkdir -p share linux
+
+# ========== 6. 创建 miku.sh：首次运行初始化 + 启动 code-server（带密码） ==========
+# 密码通过环境变量 CODESERVER_PASSWORD 传入，安全不硬编码
+RUN echo '#!/bin/bash
+echo ">>> [miku.sh] Initializing development environment..."
+
+# Clone repos if not exist
+if [ ! -d "linux/learn" ]; then
+    echo ">>> Cloning learn repo..."
+    git clone https://github.com/kaspersigi/learn.git linux/learn
+fi
+
+if [ ! -d "linux/perf_tools" ]; then
+    echo ">>> Cloning perf_tools repo..."
+    git clone https://github.com/kaspersigi/perf_tools.git linux/perf_tools
+fi
+
+if [ ! -d "linux/linux" ]; then
+    echo ">>> Cloning Linux kernel (stable)..."
+    git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git linux/linux
+fi
+
+# Download and extract NDK if not exist
+if [ ! -d "linux/android-ndk-r27d" ]; then
+    echo ">>> Downloading Android NDK r27d..."
+    cd linux && wget -q https://dl.google.com/android/repository/android-ndk-r27d-linux.zip && unzip -q android-ndk-r27d-linux.zip && rm android-ndk-r27d-linux.zip
+    echo ">>> Android NDK installed."
+fi
+
+echo ">>> Starting code-server on :8888 (password auth)..."
+# 从环境变量读取密码，若未设置则默认 "miku"（仅用于 fallback，强烈建议运行时指定）
+PASSWORD=\${CODESERVER_PASSWORD:-miku}
+code-server --bind-addr 0.0.0.0:8888 --auth password --password "\$PASSWORD" /home/miku &
+
+echo ">>> [miku.sh] Initialization complete. code-server running in background."
+' > /home/miku/miku.sh \
+    && chmod +x /home/miku/miku.sh
+
+# ========== 7. 切回 root，创建内联启动脚本 ==========
 USER root
-WORKDIR /root
-ENTRYPOINT /root/run.sh && su miku && /home/miku/miku.sh
-# CMD /usr/sbin/sshd -D &
-# sudo apt install apparmor-utils
-# docker build -t kaspersigizz/clang:amd64 .
-# docker buildx build --platform=linux/amd64 -t kaspersigizz/clang:amd64 .
-# docker run -it --restart always --privileged -p 2222:22 -p 8888:8888 -v /Users/miku/share:/home/miku/share --name=amd64 --hostname AMD64-Miku kaspersigizz/clang:amd64
-# docker run -it --restart always --privileged -p 2222:22 -p 8888:8888 -v /d/share:/home/miku/share --name=amd64 --hostname AMD64-Miku kaspersigizz/clang:amd64
-# docker run -it --restart always --privileged -p 2222:22 -p 8888:8888 -v /root/share:/home/miku/share --name=amd64 --hostname AMD64-Miku kaspersigizz/clang:amd64
+
+# ========== 8. 内联启动脚本（启动 SSH + 切用户执行 miku.sh） ==========
+RUN echo '#!/bin/bash
+echo ">>> [start.sh] Starting SSH daemon..."
+/usr/sbin/sshd -D &
+
+echo ">>> [start.sh] Switching to user miku and running miku.sh..."
+su - miku -c "/home/miku/miku.sh"
+
+echo ">>> [start.sh] All services started. Container running..."
+wait
+' > /root/start.sh \
+    && chmod +x /root/start.sh
+
+# ========== 9. 设置入口点 ==========
+ENTRYPOINT ["/root/start.sh"]
