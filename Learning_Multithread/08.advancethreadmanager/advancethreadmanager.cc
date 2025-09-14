@@ -1,5 +1,5 @@
 // ============================
-// file: advancethreadmanager.cpp
+// file: advancethreadmanager.cc
 // 说明：AdvanceThreadManager 的最终实现 (已修复所有已知 Bug)
 // ============================
 #include "advancethreadmanager.h"

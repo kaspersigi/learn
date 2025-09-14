@@ -1,13 +1,11 @@
 // ============================
-// file: main.cc（演示）
-// 说明：展示家族注册、按序与无序投递、队列上限、优先级插队、过期任务与 Flush/Sync 的行为
-// 注意：示例仅演示用法；回调里 delete “已执行任务”的数据；被取消的任务由 cancel 回调回收
+// file: main.cc (for Modern ThreadManager)
+// 说明：展示现代化、类型安全的线程池 API 用法 (最终教学版)
 // ============================
-
 #include "threadmanager.h"
-#include <chrono>
-#include <print>
-#include <thread>
+#include <iostream>
+#include <memory>
+#include <vector>
 
 // 演示用负载：携带一个整数与家族标签
 struct Payload {
@@ -15,90 +13,93 @@ struct Payload {
     const char* tag;
 };
 
-// 执行体：模拟工作并打印；仅对“已执行”的任务释放资源
-auto myJob(void* p) -> void
+// 任务执行体
+void myJob(Payload* p)
 {
-    auto* pl = static_cast<Payload*>(p);
+    if (!p)
+        return;
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
-    std::println("[{}] job {} done", pl->tag, pl->v);
-    delete pl; // 被取消的任务资源由 cancel 回调释放
+    std::cout << "[" << p->tag << "] job " << p->v << " done" << std::endl;
 }
 
-auto main(int argc, char* argv[]) -> int
+// 取消回调体
+void myCancel(Payload* p)
 {
-    // 创建 4 个 worker
-    ThreadManager* pPerfThreadPool = nullptr;
-    bool ret = ThreadManager::Create(&pPerfThreadPool, "PerfThreadManager", 4);
+    if (!p)
+        return;
+    std::cout << "[" << p->tag << "] Job " << p->v << " cancelled." << std::endl;
+}
 
-    // 为了更直观看到“队列上限触发取消”，将 cap 设置较小
-    pPerfThreadPool->SetQueueCap(8);
+int main()
+{
+    auto threadPool = std::make_unique<ThreadManager>("MainThreadPool", 4);
+    threadPool->SetQueueCap(8);
 
     // ---- 家族 A（有序）----
-    // - 开启 addInOrder，使用乱序窗口 8
-    // - 注册取消回调用于回收被拒/过期/Flush 的 Payload*
     ThreadManager::Handle hA = 0;
-    pPerfThreadPool->RegisterJobFamily(
-        &myJob,
-        "family-A",
-        &hA,
-        /*addInOrder*/ true,
-        /*maxWindow*/ 8,
-        /*cancel*/ ThreadManager::DeleteAs<Payload>());
+    threadPool->RegisterJobFamily("family-A", &hA, /*addInOrder*/ true, /*maxWindow*/ 8);
 
-    // 乱序提交 0..5；实际执行顺序应为 0,1,2,3,4,5
-    pPerfThreadPool->PostJob(hA, new Payload { 2, "A" }, /*seq*/ 2);
-    pPerfThreadPool->PostJob(hA, new Payload { 0, "A" }, /*seq*/ 0);
-    pPerfThreadPool->PostJob(hA, new Payload { 1, "A" }, /*seq*/ 1);
-    pPerfThreadPool->PostJob(hA, new Payload { 5, "A" }, /*seq*/ 5);
-    pPerfThreadPool->PostJob(hA, new Payload { 4, "A" }, /*seq*/ 4);
-    pPerfThreadPool->PostJob(hA, new Payload { 3, "A" }, /*seq*/ 3);
+    std::vector<int> order = { 2, 0, 1, 5, 4, 3 };
+    for (int i : order) {
+        auto p = std::make_shared<Payload>(i, "A");
+        threadPool->PostJob(
+            hA,
+            [p]() { myJob(p.get()); },
+            i,
+            ThreadManager::Priority::Default,
+            {},
+            [p]() { myCancel(p.get()); });
+    }
 
-    // 等待家族 A 清空
-    pPerfThreadPool->Sync(hA);
-    std::println("[A] sync done");
+    std::cout << "[A] All jobs posted. Waiting for sync..." << std::endl;
+    threadPool->Sync(hA);
+    std::cout << "[A] sync done" << std::endl;
+    threadPool->PrintStats(hA); // [教学增强] 打印统计信息
 
-    // 演示 Flush：提交 6、7 后立即 Flush，未执行的会被取消
-    pPerfThreadPool->PostJob(hA, new Payload { 6, "A" }, 6);
-    pPerfThreadPool->PostJob(hA, new Payload { 7, "A" }, 7);
-
-    pPerfThreadPool->Flush(hA);
-    std::println("[A] flush done");
+    // 演示 Flush
+    {
+        auto p6 = std::make_shared<Payload>(6, "A");
+        auto p7 = std::make_shared<Payload>(7, "A");
+        threadPool->PostJob(hA, [p6]() { myJob(p6.get()); }, 6, ThreadManager::Priority::Default, {}, [p6]() { myCancel(p6.get()); });
+        threadPool->PostJob(hA, [p7]() { myJob(p7.get()); }, 7, ThreadManager::Priority::Default, {}, [p7]() { myCancel(p7.get()); });
+    }
+    threadPool->Flush(hA);
+    std::cout << "[A] flush done" << std::endl;
+    threadPool->PrintStats(hA);
 
     // ---- 家族 B（无序）----
-    // - 用于演示优先级、队列上限与 deadline 行为
     ThreadManager::Handle hB = 0;
-    pPerfThreadPool->RegisterJobFamily(
-        &myJob,
-        "family-B",
-        &hB,
-        /*addInOrder*/ false,
-        /*maxWindow*/ 0,
-        /*cancel*/ ThreadManager::DeleteAs<Payload>());
+    threadPool->RegisterJobFamily("family-B", &hB);
 
-    // 提交数条默认优先级任务
     for (int i = 100; i < 104; ++i) {
-        pPerfThreadPool->PostJob(hB, new Payload { i, "B" }, /*seq*/ 0, ThreadManager::Priority::Default);
+        auto p = std::make_shared<Payload>(i, "B");
+        threadPool->PostJob(hB, [p]() { myJob(p.get()); }, 0, ThreadManager::Priority::Default, {}, [p]() { myCancel(p.get()); });
     }
-
-    // 提交一条高优先级任务（应更早被执行）
-    pPerfThreadPool->PostJob(hB, new Payload { 999, "B-HIGH" }, /*seq*/ 0, ThreadManager::Priority::High);
-
-    // 演示过期：给一个已经过期的 deadline，任务会被直接取消
-    auto past = std::chrono::steady_clock::now() - std::chrono::milliseconds(1);
-    pPerfThreadPool->PostJob(hB, new Payload { 555, "B-EXP" }, /*seq*/ 0, ThreadManager::Priority::Default, past);
-
-    // 演示队列上限：一次性投很多条，超过 cap 的会被拒并触发取消回调
+    {
+        auto p = std::make_shared<Payload>(999, "B-HIGH");
+        threadPool->PostJob(hB, [p]() { myJob(p.get()); }, 0, ThreadManager::Priority::High, {}, [p]() { myCancel(p.get()); });
+    }
+    {
+        auto p = std::make_shared<Payload>(555, "B-EXP");
+        auto past = std::chrono::steady_clock::now() - std::chrono::milliseconds(1);
+        threadPool->PostJob(hB, [p]() { myJob(p.get()); }, 0, ThreadManager::Priority::Default, past, [p]() { myCancel(p.get()); });
+    }
     for (int i = 200; i < 220; ++i) {
-        pPerfThreadPool->PostJob(hB, new Payload { i, "B" }, /*seq*/ 0, ThreadManager::Priority::Default);
+        auto p = std::make_shared<Payload>(i, "B");
+        threadPool->PostJob(hB, [p]() { myJob(p.get()); }, 0, ThreadManager::Priority::Default, {}, [p]() { myCancel(p.get()); });
     }
 
-    // 等待家族 B 清空
-    pPerfThreadPool->Sync(hB);
-    std::println("[B] sync done (cap/priority/deadline demo)");
+    // [教学增强] 演示 SyncFor 超时
+    std::cout << "\n[B] Trying SyncFor with a short timeout (will likely fail)..." << std::endl;
+    bool success = threadPool->SyncFor(hB, std::chrono::milliseconds(10));
+    std::cout << "[B] SyncFor " << (success ? "succeeded" : "timed out") << std::endl;
 
-    // 程序结束：析构将执行“软 Flush”，确保资源被取消回调回收
-    pPerfThreadPool->Destroy();
-    pPerfThreadPool = nullptr;
+    std::cout << "[B] Waiting for final sync..." << std::endl;
+    threadPool->Sync(hB);
+    std::cout << "[B] sync done (cap/priority/deadline demo)" << std::endl;
+    threadPool->PrintStats(hB);
+
+    std::cout << "\nThread pool will be destroyed automatically by unique_ptr." << std::endl;
 
     return 0;
 }

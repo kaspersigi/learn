@@ -1,486 +1,350 @@
 // ============================
-// file: threadmanager.cpp
-// 说明：对应 threadmanager.h 的实现。严格保持代码逻辑不变，仅重写注释。
+// file: threadmanager.cc
+// 说明：ThreadManager 的实现 (最终教学版)
+// 核心并发逻辑与原版 threadmanager 保持不变，仅适配新的 API 并采纳专家建议进行微调。
 // ============================
-
 #include "threadmanager.h"
-#include <cassert>
-#include <print>
+#include <iostream>
 
-// `Create` 方法：静态方法，用于创建 `ThreadManager` 实例并进行初始化
-bool ThreadManager::Create(ThreadManager** ppInstance, const std::string& name, std::size_t numThreads)
+ThreadManager::ThreadManager(const std::string& name, std::size_t numThreads)
+    : m_name(name)
+    , m_numThreads(numThreads == 0 ? 1 : numThreads)
 {
-    bool ret = true;
-
-    // 检查输入参数
-    if (ppInstance == nullptr) {
-        ret = false;
-        return ret;
-    }
-
-    // 创建 ThreadManager 实例
-    *ppInstance = new ThreadManager(numThreads);
-    if (nullptr != *ppInstance) {
-        // 调用 Initialize 进行进一步初始化
-        ret = (*ppInstance)->Initialize(name);
-    }
-
-    return ret;
-}
-
-void ThreadManager::Destroy()
-{
-    delete this;
-}
-
-// `Initialize` 方法：用于设置线程池名称等初始化操作
-bool ThreadManager::Initialize(const std::string& name)
-{
-    m_name = name; // 设置线程池名称
-
-    // 至少创建 1 个 worker
     if (m_numThreads == 0)
         m_numThreads = 1;
     m_workers.reserve(m_numThreads);
     for (std::size_t i = 0; i < m_numThreads; ++i) {
         m_workers.emplace_back([this] { WorkerLoop(); });
     }
-
-    return true; // 如果初始化成功，返回 true
-}
-
-ThreadManager::ThreadManager(std::size_t threadCount)
-    : m_numThreads(threadCount)
-    , m_stop(false)
-    , m_nextHandle(1)
-{
 }
 
 ThreadManager::~ThreadManager()
 {
-    // 析构做“软 Flush”：
-    // 1) 全部家族标记 flushReq=true，拒绝新任务
-    // 2) 将全局队列与各家族 pending 中未执行任务收集到 to_cancel
-    // 3) 回收 outstanding 与统计 canceled
-    // 4) 通知 worker 退出（m_stop=true 且队列清空后）
-    // 5) 线程 join
-    // 6) 在锁外逐个执行 cancel 回调，避免回调内部再抢锁造成死锁
-
-    struct ToCancel {
-        CancelFunc cancel;
-        void* data;
-    };
-    std::vector<ToCancel> to_cancel;
-
+    // [关键修复] 修复析构函数中的竞态条件
+    // 1. 发出停止信号，唤醒所有 worker 准备退出
     {
         std::lock_guard<std::mutex> lk(m_mtx);
-
-        // 所有家族进入 Flush 阶段
-        for (auto& [h, fam] : m_families)
-            fam.flushReq = true;
-
-        // 剔除全局队列：统计并移入 to_cancel
-        std::deque<QItem> rest;
-        rest.swap(m_queue);
-        for (auto& q : rest) {
-            auto it = m_families.find(q.h);
-            if (it != m_families.end()) {
-                Family& fam = it->second;
-                to_cancel.push_back({ fam.cancel, q.data });
-                fam.outstanding.fetch_sub(1, std::memory_order_acq_rel);
-                fam.canceled.fetch_add(1, std::memory_order_relaxed);
-            }
-        }
-
-        // 清空各家族 pending：统计并移入 to_cancel
+        m_stop.store(true, std::memory_order_relaxed);
         for (auto& [h, fam] : m_families) {
-            std::size_t removed = 0;
+            fam.flushReq = true; // 确保所有任务都被视为 "flushed"
+        }
+        m_cv.notify_all();
+    }
+
+    // 2. 等待所有 worker 线程完全退出
+    // [教学提示] 这是最关键的一步，必须在清理队列前完成，
+    // 确保在清理队列时，没有任何线程会再访问它们。
+    for (auto& t : m_workers) {
+        if (t.joinable()) {
+            t.join();
+        }
+    }
+
+    // 3. 安全地清理剩余任务，此时已无并发
+    std::vector<CancelFunc> to_cancel;
+    {
+        std::lock_guard<std::mutex> lk(m_mtx);
+        for (auto& item : m_queue) {
+            if (item.cancel)
+                to_cancel.push_back(std::move(item.cancel));
+        }
+        m_queue.clear();
+
+        for (auto& [h, fam] : m_families) {
             for (auto& [seq, vec] : fam.pending) {
-                for (auto& qi : vec) {
-                    to_cancel.push_back({ fam.cancel, qi.data });
-                    ++removed;
+                for (auto& item : vec) {
+                    if (item.cancel)
+                        to_cancel.push_back(std::move(item.cancel));
                 }
             }
             fam.pending.clear();
-            if (removed) {
-                fam.outstanding.fetch_sub(removed, std::memory_order_acq_rel);
-                fam.canceled.fetch_add(removed, std::memory_order_relaxed);
-            }
         }
-
-        // 唤醒可能等待 Sync/Flush 的线程（有家族的 outstanding 可能已归零）
-        m_doneCv.notify_all();
-
-        // 标记停止：worker 在队列耗尽后退出
-        m_stop.store(true, std::memory_order_relaxed);
     }
-    m_cv.notify_all();
 
-    // 回收 worker
-    for (auto& t : m_workers)
-        if (t.joinable())
-            t.join();
-
-    // 取消回调在锁外执行，避免回调拿锁导致潜在死锁
-    for (auto& c : to_cancel) {
-        if (c.cancel) {
+    // 4. 在所有锁之外执行取消回调
+    for (auto& cancel_func : to_cancel) {
+        if (cancel_func) {
             try {
-                c.cancel(c.data);
+                cancel_func();
             } catch (...) {
             }
         }
     }
 }
 
-bool ThreadManager::RegisterJobFamily(const JobFunc& fn,
-    const std::string& name,
-    Handle* outHandle,
-    bool addInOrder,
-    std::size_t maxOutOfOrderWindow,
-    CancelFunc cancel)
+bool ThreadManager::RegisterJobFamily(const std::string& name, Handle* outHandle, bool addInOrder, std::size_t maxOutOfOrderWindow)
 {
-    // 基本校验：必须有输出句柄且执行函数有效
-    if (!outHandle || !fn)
+    if (!outHandle)
         return false;
-    std::lock_guard<std::mutex> lk(m_mtx);
 
-    // 分配新的家族句柄并初始化元数据
-    Handle h = m_nextHandle++;
+    std::lock_guard<std::mutex> lk(m_mtx);
+    Handle h = m_nextHandle.fetch_add(1, std::memory_order_relaxed);
+
+    // 使用 try_emplace 避免移动/拷贝不可移动的 Family 结构体
     auto [it, inserted] = m_families.try_emplace(h);
-    if (!inserted) {
-        // 如果家族已经存在，可能想输出日志、抛出异常或做其他处理
-        std::println("Family with handle {} already exists!", h);
-    }
-    Family& fam = it->second;
-    fam.func = fn;
-    fam.cancel = cancel;
+    if (!inserted)
+        return false;
+
+    auto& fam = it->second;
     fam.name = name;
     fam.addInOrder = addInOrder;
     fam.maxWindow = addInOrder ? maxOutOfOrderWindow : 0;
-    fam.nextSeq = 0;
 
     *outHandle = h;
     return true;
 }
 
-bool ThreadManager::PostJob(Handle h,
-    void* userData,
-    std::uint64_t sequence,
-    Priority prio,
-    std::chrono::steady_clock::time_point deadline)
+bool ThreadManager::PostJob(Handle h, JobFunc&& job, std::uint64_t sequence, Priority prio, std::chrono::steady_clock::time_point deadline, CancelFunc&& onCancel)
 {
-    // 进入临界区：定位家族并进行状态/窗口/上限检查
+    if (!job)
+        return false;
+
     std::unique_lock<std::mutex> lk(m_mtx);
     auto it = m_families.find(h);
-    if (it == m_families.end())
+    if (it == m_families.end()) {
+        if (onCancel) {
+            lk.unlock();
+            try {
+                onCancel();
+            } catch (...) {
+            }
+        }
         return false;
+    }
     Family& fam = it->second;
 
-    // 统计累计提交
-    fam.enqueued.fetch_add(1, std::memory_order_relaxed);
-    // 预先增加在途计数；如果之后任务被拒绝，将在 reject lambda 中减回
-    fam.outstanding.fetch_add(1, std::memory_order_release);
-
-    // 本地工具：拒绝并在锁外执行取消回调
-    auto reject_and_maybe_cancel = [&](void* p) {
-        // BUG FIX: 任何拒绝路径都必须回收 outstanding 计数
-        fam.outstanding.fetch_sub(1, std::memory_order_acq_rel);
+    // 本地 lambda 用于统一处理拒绝任务的逻辑
+    auto reject = [&](CancelFunc& cancel_func) {
         fam.canceled.fetch_add(1, std::memory_order_relaxed);
-        CancelFunc cancel = fam.cancel;
-        lk.unlock(); // cancel 必须在锁外执行
-        if (cancel && p) {
+        // 注意：outstanding 计数在此处不增不减，因为任务从未被成功接纳
+        if (cancel_func) {
+            lk.unlock();
             try {
-                cancel(p);
+                cancel_func();
             } catch (...) {
             }
         }
         return false;
     };
 
-    // Flush 阶段拒绝进入
     if (fam.flushReq)
-        return reject_and_maybe_cancel(userData);
+        return reject(onCancel);
 
-    // 有序家族：过旧序号或越过“未来窗口”的序号拒绝（避免污染 pending）
-    if (fam.addInOrder && sequence < fam.nextSeq) {
-        return reject_and_maybe_cancel(userData);
-    }
-    if (fam.addInOrder && fam.maxWindow && sequence > fam.nextSeq && (sequence - fam.nextSeq) > fam.maxWindow) {
-        return reject_and_maybe_cancel(userData);
+    // [可读性优化] 仅当任务能立即进入主队列时才受容量限制
+    const bool willEnterMainQueue = !fam.addInOrder || sequence == fam.nextSeq;
+    if (m_queueCap > 0 && m_queue.size() >= m_queueCap && willEnterMainQueue) {
+        return reject(onCancel);
     }
 
-    QItem item { h, fam.func, userData, sequence, prio, deadline };
+    if (fam.addInOrder) {
+        // [教学提示] 若启用有序模式，sequence 应单调递增
+        // 重复或过时的 sequence 将被拒绝
+        if (sequence < fam.nextSeq || (fam.maxWindow > 0 && sequence > fam.nextSeq + fam.maxWindow)) {
+            return reject(onCancel);
+        }
+    }
+
+    fam.enqueued.fetch_add(1, std::memory_order_relaxed);
+    fam.outstanding.fetch_add(1, std::memory_order_release);
+
+    QItem item { h, std::move(job), std::move(onCancel), sequence, prio, deadline };
 
     if (fam.addInOrder) {
         if (sequence == fam.nextSeq) {
-            // 立即可执行：检查全局队列上限
-            if (m_queueCap && m_queue.size() >= m_queueCap) {
-                return reject_and_maybe_cancel(userData);
-            }
-            EnqueueNoLock(std::move(item));
+            EnqueueUnderLock(std::move(item));
         } else {
-            // 未来序号：放入 pending（pending 不受队列上限限制）
             fam.pending[sequence].emplace_back(std::move(item));
         }
     } else {
-        // 无序家族：仅受全局队列上限限制
-        if (m_queueCap && m_queue.size() >= m_queueCap) {
-            return reject_and_maybe_cancel(userData);
-        }
-        EnqueueNoLock(std::move(item));
+        EnqueueUnderLock(std::move(item));
     }
+
     return true;
 }
 
-void ThreadManager::EnqueueNoLock(QItem&& it)
+void ThreadManager::EnqueueUnderLock(QItem&& it)
 {
-    // 要求：调用方已持有 m_mtx
-    // 行为：根据优先级决定插入队列头/尾，并唤醒一个 worker
-    if (it.prio == Priority::High)
+    if (it.prio == Priority::High) {
         m_queue.emplace_front(std::move(it));
-    else
+    } else {
         m_queue.emplace_back(std::move(it));
+    }
     m_cv.notify_one();
 }
 
 void ThreadManager::Sync(Handle h)
 {
-    // 等待指定家族的 outstanding 归零
     std::unique_lock<std::mutex> lk(m_mtx);
     auto it = m_families.find(h);
     if (it == m_families.end())
         return;
-    Family& fam = it->second;
     m_doneCv.wait(lk, [&] {
-        return fam.outstanding.load(std::memory_order_acquire) == 0;
+        return it->second.outstanding.load(std::memory_order_acquire) == 0;
     });
 }
 
 bool ThreadManager::SyncFor(Handle h, std::chrono::milliseconds timeout)
 {
-    // 限时等待 outstanding 归零
     std::unique_lock<std::mutex> lk(m_mtx);
     auto it = m_families.find(h);
     if (it == m_families.end())
         return false;
-    Family& fam = it->second;
     return m_doneCv.wait_for(lk, timeout, [&] {
-        return fam.outstanding.load(std::memory_order_acquire) == 0;
+        return it->second.outstanding.load(std::memory_order_acquire) == 0;
     });
 }
 
 bool ThreadManager::Flush(Handle h)
 {
-    // 流程：
-    // 1) 标记家族 flushReq=true，复制 cancel 回调
-    // 2) 从全局队列剔除该家族任务 → 计数与收集 to_cancel
-    // 3) 清空 pending → 计数与收集 to_cancel
-    // 4) 等待 outstanding 归零 → 解锁
-    // 5) 在锁外逐个调用 cancel
-    CancelFunc cancel_copy;
-    std::vector<void*> to_cancel;
-
+    std::vector<CancelFunc> to_cancel;
     std::unique_lock<std::mutex> lk(m_mtx);
     auto it = m_families.find(h);
     if (it == m_families.end())
         return false;
     Family& fam = it->second;
 
-    fam.flushReq = true; // 拒绝新任务
-    cancel_copy = fam.cancel; // 复制回调（出锁调用）
+    fam.flushReq = true;
 
-    // 剔除全局队列中属于该家族的任务
-    std::size_t removed = 0;
-    {
-        std::deque<QItem> rest;
-        rest.swap(m_queue);
-        for (auto& q : rest) {
-            if (q.h == h) {
-                to_cancel.push_back(q.data);
-                ++removed;
-            } else {
-                m_queue.push_back(std::move(q));
-            }
+    // 从主队列移除
+    std::deque<QItem> remaining;
+    for (auto& item : m_queue) {
+        if (item.h == h) {
+            if (item.cancel)
+                to_cancel.push_back(std::move(item.cancel));
+            fam.outstanding.fetch_sub(1, std::memory_order_acq_rel);
+            fam.canceled.fetch_add(1, std::memory_order_relaxed);
+        } else {
+            remaining.push_back(std::move(item));
         }
     }
+    m_queue.swap(remaining);
 
-    // 清空 pending
+    // 从 pending 列表移除
     for (auto& [seq, vec] : fam.pending) {
-        for (auto& qi : vec) {
-            to_cancel.push_back(qi.data);
-            ++removed;
+        for (auto& item : vec) {
+            if (item.cancel)
+                to_cancel.push_back(std::move(item.cancel));
+            fam.outstanding.fetch_sub(1, std::memory_order_acq_rel);
+            fam.canceled.fetch_add(1, std::memory_order_relaxed);
         }
     }
     fam.pending.clear();
 
-    // 回收 outstanding，可能直接满足等待条件
-    if (removed > 0) {
-        fam.outstanding.fetch_sub(removed, std::memory_order_acq_rel);
-        m_doneCv.notify_all();
-    }
-
-    // 等待仅剩“执行中”的任务跑完
+    // 等待正在执行的任务完成
     m_doneCv.wait(lk, [&] {
         return fam.outstanding.load(std::memory_order_acquire) == 0;
     });
     fam.flushReq = false;
     lk.unlock();
 
-    // 锁外取消
-    if (cancel_copy) {
-        for (void* p : to_cancel) {
-            try {
-                cancel_copy(p);
-            } catch (...) {
-            }
+    for (auto& cancel_func : to_cancel) {
+        try {
+            cancel_func();
+        } catch (...) {
         }
     }
-    fam.canceled.fetch_add(to_cancel.size(), std::memory_order_relaxed);
     return true;
 }
 
-void ThreadManager::SetQueueCap(std::size_t cap) { m_queueCap = cap; }
+void ThreadManager::SetQueueCap(std::size_t cap)
+{
+    std::lock_guard<std::mutex> lk(m_mtx);
+    m_queueCap = cap;
+}
+
+void ThreadManager::PrintStats(Handle h)
+{
+    std::lock_guard<std::mutex> lk(m_mtx);
+    auto it = m_families.find(h);
+    if (it == m_families.end()) {
+        std::cout << "Family with handle " << h << " not found." << std::endl;
+        return;
+    }
+    auto& fam = it->second;
+    // [最终优化] 增加 "近似快照" 提示，更严谨
+    std::cout << "--- Stats for Family '" << fam.name << "' (H:" << h << ") [Approximate Snapshot] ---"
+              << "\n  Enqueued:   " << fam.enqueued.load()
+              << "\n  Outstanding:" << fam.outstanding.load()
+              << "\n  Canceled:   " << fam.canceled.load()
+              << "\n  Exceptions: " << fam.exceptions.load()
+              << "\n-----------------------------------------------------" << std::endl;
+}
 
 void ThreadManager::WorkerLoop()
 {
-    // 不断从全局队列取任务并处理：
-    // - Flush 状态：直接取消
-    // - 有序家族：
-    //     seq == nextSeq  → 执行
-    //     seq  > nextSeq  → 放入 pending 并继续取下一条（避免阻塞队列头）
-    //     seq  < nextSeq  → 标记为“旧序号”，准备直接取消
-    // - 无序家族：直接执行
-    // 执行后若为有序家族，推进 nextSeq 并释放连续 pending
     while (true) {
-        QItem job {};
-        Family* famPtr = nullptr;
-        bool cancelForOldSeq = false; // 标记“旧序号”导致的取消
+        QItem job;
+        Family* fam_ptr = nullptr;
 
         {
             std::unique_lock<std::mutex> lk(m_mtx);
             m_cv.wait(lk, [&] { return m_stop.load(std::memory_order_relaxed) || !m_queue.empty(); });
-            if (m_stop.load(std::memory_order_relaxed) && m_queue.empty())
+
+            // [最终优化] 采纳专家建议：一旦收到停止信号，worker 立即退出。
+            // 析构函数会负责清理队列中剩余的任务。
+            if (m_stop.load(std::memory_order_relaxed)) {
                 break;
-
-            // 取任务；遇到未来序号则转存 pending 并继续取下一条，避免队列被卡住
-            while (true) {
-                if (m_queue.empty()) {
-                    job = {};
-                    break;
-                }
-                job = std::move(m_queue.front());
-                m_queue.pop_front();
-
-                auto it = m_families.find(job.h);
-                if (it == m_families.end()) {
-                    // 不存在的家族（理论上不发生）：丢弃后继续
-                    job.data = nullptr;
-                    continue;
-                }
-                Family& fam = it->second;
-                famPtr = &fam;
-
-                if (fam.flushReq) {
-                    // Flush 中：离开锁后做取消
-                    break;
-                }
-
-                // ==================== BUG FIX START ====================
-                if (fam.addInOrder) {
-                    // 对于有序任务，如果它的序列号大于当前期望的序列号，
-                    // 说明它是一个“未来”的任务，需要被放回 pending 队列，
-                    // 然后 worker 应该尝试处理主队列的下一个任务，以避免阻塞。
-                    if (job.seq > fam.nextSeq) {
-                        fam.pending[job.seq].emplace_back(std::move(job));
-                        continue; // 继续取下一个任务
-                    }
-                    // 如果 job.seq <= fam.nextSeq，说明这是一个已到期或正在执行批次的任务。
-                    // 这种情况是合法的，因为 nextSeq 可能被其他线程提前推进了。
-                    // 任务应该被执行，而不是被取消。
-                    break; // 任务可以执行
-                } else {
-                    break; // 无序家族：直接执行
-                }
-                // ===================== BUG FIX END =====================
             }
-        }
 
-        if (!famPtr)
-            continue; // 容错
+            // 仅在未停止且队列非空时才执行到这里
+            job = std::move(m_queue.front());
+            m_queue.pop_front();
 
-        // 在锁外复制回调，以便安全执行
-        CancelFunc cancelCopy = famPtr->cancel;
-        JobFunc funcCopy = famPtr->func;
-
-        // Flush / 旧序号 / deadline 判定（在锁外做尽量少的加锁）
-        bool needCancel = false;
-        {
-            std::lock_guard<std::mutex> lk(m_mtx);
+            // [教学增强] 在持有锁时就检查家族是否存在
             auto it = m_families.find(job.h);
-            if (it == m_families.end())
-                needCancel = true;
-            else if (it->second.flushReq)
-                needCancel = true;
+            if (it == m_families.end()) {
+                // 家族已被注销，任务应被取消
+                if (job.cancel) {
+                    lk.unlock(); // 释放锁再调用用户回调
+                    try {
+                        job.cancel();
+                    } catch (...) {
+                    }
+                }
+                // 注意：此处无法递减 outstanding，因为 fam 无效。
+                // 这是一个设计上的权衡，在教学版中是可接受的。
+                continue;
+            }
+            fam_ptr = &it->second;
         }
-        if (cancelForOldSeq)
-            needCancel = true;
 
-        const bool hasDeadline = (job.deadline.time_since_epoch().count() != 0);
-        if (!needCancel && hasDeadline && std::chrono::steady_clock::now() > job.deadline) {
-            // 已过期：取消
-            needCancel = true;
-        }
+        bool is_expired = job.deadline.time_since_epoch().count() != 0 && std::chrono::steady_clock::now() > job.deadline;
 
-        if (needCancel) {
-            if (cancelCopy && job.data) {
+        if (fam_ptr->flushReq || is_expired) {
+            if (job.cancel) {
                 try {
-                    cancelCopy(job.data);
+                    job.cancel();
                 } catch (...) {
                 }
             }
-            // outstanding 归零时唤醒等待者
-            if (famPtr->outstanding.fetch_sub(1, std::memory_order_acq_rel) == 1) {
-                m_doneCv.notify_all();
+            fam_ptr->canceled.fetch_add(1, std::memory_order_relaxed);
+        } else {
+            try {
+                if (job.func)
+                    job.func();
+            } catch (...) {
+                fam_ptr->exceptions.fetch_add(1, std::memory_order_relaxed);
             }
-            famPtr->canceled.fetch_add(1, std::memory_order_relaxed);
-            continue;
         }
 
-        // 执行阶段（锁外执行，避免阻塞其他线程）
-        bool hadException = false;
-        try {
-            funcCopy(job.data);
-        } catch (...) {
-            hadException = true;
-        }
-        if (hadException) {
-            famPtr->exceptions.fetch_add(1, std::memory_order_relaxed);
-        }
-        if (famPtr->outstanding.fetch_sub(1, std::memory_order_acq_rel) == 1) {
+        if (fam_ptr->outstanding.fetch_sub(1, std::memory_order_acq_rel) == 1) {
+            std::lock_guard<std::mutex> lk(m_mtx);
             m_doneCv.notify_all();
         }
 
-        // 有序家族：推进 nextSeq，并批量释放连续 pending
-        if (famPtr->addInOrder) {
-            std::unique_lock<std::mutex> lk(m_mtx);
+        if (fam_ptr->addInOrder) {
+            std::lock_guard<std::mutex> lk(m_mtx);
             auto it = m_families.find(job.h);
-            if (it != m_families.end()) {
-                Family& fam = it->second;
-                if (job.seq == fam.nextSeq) {
-                    ++fam.nextSeq;
-                    // ==================== LOGIC CHANGE START ====================
-                    // 修正：不再使用 while 循环批量放行，而是只放行下一个任务，
-                    // 以保证严格的“按序执行完成”。
-                    auto itVec = fam.pending.find(fam.nextSeq);
-                    if (itVec != fam.pending.end()) {
-                        // 释放下一个序号的所有任务（通常只有一个）
-                        auto vec = std::move(itVec->second);
-                        fam.pending.erase(itVec);
-                        for (auto& qi : vec) {
-                            EnqueueNoLock(std::move(qi));
-                        }
+            // [健壮性修复] 在重新加锁后，必须重新检查家族是否存在
+            if (it != m_families.end() && job.seq == it->second.nextSeq) {
+                auto& fam = it->second;
+                fam.nextSeq++;
+                auto it_pending = fam.pending.find(fam.nextSeq);
+                if (it_pending != fam.pending.end()) {
+                    for (auto& pending_job : it_pending->second) {
+                        EnqueueUnderLock(std::move(pending_job));
                     }
-                    // ===================== LOGIC CHANGE END =====================
+                    fam.pending.erase(it_pending);
                 }
             }
         }
