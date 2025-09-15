@@ -3,8 +3,8 @@
 // 说明：展示现代化、类型安全的线程池 API 用法 (最终教学版)
 // ============================
 #include "threadmanager.h"
-#include <iostream>
 #include <memory>
+#include <print>
 #include <vector>
 
 // 演示用负载：携带一个整数与家族标签
@@ -14,23 +14,23 @@ struct Payload {
 };
 
 // 任务执行体
-void myJob(Payload* p)
+auto myJob(Payload* p) -> void
 {
     if (!p)
         return;
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
-    std::cout << "[" << p->tag << "] job " << p->v << " done" << std::endl;
+    std::println("[{}] job {} done", p->tag, p->v);
 }
 
 // 取消回调体
-void myCancel(Payload* p)
+auto myCancel(Payload* p) -> void
 {
     if (!p)
         return;
-    std::cout << "[" << p->tag << "] Job " << p->v << " cancelled." << std::endl;
+    std::println("[{}] Job {} cancelled.", p->tag, p->v);
 }
 
-int main()
+auto main(int argc, char* argv[]) -> int
 {
     auto threadPool = std::make_unique<ThreadManager>("MainThreadPool", 4);
     threadPool->SetQueueCap(8);
@@ -39,7 +39,14 @@ int main()
     ThreadManager::Handle hA = 0;
     threadPool->RegisterJobFamily("family-A", &hA, /*addInOrder*/ true, /*maxWindow*/ 8);
 
-    std::vector<int> order = { 2, 0, 1, 5, 4, 3 };
+    std::vector<int> order = {
+        2,
+        0,
+        1,
+        5,
+        4,
+        3,
+    };
     for (int i : order) {
         auto p = std::make_shared<Payload>(i, "A");
         threadPool->PostJob(
@@ -51,9 +58,9 @@ int main()
             [p]() { myCancel(p.get()); });
     }
 
-    std::cout << "[A] All jobs posted. Waiting for sync..." << std::endl;
+    std::println("[A] All jobs posted. Waiting for sync...");
     threadPool->Sync(hA);
-    std::cout << "[A] sync done" << std::endl;
+    std::println("[A] sync done");
     threadPool->PrintStats(hA); // [教学增强] 打印统计信息
 
     // 演示 Flush
@@ -64,7 +71,7 @@ int main()
         threadPool->PostJob(hA, [p7]() { myJob(p7.get()); }, 7, ThreadManager::Priority::Default, {}, [p7]() { myCancel(p7.get()); });
     }
     threadPool->Flush(hA);
-    std::cout << "[A] flush done" << std::endl;
+    std::println("[A] flush done");
     threadPool->PrintStats(hA);
 
     // ---- 家族 B（无序）----
@@ -90,16 +97,16 @@ int main()
     }
 
     // [教学增强] 演示 SyncFor 超时
-    std::cout << "\n[B] Trying SyncFor with a short timeout (will likely fail)..." << std::endl;
+    std::println("\n[B] Trying SyncFor with a short timeout (will likely fail)...");
     bool success = threadPool->SyncFor(hB, std::chrono::milliseconds(10));
-    std::cout << "[B] SyncFor " << (success ? "succeeded" : "timed out") << std::endl;
+    std::println("[B] SyncFor {}", success ? "succeeded" : "timed out");
 
-    std::cout << "[B] Waiting for final sync..." << std::endl;
+    std::println("[B] Waiting for final sync...");
     threadPool->Sync(hB);
-    std::cout << "[B] sync done (cap/priority/deadline demo)" << std::endl;
+    std::println("[B] sync done (cap/priority/deadline demo)");
     threadPool->PrintStats(hB);
 
-    std::cout << "\nThread pool will be destroyed automatically by unique_ptr." << std::endl;
+    std::println("\nThread pool will be destroyed automatically by unique_ptr.");
 
     return 0;
 }

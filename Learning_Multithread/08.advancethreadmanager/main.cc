@@ -5,8 +5,8 @@
 
 #include "advancethreadmanager.h"
 #include <chrono>
-#include <iostream>
 #include <memory>
+#include <print>
 #include <thread>
 
 // 演示用负载：携带一个整数与家族标签
@@ -15,14 +15,24 @@ struct Payload {
     const char* tag;
 };
 
-// 执行体：现在接收 Payload*
-void myJob(Payload* pl)
+// 任务执行体
+auto myJob(Payload* p) -> void
 {
+    if (!p)
+        return;
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
-    std::cout << "[" << pl->tag << "] job " << pl->v << " done" << std::endl;
+    std::println("[{}] job {} done", p->tag, p->v);
 }
 
-int main(int argc, char* argv[])
+// 取消回调体
+auto myCancel(Payload* p) -> void
+{
+    if (!p)
+        return;
+    std::println("[{}] Job {} cancelled.", p->tag, p->v);
+}
+
+auto main(int argc, char* argv[]) -> int
 {
     // 1. RAII: 使用 unique_ptr 管理线程池生命周期
     auto threadPool = std::make_unique<AdvanceThreadManager>("PerfThreadPool", 4);
@@ -47,9 +57,7 @@ int main(int argc, char* argv[])
             AdvanceThreadManager::Priority::Default,
             {},
             // 取消回调也按值捕获同一个 shared_ptr
-            [p]() {
-                std::cout << "[A] Job " << p->v << " cancelled." << std::endl;
-            });
+            [p]() { myCancel(p.get()); });
     };
 
     // 乱序提交 0..5；执行应严格按 0,1,2,3,4,5 顺序
@@ -61,13 +69,13 @@ int main(int argc, char* argv[])
     postOrderedJob(3, 3);
 
     threadPool->Sync(hA);
-    std::cout << "[A] sync done" << std::endl;
+    std::println("[A] sync done");
 
     // 演示 Flush
     postOrderedJob(6, 6);
     postOrderedJob(7, 7);
     threadPool->Flush(hA);
-    std::cout << "[A] flush done" << std::endl;
+    std::println("[A] flush done");
 
     // ---- 家族 B（无序）----
     AdvanceThreadManager::Handle hB = 0;
@@ -82,9 +90,7 @@ int main(int argc, char* argv[])
             0,
             prio,
             deadline,
-            [p]() {
-                std::cout << "[" << p->tag << "] Job " << p->v << " cancelled." << std::endl;
-            });
+            [p]() { myCancel(p.get()); });
     };
 
     // 提交数条默认优先级任务
@@ -105,7 +111,7 @@ int main(int argc, char* argv[])
     }
 
     threadPool->Sync(hB);
-    std::cout << "[B] sync done (cap/priority/deadline demo)" << std::endl;
+    std::println("[B] sync done (cap/priority/deadline demo)");
 
     // 3. 自动清理: unique_ptr 离开作用域，线程池自动析构，无需手动 Destroy()
     return 0;

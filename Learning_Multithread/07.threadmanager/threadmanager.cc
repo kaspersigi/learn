@@ -4,7 +4,7 @@
 // 核心并发逻辑与原版 threadmanager 保持不变，仅适配新的 API 并采纳专家建议进行微调。
 // ============================
 #include "threadmanager.h"
-#include <iostream>
+#include <print>
 
 ThreadManager::ThreadManager(const std::string& name, std::size_t numThreads)
     : m_name(name)
@@ -257,17 +257,23 @@ void ThreadManager::PrintStats(Handle h)
     std::lock_guard<std::mutex> lk(m_mtx);
     auto it = m_families.find(h);
     if (it == m_families.end()) {
-        std::cout << "Family with handle " << h << " not found." << std::endl;
+        std::println("Family with handle {} not found.", h);
         return;
     }
     auto& fam = it->second;
     // [最终优化] 增加 "近似快照" 提示，更严谨
-    std::cout << "--- Stats for Family '" << fam.name << "' (H:" << h << ") [Approximate Snapshot] ---"
-              << "\n  Enqueued:   " << fam.enqueued.load()
-              << "\n  Outstanding:" << fam.outstanding.load()
-              << "\n  Canceled:   " << fam.canceled.load()
-              << "\n  Exceptions: " << fam.exceptions.load()
-              << "\n-----------------------------------------------------" << std::endl;
+    std::println("--- Stats for Family '{}' (H:{}) [Approximate Snapshot] ---"
+                 "\n  Enqueued:   {}"
+                 "\n  Outstanding:{}"
+                 "\n  Canceled:   {}"
+                 "\n  Exceptions: {}"
+                 "\n-----------------------------------------------------",
+        fam.name,
+        h,
+        fam.enqueued.load(),
+        fam.outstanding.load(),
+        fam.canceled.load(),
+        fam.exceptions.load());
 }
 
 void ThreadManager::WorkerLoop()
