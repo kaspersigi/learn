@@ -4,7 +4,6 @@
 // 编译：g++ -std=c++17 learn_std_priority_queue.cc -o learn_priority_queue
 // ============================
 
-#include <deque>
 #include <functional> // std::greater
 #include <iostream>
 #include <queue>

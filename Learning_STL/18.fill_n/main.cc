@@ -1,27 +1,16 @@
 #include <algorithm>
-#include <array>
 #include <iostream>
+#include <vector>
 
-auto main(int argc, char* argv[]) -> int
+int main()
 {
-    std::array<int, 10> nums {
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-    };
-    std::for_each(nums.cbegin(), nums.cend(), [](auto e) { std::cout << e << ' ' << std::flush; });
-    std::cout << std::endl;
+    std::vector<int> v(5, 0); // {0,0,0,0,0}
 
-    std::fill_n(nums.begin(), nums.size(), 0);
-    std::for_each(nums.cbegin(), nums.cend(), [](auto e) { std::cout << e << ' ' << std::flush; });
-    std::cout << std::endl;
+    std::fill_n(v.begin(), 3, -1); // 前3个设为 -1
 
-    return 0;
+    for (int x : v)
+        std::cout << x << " "; // 输出: -1 -1 -1 0 0
+    std::cout << "\n";
+
+    // ✅ 学习点：从迭代器开始填 N 个，注意不要越界！
 }

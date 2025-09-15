@@ -2,21 +2,17 @@
 #include <iostream>
 #include <vector>
 
-auto main(int argc, char* argv[]) -> int
+int main()
 {
-    std::vector vi {
-        1,
-        2,
-        2,
-        3,
-        3,
-        3,
-        4,
-        4,
-        4,
-        4,
-    };
-    auto number = std::count_if(vi.cbegin(), vi.cend(), [](auto e) { return e * e == 4; });
-    std::cout << number << std::endl;
-    return 0;
+    std::vector<int> v = { 1, 2, 3, 4, 5, 6, 7, 8 };
+
+    // Lambda 谓词：判断是否为偶数
+    int even_count = std::count_if(v.begin(), v.end(), [](int x) {
+        return x % 2 == 0;
+    });
+
+    std::cout << "Even numbers: " << even_count << "\n"; // 输出: 4
+
+    // ✅ 学习点：高阶函数！谓词(Predicate) = 函数对象/lambda/函数指针
+    // ✅ 函数式思想：行为参数化
 }

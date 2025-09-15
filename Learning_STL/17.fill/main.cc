@@ -1,27 +1,16 @@
 #include <algorithm>
-#include <array>
 #include <iostream>
+#include <vector>
 
-auto main(int argc, char* argv[]) -> int
+int main()
 {
-    std::array<int, 10> nums {
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-    };
-    std::for_each(nums.cbegin(), nums.cend(), [](auto e) { std::cout << e << ' ' << std::flush; });
-    std::cout << std::endl;
+    std::vector<int> v(5); // {0,0,0,0,0}
 
-    std::fill(nums.begin(), nums.end(), 0);
-    std::for_each(nums.cbegin(), nums.cend(), [](auto e) { std::cout << e << ' ' << std::flush; });
-    std::cout << std::endl;
+    std::fill(v.begin(), v.end(), 99); // 全部设为 99
 
-    return 0;
+    for (int x : v)
+        std::cout << x << " "; // 输出: 99 99 99 99 99
+    std::cout << "\n";
+
+    // ✅ 学习点：范围 [first, last)，值类型需可赋值
 }

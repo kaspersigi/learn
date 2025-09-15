@@ -5,13 +5,10 @@
 // ============================
 
 #include <algorithm> // set_union, set_intersection 等
-#include <functional> // std::greater
-#include <iostream>
 #include <iterator> // std::inserter
 #include <print> // C++23
 #include <set>
 #include <string>
-#include <vector>
 
 // 辅助函数：打印容器
 template <typename Container>
