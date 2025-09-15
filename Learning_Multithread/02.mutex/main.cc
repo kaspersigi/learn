@@ -1,82 +1,50 @@
 #include "ftrace.h"
+#include <iostream>
 #include <mutex>
-#include <print>
 #include <thread>
 
-static std::mutex mutex;
-static int i = 0;
+std::mutex mtx;
+int i = 0;
 
-#if 0
-void func1()
+void print_a()
 {
     Ftrace::ftrace_duration_begin("ChildThread1");
-    while (i < 100) {
-        if (0 == i % 2) {
-            mutex.lock();
-            std::print("a");
-            i++;
-            mutex.unlock();
-        } else {
-            std::this_thread::yield();
+    while (true) {
+        std::lock_guard<std::mutex> lock(mtx);
+        if (i >= 100)
+            break;
+        if (i % 2 == 0) {
+            std::cout << 'a' << std::flush;
+            ++i;
         }
+        // 不需要 else + yield —— 出临界区后自然重新竞争
     }
     Ftrace::ftrace_duration_end();
 }
 
-void func2()
+void print_b()
 {
     Ftrace::ftrace_duration_begin("ChildThread2");
-    while (i < 100) {
-        if (1 == i % 2) {
-            mutex.lock();
-            std::print("b");
-            i++;
-            mutex.unlock();
-        } else {
-            std::this_thread::yield();
-        }
-    }
-    Ftrace::ftrace_duration_end();
-}
-#else
-void func1()
-{
-    Ftrace::ftrace_duration_begin("ChildThread1");
-    while (i < 100) {
-        if (0 == i % 2) {
-            std::lock_guard<std::mutex> lg(mutex);
-            std::print("a");
-            i++;
-        } else {
-            std::this_thread::yield();
+    while (true) {
+        std::lock_guard<std::mutex> lock(mtx);
+        if (i >= 100)
+            break;
+        if (i % 2 == 1) {
+            std::cout << 'b' << std::flush;
+            ++i;
         }
     }
     Ftrace::ftrace_duration_end();
 }
 
-void func2()
-{
-    Ftrace::ftrace_duration_begin("ChildThread2");
-    while (i < 100) {
-        if (1 == i % 2) {
-            std::lock_guard<std::mutex> lg(mutex);
-            std::print("b");
-            i++;
-        } else {
-            std::this_thread::yield();
-        }
-    }
-    Ftrace::ftrace_duration_end();
-}
-#endif
-
-auto main(int argc, char* argv[]) -> int
+int main(int argc, char* argv[])
 {
     Ftrace::ftrace_duration_begin("MainThread");
-    std::thread t1(func1);
-    std::thread t2(func2);
+    std::thread t1(print_a);
+    std::thread t2(print_b);
     t1.join();
     t2.join();
+    std::cout << "\n✅ 互斥量版：打印完成！" << std::endl;
     Ftrace::ftrace_duration_end();
 
     return 0;
