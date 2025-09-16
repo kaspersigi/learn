@@ -1,17 +1,19 @@
 // ============================
-// file: advancethreadmanager.h
-// 说明：生产级高性能线程池/任务调度器
-// [核心特性]
-// - 高性能调度：采用“工作窃取”(Work-Stealing)模式，每个 Worker 拥有独立队列，极大降低锁竞争。
-// - 类型安全：API 全面采用 std::function<void()>，杜绝 void* 和不安全的类型转换。
-// - 现代化生命周期管理：遵循 RAII 原则，使用构造/析构函数管理资源，推荐由智能指针持有。
-// - 作业家族 (Family)：保留并优化了家族概念，用于任务分组与统计。
-// - 严格按序执行：为有序家族提供严格的“按序完成”保证。
-// [保留功能]
-// - 优先级、超时/过期、乱序窗口、队列上限、Flush/Sync 等高级功能。
-// [锁策略]
-// - 细粒度锁：用多把锁替代全局大锁。家族管理使用读写锁，每个 Worker 队列有独立锁。
+// 文件: advancethreadmanager.h
+// 说明：生产级高性能线程池/任务调度器（最终教学版）
+// 核心目标：在保持现代化 API（类型安全、RAII、智能指针）的同时，
+//          通过“工作窃取”(Work-Stealing) + 细粒度锁，实现高并发、低延迟、低锁竞争。
+// 关键特性：
+//   - 高性能调度：每个 Worker 拥有独立队列，优先消费本地任务，空闲时窃取他人任务。
+//   - 类型安全：全面使用 std::function<void()>，杜绝 void* 和强制类型转换。
+//   - RAII 生命周期：构造启动线程，析构自动清理，推荐由 unique_ptr 持有。
+//   - 作业家族 (Family)：支持任务分组、独立同步、统计、顺序控制。
+//   - 严格顺序保证：有序家族确保“按序完成”，即使任务乱序提交。
+//   - 高级功能：优先级、超时取消、乱序窗口、队列上限、Flush/Sync。
+//   - 细粒度锁：家族表用读写锁，Worker 队列用独立互斥锁，极大降低锁竞争。
+// 教学价值：理解现代高性能线程池的架构设计与工程权衡。
 // ============================
+
 #pragma once
 
 #include <atomic>
@@ -24,8 +26,8 @@
 #include <limits>
 #include <map>
 #include <mutex>
-#include <random>
-#include <shared_mutex>
+#include <random> // 用于随机分发任务和工作窃取
+#include <shared_mutex> // 用于家族表的读写锁
 #include <string>
 #include <thread>
 #include <unordered_map>
@@ -35,58 +37,67 @@
 class AdvanceThreadManager
 {
 public:
-    // 任务优先级：High 将进入队列头部，Default 进入尾部
+    // 任务优先级枚举：高优先级任务插入队列头部，优先执行
     enum class Priority {
-        High,
-        Default,
+        High, // 高优先级，插队到队列头部
+        Default, // 默认优先级，追加到队列尾部
     };
 
-    // 家族句柄类型（0 作为非法句柄）
+    // 家族句柄类型：用于标识任务家族，0 表示非法句柄（保留值）
     using Handle = std::uint32_t;
 
-    // 任务函数签名：采用 std::function<void()> 实现类型安全
+    // 任务函数类型：无参数无返回值，通过 lambda 捕获上下文实现类型安全
     using JobFunc = std::function<void()>;
 
-    // 取消回调：同样采用类型安全的方式
+    // 取消回调函数类型：当任务被取消或超时时调用，用于资源清理
     using CancelFunc = std::function<void()>;
 
-    // 无限等待占位常量
+    // 无限等待常量（用于内部逻辑，当前未暴露给用户 API）
     static constexpr std::uint64_t kWaitForever = std::numeric_limits<std::uint64_t>::max();
 
     // 构造函数：创建并启动线程池
-    // - name: 线程池名称，用于日志和调试
-    // - numThreads: 线程池大小，默认为硬件核心数
+    // 参数：
+    //   name: 线程池名称（用于日志和调试，默认 "AdvanceThreadManager"）
+    //   numThreads: 工作线程数量（默认为硬件并发数，若为0则设为1）
     explicit AdvanceThreadManager(const std::string& name = "AdvanceThreadManager",
         std::size_t numThreads = std::thread::hardware_concurrency());
 
-    // 析构函数：安全地停止并清理所有资源
+    // 析构函数：安全停止所有线程，清理残留任务，调用取消回调
+    // 保证线程安全退出，避免析构时访问已销毁对象
     ~AdvanceThreadManager();
 
-    // 禁止拷贝与移动
+    // 禁用拷贝与移动语义：线程池是独占资源，不可复制或转移
     AdvanceThreadManager(const AdvanceThreadManager&) = delete;
     AdvanceThreadManager& operator = (const AdvanceThreadManager&) = delete;
     AdvanceThreadManager(AdvanceThreadManager&&) = delete;
     AdvanceThreadManager& operator = (AdvanceThreadManager&&) = delete;
 
-    // 注册一个作业家族
-    // - fn：(可选) 家族统一的执行函数，如果 PostJob 时提供了具体任务，则此参数可忽略
-    // - name：家族名（用于诊断/统计）
-    // - outHandle：输出家族句柄（必需）
-    // - addInOrder：是否按序放行
-    // - maxOutOfOrderWindow：当 addInOrder=true 时，允许的“未来序号”窗口
-    // - cancel：(可选) 统一的取消回调
+    // 注册一个任务家族（Job Family）
+    // 任务家族用于对任务分组管理，可独立同步、设置顺序性、统计性能
+    // 参数：
+    //   name: 家族名称（用于调试）
+    //   outHandle: 输出参数，返回分配的家族句柄（必须非空）
+    //   addInOrder: 是否启用顺序执行（默认 false）
+    //   maxOutOfOrderWindow: 若启用顺序执行，允许的最大乱序窗口（超出则拒绝任务）
+    // 返回值：
+    //   true: 注册成功
+    //   false: 句柄无效或分配失败
     [[nodiscard]] bool RegisterJobFamily(const std::string& name,
         Handle* outHandle,
         bool addInOrder = false,
         std::size_t maxOutOfOrderWindow = 0);
 
-    // 提交任务 (类型安全版本)
-    // - h：目标家族
-    // - job：要执行的任务函数
-    // - sequence：任务序号（用于按序放行）
-    // - prio：优先级
-    // - deadline：过期时间点
-    // - onCancel：任务被取消时执行的回调
+    // 提交一个任务到指定家族
+    // 参数：
+    //   h: 家族句柄（必须已注册）
+    //   job: 任务函数（必须非空）
+    //   sequence: 任务序列号（仅在 addInOrder=true 时有效，用于控制执行顺序）
+    //   prio: 任务优先级（默认 Default）
+    //   deadline: 任务截止时间（超时则取消，不执行）
+    //   onCancel: 取消回调（任务被拒绝、取消或超时时调用）
+    // 返回值：
+    //   true: 任务成功入队
+    //   false: 任务被拒绝（家族不存在、队列满、序列号无效等）
     [[nodiscard]] bool PostJob(Handle h,
         JobFunc && job,
         std::uint64_t sequence = 0,
@@ -94,82 +105,104 @@ public:
         std::chrono::steady_clock::time_point deadline = {},
         CancelFunc&& onCancel = nullptr);
 
-    // 阻塞等待：指定家族在途任务清零
+    // 同步等待：阻塞直到指定家族所有已提交任务（包括队列中和正在执行的）全部完成
+    // 注意：不会取消或跳过任务，只是等待它们自然结束
     void Sync(Handle h);
 
-    // 限时等待：true 表示在超时前完成
+    // 限时同步等待：在指定超时时间内等待家族任务完成
+    // 返回值：
+    //   true: 在超时前完成
+    //   false: 超时或家族不存在
     [[nodiscard]] bool SyncFor(Handle h, std::chrono::milliseconds timeout);
 
-    // Flush：拒绝新任务，丢弃未执行项，等待正在执行的任务结束
+    // Flush 操作：立即取消家族所有待执行任务（队列中 + pending 中），并等待正在执行的任务完成
+    // 注意：正在执行的任务不会被中断，但完成后不再调度后续 pending 任务
+    // 返回值：
+    //   true: 操作成功
+    //   false: 家族不存在
     [[nodiscard]] bool Flush(Handle h);
 
-    // 设置全局队列上限（0 不限制）
+    // 设置全局任务队列容量上限（0 表示无限制）
+    // 当“总入队数”超过上限时，新提交的任务将被拒绝（调用 onCancel）
+    // 注意：此处是“全局计数器”，非单个队列长度
     void SetQueueCap(std::size_t cap);
 
 private:
-    // 任务队列中的完整条目
+    // 任务队列中的单个元素结构体
     struct QItem {
-        Handle h;
-        JobFunc func;
-        CancelFunc cancel;
-        std::uint64_t seq;
-        Priority prio;
-        std::chrono::steady_clock::time_point deadline;
+        Handle h; // 所属家族句柄
+        JobFunc func; // 任务函数
+        CancelFunc cancel; // 取消回调函数
+        std::uint64_t seq; // 序列号（用于顺序控制）
+        Priority prio; // 优先级
+        std::chrono::steady_clock::time_point deadline; // 截止时间（0 表示无限制）
     };
 
-    // 每个 Worker 线程拥有的本地任务队列
+    // 每个工作线程的本地任务队列（Work-Stealing 的核心）
     struct WorkerQueue {
-        std::deque<QItem> q;
-        std::mutex mtx;
+        std::deque<QItem> q; // 本地任务队列
+        std::mutex mtx; // 保护该队列的互斥锁（细粒度锁）
     };
 
-    // 家族元数据与统计
+    // 任务家族结构体：管理一组相关任务的元数据和状态
     struct Family {
-        std::string name;
-        bool addInOrder = false;
-        std::size_t maxWindow = 0;
-        std::atomic<std::uint64_t> nextSeq { 0 };
+        std::string name; // 家族名称（调试用）
+        bool addInOrder = false; // 是否启用顺序执行
+        std::size_t maxWindow = 0; // 最大允许的乱序窗口（仅当 addInOrder=true 时有效）
+        std::atomic<std::uint64_t> nextSeq { 0 }; // 下一个期望执行的序列号（原子操作，线程安全）
 
-        // 待放行缓存 (仅用于有序家族)
+        // 乱序任务暂存区：key=序列号，value=该序列号对应的所有任务（通常为1个）
         std::map<std::uint64_t, std::vector<QItem>> pending;
-        std::mutex pendingMtx; // 保护 pending map
+        std::mutex pendingMtx; // 保护 pending map 的互斥锁
 
-        // 原子统计
-        std::atomic<std::size_t> outstanding { 0 };
-        std::atomic<std::size_t> enqueued { 0 };
-        std::atomic<std::size_t> canceled { 0 };
-        std::atomic<std::size_t> exceptions { 0 };
-        std::atomic<bool> flushReq { false };
+        // 统计计数器（原子操作，线程安全）
+        std::atomic<std::size_t> outstanding { 0 }; // 当前进行中任务数（含队列中+执行中）
+        std::atomic<std::size_t> enqueued { 0 }; // 总共成功入队任务数
+        std::atomic<std::size_t> canceled { 0 }; // 被取消/拒绝的任务数
+        std::atomic<std::size_t> exceptions { 0 }; // 执行时抛出异常的任务数
+
+        std::atomic<bool> flushReq { false }; // 是否收到 Flush 请求（收到后新任务将被拒绝）
     };
 
 private:
+    // 工作线程主循环函数：尝试从本地队列或窃取他人队列获取任务并执行
     void WorkerLoop(std::size_t workerId);
+
+    // 尝试获取一个任务（先本地，后窃取）
+    // 返回 true 表示成功获取，job 被填充；false 表示无任务
     bool TryGetJob(QItem & job, std::size_t workerId);
+
+    // 将任务入队（根据家族是否有序，决定分发策略）
     void Enqueue(QItem && it, Handle h_for_ordered_dispatch);
+
+    // 将任务插入指定队列（根据优先级决定插入位置）
     void EnqueueTo(std::deque<QItem> & q, QItem && it);
 
 private:
-    std::string m_name;
-    std::size_t m_numThreads { 0 };
+    // 成员变量区 —— 所有成员均在线程安全保护下访问
+
+    std::string m_name; // 线程池名称
+    std::size_t m_numThreads { 0 }; // 工作线程数量
 
     // 线程与队列
-    std::vector<std::thread> m_workers;
-    std::vector<WorkerQueue> m_workerQueues; // 每个 worker 一个队列
-    std::atomic<std::size_t> m_queueCap { 0 };
-    std::atomic<std::size_t> m_totalQueued { 0 };
+    std::vector<std::thread> m_workers; // 工作线程容器
+    std::vector<WorkerQueue> m_workerQueues; // 每个 worker 一个独立队列（Work-Stealing 基础）
+    std::atomic<std::size_t> m_queueCap { 0 }; // 全局队列容量上限（0=无限制）
+    std::atomic<std::size_t> m_totalQueued { 0 }; // 全局总入队计数器（用于容量控制）
 
-    // 家族表：句柄到 Family 的映射
+    // 家族映射表：句柄 -> 家族结构
     std::unordered_map<Handle, Family> m_families;
-    std::shared_mutex m_familiesMtx; // 读写锁保护家族表
+    std::shared_mutex m_familiesMtx; // 读写锁保护家族表（读多写少场景优化）
 
-    // 全局同步机制
-    std::mutex m_cvMtx;
-    std::condition_variable m_cv;
-    std::condition_variable m_doneCv;
+    // 全局同步原语（用于 Sync/Flush 等待）
+    std::mutex m_cvMtx; // 条件变量的配套互斥锁
+    std::condition_variable m_cv; // 通知 worker 有新任务（或停止）
+    std::condition_variable m_doneCv; // 通知等待者家族任务已完成
 
-    std::atomic<bool> m_stop { false };
-    std::atomic<Handle> m_nextHandle { 1 };
+    // 控制标志
+    std::atomic<bool> m_stop { false }; // 停止标志（通知所有 worker 退出）
+    std::atomic<Handle> m_nextHandle { 1 }; // 下一个可用家族句柄（从1开始，0为非法）
 
-    // 用于 work-stealing 和随机分发
+    // 随机引擎：用于任务随机分发和工作窃取时选择受害者
     std::mt19937 m_randEngine { std::random_device {}() };
 };
