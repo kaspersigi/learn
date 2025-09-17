@@ -6,7 +6,8 @@ CompileFlags:
     -stdlib=libc++,
     -Wall,
     -Wno-unused,
-    -I../inc
+    -I../inc,
+    -Iinc
   ]
 
   # 指定编译器路径（确保 clangd 使用与你相同的 clang++-21）
