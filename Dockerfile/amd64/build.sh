@@ -5,6 +5,7 @@ docker run -d \
   --privileged \
   -p 2222:22 \
   -p 8888:8888 \
+  -p 51982:51982 \
   -e CODESERVER_PASSWORD=MyCodeServer \
   -v ~/.ssh:/home/miku/.ssh:ro \
   -v ~/share:/home/miku/share \
