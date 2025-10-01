@@ -7,6 +7,8 @@ TOP_PATH="/mnt/d/Learning_Camera/learn"
 TEMP_PATH="/mnt/c/Users/Public/Downloads"
 BOCHS_VERSION="3.0"
 BOCHS_PATH="$TOP_PATH/bochs-$BOCHS_VERSION"
+VALGRIND_VERSION="3.25.1"
+VALGRIND_PATH="$TOP_PATH/valgrind-$VALGRIND_VERSION"
 PLATFORM="darwin"
 ARCH=$(uname -m)
 if [ "$ARCH" = "x86_64" ]; then
@@ -28,7 +30,7 @@ apt upgrade -y
 apt autoremove -y
 
 apt install clang$LLVM clangd$LLVM clang-format$LLVM lldb$LLVM libllvmlibc$LLVM-dev libc++$LLVM-dev lld$LLVM binutils-i686-linux-gnu binutils-x86-64-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu bsdmainutils make gdb cgdb valgrind qemu-system-arm qemu-system-misc qemu-system-x86 -y
-apt install libncurses5 libncurses-dev flex bison bc dwarves libssl-dev libelf-dev python-is-python3 python3-pip python3-virtualenv pbzip2 bzip2 zip unzip xz-utils lz4 cpio rsync -y
+apt install libncurses5 libncurses-dev flex bison bc dwarves libssl-dev libelf-dev python-is-python3 python3-pip python3-virtualenv pbzip2 bzip2 zip unzip xz-utils lz4 cpio rsync automake autoconf libtool -y
 # apt install libze-intel-gpu1 libze1 intel-opencl-icd libze-dev intel-ocloc intel-level-zero-gpu-raytracing clinfo -y
 
 apt update
@@ -55,6 +57,16 @@ if [ -e "$BOCHS_PATH" ]; then
     make install
 else
     echo "install bochs failed"
+fi
+
+# echo "VALGRIND_PATH=$VALGRIND_PATH"
+if [ -e "$VALGRIND_PATH" ]; then
+    echo "install valgrind-$VALGRIND_VERSION"
+    tar zxvf $VALGRIND_PATH/valgrind-$VALGRIND_VERSION-bin-$ARCH.tar.gz -C /tmp
+    cd /tmp/valgrind-$VALGRIND_VERSION-bin
+    make install
+else
+    echo "install valgrind failed"
 fi
 
 su miku
