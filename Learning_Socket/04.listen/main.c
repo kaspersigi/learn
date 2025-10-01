@@ -50,6 +50,9 @@ int listen(int __fd, int __n);
 int main(int argc, char* argv[])
 {
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0) {
+        return -1;
+    }
     struct sockaddr_in sock;
     sock.sin_family = AF_INET;
     sock.sin_port = htons(8888);

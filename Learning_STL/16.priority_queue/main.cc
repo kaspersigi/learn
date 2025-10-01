@@ -229,7 +229,7 @@ struct Graph {
 
         while (!pq.empty()) {
             int u = pq.top().second;
-            int d = pq.top().first;
+            [[maybe_unused]] int d = pq.top().first;
             pq.pop();
 
             if (visited.count(u))

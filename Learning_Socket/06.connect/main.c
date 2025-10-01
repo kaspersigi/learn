@@ -65,6 +65,9 @@ int connect(int __fd, const struct sockaddr* __addr, socklen_t __len);
 int main(int argc, char* argv[])
 {
     int sockfd_client = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd_client < 0) {
+        return -1;
+    }
     struct sockaddr_in sock_server;
     sock_server.sin_family = AF_INET;
     sock_server.sin_port = htons(8888);

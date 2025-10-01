@@ -71,6 +71,9 @@ int close(int __fd);
 int main(int argc, char* argv[])
 {
     int sockfd_listen = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd_listen < 0) {
+        return -1;
+    }
     struct sockaddr_in sock_listen;
     sock_listen.sin_family = AF_INET;
     sock_listen.sin_port = htons(8888);
@@ -80,6 +83,9 @@ int main(int argc, char* argv[])
     struct sockaddr_in sock_client;
     socklen_t sock_client_len = sizeof(sock_listen);
     int sockfd_service = accept(sockfd_listen, (struct sockaddr*)&sock_client, &sock_client_len);
+    if (sockfd_service < 0) {
+        return -1;
+    }
     fputs("server connect succeed...\n", stdout);
     char read_buff[128] = {};
     int ret = recv(sockfd_service, read_buff, 128, 0);

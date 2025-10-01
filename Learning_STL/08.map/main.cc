@@ -153,7 +153,7 @@ void example_find_erase()
 
     // ✅ at —— 带异常检查
     try {
-        int score = m.at("Charlie");
+        [[maybe_unused]] int score = m.at("Charlie");
         std::println("Charlie: {}分", score);
         score = m.at("Unknown"); // 抛出 std::out_of_range
     } catch (const std::out_of_range& e) {

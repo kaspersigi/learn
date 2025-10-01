@@ -186,6 +186,9 @@ void unimplemented(int sockfd_service)
 int main(int argc, char* argv[])
 {
     int sockfd_listen = start();
+    if (sockfd_listen < 0) {
+        return -1;
+    }
     printf("httpd running on port %d\n", port);
     struct sockaddr_in sock_client;
     socklen_t sock_client_len = sizeof(sock_client);

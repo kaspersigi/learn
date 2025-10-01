@@ -27,6 +27,9 @@ struct pollfd {
 int main(int argc, char* argv[])
 {
     int sockfd_listen = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd_listen < 0) {
+        return -1;
+    }
     struct sockaddr_in sock_listen;
     sock_listen.sin_family = AF_INET;
     sock_listen.sin_port = htons(8888);

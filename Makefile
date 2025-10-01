@@ -11,6 +11,7 @@ CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM) make
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
@@ -77,6 +78,20 @@ clean :
 	$(MAKE) -C Learning_Operating_System clean
 	$(MAKE) -C Learning_Socket clean
 	$(MAKE) -C Learning_STL clean
+
+check :
+# 	$(SCAN) -C Learning_Algorithm
+# 	# $(SCAN) -C Learning_Android
+# 	$(SCAN) -C Learning_C
+# 	$(SCAN) -C Learning_C++
+# 	$(SCAN) -C Learning_Design_Pattern
+# 	$(SCAN) -C Learning_Driver
+# 	$(SCAN) -C Learning_Multithread
+# 	$(SCAN) -C Learning_Native
+	$(SCAN) -C Learning_OpenCL
+# 	$(SCAN) -C Learning_Operating_System
+# 	$(SCAN) -C Learning_Socket
+# 	$(SCAN) -C Learning_STL
 
 style :
 	clang-format -style=webkit -dump-config > .clang-format
