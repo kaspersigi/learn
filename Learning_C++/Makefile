@@ -11,6 +11,7 @@ CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
@@ -126,6 +127,7 @@ format :
 	$(MAKE) -C 30.halrequest format
 	$(MAKE) -C 31.framecapture format
 	$(MAKE) -C 32.spdlog format
+
 clean :
 	$(MAKE) -C 00.template clean
 	$(MAKE) -C 01.macro clean
@@ -160,3 +162,38 @@ clean :
 	$(MAKE) -C 30.halrequest clean
 	$(MAKE) -C 31.framecapture clean
 	$(MAKE) -C 32.spdlog clean
+
+scan :
+	$(MAKE) -C 00.template scan
+	$(MAKE) -C 01.macro scan
+	$(MAKE) -C 02.regex scan
+	$(MAKE) -C 03.constructor scan
+	$(MAKE) -C 04.deconstructor scan
+	$(MAKE) -C 05.interface scan
+	$(MAKE) -C 06.interface_template scan
+	$(MAKE) -C 07.shared_ptr scan
+	$(MAKE) -C 08.weak_ptr scan
+	$(MAKE) -C 09.const scan
+	$(MAKE) -C 10.function_template scan
+	$(MAKE) -C 11.class_template scan
+	$(MAKE) -C 12.threadpool scan
+	$(MAKE) -C 13.iterator scan
+	$(MAKE) -C 14.class_export scan
+	$(MAKE) -C 15.class_thread scan
+	$(MAKE) -C 16.class_async scan
+	$(MAKE) -C 17.class_promise scan
+	$(MAKE) -C 18.class_pthread scan
+	$(MAKE) -C 19.async_callback scan
+	$(MAKE) -C 20.format scan
+	$(MAKE) -C 21.print scan
+	$(MAKE) -C 22.path scan
+	$(MAKE) -C 23.filesystem scan
+	$(MAKE) -C 24.ifstream scan
+	$(MAKE) -C 25.ofstream scan
+	$(MAKE) -C 26.boost_regex scan
+	$(MAKE) -C 27.static_local_variable scan
+	$(MAKE) -C 28.singleton scan
+	$(MAKE) -C 29.ftrace scan
+	$(MAKE) -C 30.halrequest scan
+	$(MAKE) -C 31.framecapture scan
+	$(MAKE) -C 32.spdlog scan
