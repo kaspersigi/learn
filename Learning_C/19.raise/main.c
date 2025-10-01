@@ -11,7 +11,7 @@
 int main(int argc, char* argv[])
 {
     printf("Hello World!");
-    int ret = raise(SIGKILL); // 相当于_exit()，不清空缓存
+    [[maybe_unused]] int ret = raise(SIGKILL); // 相当于_exit()，不清空缓存
     sleep(5);
 
     return 0;

@@ -11,6 +11,7 @@ ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
 FORMAT = /usr/bin/clang-format$(LLVM)
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
 DEBUG = -g -O0
@@ -34,3 +35,5 @@ clean :
 	rm -v $(TRG)
 check :
 	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)
+scan :
+	$(SCAN) make

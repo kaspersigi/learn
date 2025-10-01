@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
     // fputs("Hello Linux!", fp);
     // fputs("Hello Linux!", stdout);
 
-    char* p = fgets(read_buffer, 128, fp);
+    [[maybe_unused]] char* p = fgets(read_buffer, 128, fp);
 
     printf("%s\n", read_buffer);
 

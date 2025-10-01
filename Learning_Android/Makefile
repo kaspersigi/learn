@@ -19,11 +19,12 @@ TARGET = aarch64-linux-android
 API = 35
 CC = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang
 CXX = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang++
+SCAN = scan-build$(LLVM) --use-cc=$(CC) --use-c++=$(CXX)
 AR = $(TOOLCHAIN)/bin/llvm-ar
 LLVM = -21
 FORMAT = /usr/bin/clang-format$(LLVM)
-C_FLAGS = -std=c23 -Wall -Wno-unused
-CXX_FLAGS = -std=c++26 -Wall -Wno-unused
+C_FLAGS = -std=c23 -Wall -Wno-unused --sysroot=$(TOOLCHAIN)/sysroot --target=$(TARGET)
+CXX_FLAGS = -std=c++26 -Wall -Wno-unused --sysroot=$(TOOLCHAIN)/sysroot --target=$(TARGET)
 DEBUG = -g -O0
 RELEASE = -flto -O3
 LIBS = -lpthread
@@ -107,3 +108,22 @@ clean :
 	$(MAKE) -C 14.android_clinfo clean
 	$(MAKE) -C 15.android_opencl clean
 	$(MAKE) -C 16.android_dlopen clean
+
+scan :
+	$(MAKE) -C 00.template scan
+	$(MAKE) -C 01.android_c scan
+	$(MAKE) -C 02.android_cpp scan
+	$(MAKE) -C 03.android_ftrace scan
+	$(MAKE) -C 04.android_atrace scan
+	$(MAKE) -C 05.android_clog scan
+	$(MAKE) -C 06.android_cpplog scan
+	$(MAKE) -C 07.android_setpriority scan
+	$(MAKE) -C 08.android_nice scan
+	$(MAKE) -C 09.android_setschedparam scan
+	$(MAKE) -C 10.android_setscheduler scan
+	$(MAKE) -C 11.android_native_buf scan
+	$(MAKE) -C 12.android_backtrace scan
+	$(MAKE) -C 13.android_detach scan
+	$(MAKE) -C 14.android_clinfo scan
+	$(MAKE) -C 15.android_opencl scan
+	$(MAKE) -C 16.android_dlopen scan

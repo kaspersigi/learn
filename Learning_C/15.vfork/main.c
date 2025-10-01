@@ -14,12 +14,17 @@
 // 另 vfork()在macOS和Linux上行为不一样
 // Linux的glibc2.12之前和glibc2.12之后也不一样
 
-int main(int argc, char* argv[])
+int main(void)
 {
+    // 目的：创建一个子进程，让它打印一条消息然后退出。
     if (vfork() == 0) {
+        // 这是子进程
         printf("This is the child process\n");
         exit(0);
-    } else
+    } else {
+        // 这是父进程
         printf("This is the parent process\n");
+    }
+
     return 0;
 }

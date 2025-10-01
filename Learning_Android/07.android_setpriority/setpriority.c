@@ -55,7 +55,7 @@ int main(int argc, char* argv[])
     int ret = 0;
     if (!ftrace_init())
         return -1;
-    ret = ftrace_duration_begin("MainThread");
+    ftrace_duration_begin("MainThread");
 
     pthread_t tid;
     ret = pthread_create(&tid, NULL, func, NULL);
@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
     }
 
     pthread_join(tid, NULL);
-    ret = ftrace_duration_end();
+    ftrace_duration_end();
     ftrace_close();
 
     return 0;

@@ -13,6 +13,7 @@ CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
 DEBUG = -g -O0
 RELEASE = -flto -O3
 LIBS = -lpthread
@@ -296,3 +297,72 @@ clean :
 	$(MAKE) -C 64.sched_setscheduler clean
 	$(MAKE) -C 65.static_local_variable clean
 	$(MAKE) -C 66.ftrace clean
+
+scan :
+	$(MAKE) -C 00.template scan
+	$(MAKE) -C 01.macro scan
+	$(MAKE) -C 02.static_library scan
+	$(MAKE) -C 03.dynamic_library scan
+	$(MAKE) -C 04.dlsym scan
+	$(MAKE) -C 05.open scan
+	$(MAKE) -C 06.write scan
+	$(MAKE) -C 07.read scan
+	$(MAKE) -C 08.fopen scan
+	$(MAKE) -C 09.line_buffer scan
+	$(MAKE) -C 10.all_buffer scan
+	$(MAKE) -C 11.mkdir scan
+	$(MAKE) -C 12.opendir scan
+	$(MAKE) -C 13.readdir scan
+	$(MAKE) -C 14.fork scan
+	$(MAKE) -C 15.vfork scan
+	$(MAKE) -C 16.pipe scan
+	$(MAKE) -C 17.mkfifo scan
+	$(MAKE) -C 18.kill scan
+	$(MAKE) -C 19.raise scan
+	$(MAKE) -C 20.alarm scan
+	$(MAKE) -C 21.pause scan
+	$(MAKE) -C 22.signal scan
+	$(MAKE) -C 23.shmget scan
+	$(MAKE) -C 24.ftok scan
+	$(MAKE) -C 25.shmat scan
+	$(MAKE) -C 26.shmctl scan
+	$(MAKE) -C 27.msgget scan
+	$(MAKE) -C 28.msgsnd scan
+	$(MAKE) -C 29.msgrcv scan
+	$(MAKE) -C 30.semget scan
+	$(MAKE) -C 31.semop scan
+	$(MAKE) -C 32.one_producer_one_consumer_sem scan
+	$(MAKE) -C 33.multi_producer_multi_consumer_sem scan
+	$(MAKE) -C 34.pthread_create scan
+	$(MAKE) -C 35.pthread_exit scan
+	$(MAKE) -C 36.pthread_join scan
+	$(MAKE) -C 37.pthread_detach scan
+	$(MAKE) -C 38.pthread_cancel scan
+	$(MAKE) -C 39.pthread_kill scan
+	$(MAKE) -C 40.sigaction scan
+	$(MAKE) -C 41.pthread_cleanup scan
+	$(MAKE) -C 42.pthread_mutex scan
+	$(MAKE) -C 43.pthread_rwlock scan
+	$(MAKE) -C 44.pthread_cond scan
+	$(MAKE) -C 45.one_producer_one_consumer_cond scan
+	$(MAKE) -C 46.multi_producer_multi_consumer_cond scan
+	$(MAKE) -C 47.perror scan
+	$(MAKE) -C 48.union scan
+	$(MAKE) -C 49.threadpool scan
+	$(MAKE) -C 50.asm scan
+	$(MAKE) -C 51.asm_call_c scan
+	$(MAKE) -C 52.inline_asm scan
+	$(MAKE) -C 53.syscall scan
+	$(MAKE) -C 54.mmap scan
+	$(MAKE) -C 55.polymorphism scan
+	$(MAKE) -C 56.complex_macro scan
+	$(MAKE) -C 57.class_export scan
+	$(MAKE) -C 58.function_pointer scan
+	$(MAKE) -C 59.mirrorrotate scan
+	$(MAKE) -C 60.stringize scan
+	$(MAKE) -C 61.setpriority scan
+	$(MAKE) -C 62.nice scan
+	$(MAKE) -C 63.pthread_setschedparam scan
+	$(MAKE) -C 64.sched_setscheduler scan
+	$(MAKE) -C 65.static_local_variable scan
+	$(MAKE) -C 66.ftrace scan

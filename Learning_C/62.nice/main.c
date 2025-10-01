@@ -28,11 +28,11 @@ int main(int argc, char* argv[])
         printf("%s: ftrace_init filed!\n", __PRETTY_FUNCTION__);
         return -1;
     }
-    int ret = ftrace_duration_begin("MyFtrace");
+    ftrace_duration_begin("MyFtrace");
 
     pthread_t tid;
     printf("main thread nice = %d\n", nice(0));
-    ret = pthread_create(&tid, NULL, func, NULL);
+    int ret = pthread_create(&tid, NULL, func, NULL);
     if (0 != ret) {
         printf("create new thread failed!\n");
         return -1;
@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
     pthread_join(tid, NULL);
     printf("main thread nice = %d\n", nice(0));
 
-    ret = ftrace_duration_end();
+    ftrace_duration_end();
     ftrace_close();
 
     return 0;

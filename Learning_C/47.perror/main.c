@@ -7,8 +7,11 @@ void perror (const char *__s);
 
 int main(int argc, char* argv[])
 {
-    FILE* fp = fopen("file.txt", "r");
+    [[maybe_unused]] FILE* fp = fopen("file.txt", "r");
     perror("main");
+    if (fp) {
+        fclose(fp);
+    }
     // "main: No such file or directory"
     return 0;
 }

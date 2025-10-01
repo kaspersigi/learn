@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
     if (!ftrace_init())
         return -1;
 
-    ret = ftrace_duration_begin("MainThread");
+    ftrace_duration_begin("MainThread");
 
     void* handle = dlopen("./libfunc.so", RTLD_LAZY);
     if (!handle) {
@@ -22,9 +22,11 @@ int main(int argc, char* argv[])
     int result = func(1);
     printf("result = %d\n", result);
     sleep(1);
-    dlclose(handle);
+    if (handle) {
+        dlclose(handle);
+    }
 
-    ret = ftrace_duration_end();
+    ftrace_duration_end();
     ftrace_close();
 
     return 0;

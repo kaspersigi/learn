@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
     int ret = 0;
     if (!ftrace_init())
         return -1;
-    ret = ftrace_duration_begin("MainThread");
+    ftrace_duration_begin("MainThread");
 
     LOGI("main thread nice = %d -- lzz", nice(0));
     pthread_t tid;
@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
 
     pthread_join(tid, NULL);
     LOGI("main thread nice = %d -- lzz", nice(0));
-    ret = ftrace_duration_end();
+    ftrace_duration_end();
     ftrace_close();
 
     return 0;

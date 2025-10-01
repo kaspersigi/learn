@@ -2352,6 +2352,7 @@ void device_info_devtopo_khr(struct device_info_ret* ret,
     const struct info_loc* loc, const struct device_info_checks* UNUSED(chk),
     const struct opt_out* output)
 {
+    memset(&ret->value.devtopo_khr, 0, sizeof(ret->value.devtopo_khr));
     GET_VAL(ret, loc, devtopo_khr);
     /* TODO how to do this in CLINFO_RAW mode */
     if (!ret->err) {
@@ -2364,7 +2365,7 @@ void device_info_devtopo_khr(struct device_info_ret* ret,
 /* stringify a cl_device_topology_amd */
 void devtopo_amd_str(struct device_info_ret* ret, const cl_device_topology_amd* devtopo)
 {
-    cl_device_pci_bus_info_khr devtopo_info;
+    cl_device_pci_bus_info_khr devtopo_info = { 0 };
 
     switch (devtopo->raw.type) {
     case 0:
@@ -2405,7 +2406,7 @@ void device_info_devtopo_nv(struct device_info_ret* ret,
     const struct opt_out* output)
 {
     struct info_loc loc2 = *loc;
-    cl_device_pci_bus_info_khr devtopo;
+    cl_device_pci_bus_info_khr devtopo = { 0 };
     DEV_FETCH(cl_uint, val); /* CL_DEVICE_PCI_BUS_ID_NV */
     if (!ret->err) {
         devtopo.pci_bus = val & 0xff;
@@ -4565,6 +4566,12 @@ void free_output(struct opt_out* UNUSED(output))
     /* nothing to do until we implement proper memory management
      * for selected_devices and selected_props
      */
+    /* 释放由 parse_prop 分配的属性字符串 */
+    for (cl_uint i = 0; i < output->num_selected_props; ++i) {
+        // 因为 selected_props 数组的类型是 const char*，
+        // 我们需要强制类型转换为 (void*) 来释放它。
+        free((void*)output->selected_props[i]);
+    }
 }
 
 void add_selected_prop(struct opt_out* output, const char* prop)

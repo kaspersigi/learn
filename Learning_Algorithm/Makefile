@@ -11,6 +11,7 @@ CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
@@ -109,3 +110,25 @@ clean :
 	$(MAKE) -C 17.4sum_ii clean
 	$(MAKE) -C 18.ransom_note clean
 	$(MAKE) -C 19.3sum clean
+
+scan :
+	$(MAKE) -C 00.template scan
+	$(MAKE) -C 01.binary_search scan
+	$(MAKE) -C 02.remove_element scan
+	$(MAKE) -C 03.squares_of_a_sorted_array scan
+	$(MAKE) -C 04.minimum_size_subarray_sum scan
+	$(MAKE) -C 05.spiral_matrix_ii scan
+	$(MAKE) -C 06.remove_linked_list_elements scan
+	$(MAKE) -C 07.design_linked_list scan
+	$(MAKE) -C 08.reverse_linked_list scan
+	$(MAKE) -C 09.swap_nodes_in_pairs scan
+	$(MAKE) -C 10.remove_nth_node_from_end_of_list scan
+	$(MAKE) -C 11.intersection_of_two_linked_lists_lcci scan
+	$(MAKE) -C 12.linked_list_cycle_ii scan
+	$(MAKE) -C 13.valid_anagram scan
+	$(MAKE) -C 14.intersection_of_two_arrays scan
+	$(MAKE) -C 15.happy_number scan
+	$(MAKE) -C 16.two_sum scan
+	$(MAKE) -C 17.4sum_ii scan
+	$(MAKE) -C 18.ransom_note scan
+	$(MAKE) -C 19.3sum scan
