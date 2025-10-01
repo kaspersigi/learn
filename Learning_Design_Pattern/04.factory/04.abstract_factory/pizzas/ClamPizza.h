@@ -6,7 +6,7 @@
 class ClamPizza : public Pizza
 {
 public:
-    explicit ClamPizza(PizzaIngredientFactory * ingredientFactory);
+    explicit ClamPizza(std::unique_ptr<PizzaIngredientFactory> f);
     explicit ClamPizza(std::nullptr_t) = delete;
     virtual ~ClamPizza() = default;
 
@@ -19,5 +19,5 @@ protected:
     ClamPizza& operator = (ClamPizza&&) = delete;
 
 private:
-    mutable std::shared_ptr<PizzaIngredientFactory> _ingredientFactory {};
+    std::unique_ptr<PizzaIngredientFactory> _ingredientFactory;
 };

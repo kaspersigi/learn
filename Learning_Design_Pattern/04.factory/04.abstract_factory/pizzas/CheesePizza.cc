@@ -1,7 +1,7 @@
 #include "CheesePizza.h"
 
-CheesePizza::CheesePizza(PizzaIngredientFactory* ingredientFactory)
-    : _ingredientFactory(ingredientFactory)
+CheesePizza::CheesePizza(std::unique_ptr<PizzaIngredientFactory> f)
+    : _ingredientFactory(std::move(f))
 {
 }
 

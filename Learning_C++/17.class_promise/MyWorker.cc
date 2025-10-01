@@ -27,6 +27,6 @@ void MainWorker::execute(int value, const std::string& str)
     std::future<int> f { p.get_future() };
     std::thread t { &ChildWorker::child_worker, _cw, value, std::ref(str), std::ref(p) };
     t.detach();
-    int ret1 = main_worker();
-    int ret2 = f.get();
+    [[maybe_unused]] int ret1 = main_worker();
+    [[maybe_unused]] int ret2 = f.get();
 }

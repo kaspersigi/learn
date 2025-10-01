@@ -29,7 +29,7 @@ void MainWorker::execute(int value, const std::string& str)
     ret1.get();
 #else
     std::future<int> ret1(std::async(&ChildWorker::child_worker, _cw, value, std::ref(str)));
-    int ret2 = main_worker();
+    [[maybe_unused]] int ret2 = main_worker();
     ret1.get();
 #endif
 }

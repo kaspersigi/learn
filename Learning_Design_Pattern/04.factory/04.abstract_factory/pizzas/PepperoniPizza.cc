@@ -1,7 +1,7 @@
 #include "PepperoniPizza.h"
 
-PepperoniPizza::PepperoniPizza(PizzaIngredientFactory* ingredientFactory)
-    : _ingredientFactory(ingredientFactory)
+PepperoniPizza::PepperoniPizza(std::unique_ptr<PizzaIngredientFactory> f)
+    : _ingredientFactory(std::move(f))
 {
 }
 

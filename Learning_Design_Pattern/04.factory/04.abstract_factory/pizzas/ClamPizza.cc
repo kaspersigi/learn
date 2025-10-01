@@ -1,7 +1,7 @@
 #include "ClamPizza.h"
 
-ClamPizza::ClamPizza(PizzaIngredientFactory* ingredientFactory)
-    : _ingredientFactory(ingredientFactory)
+ClamPizza::ClamPizza(std::unique_ptr<PizzaIngredientFactory> f)
+    : _ingredientFactory(std::move(f))
 {
 }
 

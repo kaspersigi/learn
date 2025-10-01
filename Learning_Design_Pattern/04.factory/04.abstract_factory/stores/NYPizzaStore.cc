@@ -4,20 +4,23 @@
 
 std::shared_ptr<Pizza> NYPizzaStore::createPizza(std::string type) const
 {
-    PizzaIngredientFactory* ingredientFactory = new NYPizzaIngredientFactory();
     std::shared_ptr<Pizza> pizza;
-    if (0 == type.compare("cheese")) {
-        pizza = std::shared_ptr<Pizza>(new CheesePizza(ingredientFactory));
-        pizza->setName("New York Style Cheese Pizza");
-    } else if (0 == type.compare("veggie")) {
-        pizza = std::shared_ptr<Pizza>(new VeggiePizza(ingredientFactory));
-        pizza->setName("New York Style Veggie Pizza");
-    } else if (0 == type.compare("clam")) {
-        pizza = std::shared_ptr<Pizza>(new ClamPizza(ingredientFactory));
-        pizza->setName("New York Style Clam Pizza");
-    } else if (0 == type.compare("pepperoni")) {
-        pizza = std::shared_ptr<Pizza>(new PepperoniPizza(ingredientFactory));
-        pizza->setName("New York Style Pepperoni Pizza");
+    if (type == "cheese") {
+        pizza = std::make_shared<CheesePizza>(
+            std::make_unique<NYPizzaIngredientFactory>());
+        pizza->setName("Chicago Style Cheese Pizza");
+    } else if (type == "veggie") {
+        pizza = std::make_shared<VeggiePizza>(
+            std::make_unique<NYPizzaIngredientFactory>());
+        pizza->setName("Chicago Style Veggie Pizza");
+    } else if (type == "clam") {
+        pizza = std::make_shared<ClamPizza>(
+            std::make_unique<NYPizzaIngredientFactory>());
+        pizza->setName("Chicago Style Clam Pizza");
+    } else if (type == "pepperoni") {
+        pizza = std::make_shared<PepperoniPizza>(
+            std::make_unique<NYPizzaIngredientFactory>());
+        pizza->setName("Chicago Style Pepperoni Pizza");
     }
     return pizza;
 }

@@ -79,19 +79,19 @@ clean :
 	$(MAKE) -C Learning_Socket clean
 	$(MAKE) -C Learning_STL clean
 
-check :
-# 	$(SCAN) -C Learning_Algorithm
-# 	# $(SCAN) -C Learning_Android
-# 	$(SCAN) -C Learning_C
-# 	$(SCAN) -C Learning_C++
-# 	$(SCAN) -C Learning_Design_Pattern
-# 	$(SCAN) -C Learning_Driver
-# 	$(SCAN) -C Learning_Multithread
-# 	$(SCAN) -C Learning_Native
-	$(SCAN) -C Learning_OpenCL
-# 	$(SCAN) -C Learning_Operating_System
-# 	$(SCAN) -C Learning_Socket
-# 	$(SCAN) -C Learning_STL
+scan :
+	$(MAKE) -C Learning_Algorithm scan
+# 	$(MAKE) -C Learning_Android scan
+# 	$(MAKE) -C Learning_C scan
+	$(MAKE) -C Learning_C++ scan
+	$(MAKE) -C Learning_Design_Pattern scan
+	$(MAKE) -C Learning_Driver scan
+	$(MAKE) -C Learning_Multithread scan
+# 	$(MAKE) -C Learning_Native scan
+	$(MAKE) -C Learning_OpenCL scan
+# 	$(MAKE) -C Learning_Operating_System scan
+	$(MAKE) -C Learning_Socket scan
+	$(MAKE) -C Learning_STL scan
 
 style :
 	clang-format -style=webkit -dump-config > .clang-format

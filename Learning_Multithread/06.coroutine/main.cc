@@ -57,7 +57,7 @@ Result Coroutine()
 int main(int argc, char* argv[])
 {
     std::cout << "start main" << std::endl;
-    Result c = Coroutine();
+    [[maybe_unused]] Result c = Coroutine();
     std::cout << "end main" << std::endl;
 
     return 0;

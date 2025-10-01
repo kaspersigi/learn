@@ -35,8 +35,8 @@ void MainWorker::execute()
 {
     pthread_t mw_tid = 0;
     pthread_t cw_tid = 0;
-    int mw_ret = pthread_create(&mw_tid, NULL, main_worker, NULL);
-    int cw_ret = pthread_create(&cw_tid, NULL, _cw->child_worker, NULL);
+    [[maybe_unused]] int mw_ret = pthread_create(&mw_tid, NULL, main_worker, NULL);
+    [[maybe_unused]] int cw_ret = pthread_create(&cw_tid, NULL, _cw->child_worker, NULL);
     pthread_join(mw_tid, NULL);
     pthread_join(cw_tid, NULL);
     // https://comp.programming.threads.narkive.com/IS1dxD6T/how-to-pass-class-member-function-to-pthread-create
