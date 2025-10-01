@@ -9,7 +9,8 @@ KDIR := ~/linux/linux
 LLVM := -21
 ARCH := arm64
 C_FLAGS := LLVM=$(LLVM) ARCH=$(ARCH)
-FORMAT = /usr/bin/clang-format$(LLVM)
+FORMAT := /usr/bin/clang-format$(LLVM)
+SCAN := scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
 
 all :
 	make $(C_FLAGS) -C $(KDIR) M=$(PWD)
@@ -22,4 +23,6 @@ install : $(MOD)
 	sudo /sbin/insmod $(MOD)
 remove :
 	sudo /sbin/rmmod $(MOD)
+scan :
+	$(SCAN) make
 endif

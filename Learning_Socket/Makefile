@@ -11,6 +11,7 @@ CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
@@ -117,3 +118,27 @@ clean :
 	$(MAKE) -C 19.multithread_epoll clean
 	$(MAKE) -C 20.threadpool_epoll clean
 	$(MAKE) -C 21.myhttpd clean
+
+scan :
+	$(MAKE) -C 00.template scan
+	$(MAKE) -C 01.hton scan
+	$(MAKE) -C 02.inet_pton scan
+	$(MAKE) -C 03.socket scan
+	$(MAKE) -C 04.listen scan
+	$(MAKE) -C 05.accept scan
+	$(MAKE) -C 06.connect scan
+	$(MAKE) -C 07.recv scan
+	$(MAKE) -C 08.send scan
+	$(MAKE) -C 09.server scan
+	$(MAKE) -C 10.client scan
+	$(MAKE) -C 11.threadpool scan
+	$(MAKE) -C 12.select scan
+	$(MAKE) -C 13.multithread scan
+	$(MAKE) -C 14.poll scan
+	$(MAKE) -C 15.epoll scan
+	$(MAKE) -C 16.level_triggered scan
+	$(MAKE) -C 17.edge_triggered scan
+	$(MAKE) -C 18.edge_triggered_nonblock scan
+	$(MAKE) -C 19.multithread_epoll scan
+	$(MAKE) -C 20.threadpool_epoll scan
+	$(MAKE) -C 21.myhttpd scan

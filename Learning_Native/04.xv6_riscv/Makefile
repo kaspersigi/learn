@@ -14,6 +14,7 @@ CONFIG = llvm-config$(LLVM)
 ARCH = i686-unknown-linux-gnu
 CC = /usr/bin/clang$(LLVM) --target=riscv64-unknown-linux-gnu
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
@@ -56,3 +57,5 @@ clean :
 	$(MAKE) -C filesystem clean
 qemu :
 	qemu-system-riscv64 -machine virt -bios none -kernel kernel/kernel -m 128M -smp 4 -global virtio-mmio.force-legacy=false -drive file=filesystem/fs.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0 -nographic
+scan :
+	make

@@ -10,6 +10,7 @@ AS = /usr/bin/i686-linux-gnu-as
 LD = /usr/bin/i686-linux-gnu-ld
 CC = /usr/bin/i686-linux-gnu-gcc
 CXX = /usr/bin/g++
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/i686-linux-gnu-gcc
 LLVM = -21
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c2x -Wall -Wno-unused

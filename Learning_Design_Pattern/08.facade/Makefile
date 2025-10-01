@@ -10,6 +10,7 @@ CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
@@ -44,3 +45,5 @@ clean :
 	rm -v HomeTheater
 check :
 	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./HomeTheater
+scan :
+	$(SCAN) make

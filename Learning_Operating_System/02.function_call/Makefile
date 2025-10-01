@@ -13,6 +13,7 @@ CONFIG = llvm-config$(LLVM)
 ARCH = i686-unknown-linux-gnu
 CC = /usr/bin/clang$(LLVM)
 CXX = /usr/bin/clang++$(LLVM)
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
@@ -50,3 +51,5 @@ qemu :
 	qemu-system-i386 -cpu max -machine pc,accel=tcg,kernel-irqchip=split,hmat=on -smp 1,cores=1,threads=1,sockets=1 -m 1M -drive format=raw,file=./boot.img
 bochs :
 	bochs -f ../mac.bxrc
+scan :
+	make

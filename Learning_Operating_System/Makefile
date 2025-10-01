@@ -11,6 +11,7 @@ CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
@@ -69,3 +70,19 @@ clean :
 	$(MAKE) -C 11.kernel clean
 	$(MAKE) -C 12.idt clean
 	$(MAKE) -C 13.star clean
+
+scan :
+	$(MAKE) -C 00.template scan
+	$(MAKE) -C 01.protected scan
+	$(MAKE) -C 02.function_call scan
+	$(MAKE) -C 03.paging scan
+	$(MAKE) -C 04.pae scan
+	$(MAKE) -C 05.ia32e scan
+	$(MAKE) -C 06.64bit scan
+	$(MAKE) -C 07.long_mode scan
+	$(MAKE) -C 08.gdt scan
+	$(MAKE) -C 09.rip scan
+	$(MAKE) -C 10.stack scan
+	$(MAKE) -C 11.kernel scan
+	$(MAKE) -C 12.idt scan
+	$(MAKE) -C 13.star scan

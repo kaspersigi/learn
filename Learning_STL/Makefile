@@ -10,6 +10,7 @@ CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
@@ -240,3 +241,58 @@ clean :
 	$(MAKE) -C 50.condition_variable clean
 	$(MAKE) -C 51.async clean
 	$(MAKE) -C 52.promise clean
+
+scan :
+	$(MAKE) -C 00.template scan
+	$(MAKE) -C 01.array scan
+	$(MAKE) -C 02.vector scan
+	$(MAKE) -C 03.deque scan
+	$(MAKE) -C 04.list scan
+	$(MAKE) -C 05.forward_list scan
+	$(MAKE) -C 06.set scan
+	$(MAKE) -C 07.multiset scan
+	$(MAKE) -C 08.map scan
+	$(MAKE) -C 09.multimap scan
+	$(MAKE) -C 10.unordered_set scan
+	$(MAKE) -C 11.unordered_multiset scan
+	$(MAKE) -C 12.unordered_map scan
+	$(MAKE) -C 13.unordered_multimap scan
+	$(MAKE) -C 14.stack scan
+	$(MAKE) -C 15.queue scan
+	$(MAKE) -C 16.priority_queue scan
+	$(MAKE) -C 17.fill scan
+	$(MAKE) -C 18.fill_n scan
+	$(MAKE) -C 19.count scan
+	$(MAKE) -C 20.count_if scan
+	$(MAKE) -C 21.find scan
+	$(MAKE) -C 22.find_if scan
+	$(MAKE) -C 23.for_each scan
+	$(MAKE) -C 24.transform scan
+	$(MAKE) -C 25.copy scan
+	$(MAKE) -C 26.copy_if scan
+	$(MAKE) -C 27.remove_if scan
+	$(MAKE) -C 28.accumulate scan
+	$(MAKE) -C 29.sort scan
+	$(MAKE) -C 30.stable_sort scan
+	$(MAKE) -C 31.binary_search scan
+	$(MAKE) -C 32.generate scan
+	$(MAKE) -C 33.replace scan
+	$(MAKE) -C 34.unique scan
+	$(MAKE) -C 35.minmax_element scan
+	$(MAKE) -C 36.partition scan
+	$(MAKE) -C 37.rotate scan
+	$(MAKE) -C 38.shuffle scan
+	$(MAKE) -C 39.merge scan
+	$(MAKE) -C 40.set_union scan
+	$(MAKE) -C 41.partial_sort scan
+	$(MAKE) -C 42.nth_element scan
+	$(MAKE) -C 43.adjacent_find scan
+	$(MAKE) -C 44.search scan
+	$(MAKE) -C 45.bind scan
+	$(MAKE) -C 46.lambda scan
+	$(MAKE) -C 47.function_object scan
+	$(MAKE) -C 48.equal scan
+	$(MAKE) -C 49.thread scan
+	$(MAKE) -C 50.condition_variable scan
+	$(MAKE) -C 51.async scan
+	$(MAKE) -C 52.promise scan

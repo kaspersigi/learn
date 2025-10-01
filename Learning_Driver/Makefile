@@ -11,6 +11,7 @@ CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
@@ -49,3 +50,10 @@ clean :
 	$(MAKE) -C 02.module_param clean
 	$(MAKE) -C 03.export_symbol clean
 	$(MAKE) -C 04.char clean
+
+scan :
+	$(MAKE) -C 00.template scan
+	$(MAKE) -C 01.module scan
+	$(MAKE) -C 02.module_param scan
+	$(MAKE) -C 03.export_symbol scan
+	$(MAKE) -C 04.char scan

@@ -10,6 +10,7 @@ CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
@@ -64,3 +65,14 @@ clean :
 	$(MAKE) -C 06.coroutine clean
 	$(MAKE) -C 07.threadmanager clean
 	$(MAKE) -C 08.advancethreadmanager clean
+
+scan :
+	$(MAKE) -C 00.template scan
+	$(MAKE) -C 01.atomic scan
+	$(MAKE) -C 02.mutex scan
+	$(MAKE) -C 03.condition_variable scan
+	$(MAKE) -C 04.detach scan
+	$(MAKE) -C 05.async scan
+	$(MAKE) -C 06.coroutine scan
+	$(MAKE) -C 07.threadmanager scan
+	$(MAKE) -C 08.advancethreadmanager scan

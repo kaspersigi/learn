@@ -16,3 +16,5 @@ module_init(hello_init);
 module_exit(hello_exit);
 MODULE_LICENSE("GPL v2");
 MODULE_AUTHOR("Zhuangzhuang Li <kaspersigi@outlook.com>");
+MODULE_VERSION("1.0");
+MODULE_DESCRIPTION("01.module");
