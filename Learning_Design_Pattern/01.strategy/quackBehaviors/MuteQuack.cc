@@ -1,4 +1,4 @@
 #include "MuteQuack.h"
-#include <iostream>
+#include <print>
 
-void MuteQuack::quack() const { std::cout << "<< Silence >>" << std::endl; }
+void MuteQuack::quack() const { std::println("<< Silence >>"); }

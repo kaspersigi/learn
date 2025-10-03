@@ -1,14 +1,15 @@
 #include "RedHeadDuck.h"
 #include "../flyBehaviors/flyBehaviors.h"
 #include "../quackBehaviors/quackBehaviors.h"
-#include <iostream>
+#include <memory>
+#include <print>
 
 RedHeadDuck::RedHeadDuck()
-    : Duck(new FlyWithWings(), new Quack())
+    : Duck(std::make_unique<FlyWithWings>(), std::make_unique<Quack>())
 {
 }
 
 void RedHeadDuck::display() const
 {
-    std::cout << "I'm a real Red Headed duck!" << std::endl;
+    std::println("I'm a real Red Headed duck!");
 }

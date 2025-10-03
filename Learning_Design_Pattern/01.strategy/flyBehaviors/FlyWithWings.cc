@@ -1,4 +1,4 @@
 #include "FlyWithWings.h"
-#include <iostream>
+#include <print>
 
-void FlyWithWings::fly() const { std::cout << "I'm flying!" << std::endl; }
+void FlyWithWings::fly() const { std::println("I'm flying!"); }

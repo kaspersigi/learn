@@ -1,14 +1,15 @@
 #include "RubberDuck.h"
 #include "../flyBehaviors/flyBehaviors.h"
 #include "../quackBehaviors/quackBehaviors.h"
-#include <iostream>
+#include <memory>
+#include <print>
 
 RubberDuck::RubberDuck()
-    : Duck(new FlyNoWay(), new Squeak())
+    : Duck(std::make_unique<FlyNoWay>(), std::make_unique<Squeak>())
 {
 }
 
 void RubberDuck::display() const
 {
-    std::cout << "I'm a rubber duck!" << std::endl;
+    std::println("I'm a rubber duck!");
 }

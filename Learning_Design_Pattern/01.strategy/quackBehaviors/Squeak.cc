@@ -1,4 +1,4 @@
 #include "Squeak.h"
-#include <iostream>
+#include <print>
 
-void Squeak::quack() const { std::cout << "Squeak!" << std::endl; }
+void Squeak::quack() const { std::println("Squeak!"); }

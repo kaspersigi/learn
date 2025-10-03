@@ -2,9 +2,9 @@
 #Makefile for my C++ programs
 ###########################################
 
-TRG = main
-OBJ = main.o
-SRC = main.cc
+TRG = DuckSimulator
+OBJ = DuckSimulator.o
+SRC = DuckSimulator.cc
 LLVM = -21
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
@@ -51,5 +51,7 @@ format :
 	$(MAKE) -C quackBehaviors format
 clean :
 	rm -v DuckSimulator
+check :
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)
 scan :
 	$(SCAN) make

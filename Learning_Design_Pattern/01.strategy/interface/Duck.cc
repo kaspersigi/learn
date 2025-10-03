@@ -1,27 +1,22 @@
 #include "Duck.h"
 #include "../interface/FlyBehavior.h"
 #include "../interface/QuackBehavior.h"
-#include <cassert>
-#include <iostream>
+#include <print>
 
-Duck::Duck(FlyBehavior* flyBehavior, QuackBehavior* quackBehavior)
-    : _flyBehavior(flyBehavior)
-    , _quackBehavior(quackBehavior)
+Duck::Duck(std::unique_ptr<FlyBehavior> flyBehavior, std::unique_ptr<QuackBehavior> quackBehavior)
+    : _flyBehavior(std::move(flyBehavior))
+    , _quackBehavior(std::move(quackBehavior))
 {
-    assert(flyBehavior);
-    assert(quackBehavior);
 }
 
-void Duck::setFlyBehavior(FlyBehavior* flyBehavior)
+void Duck::setFlyBehavior(std::unique_ptr<FlyBehavior> flyBehavior)
 {
-    assert(flyBehavior);
-    _flyBehavior = std::shared_ptr<FlyBehavior>(flyBehavior);
+    _flyBehavior = std::move(flyBehavior);
 }
 
-void Duck::setQuackBehavior(QuackBehavior* quackBehavior)
+void Duck::setQuackBehavior(std::unique_ptr<QuackBehavior> quackBehavior)
 {
-    assert(quackBehavior);
-    _quackBehavior = std::shared_ptr<QuackBehavior>(quackBehavior);
+    _quackBehavior = std::move(quackBehavior);
 }
 
 void Duck::performFly() const
@@ -36,5 +31,5 @@ void Duck::performQuack() const
 
 void Duck::swim() const
 {
-    std::cout << "All ducks float, even decoys!" << std::endl;
+    std::println("All ducks float, even decoys!");
 }

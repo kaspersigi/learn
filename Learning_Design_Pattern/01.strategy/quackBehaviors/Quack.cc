@@ -1,4 +1,4 @@
 #include "Quack.h"
-#include <iostream>
+#include <print>
 
-void Quack::quack() const { std::cout << "Quack!" << std::endl; }
+void Quack::quack() const { std::println("Quack!"); }

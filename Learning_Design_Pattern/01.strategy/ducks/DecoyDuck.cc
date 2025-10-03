@@ -1,14 +1,15 @@
 #include "DecoyDuck.h"
 #include "../flyBehaviors/flyBehaviors.h"
 #include "../quackBehaviors/quackBehaviors.h"
-#include <iostream>
+#include <memory>
+#include <print>
 
 DecoyDuck::DecoyDuck()
-    : Duck(new FlyNoWay(), new MuteQuack())
+    : Duck(std::make_unique<FlyNoWay>(), std::make_unique<MuteQuack>())
 {
 }
 
 void DecoyDuck::display() const
 {
-    std::cout << "I'm a duck Decoy!" << std::endl;
+    std::println("I'm a duck Decoy!");
 }

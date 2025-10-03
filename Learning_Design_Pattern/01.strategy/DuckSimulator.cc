@@ -1,28 +1,28 @@
-#include "DuckSimulator.h" // IWYU pragma: export
-#include <iostream>
+#include "DuckSimulator.h"
+#include <print>
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::shared_ptr<Duck> mallard = std::make_shared<MallardDuck>();
-    std::shared_ptr<Duck> rubberDuckie = std::make_shared<RubberDuck>();
-    std::shared_ptr<Duck> decoy = std::make_shared<DecoyDuck>();
-    std::shared_ptr<Duck> model = std::make_shared<ModelDuck>();
+    auto mallard = std::make_unique<MallardDuck>();
+    auto rubberDuckie = std::make_unique<RubberDuck>();
+    auto decoy = std::make_unique<DecoyDuck>();
+    auto model = std::make_unique<ModelDuck>();
 
     mallard->performQuack();
     mallard->performFly();
-    std::cout << "--------------------" << std::endl;
+    std::println("--------------------");
 
     rubberDuckie->performQuack();
     rubberDuckie->performFly();
-    std::cout << "--------------------" << std::endl;
+    std::println("--------------------");
 
     decoy->performQuack();
     decoy->performFly();
-    std::cout << "--------------------" << std::endl;
+    std::println("--------------------");
 
     model->performQuack();
     model->performFly();
-    model->setFlyBehavior(new FlyRocketPowered());
+    model->setFlyBehavior(std::make_unique<FlyRocketPowered>());
     model->performFly();
 
     return 0;

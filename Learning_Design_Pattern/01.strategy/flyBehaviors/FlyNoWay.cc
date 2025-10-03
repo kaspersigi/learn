@@ -1,4 +1,4 @@
 #include "FlyNoWay.h"
-#include <iostream>
+#include <print>
 
-void FlyNoWay::fly() const { std::cout << "I can't fly!" << std::endl; }
+void FlyNoWay::fly() const { std::println("I can't fly!"); }

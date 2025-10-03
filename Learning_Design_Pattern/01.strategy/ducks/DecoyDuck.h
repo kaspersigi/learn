@@ -9,10 +9,4 @@ public:
     virtual ~DecoyDuck() = default;
 
     virtual void display() const override;
-
-protected:
-    DecoyDuck(const DecoyDuck&) = delete;
-    DecoyDuck(DecoyDuck&&) = delete;
-    DecoyDuck& operator = (const DecoyDuck&) = delete;
-    DecoyDuck& operator = (DecoyDuck&&) = delete;
 };

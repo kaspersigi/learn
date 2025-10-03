@@ -1,14 +1,15 @@
 #include "ModelDuck.h"
 #include "../flyBehaviors/flyBehaviors.h"
 #include "../quackBehaviors/quackBehaviors.h"
-#include <iostream>
+#include <memory>
+#include <print>
 
 ModelDuck::ModelDuck()
-    : Duck(new FlyNoWay(), new FakeQuack())
+    : Duck(std::make_unique<FlyNoWay>(), std::make_unique<FakeQuack>())
 {
 }
 
 void ModelDuck::display() const
 {
-    std::cout << "I'm a model duck" << std::endl;
+    std::println("I'm a model duck");
 }
