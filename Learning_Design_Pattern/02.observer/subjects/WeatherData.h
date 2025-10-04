@@ -1,7 +1,8 @@
 #pragma once
 
 #include "../interface/Subject.h"
-#include <list>
+#include <memory>
+#include <vector>
 
 class WeatherData : public Subject
 {
@@ -9,9 +10,9 @@ public:
     WeatherData() = default;
     virtual ~WeatherData() = default;
 
-    virtual void registerObserver(Observer * observer) override;
-    virtual void removeObserver(Observer * observer) override;
-    virtual void notifyObservers() const override;
+    virtual void registerObserver(std::shared_ptr<Observer> observer) override;
+    virtual void removeObserver(const std::shared_ptr<Observer>& observer) override;
+    virtual void notifyObservers() override;
     void measurementsChanged();
     void setMeasurements(float temperature, float humidity, float pressure);
     float getTemperature() const;
@@ -19,7 +20,7 @@ public:
     float getPressure() const;
 
 private:
-    std::list<Observer*> _observers {};
+    std::vector<std::weak_ptr<Observer>> _observers {};
     float _temperature {};
     float _humidity {};
     float _pressure {};

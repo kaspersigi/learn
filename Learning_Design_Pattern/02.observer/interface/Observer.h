@@ -1,8 +1,9 @@
 #pragma once
 
 #include "NonCopyable.h"
+#include <memory>
 
-class Observer : public NonCopyable
+class Observer : public NonCopyable, public std::enable_shared_from_this<Observer>
 {
 public:
     virtual ~Observer() = default;

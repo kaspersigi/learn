@@ -1,15 +1,9 @@
 #include "CurrentConditionsDisplay.h"
 #include <iostream>
 
-CurrentConditionsDisplay::CurrentConditionsDisplay(Subject* weatherData)
+CurrentConditionsDisplay::CurrentConditionsDisplay(std::shared_ptr<Subject> weatherData)
     : _weatherData(weatherData)
 {
-    _weatherData->registerObserver(this);
-}
-
-CurrentConditionsDisplay::~CurrentConditionsDisplay()
-{
-    _weatherData->removeObserver(this);
 }
 
 void CurrentConditionsDisplay::update(float temperature, float humidity, float pressure)

@@ -1,13 +1,10 @@
 #include "ForecastDisplay.h"
 #include <iostream>
 
-ForecastDisplay::ForecastDisplay(Subject* weatherData)
+ForecastDisplay::ForecastDisplay(std::shared_ptr<Subject> weatherData)
     : _weatherData(weatherData)
 {
-    weatherData->registerObserver(this);
 }
-
-ForecastDisplay::~ForecastDisplay() { _weatherData->removeObserver(this); }
 
 void ForecastDisplay::update(float temperature, float humidity, float pressure)
 {

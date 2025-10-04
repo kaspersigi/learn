@@ -1,13 +1,10 @@
 #include "HeatIndexDisplay.h"
 #include <iostream>
 
-HeatIndexDisplay::HeatIndexDisplay(Subject* weatherData)
+HeatIndexDisplay::HeatIndexDisplay(std::shared_ptr<Subject> weatherData)
     : _weatherData(weatherData)
 {
-    _weatherData->registerObserver(this);
 }
-
-HeatIndexDisplay::~HeatIndexDisplay() { _weatherData->removeObserver(this); }
 
 void HeatIndexDisplay::update(float temperature, float humidity, float pressure)
 {

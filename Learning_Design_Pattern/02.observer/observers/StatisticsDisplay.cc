@@ -1,13 +1,10 @@
 #include "StatisticsDisplay.h"
 #include <iostream>
 
-StatisticsDisplay::StatisticsDisplay(Subject* weatherData)
+StatisticsDisplay::StatisticsDisplay(std::shared_ptr<Subject> weatherData)
     : _weatherData(weatherData)
 {
-    _weatherData->registerObserver(this);
 }
-
-StatisticsDisplay::~StatisticsDisplay() { _weatherData->removeObserver(this); }
 
 void StatisticsDisplay::update(float temperature, float humidity, float pressure)
 {
