@@ -1,11 +1,9 @@
 #include "StatisticsDisplay.h"
-#include <cassert>
 #include <iostream>
 
 StatisticsDisplay::StatisticsDisplay(Subject* weatherData)
     : _weatherData(weatherData)
 {
-    assert(weatherData);
     _weatherData->registerObserver(this);
 }
 

@@ -1,8 +1,10 @@
 #pragma once
 
+#include "NonCopyable.h"
+
 class Observer;
 
-class Subject
+class Subject : public NonCopyable
 {
 public:
     virtual ~Subject() = default;
@@ -13,8 +15,4 @@ public:
 
 protected:
     Subject() = default;
-    Subject(const Subject&) = delete;
-    Subject(Subject&&) = delete;
-    Subject& operator = (const Subject&) = delete;
-    Subject& operator = (Subject&&) = delete;
 };

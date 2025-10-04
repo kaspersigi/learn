@@ -13,12 +13,6 @@ public:
     virtual void update(float temperature, float humidity, float pressure) override;
     virtual void display() const override;
 
-protected:
-    StatisticsDisplay(const StatisticsDisplay&) = delete;
-    StatisticsDisplay(StatisticsDisplay&&) = delete;
-    StatisticsDisplay& operator = (const StatisticsDisplay&) = delete;
-    StatisticsDisplay& operator = (StatisticsDisplay&&) = delete;
-
 private:
     Subject* _weatherData {};
     float _maxTemp { 200.0F };

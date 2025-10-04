@@ -1,12 +1,13 @@
 #include "DuckSimulator.h"
+#include <memory>
 #include <print>
 
 auto main(int argc, char* argv[]) -> int
 {
-    auto mallard = std::make_unique<MallardDuck>();
-    auto rubberDuckie = std::make_unique<RubberDuck>();
-    auto decoy = std::make_unique<DecoyDuck>();
-    auto model = std::make_unique<ModelDuck>();
+    std::unique_ptr<Duck> mallard = std::make_unique<MallardDuck>();
+    std::unique_ptr<Duck> rubberDuckie = std::make_unique<RubberDuck>();
+    std::unique_ptr<Duck> decoy = std::make_unique<DecoyDuck>();
+    std::unique_ptr<Duck> model = std::make_unique<ModelDuck>();
 
     mallard->performQuack();
     mallard->performFly();

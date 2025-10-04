@@ -1,11 +1,9 @@
 #include "CurrentConditionsDisplay.h"
-#include <cassert>
 #include <iostream>
 
 CurrentConditionsDisplay::CurrentConditionsDisplay(Subject* weatherData)
     : _weatherData(weatherData)
 {
-    assert(weatherData);
     _weatherData->registerObserver(this);
 }
 

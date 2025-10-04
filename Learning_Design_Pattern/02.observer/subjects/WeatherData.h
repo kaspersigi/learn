@@ -18,12 +18,6 @@ public:
     float getHumidity() const;
     float getPressure() const;
 
-protected:
-    WeatherData(const WeatherData&) = delete;
-    WeatherData(WeatherData&&) = delete;
-    WeatherData& operator = (const WeatherData&) = delete;
-    WeatherData& operator = (WeatherData&&) = delete;
-
 private:
     std::list<Observer*> _observers {};
     float _temperature {};

@@ -1,6 +1,8 @@
 #pragma once
 
-class DisplayElement
+#include "NonCopyable.h"
+
+class DisplayElement : public NonCopyable
 {
 public:
     virtual ~DisplayElement() = default;
@@ -9,8 +11,4 @@ public:
 
 protected:
     DisplayElement() = default;
-    DisplayElement(const DisplayElement&) = delete;
-    DisplayElement(DisplayElement&&) = delete;
-    DisplayElement& operator = (const DisplayElement&) = delete;
-    DisplayElement& operator = (DisplayElement&&) = delete;
 };

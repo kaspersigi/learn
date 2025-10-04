@@ -1,5 +1,5 @@
 #include "WeatherStation.h"
-#include <iostream>
+#include <print>
 
 auto main(int argc, char* argv[]) -> int
 {
@@ -10,9 +10,9 @@ auto main(int argc, char* argv[]) -> int
     HeatIndexDisplay heatIndexDisplay(&weatherData);
 
     weatherData.setMeasurements(80, 65, 30.4f);
-    std::cout << "--------------------" << std::endl;
+    std::println("--------------------");
     weatherData.setMeasurements(82, 70, 29.2f);
-    std::cout << "--------------------" << std::endl;
+    std::println("--------------------");
     weatherData.setMeasurements(78, 90, 29.2f);
 
     return 0;

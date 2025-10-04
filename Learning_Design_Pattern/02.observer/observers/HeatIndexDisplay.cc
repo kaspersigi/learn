@@ -1,11 +1,9 @@
 #include "HeatIndexDisplay.h"
-#include <cassert>
 #include <iostream>
 
 HeatIndexDisplay::HeatIndexDisplay(Subject* weatherData)
     : _weatherData(weatherData)
 {
-    assert(weatherData);
     _weatherData->registerObserver(this);
 }
 

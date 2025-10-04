@@ -1,6 +1,8 @@
 #pragma once
 
-class Observer
+#include "NonCopyable.h"
+
+class Observer : public NonCopyable
 {
 public:
     virtual ~Observer() = default;
@@ -9,8 +11,4 @@ public:
 
 protected:
     Observer() = default;
-    Observer(const Observer&) = delete;
-    Observer(Observer&&) = delete;
-    Observer& operator = (const Observer&) = delete;
-    Observer& operator = (Observer&&) = delete;
 };

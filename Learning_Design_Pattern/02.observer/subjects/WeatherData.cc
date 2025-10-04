@@ -1,17 +1,14 @@
 #include "WeatherData.h"
 #include "../interface/Observer.h"
 #include <algorithm>
-#include <cassert>
 
 void WeatherData::registerObserver(Observer* observer)
 {
-    assert(observer);
     _observers.push_back(observer);
 }
 
 void WeatherData::removeObserver(Observer* observer)
 {
-    assert(observer);
     _observers.remove(observer);
 }
 

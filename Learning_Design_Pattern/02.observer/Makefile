@@ -39,6 +39,7 @@ subjects.o :
 format :
 	$(FORMAT) WeatherStation.cc -style=file -i
 	$(FORMAT) WeatherStation.h -style=file -i
+	$(FORMAT) interface/NonCopyable.h -style=file -i
 	$(FORMAT) interface/DisplayElement.h -style=file -i
 	$(FORMAT) interface/Observer.h -style=file -i
 	$(FORMAT) interface/Subject.h -style=file -i
