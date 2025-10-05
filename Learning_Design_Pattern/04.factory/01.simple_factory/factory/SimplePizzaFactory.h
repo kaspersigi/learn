@@ -1,19 +1,14 @@
 #pragma once
 
+#include "../interface/NonCopyable.h"
 #include "../pizzas/pizzas.h"
 #include <memory>
 
-class SimplePizzaFactory
+class SimplePizzaFactory : public NonCopyable
 {
 public:
     SimplePizzaFactory() = default;
     ~SimplePizzaFactory() = default;
 
-    std::shared_ptr<Pizza> createPizza(std::string type) const;
-
-protected:
-    SimplePizzaFactory(const SimplePizzaFactory&) = delete;
-    SimplePizzaFactory(SimplePizzaFactory&&) = delete;
-    SimplePizzaFactory& operator = (const SimplePizzaFactory&) = delete;
-    SimplePizzaFactory& operator = (SimplePizzaFactory&&) = delete;
+    std::unique_ptr<Pizza> createPizza(const std::string& type) const;
 };

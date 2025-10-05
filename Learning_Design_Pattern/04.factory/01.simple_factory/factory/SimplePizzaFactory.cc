@@ -1,16 +1,15 @@
 #include "SimplePizzaFactory.h"
 
-std::shared_ptr<Pizza> SimplePizzaFactory::createPizza(std::string type) const
+std::unique_ptr<Pizza> SimplePizzaFactory::createPizza(const std::string& type) const
 {
-    Pizza* pizza = nullptr;
-    if (type.compare("cheese") == 0) {
-        pizza = new CheesePizza();
-    } else if (type.compare("pepperoni") == 0) {
-        pizza = new PepperoniPizza();
-    } else if (type.compare("clam") == 0) {
-        pizza = new ClamPizza();
-    } else if (type.compare("veggie") == 0) {
-        pizza = new VeggiePizza();
+    if (type == "cheese") {
+        return std::make_unique<CheesePizza>();
+    } else if (type == "pepperoni") {
+        return std::make_unique<PepperoniPizza>();
+    } else if (type == "clam") {
+        return std::make_unique<ClamPizza>();
+    } else if (type == "veggie") {
+        return std::make_unique<VeggiePizza>();
     }
-    return std::shared_ptr<Pizza>(pizza);
+    return nullptr;
 }
