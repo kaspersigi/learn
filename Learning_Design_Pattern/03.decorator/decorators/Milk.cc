@@ -1,13 +1,8 @@
 #include "Milk.h"
 
-extern "C" {
-#include "assert.h"
-}
-
-Milk::Milk(const Beverage* beverage)
-    : _beverage(beverage)
+Milk::Milk(std::unique_ptr<Beverage> beverage)
+    : _beverage(std::move(beverage))
 {
-    assert(beverage);
 }
 
 std::string Milk::getDescription() const

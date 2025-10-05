@@ -1,13 +1,8 @@
 #include "Soy.h"
 
-extern "C" {
-#include "assert.h"
-}
-
-Soy::Soy(const Beverage* beverage)
-    : _beverage(beverage)
+Soy::Soy(std::unique_ptr<Beverage> beverage)
+    : _beverage(std::move(beverage))
 {
-    assert(beverage);
 }
 
 std::string Soy::getDescription() const

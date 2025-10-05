@@ -9,10 +9,4 @@ public:
     virtual ~DarkRoast() = default;
 
     virtual double cost() const override;
-
-protected:
-    DarkRoast(const DarkRoast&) = delete;
-    DarkRoast(DarkRoast&&) = delete;
-    DarkRoast& operator = (const DarkRoast&) = delete;
-    DarkRoast& operator = (DarkRoast&&) = delete;
 };

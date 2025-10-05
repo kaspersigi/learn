@@ -1,13 +1,8 @@
 #include "Whip.h"
 
-extern "C" {
-#include "assert.h"
-}
-
-Whip::Whip(const Beverage* beverage)
-    : _beverage(beverage)
+Whip::Whip(std::unique_ptr<Beverage> beverage)
+    : _beverage(std::move(beverage))
 {
-    assert(beverage);
 }
 
 std::string Whip::getDescription() const

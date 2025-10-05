@@ -6,18 +6,12 @@
 class Milk : public CondimentDecorator
 {
 public:
-    explicit Milk(const Beverage* beverage);
+    explicit Milk(std::unique_ptr<Beverage> beverage);
     virtual ~Milk() = default;
 
     virtual std::string getDescription() const override;
     virtual double cost() const override;
 
-protected:
-    Milk(const Milk&) = delete;
-    Milk(Milk&&) = delete;
-    Milk& operator = (const Milk&) = delete;
-    Milk& operator = (Milk&&) = delete;
-
 private:
-    std::shared_ptr<const Beverage> _beverage {};
+    std::unique_ptr<Beverage> _beverage {};
 };

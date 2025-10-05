@@ -11,8 +11,4 @@ public:
 
 protected:
     CondimentDecorator() = default;
-    CondimentDecorator(const CondimentDecorator&) = delete;
-    CondimentDecorator(CondimentDecorator&&) = delete;
-    CondimentDecorator& operator = (const CondimentDecorator&) = delete;
-    CondimentDecorator& operator = (const CondimentDecorator&&) = delete;
 };
