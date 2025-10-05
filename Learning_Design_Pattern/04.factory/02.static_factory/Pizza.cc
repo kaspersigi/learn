@@ -5,7 +5,7 @@ auto main(int argc, char* argv[]) -> int
 {
     auto store = std::make_shared<PizzaStore>();
 
-    std::shared_ptr<Pizza> pizza {};
+    std::unique_ptr<Pizza> pizza {};
 
     pizza = store->orderPizza("cheese");
     std::cout << "We ordered a " << pizza->getName() << std::endl;
