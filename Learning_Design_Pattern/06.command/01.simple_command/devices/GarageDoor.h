@@ -1,6 +1,8 @@
 #pragma once
 
-class GarageDoor
+#include "../interface/NonCopyable.h"
+
+class GarageDoor : public NonCopyable
 {
 public:
     GarageDoor() = default;
@@ -11,10 +13,4 @@ public:
     void stop() const;
     void lighton() const;
     void lightoff() const;
-
-protected:
-    GarageDoor(const GarageDoor&) = delete;
-    GarageDoor(GarageDoor&&) = delete;
-    GarageDoor& operator = (const GarageDoor&) = delete;
-    GarageDoor& operator = (GarageDoor&&) = delete;
 };

@@ -1,10 +1,10 @@
 #include "SimpleRemoteControl.h"
 #include <cassert>
 
-void SimpleRemoteControl::setCommand(const Command* command)
+void SimpleRemoteControl::setCommand(std::shared_ptr<const Command> command)
 {
     assert(command);
-    _slot = std::shared_ptr<const Command>(command);
+    _slot = command;
 }
 
 void SimpleRemoteControl::buttonWasPressed() const

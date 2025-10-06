@@ -1,21 +1,16 @@
 #pragma once
 #include "../interface/Command.h"
+#include "../interface/NonCopyable.h"
 #include <memory>
 
-class SimpleRemoteControl
+class SimpleRemoteControl : public NonCopyable
 {
 public:
     SimpleRemoteControl() = default;
     virtual ~SimpleRemoteControl() = default;
 
-    void setCommand(const Command* command);
+    void setCommand(std::shared_ptr<const Command> command);
     void buttonWasPressed() const;
-
-protected:
-    SimpleRemoteControl(const SimpleRemoteControl&) = delete;
-    SimpleRemoteControl(SimpleRemoteControl&&) = delete;
-    SimpleRemoteControl& operator = (const SimpleRemoteControl&) = delete;
-    SimpleRemoteControl& operator = (SimpleRemoteControl&&) = delete;
 
 private:
     std::shared_ptr<const Command> _slot {};
