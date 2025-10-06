@@ -28,6 +28,7 @@ all : CaffeineBeverage.o
 CaffeineBeverage.o : CaffeineBeverage.cc CaffeineBeverage.h
 	$(CXX) CaffeineBeverage.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
+	$(FORMAT) NonCopyable.h -style=file -i
 	$(FORMAT) CaffeineBeverage.cc -style=file -i
 	$(FORMAT) CaffeineBeverage.h -style=file -i
 clean :

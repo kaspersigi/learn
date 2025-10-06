@@ -4,8 +4,8 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::shared_ptr<CaffeineBeverage> coffee = std::make_shared<Coffee>();
-    std::shared_ptr<CaffeineBeverage> tea = std::make_shared<Tea>();
+    std::unique_ptr<CaffeineBeverage> coffee = std::make_unique<Coffee>();
+    std::unique_ptr<CaffeineBeverage> tea = std::make_unique<Tea>();
     std::cout << std::endl
               << "Making tea..." << std::endl;
     tea->prepareRecipe();

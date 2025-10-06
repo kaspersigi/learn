@@ -28,6 +28,7 @@ all : CaffeineBeverageWithHook.o
 CaffeineBeverageWithHook.o : CaffeineBeverageWithHook.cc CaffeineBeverageWithHook.h
 	$(CXX) CaffeineBeverageWithHook.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
+	$(FORMAT) NonCopyable.h -style=file -i
 	$(FORMAT) CaffeineBeverageWithHook.cc -style=file -i
 	$(FORMAT) CaffeineBeverageWithHook.h -style=file -i
 clean :
