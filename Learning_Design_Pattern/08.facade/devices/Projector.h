@@ -1,11 +1,12 @@
 #pragma once
 
+#include "../interface/NonCopyable.h"
 #include <memory>
 #include <string>
 
 class DvdPlayer;
 
-class Projector
+class Projector : public NonCopyable
 {
 public:
     Projector(std::string description, std::shared_ptr<DvdPlayer> dvdPlayer);
@@ -16,12 +17,6 @@ public:
     void wideScreenMode();
     void tvMode();
     std::string toShow() const;
-
-protected:
-    Projector(const Projector&) = delete;
-    Projector(Projector&&) = delete;
-    Projector& operator = (const Projector&) = delete;
-    Projector& operator = (Projector&&) = delete;
 
 private:
     std::string _description {};

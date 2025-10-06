@@ -1,8 +1,9 @@
 #pragma once
 
+#include "../interface/NonCopyable.h"
 #include <string>
 
-class PopcornPopper
+class PopcornPopper : public NonCopyable
 {
 public:
     explicit PopcornPopper(std::string description);
@@ -12,12 +13,6 @@ public:
     void off() const;
     void pop() const;
     std::string toShow() const;
-
-protected:
-    PopcornPopper(const PopcornPopper&) = delete;
-    PopcornPopper(PopcornPopper&&) = delete;
-    PopcornPopper& operator = (const PopcornPopper&) = delete;
-    PopcornPopper& operator = (PopcornPopper&&) = delete;
 
 private:
     std::string _description {};

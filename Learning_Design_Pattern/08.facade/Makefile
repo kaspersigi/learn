@@ -37,6 +37,7 @@ devices.o :
 facade.o :
 	$(MAKE) -C facade
 format :
+	$(FORMAT) interface/NonCopyable.h -style=file -i
 	$(FORMAT) HomeTheater.cc -style=file -i
 	$(FORMAT) HomeTheater.h -style=file -i
 	$(MAKE) -C devices format

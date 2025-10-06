@@ -1,11 +1,12 @@
 #pragma once
 
+#include "../interface/NonCopyable.h"
 #include <memory>
 #include <string>
 
 class Amplifier;
 
-class CdPlayer
+class CdPlayer : public NonCopyable
 {
 public:
     CdPlayer(std::string description, std::shared_ptr<Amplifier> amplifier);
@@ -19,12 +20,6 @@ public:
     void stop();
     void pause();
     std::string toShow() const;
-
-protected:
-    CdPlayer(const CdPlayer&) = delete;
-    CdPlayer(CdPlayer&&) = delete;
-    CdPlayer& operator = (const CdPlayer&) = delete;
-    CdPlayer& operator = (CdPlayer&&) = delete;
 
 private:
     std::string _description {};

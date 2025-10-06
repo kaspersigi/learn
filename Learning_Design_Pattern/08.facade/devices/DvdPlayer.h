@@ -1,11 +1,12 @@
 #pragma once
 
+#include "../interface/NonCopyable.h"
 #include <memory>
 #include <string>
 
 class Amplifier;
 
-class DvdPlayer
+class DvdPlayer : public NonCopyable
 {
 public:
     DvdPlayer(std::string description, std::shared_ptr<Amplifier> amplifier);
@@ -21,12 +22,6 @@ public:
     std::string toShow() const;
     void setTwoChannelAudio();
     void setSurroundAudio();
-
-protected:
-    DvdPlayer(const DvdPlayer&) = delete;
-    DvdPlayer(DvdPlayer&&) = delete;
-    DvdPlayer& operator = (const DvdPlayer&) = delete;
-    DvdPlayer& operator = (DvdPlayer&&) = delete;
 
 private:
     std::string _description {};

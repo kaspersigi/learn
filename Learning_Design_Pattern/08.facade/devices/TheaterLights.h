@@ -1,8 +1,9 @@
 #pragma once
 
+#include "../interface/NonCopyable.h"
 #include <string>
 
-class TheaterLights
+class TheaterLights : public NonCopyable
 {
 public:
     explicit TheaterLights(std::string description);
@@ -12,12 +13,6 @@ public:
     void off() const;
     void dim(int level);
     std::string toShow() const;
-
-protected:
-    TheaterLights(const TheaterLights&) = delete;
-    TheaterLights(TheaterLights&&) = delete;
-    TheaterLights& operator = (const TheaterLights&) = delete;
-    TheaterLights& operator = (TheaterLights&&) = delete;
 
 private:
     std::string _description {};

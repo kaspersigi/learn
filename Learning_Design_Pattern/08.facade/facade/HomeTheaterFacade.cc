@@ -2,7 +2,7 @@
 #include "../devices/devices.h"
 #include <iostream>
 
-HomeTheaterFacade::HomeTheaterFacade(std::shared_ptr<Amplifier> amp, std::shared_ptr<Tuner> tuner, std::shared_ptr<DvdPlayer> dvd, std::shared_ptr<CdPlayer> cd, std::shared_ptr<Projector> projector, std::shared_ptr<TheaterLights> lights, std::shared_ptr<Screen> screen, std::shared_ptr<PopcornPopper> popper)
+HomeTheaterFacade::HomeTheaterFacade(const std::shared_ptr<Amplifier>& amp, const std::shared_ptr<Tuner>& tuner, const std::shared_ptr<DvdPlayer>& dvd, const std::shared_ptr<CdPlayer>& cd, const std::shared_ptr<Projector>& projector, const std::shared_ptr<TheaterLights>& lights, const std::shared_ptr<Screen>& screen, const std::shared_ptr<PopcornPopper>& popper)
     : _amp(amp)
     , _tuner(tuner)
     , _dvd(dvd)

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../interface/NonCopyable.h"
 #include <memory>
 #include <string>
 
@@ -12,10 +13,10 @@ class TheaterLights;
 class Screen;
 class PopcornPopper;
 
-class HomeTheaterFacade
+class HomeTheaterFacade : public NonCopyable
 {
 public:
-    HomeTheaterFacade(std::shared_ptr<Amplifier> amp, std::shared_ptr<Tuner> tuner, std::shared_ptr<DvdPlayer> dvd, std::shared_ptr<CdPlayer> cd, std::shared_ptr<Projector> projector, std::shared_ptr<TheaterLights> lights, std::shared_ptr<Screen> screen, std::shared_ptr<PopcornPopper> popper);
+    HomeTheaterFacade(const std::shared_ptr<Amplifier>& amp, const std::shared_ptr<Tuner>& tuner, const std::shared_ptr<DvdPlayer>& dvd, const std::shared_ptr<CdPlayer>& cd, const std::shared_ptr<Projector>& projector, const std::shared_ptr<TheaterLights>& lights, const std::shared_ptr<Screen>& screen, const std::shared_ptr<PopcornPopper>& popper);
     ~HomeTheaterFacade() = default;
 
     void watchMovie(std::string movie);
@@ -24,12 +25,6 @@ public:
     void endCd();
     void listenToRadio(double frequency);
     void endRadio();
-
-protected:
-    HomeTheaterFacade(const HomeTheaterFacade&) = delete;
-    HomeTheaterFacade(HomeTheaterFacade&&) = delete;
-    HomeTheaterFacade& operator = (const HomeTheaterFacade&) = delete;
-    HomeTheaterFacade& operator = (HomeTheaterFacade&&) = delete;
 
 private:
     std::weak_ptr<Amplifier> _amp {};

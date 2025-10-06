@@ -1,11 +1,12 @@
 #pragma once
 
+#include "../interface/NonCopyable.h"
 #include <memory>
 #include <string>
 
 class Amplifier;
 
-class Tuner
+class Tuner : public NonCopyable
 {
 public:
     Tuner(std::string description, std::shared_ptr<Amplifier> amplifier);
@@ -17,12 +18,6 @@ public:
     void setAm();
     void setFm();
     std::string toShow() const;
-
-protected:
-    Tuner(const Tuner&) = delete;
-    Tuner(Tuner&&) = delete;
-    Tuner& operator = (const Tuner&) = delete;
-    Tuner& operator = (Tuner&&) = delete;
 
 private:
     std::string _description {};
