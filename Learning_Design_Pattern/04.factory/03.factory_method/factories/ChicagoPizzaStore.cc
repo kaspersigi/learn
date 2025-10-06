@@ -1,16 +1,16 @@
 #include "ChicagoPizzaStore.h"
 #include "../pizzas/ChicagoStylePizzas.h"
 
-std::shared_ptr<Pizza> ChicagoPizzaStore::createPizza(std::string type) const
+std::unique_ptr<Pizza> ChicagoPizzaStore::createPizza(std::string type) const
 {
     if (type.compare("cheese") == 0) {
-        return std::shared_ptr<Pizza>(new ChicagoStyleCheesePizza());
+        return std::make_unique<ChicagoStyleCheesePizza>();
     } else if (type.compare("veggie") == 0) {
-        return std::shared_ptr<Pizza>(new ChicagoStyleVeggiePizza());
+        return std::make_unique<ChicagoStyleVeggiePizza>();
     } else if (type.compare("clam") == 0) {
-        return std::shared_ptr<Pizza>(new ChicagoStyleClamPizza());
+        return std::make_unique<ChicagoStyleClamPizza>();
     } else if (type.compare("pepperoni") == 0) {
-        return std::shared_ptr<Pizza>(new ChicagoStylePepperoniPizza());
+        return std::make_unique<ChicagoStylePepperoniPizza>();
     } else
-        return std::shared_ptr<Pizza>(nullptr);
+        return std::unique_ptr<Pizza>(nullptr);
 }
