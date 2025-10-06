@@ -1,21 +1,16 @@
 #pragma once
 
+#include "NonCopyable.h"
 #include <memory>
 
-template<class T>
-    class Iterator
+template<class T> class Iterator : public NonCopyable
 {
-
 public:
     virtual ~Iterator() = default;
 
     virtual bool hasNext() const = 0;
-    virtual std::shared_ptr<T> next() const = 0;
+    virtual const T& next() const = 0;
 
 protected:
     Iterator() = default;
-    Iterator(const Iterator&) = delete;
-    Iterator(Iterator&&) = delete;
-    Iterator& operator = (const Iterator&) = delete;
-    Iterator& operator = (Iterator&&) = delete;
 };

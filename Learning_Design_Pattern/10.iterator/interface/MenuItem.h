@@ -1,24 +1,19 @@
 #pragma once
 
+#include "NonCopyable.h"
 #include <string>
 
-class MenuItem
+class MenuItem : public NonCopyable
 {
 public:
     MenuItem(std::string name, std::string description, bool vegetarian, double price);
     virtual ~MenuItem() = default;
 
-    std::string getName();
-    std::string getDescription();
-    double getPrice();
-    bool isVegetarian();
-    std::string toShow();
-
-protected:
-    MenuItem(const MenuItem&) = delete;
-    MenuItem(MenuItem&&) = delete;
-    MenuItem& operator = (const MenuItem&) = delete;
-    MenuItem& operator = (MenuItem&&) = delete;
+    std::string getName() const;
+    std::string getDescription() const;
+    double getPrice() const;
+    bool isVegetarian() const;
+    std::string toShow() const;
 
 private:
     std::string _name {};

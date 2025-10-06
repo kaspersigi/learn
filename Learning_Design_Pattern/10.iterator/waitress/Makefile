@@ -31,7 +31,7 @@ format :
 	$(FORMAT) Waitress.cc -style=file -i
 	$(FORMAT) Waitress.h -style=file -i
 clean :
-	rm -v Waitress.o
+	rm -vf Waitress.o
 check :
 	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)
 scan :

@@ -2,25 +2,17 @@
 
 #include "../interface/Menu.h"
 #include <string>
+#include <vector>
 
 class DinerMenu : public Menu
 {
 public:
     DinerMenu();
-    virtual ~DinerMenu();
+    virtual ~DinerMenu() = default;
 
     void addItem(std::string name, std::string description, bool vegetarian, double price);
-    std::shared_ptr<MenuItem>* getMenuItems() const;
-    virtual Iterator<MenuItem>* createIterator() const override;
-
-protected:
-    DinerMenu(const DinerMenu&) = delete;
-    DinerMenu(DinerMenu&&) = delete;
-    DinerMenu& operator = (const DinerMenu&) = delete;
-    DinerMenu& operator = (DinerMenu&&) = delete;
+    virtual std::unique_ptr<Iterator<MenuItem>> createIterator() const override;
 
 private:
-    static const int MAX_ITEMS { 6 };
-    int _numberOfItems { 0 };
-    std::shared_ptr<MenuItem>* _menuItems { nullptr };
+    std::vector<std::shared_ptr<MenuItem>> _menuItems;
 };

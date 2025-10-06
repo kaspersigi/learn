@@ -36,7 +36,7 @@ format :
 	$(FORMAT) PancakeHouseMenuIterator.h -style=file -i
 	$(FORMAT) iterators.h -style=file -i
 clean :
-	rm -v DinerMenuIterator.o PancakeHouseMenuIterator.o
+	rm -vf DinerMenuIterator.o PancakeHouseMenuIterator.o
 check :
 	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)
 scan :

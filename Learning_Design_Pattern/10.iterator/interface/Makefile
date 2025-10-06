@@ -28,6 +28,7 @@ all : MenuItem.o
 MenuItem.o : MenuItem.cc MenuItem.h
 	$(CXX) MenuItem.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
+	$(FORMAT) NonCopyable.h -style=file -i
 	$(FORMAT) MenuItem.cc -style=file -i
 	$(FORMAT) MenuItem.h -style=file -i
 	$(FORMAT) Iterator.h -style=file -i

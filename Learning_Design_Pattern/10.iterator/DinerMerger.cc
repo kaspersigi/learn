@@ -1,9 +1,10 @@
-#include "DinerMerger.h"
+#include "waitress/Waitress.h"
 
-auto main(int argc, char* argv[]) -> int
+int main(int argc, char* argv[])
 {
-    auto waitress = std::make_shared<Waitress>(new PancakeHouseMenu(), new DinerMenu());
+    auto waitress = std::make_shared<Waitress>(std::make_shared<PancakeHouseMenu>(), std::make_shared<DinerMenu>());
 
     waitress->printMenu();
+    waitress->printVegetarianMenu();
     return 0;
 }

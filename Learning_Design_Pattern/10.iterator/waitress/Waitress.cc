@@ -1,7 +1,7 @@
 #include "Waitress.h"
 #include <iostream>
 
-Waitress::Waitress(PancakeHouseMenu* pancakeHouseMenu, DinerMenu* dinerMenu)
+Waitress::Waitress(std::shared_ptr<PancakeHouseMenu> pancakeHouseMenu, std::shared_ptr<DinerMenu> dinerMenu)
     : _pancakeHouseMenu(pancakeHouseMenu)
     , _dinerMenu(dinerMenu)
 {
@@ -9,65 +9,70 @@ Waitress::Waitress(PancakeHouseMenu* pancakeHouseMenu, DinerMenu* dinerMenu)
 
 void Waitress::printMenu() const
 {
-    Iterator<MenuItem>* pancakeIterator = _pancakeHouseMenu->createIterator();
-    Iterator<MenuItem>* dinerIterator = _dinerMenu->createIterator();
+    auto pancakeIterator = _pancakeHouseMenu->createIterator();
+    auto dinerIterator = _dinerMenu->createIterator();
 
     std::cout << "MENU\n----\nBREAKFAST" << std::endl;
-    printMenu(pancakeIterator);
+    printMenu(*pancakeIterator);
     std::cout << "\nLUNCH" << std::endl;
-    printMenu(dinerIterator);
-}
-
-void Waitress::printMenu(Iterator<MenuItem>* iterator) const
-{
-    while (iterator->hasNext()) {
-        auto menuItem = iterator->next();
-        std::cout << menuItem->getName() << ", ";
-        std::cout << menuItem->getPrice() << " -- ";
-        std::cout << menuItem->getDescription() << std::endl;
-    }
+    printMenu(*dinerIterator);
 }
 
 void Waitress::printVegetarianMenu() const
 {
-    printVegetarianMenu(_pancakeHouseMenu->createIterator());
-    printVegetarianMenu(_dinerMenu->createIterator());
-}
-
-bool Waitress::isItemVegetarian(std::string name) const
-{
-    Iterator<MenuItem>* breakfastIterator = _pancakeHouseMenu->createIterator();
-    if (isVegetarian(name, breakfastIterator)) {
-        return true;
+    std::cout << "\nVEGETARIAN MENU\n----\nBREAKFAST" << std::endl;
+    auto pancakeIterator = _pancakeHouseMenu->createIterator();
+    while (pancakeIterator->hasNext()) {
+        const auto& menuItem = pancakeIterator->next();
+        if (menuItem.isVegetarian()) {
+            std::cout << menuItem.getName() << ", ";
+            std::cout << menuItem.getPrice() << " -- ";
+            std::cout << menuItem.getDescription() << std::endl;
+        }
     }
-    Iterator<MenuItem>* dinnerIterator = _dinerMenu->createIterator();
-    if (isVegetarian(name, dinnerIterator)) {
-        return true;
-    }
-    return false;
-}
 
-void Waitress::printVegetarianMenu(Iterator<MenuItem>* iterator) const
-{
-    while (iterator->hasNext()) {
-        auto menuItem = iterator->next();
-        if (menuItem->isVegetarian()) {
-            std::cout << menuItem->getName() << ", ";
-            std::cout << menuItem->getPrice() << " -- ";
-            std::cout << menuItem->getDescription() << std::endl;
+    std::cout << "\nLUNCH" << std::endl;
+    auto dinerIterator = _dinerMenu->createIterator();
+    while (dinerIterator->hasNext()) {
+        const auto& menuItem = dinerIterator->next();
+        if (menuItem.isVegetarian()) {
+            std::cout << menuItem.getName() << ", ";
+            std::cout << menuItem.getPrice() << " -- ";
+            std::cout << menuItem.getDescription() << std::endl;
         }
     }
 }
 
-bool Waitress::isVegetarian(std::string name, Iterator<MenuItem>* iterator) const
+bool Waitress::isItemVegetarian(std::string name) const
 {
-    while (iterator->hasNext()) {
-        auto menuItem = iterator->next();
-        if (menuItem->getName().compare(name) == 0) {
-            if (menuItem->isVegetarian()) {
+    auto breakfastIterator = _pancakeHouseMenu->createIterator();
+    while (breakfastIterator->hasNext()) {
+        const auto& menuItem = breakfastIterator->next();
+        if (menuItem.getName().compare(name) == 0) {
+            if (menuItem.isVegetarian()) {
+                return true;
+            }
+        }
+    }
+
+    auto dinnerIterator = _dinerMenu->createIterator();
+    while (dinnerIterator->hasNext()) {
+        const auto& menuItem = dinnerIterator->next();
+        if (menuItem.getName().compare(name) == 0) {
+            if (menuItem.isVegetarian()) {
                 return true;
             }
         }
     }
     return false;
+}
+
+void Waitress::printMenu(Iterator<MenuItem>& iterator) const
+{
+    while (iterator.hasNext()) {
+        const auto& menuItem = iterator.next();
+        std::cout << menuItem.getName() << ", ";
+        std::cout << menuItem.getPrice() << " -- ";
+        std::cout << menuItem.getDescription() << std::endl;
+    }
 }

@@ -11,15 +11,7 @@ public:
     virtual ~PancakeHouseMenu() = default;
 
     void addItem(std::string name, std::string description, bool vegetarian, double price);
-    std::vector<std::shared_ptr<MenuItem>> getMenuItems() const;
-    virtual Iterator<MenuItem>* createIterator() const override;
-    std::string toShow() const;
-
-protected:
-    PancakeHouseMenu(const PancakeHouseMenu&) = delete;
-    PancakeHouseMenu(PancakeHouseMenu&&) = delete;
-    PancakeHouseMenu& operator = (const PancakeHouseMenu&) = delete;
-    PancakeHouseMenu& operator = (PancakeHouseMenu&&) = delete;
+    virtual std::unique_ptr<Iterator<MenuItem>> createIterator() const override;
 
 private:
     std::vector<std::shared_ptr<MenuItem>> _menuItems {};

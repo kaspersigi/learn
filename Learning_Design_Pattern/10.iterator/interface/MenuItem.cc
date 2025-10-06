@@ -8,15 +8,15 @@ MenuItem::MenuItem(std::string name, std::string description, bool vegetarian, d
 {
 }
 
-std::string MenuItem::getName() { return _name; }
+std::string MenuItem::getName() const { return _name; }
 
-std::string MenuItem::getDescription() { return _description; }
+std::string MenuItem::getDescription() const { return _description; }
 
-double MenuItem::getPrice() { return _price; }
+double MenuItem::getPrice() const { return _price; }
 
-bool MenuItem::isVegetarian() { return _vegetarian; }
+bool MenuItem::isVegetarian() const { return _vegetarian; }
 
-std::string MenuItem::toShow()
+std::string MenuItem::toShow() const
 {
     std::string value;
     value += _name + " $" + std::to_string(_price) + "\n" + _description;

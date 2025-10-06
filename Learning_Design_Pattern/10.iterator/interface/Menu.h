@@ -2,18 +2,16 @@
 
 #include "Iterator.h"
 #include "MenuItem.h"
+#include "NonCopyable.h"
+#include <memory>
 
-class Menu
+class Menu : public NonCopyable
 {
 public:
     virtual ~Menu() = default;
 
-    virtual Iterator<MenuItem>* createIterator() const = 0;
+    virtual std::unique_ptr<Iterator<MenuItem>> createIterator() const = 0;
 
 protected:
     Menu() = default;
-    Menu(const Menu&) = delete;
-    Menu(Menu&&) = delete;
-    Menu& operator = (const Menu&) = delete;
-    Menu& operator = (Menu&&) = delete;
 };
