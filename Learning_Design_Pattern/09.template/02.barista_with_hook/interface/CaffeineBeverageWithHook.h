@@ -1,18 +1,16 @@
 #pragma once
 
-class CaffeineBeverageWithHook
+#include "NonCopyable.h"
+
+class CaffeineBeverageWithHook : public NonCopyable
 {
 public:
     CaffeineBeverageWithHook() = default;
 
     virtual void prepareRecipe();
 
-protected:
+public:
     virtual ~CaffeineBeverageWithHook() = default;
-    CaffeineBeverageWithHook(const CaffeineBeverageWithHook&) = delete;
-    CaffeineBeverageWithHook(CaffeineBeverageWithHook&&) = delete;
-    CaffeineBeverageWithHook& operator = (const CaffeineBeverageWithHook&) = delete;
-    CaffeineBeverageWithHook& operator = (CaffeineBeverageWithHook&&) = delete;
 
     virtual void brew() const = 0;
     virtual void addCondiments() const = 0;

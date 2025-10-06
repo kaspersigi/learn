@@ -12,10 +12,4 @@ public:
     virtual void addCondiments() const override;
     virtual bool customerWantsCondiments() const override;
     char getUserInput() const;
-
-protected:
-    CoffeeWithHook(const CoffeeWithHook&) = delete;
-    CoffeeWithHook(CoffeeWithHook&&) = delete;
-    CoffeeWithHook& operator = (const CoffeeWithHook&) = delete;
-    CoffeeWithHook& operator = (CoffeeWithHook&&) = delete;
 };
