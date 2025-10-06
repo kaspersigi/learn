@@ -24,20 +24,22 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
-all : pointer smart_pointer
-pointer :
-	$(MAKE) -C 01.pointer
-smart_pointer :
-	$(MAKE) -C 02.smart_pointer
-
+all : Chocolate
+Chocolate : Chocolate.o singleton.o
+	$(CXX) Chocolate.o singleton/*.o -o Chocolate $(CLANGXX_LINK_FLAGS)
+	rm -v Chocolate.o
+	$(MAKE) -C singleton clean
+Chocolate.o : Chocolate.cc Chocolate.h
+	$(CXX) Chocolate.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
+singleton.o :
+	$(MAKE) -C singleton
 format :
-	$(MAKE) -C 01.pointer format
-	$(MAKE) -C 02.smart_pointer format
-
+	$(FORMAT) Chocolate.cc -style=file -i
+	$(FORMAT) Chocolate.h -style=file -i
+	$(MAKE) -C singleton format
 clean :
-	$(MAKE) -C 01.pointer clean
-	$(MAKE) -C 02.smart_pointer clean
-
+	rm -v Chocolate
+check :
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./Chocolate
 scan :
-	$(MAKE) -C 01.pointer scan
-	$(MAKE) -C 02.smart_pointer scan
+	$(SCAN) make
