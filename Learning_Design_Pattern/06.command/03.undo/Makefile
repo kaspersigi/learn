@@ -42,6 +42,8 @@ devices.o :
 format :
 	$(FORMAT) Undo.cc -style=file -i
 	$(FORMAT) Undo.h -style=file -i
+	$(FORMAT) interface/NonCopyable.h -style=file -i
+	$(FORMAT) interface/Command.h -style=file -i
 	$(MAKE) -C commands format
 	$(MAKE) -C control format
 	$(MAKE) -C devices format

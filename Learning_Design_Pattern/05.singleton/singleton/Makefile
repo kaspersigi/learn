@@ -28,6 +28,7 @@ all : ChocolateBoiler.o
 ChocolateBoiler.o : ChocolateBoiler.cc ChocolateBoiler.h
 	$(CXX) ChocolateBoiler.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
+	$(FORMAT) NonCopyable.h -style=file -i
 	$(FORMAT) ChocolateBoiler.cc -style=file -i
 	$(FORMAT) ChocolateBoiler.h -style=file -i
 clean :

@@ -28,6 +28,7 @@ all : Beverage.o
 Beverage.o : Beverage.cc Beverage.h
 	$(CXX) Beverage.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
+	$(FORMAT) NonCopyable.h -style=file -i
 	$(FORMAT) CondimentDecorator.h -style=file -i
 	$(FORMAT) Beverage.cc -style=file -i
 	$(FORMAT) Beverage.h -style=file -i

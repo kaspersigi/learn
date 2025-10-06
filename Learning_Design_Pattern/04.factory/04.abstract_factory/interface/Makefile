@@ -41,6 +41,7 @@ format :
 	$(FORMAT) Sauce.h -style=file -i
 	$(FORMAT) Veggies.h -style=file -i
 	$(FORMAT) PizzaIngredientFactory.h -style=file -i
+	$(FORMAT) NonCopyable.h -style=file -i
 clean :
 	rm -v Pizza.o PizzaStore.o
 check :

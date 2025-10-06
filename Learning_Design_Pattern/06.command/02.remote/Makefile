@@ -42,6 +42,8 @@ devices.o :
 format :
 	$(FORMAT) Remote.cc -style=file -i
 	$(FORMAT) Remote.h -style=file -i
+	$(FORMAT) interface/NonCopyable.h -style=file -i
+	$(FORMAT) interface/Command.h -style=file -i
 	$(MAKE) -C commands format
 	$(MAKE) -C control format
 	$(MAKE) -C devices format

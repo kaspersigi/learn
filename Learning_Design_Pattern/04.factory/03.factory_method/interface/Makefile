@@ -30,6 +30,7 @@ Pizza.o : Pizza.cc Pizza.h
 PizzaStore.o : PizzaStore.cc PizzaStore.h
 	$(CXX) PizzaStore.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
+	$(FORMAT) NonCopyable.h -style=file -i
 	$(FORMAT) Pizza.cc -style=file -i
 	$(FORMAT) Pizza.h -style=file -i
 	$(FORMAT) PizzaStore.cc -style=file -i

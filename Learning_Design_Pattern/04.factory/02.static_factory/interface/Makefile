@@ -28,6 +28,7 @@ all : Pizza.o
 Pizza.o : Pizza.cc Pizza.h
 	$(CXX) Pizza.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
+	$(FORMAT) NonCopyable.h -style=file -i
 	$(FORMAT) Pizza.cc -style=file -i
 	$(FORMAT) Pizza.h -style=file -i
 clean :
