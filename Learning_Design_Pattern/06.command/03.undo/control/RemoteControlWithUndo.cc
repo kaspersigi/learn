@@ -10,27 +10,33 @@ RemoteControlWithUndo::RemoteControlWithUndo()
     std::for_each(_onCommands.begin(), _onCommands.end(), [](auto& e) { e = std::make_shared<NoCommand>(); });
 }
 
-void RemoteControlWithUndo::setCommand(int slot, Command* onCommand, Command* offCommand)
+void RemoteControlWithUndo::setCommand(int slot, std::shared_ptr<Command> onCommand, std::shared_ptr<Command> offCommand)
 {
     assert(slot <= SLOTS);
-    assert(onCommand);
-    assert(offCommand);
-    _onCommands[slot] = std::shared_ptr<Command>(onCommand);
-    _offCommands[slot] = std::shared_ptr<Command>(offCommand);
+    _onCommands[slot] = onCommand;
+    _offCommands[slot] = offCommand;
 }
 
 void RemoteControlWithUndo::onButtonWasPushed(int slot) const
 {
     assert(slot <= SLOTS);
-    _onCommands[slot]->execute();
-    _undoCommand = _onCommands[slot];
+    if (dynamic_cast<NoCommand*>(_onCommands[slot].get()) == nullptr) {
+        _onCommands[slot]->execute();
+        _undoCommand = _onCommands[slot];
+    } else {
+        _onCommands[slot]->execute();
+    }
 }
 
 void RemoteControlWithUndo::offButtonWasPushed(int slot) const
 {
     assert(slot <= SLOTS);
-    _offCommands[slot]->execute();
-    _undoCommand = _offCommands[slot];
+    if (dynamic_cast<NoCommand*>(_offCommands[slot].get()) == nullptr) {
+        _offCommands[slot]->execute();
+        _undoCommand = _offCommands[slot];
+    } else {
+        _offCommands[slot]->execute();
+    }
 }
 
 void RemoteControlWithUndo::undoButtonWasPushed() const { _undoCommand->undo(); }

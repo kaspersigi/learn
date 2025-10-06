@@ -1,8 +1,9 @@
 #pragma once
 
+#include "../interface/NonCopyable.h"
 #include <string>
 
-class Light
+class Light : public NonCopyable
 {
 public:
     explicit Light(const std::string location);
@@ -12,12 +13,6 @@ public:
     void off() const;
     void dim(int level) const;
     int getLevel() const;
-
-protected:
-    Light(const Light&) = delete;
-    Light(Light&&) = delete;
-    Light& operator = (const Light&) = delete;
-    Light& operator = (Light&&) = delete;
 
 private:
     std::string _location {};

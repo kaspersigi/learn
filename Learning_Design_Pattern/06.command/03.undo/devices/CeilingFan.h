@@ -1,8 +1,9 @@
 #pragma once
 
+#include "../interface/NonCopyable.h"
 #include <string>
 
-class CeilingFan
+class CeilingFan : public NonCopyable
 {
 public:
     explicit CeilingFan(const std::string location);
@@ -18,12 +19,6 @@ public:
     void high() const;
     void off() const;
     Level getSpeed();
-
-protected:
-    CeilingFan(const CeilingFan&) = delete;
-    CeilingFan(CeilingFan&&) = delete;
-    CeilingFan& operator = (const CeilingFan&) = delete;
-    CeilingFan& operator = (CeilingFan&&) = delete;
 
 private:
     std::string _location {};
