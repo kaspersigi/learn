@@ -13,10 +13,6 @@ public:
 
 protected:
     virtual ~HottubOnCommand() = default;
-    HottubOnCommand(const HottubOnCommand&) = delete;
-    HottubOnCommand(HottubOnCommand&&) = delete;
-    HottubOnCommand& operator = (const HottubOnCommand&) = delete;
-    HottubOnCommand& operator = (HottubOnCommand&&) = delete;
 
 private:
     std::weak_ptr<const Hottub> _hottub {};

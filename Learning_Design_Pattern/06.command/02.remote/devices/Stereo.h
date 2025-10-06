@@ -1,8 +1,9 @@
 #pragma once
 
+#include "../interface/NonCopyable.h"
 #include <string>
 
-class Stereo
+class Stereo : public NonCopyable
 {
 public:
     explicit Stereo(const std::string location);
@@ -14,12 +15,6 @@ public:
     void setDVD() const;
     void setRadio() const;
     void setVolume(int volume) const;
-
-protected:
-    Stereo(const Stereo&) = delete;
-    Stereo(Stereo&&) = delete;
-    Stereo& operator = (const Stereo&) = delete;
-    Stereo& operator = (Stereo&&) = delete;
 
 private:
     std::string _location {};

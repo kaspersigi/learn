@@ -12,10 +12,6 @@ public:
 
 protected:
     virtual ~CeilingFanOnCommand() = default;
-    CeilingFanOnCommand(const CeilingFanOnCommand&) = delete;
-    CeilingFanOnCommand(CeilingFanOnCommand&&) = delete;
-    CeilingFanOnCommand& operator=(const CeilingFanOnCommand&) = delete;
-    CeilingFanOnCommand& operator=(CeilingFanOnCommand&&) = delete;
 
 private:
     std::weak_ptr<const CeilingFan> _ceilingFan {};

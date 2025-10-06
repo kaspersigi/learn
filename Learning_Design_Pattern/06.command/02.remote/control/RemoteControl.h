@@ -1,25 +1,21 @@
 #pragma once
+
 #include "../interface/Command.h"
+#include "../interface/NonCopyable.h"
 #include <array>
 #include <memory>
 #include <string>
 
-class RemoteControl
+class RemoteControl : public NonCopyable
 {
 public:
     RemoteControl();
     ~RemoteControl() = default;
 
-    void setCommand(int slot, Command* onCommand, Command* offCommand);
+    void setCommand(int slot, std::shared_ptr<Command> onCommand, std::shared_ptr<Command> offCommand);
     void onButtonWasPushed(int slot) const;
     void offButtonWasPushed(int slot) const;
     std::string toShow() const;
-
-protected:
-    RemoteControl(const RemoteControl&) = delete;
-    RemoteControl(RemoteControl&&) = delete;
-    RemoteControl& operator = (const RemoteControl&) = delete;
-    RemoteControl& operator = (RemoteControl&&) = delete;
 
 private:
     static const int SLOTS = 7;

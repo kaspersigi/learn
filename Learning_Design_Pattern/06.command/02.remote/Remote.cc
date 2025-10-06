@@ -6,7 +6,7 @@ auto main(int argc, char* argv[]) -> int
     auto remoteControl = std::make_shared<RemoteControl>();
     auto light = std::make_shared<Light>("Living Room");
 
-    remoteControl->setCommand(0, new LivingroomLightOnCommand(light), new LivingroomLightOffCommand(light));
+    remoteControl->setCommand(0, std::make_shared<LivingroomLightOnCommand>(light), std::make_shared<LivingroomLightOffCommand>(light));
     std::cout << remoteControl->toShow() << std::endl;
     remoteControl->onButtonWasPushed(0);
     remoteControl->offButtonWasPushed(0);

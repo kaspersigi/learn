@@ -13,10 +13,6 @@ public:
 
 protected:
     virtual ~StereoOffCommand() = default;
-    StereoOffCommand(const StereoOffCommand&) = delete;
-    StereoOffCommand(StereoOffCommand&&) = delete;
-    StereoOffCommand& operator = (const StereoOffCommand&) = delete;
-    StereoOffCommand& operator = (StereoOffCommand&&) = delete;
 
 private:
     std::weak_ptr<const Stereo> _stereo {};

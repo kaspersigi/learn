@@ -13,10 +13,6 @@ public:
 
 protected:
     virtual ~GarageDoorDownCommand() = default;
-    GarageDoorDownCommand(const GarageDoorDownCommand&) = delete;
-    GarageDoorDownCommand(GarageDoorDownCommand&&) = delete;
-    GarageDoorDownCommand& operator = (const GarageDoorDownCommand&) = delete;
-    GarageDoorDownCommand& operator = (GarageDoorDownCommand&&) = delete;
 
 private:
     std::weak_ptr<const GarageDoor> _garageDoor {};

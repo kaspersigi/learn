@@ -9,13 +9,11 @@ RemoteControl::RemoteControl()
     std::for_each(_onCommands.begin(), _onCommands.end(), [](auto& e) { e = std::make_shared<NoCommand>(); });
 }
 
-void RemoteControl::setCommand(int slot, Command* onCommand, Command* offCommand)
+void RemoteControl::setCommand(int slot, std::shared_ptr<Command> onCommand, std::shared_ptr<Command> offCommand)
 {
     assert(slot <= SLOTS);
-    assert(onCommand);
-    assert(offCommand);
-    _onCommands[slot] = std::shared_ptr<Command>(onCommand);
-    _offCommands[slot] = std::shared_ptr<Command>(offCommand);
+    _onCommands[slot] = onCommand;
+    _offCommands[slot] = offCommand;
 }
 
 void RemoteControl::onButtonWasPushed(int slot) const

@@ -13,10 +13,6 @@ public:
 
 protected:
     virtual ~LightOnCommand() = default;
-    LightOnCommand(const LightOnCommand&) = delete;
-    LightOnCommand(LightOnCommand&&) = delete;
-    LightOnCommand& operator = (const LightOnCommand&) = delete;
-    LightOnCommand& operator = (LightOnCommand&&) = delete;
 
 private:
     std::weak_ptr<const Light> _light {};

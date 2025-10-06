@@ -1,8 +1,9 @@
 #pragma once
 
+#include "../interface/NonCopyable.h"
 #include <string>
 
-class TV
+class TV : public NonCopyable
 {
 public:
     explicit TV(const std::string location);
@@ -11,12 +12,6 @@ public:
     void on() const;
     void off() const;
     void setInputChannel();
-
-protected:
-    TV(const TV&) = delete;
-    TV(TV&&) = delete;
-    TV& operator = (const TV&) = delete;
-    TV& operator = (TV&&) = delete;
 
 private:
     std::string _location {};

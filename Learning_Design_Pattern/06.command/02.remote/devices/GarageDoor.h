@@ -1,8 +1,9 @@
 #pragma once
 
+#include "../interface/NonCopyable.h"
 #include <string>
 
-class GarageDoor
+class GarageDoor : public NonCopyable
 {
 public:
     explicit GarageDoor(const std::string location);
@@ -13,12 +14,6 @@ public:
     void stop() const;
     void lighton() const;
     void lightoff() const;
-
-protected:
-    GarageDoor(const GarageDoor&) = delete;
-    GarageDoor(GarageDoor&&) = delete;
-    GarageDoor& operator = (const GarageDoor&) = delete;
-    GarageDoor& operator = (GarageDoor&&) = delete;
 
 private:
     std::string _location {};

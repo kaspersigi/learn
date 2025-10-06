@@ -1,8 +1,9 @@
 #pragma once
 
+#include "../interface/NonCopyable.h"
 #include <string>
 
-class Hottub
+class Hottub : public NonCopyable
 {
 public:
     Hottub() = default;
@@ -20,12 +21,6 @@ public:
     void setTemperature(int temperature);
     void heat() const;
     void cool() const;
-
-protected:
-    Hottub(const Hottub&) = delete;
-    Hottub(Hottub&&) = delete;
-    Hottub& operator = (const Hottub&) = delete;
-    Hottub& operator = (Hottub&&) = delete;
 
 private:
     mutable State _state { State::OFF };
