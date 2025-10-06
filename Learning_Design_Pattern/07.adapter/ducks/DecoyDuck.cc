@@ -4,7 +4,7 @@
 #include <iostream>
 
 DecoyDuck::DecoyDuck()
-    : Duck(new FlyNoWay(), new MuteQuack())
+    : Duck(std::make_shared<FlyNoWay>(), std::make_shared<MuteQuack>())
 {
 }
 

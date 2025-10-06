@@ -4,7 +4,7 @@
 #include <iostream>
 
 WildTurkey::WildTurkey()
-    : Turkey(new FlyWithWings(), new Gobble())
+    : Turkey(std::make_shared<FlyWithWings>(), std::make_shared<Gobble>())
 {
 }
 

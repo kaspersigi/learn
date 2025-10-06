@@ -4,7 +4,7 @@
 #include <cassert>
 #include <iostream>
 
-Turkey::Turkey(FlyBehavior* flyBehavior, QuackBehavior* quackBehavior)
+Turkey::Turkey(std::shared_ptr<FlyBehavior> flyBehavior, std::shared_ptr<QuackBehavior> quackBehavior)
     : _flyBehavior(flyBehavior)
     , _quackBehavior(quackBehavior)
 {
@@ -12,16 +12,16 @@ Turkey::Turkey(FlyBehavior* flyBehavior, QuackBehavior* quackBehavior)
     assert(quackBehavior);
 }
 
-void Turkey::setFlyBehavior(FlyBehavior* flyBehavior)
+void Turkey::setFlyBehavior(std::shared_ptr<FlyBehavior> flyBehavior)
 {
     assert(flyBehavior);
-    _flyBehavior = std::shared_ptr<FlyBehavior>(flyBehavior);
+    _flyBehavior = flyBehavior;
 }
 
-void Turkey::setQuackBehavior(QuackBehavior* quackBehavior)
+void Turkey::setQuackBehavior(std::shared_ptr<QuackBehavior> quackBehavior)
 {
     assert(quackBehavior);
-    _quackBehavior = std::shared_ptr<QuackBehavior>(quackBehavior);
+    _quackBehavior = quackBehavior;
 }
 
 void Turkey::performFly() const

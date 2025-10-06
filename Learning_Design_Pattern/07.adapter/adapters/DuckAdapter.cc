@@ -2,8 +2,8 @@
 #include "../flyBehaviors/flyBehaviors.h"
 #include "../quackBehaviors/quackBehaviors.h"
 
-DuckAdapter::DuckAdapter(const Duck* duck)
-    : Turkey(new FlyWithWings(), new Gobble())
+DuckAdapter::DuckAdapter(std::shared_ptr<const Duck> duck)
+    : Turkey(std::make_shared<FlyWithWings>(), std::make_shared<Gobble>())
     , _duck(duck)
 {
 }

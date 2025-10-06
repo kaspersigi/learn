@@ -1,6 +1,8 @@
 #pragma once
 
-class QuackBehavior
+#include "NonCopyable.h"
+
+class QuackBehavior : public NonCopyable
 {
 public:
     virtual ~QuackBehavior() = default;
@@ -9,8 +11,4 @@ public:
 
 protected:
     QuackBehavior() = default;
-    QuackBehavior(const QuackBehavior&) = delete;
-    QuackBehavior(QuackBehavior&&) = delete;
-    QuackBehavior& operator = (const QuackBehavior&) = delete;
-    QuackBehavior& operator = (QuackBehavior&&) = delete;
 };

@@ -9,10 +9,4 @@ public:
     virtual ~ModelDuck() = default;
 
     virtual void display() const override;
-
-protected:
-    ModelDuck(const ModelDuck&) = delete;
-    ModelDuck(ModelDuck&&) = delete;
-    ModelDuck& operator = (const ModelDuck&) = delete;
-    ModelDuck& operator = (ModelDuck&&) = delete;
 };

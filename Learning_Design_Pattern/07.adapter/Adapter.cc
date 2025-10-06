@@ -23,7 +23,7 @@ auto main(int argc, char* argv[]) -> int
 
     model->performQuack();
     model->performFly();
-    model->setFlyBehavior(new FlyRocketPowered());
+    model->setFlyBehavior(std::make_shared<FlyRocketPowered>());
     model->performFly();
     std::cout << "--------------------" << std::endl;
 
@@ -31,13 +31,15 @@ auto main(int argc, char* argv[]) -> int
     wild->performFly();
     std::cout << "--------------------" << std::endl;
 
-    std::shared_ptr<Turkey> duckAdapter = std::make_shared<DuckAdapter>(new RubberDuck());
+    std::shared_ptr<Duck> rubberDuck = std::make_shared<RubberDuck>();
+    std::shared_ptr<Turkey> duckAdapter = std::make_shared<DuckAdapter>(rubberDuck);
     duckAdapter->display();
     duckAdapter->performQuack();
     duckAdapter->performFly();
     std::cout << "--------------------" << std::endl;
 
-    std::shared_ptr<Duck> turkeyAdapter = std::make_shared<TurkeyAdapter>(new WildTurkey());
+    std::shared_ptr<Turkey> wildTurkey = std::make_shared<WildTurkey>();
+    std::shared_ptr<Duck> turkeyAdapter = std::make_shared<TurkeyAdapter>(wildTurkey);
     turkeyAdapter->display();
     turkeyAdapter->performQuack();
     turkeyAdapter->performFly();

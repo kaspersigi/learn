@@ -4,7 +4,7 @@
 #include <iostream>
 
 ModelDuck::ModelDuck()
-    : Duck(new FlyNoWay(), new FakeQuack())
+    : Duck(std::make_shared<FlyNoWay>(), std::make_shared<FakeQuack>())
 {
 }
 

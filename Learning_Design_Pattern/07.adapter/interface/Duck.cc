@@ -1,27 +1,22 @@
 #include "Duck.h"
 #include "../interface/FlyBehavior.h"
 #include "../interface/QuackBehavior.h"
-#include <cassert>
 #include <iostream>
 
-Duck::Duck(FlyBehavior* flyBehavior, QuackBehavior* quackBehavior)
+Duck::Duck(std::shared_ptr<FlyBehavior> flyBehavior, std::shared_ptr<QuackBehavior> quackBehavior)
     : _flyBehavior(flyBehavior)
     , _quackBehavior(quackBehavior)
 {
-    assert(flyBehavior);
-    assert(quackBehavior);
 }
 
-void Duck::setFlyBehavior(FlyBehavior* flyBehavior)
+void Duck::setFlyBehavior(std::shared_ptr<FlyBehavior> flyBehavior)
 {
-    assert(flyBehavior);
-    _flyBehavior = std::shared_ptr<FlyBehavior>(flyBehavior);
+    _flyBehavior = flyBehavior;
 }
 
-void Duck::setQuackBehavior(QuackBehavior* quackBehavior)
+void Duck::setQuackBehavior(std::shared_ptr<QuackBehavior> quackBehavior)
 {
-    assert(quackBehavior);
-    _quackBehavior = std::shared_ptr<QuackBehavior>(quackBehavior);
+    _quackBehavior = quackBehavior;
 }
 
 void Duck::performFly() const

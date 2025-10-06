@@ -1,6 +1,8 @@
 #pragma once
 
-class FlyBehavior
+#include "NonCopyable.h"
+
+class FlyBehavior : public NonCopyable
 {
 public:
     virtual ~FlyBehavior() = default;
@@ -9,8 +11,4 @@ public:
 
 protected:
     FlyBehavior() = default;
-    FlyBehavior(const FlyBehavior&) = delete;
-    FlyBehavior(FlyBehavior&&) = delete;
-    FlyBehavior& operator = (const FlyBehavior&) = delete;
-    FlyBehavior& operator = (FlyBehavior&&) = delete;
 };

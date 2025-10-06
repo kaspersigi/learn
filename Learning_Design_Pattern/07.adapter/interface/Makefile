@@ -30,6 +30,7 @@ Duck.o : Duck.cc Duck.h
 Turkey.o : Turkey.cc Turkey.h
 	$(CXX) Turkey.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 format :
+	$(FORMAT) NonCopyable.h -style=file -i
 	$(FORMAT) FlyBehavior.h -style=file -i
 	$(FORMAT) QuackBehavior.h -style=file -i
 	$(FORMAT) Duck.cc -style=file -i

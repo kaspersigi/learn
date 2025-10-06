@@ -4,7 +4,7 @@
 #include <iostream>
 
 MallardDuck::MallardDuck()
-    : Duck(new FlyWithWings(), new Quack())
+    : Duck(std::make_shared<FlyWithWings>(), std::make_shared<Quack>())
 {
 }
 

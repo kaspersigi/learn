@@ -4,7 +4,7 @@
 #include <iostream>
 
 RubberDuck::RubberDuck()
-    : Duck(new FlyNoWay(), new Squeak())
+    : Duck(std::make_shared<FlyNoWay>(), std::make_shared<Squeak>())
 {
 }
 
