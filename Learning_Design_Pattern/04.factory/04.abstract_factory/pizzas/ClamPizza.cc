@@ -1,15 +1,16 @@
 #include "ClamPizza.h"
+#include <iostream>
 
 ClamPizza::ClamPizza(std::unique_ptr<PizzaIngredientFactory> f)
     : _ingredientFactory(std::move(f))
 {
 }
 
-void ClamPizza::prepare() const
+void ClamPizza::prepare()
 {
     std::cout << "Preparing " << getName() << std::endl;
-    _dough = std::shared_ptr<Dough>(_ingredientFactory->createDough());
-    _sauce = std::shared_ptr<Sauce>(_ingredientFactory->createSauce());
-    _cheese = std::shared_ptr<Cheese>(_ingredientFactory->createCheese());
-    _clam = std::shared_ptr<Clams>(_ingredientFactory->createClams());
+    _dough = _ingredientFactory->createDough();
+    _sauce = _ingredientFactory->createSauce();
+    _cheese = _ingredientFactory->createCheese();
+    _clam = _ingredientFactory->createClams();
 }

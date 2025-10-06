@@ -1,22 +1,22 @@
 #pragma once
 
+#include "Cheese.h"
+#include "Clams.h"
+#include "Dough.h"
+#include "NonCopyable.h"
+#include "Pepperoni.h"
+#include "Sauce.h"
+#include "Veggies.h"
 #include <iostream>
 #include <memory>
 #include <vector>
 
-#include "Cheese.h"
-#include "Clams.h"
-#include "Dough.h"
-#include "Pepperoni.h"
-#include "Sauce.h"
-#include "Veggies.h"
-
-class Pizza
+class Pizza : public NonCopyable
 {
 public:
     virtual ~Pizza();
 
-    virtual void prepare() const = 0;
+    virtual void prepare() = 0;
     virtual void bake() const;
     virtual void cut() const;
     virtual void box() const;
@@ -26,17 +26,13 @@ public:
 
 protected:
     Pizza() = default;
-    Pizza(const Pizza&) = delete;
-    Pizza(Pizza&&) = delete;
-    Pizza& operator = (const Pizza&) = delete;
-    Pizza& operator = (Pizza&&) = delete;
 
-    mutable std::shared_ptr<Cheese> _cheese {};
-    mutable std::shared_ptr<Clams> _clam {};
-    mutable std::shared_ptr<Dough> _dough {};
-    mutable std::shared_ptr<Pepperoni> _pepperoni {};
-    mutable std::shared_ptr<Sauce> _sauce {};
-    mutable std::vector<Veggies*> _veggies {};
+    std::unique_ptr<Cheese> _cheese {};
+    std::unique_ptr<Clams> _clam {};
+    std::unique_ptr<Dough> _dough {};
+    std::unique_ptr<Pepperoni> _pepperoni {};
+    std::unique_ptr<Sauce> _sauce {};
+    std::vector<std::unique_ptr<Veggies>> _veggies {};
 
 private:
     std::string _name {};

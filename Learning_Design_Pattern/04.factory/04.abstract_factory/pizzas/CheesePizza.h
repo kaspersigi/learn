@@ -10,13 +10,7 @@ public:
     explicit CheesePizza(std::nullptr_t) = delete;
     virtual ~CheesePizza() = default;
 
-    void prepare() const;
-
-protected:
-    CheesePizza(const CheesePizza&) = delete;
-    CheesePizza(CheesePizza&&) = delete;
-    CheesePizza& operator = (const CheesePizza&) = delete;
-    CheesePizza& operator = (CheesePizza&&) = delete;
+    void prepare();
 
 private:
     std::unique_ptr<PizzaIngredientFactory> _ingredientFactory;

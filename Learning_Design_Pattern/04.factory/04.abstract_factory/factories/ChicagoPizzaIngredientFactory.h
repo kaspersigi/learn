@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../interface/PizzaIngredientFactory.h"
+#include <memory>
 
 class ChicagoPizzaIngredientFactory : public PizzaIngredientFactory
 {
@@ -8,16 +9,10 @@ public:
     ChicagoPizzaIngredientFactory() = default;
     virtual ~ChicagoPizzaIngredientFactory() = default;
 
-    virtual Cheese* createCheese() const override;
-    virtual Clams* createClams() const override;
-    virtual Dough* createDough() const override;
-    virtual Pepperoni* createPepperoni() const override;
-    virtual Sauce* createSauce() const override;
-    virtual std::vector<Veggies*> createVeggies() const override;
-
-protected:
-    ChicagoPizzaIngredientFactory(const ChicagoPizzaIngredientFactory&) = delete;
-    ChicagoPizzaIngredientFactory(ChicagoPizzaIngredientFactory&&) = delete;
-    ChicagoPizzaIngredientFactory& operator = (const ChicagoPizzaIngredientFactory&) = delete;
-    ChicagoPizzaIngredientFactory& operator = (ChicagoPizzaIngredientFactory&&) = delete;
+    virtual std::unique_ptr<Dough> createDough() const override;
+    virtual std::unique_ptr<Sauce> createSauce() const override;
+    virtual std::unique_ptr<Cheese> createCheese() const override;
+    virtual std::vector<std::unique_ptr<Veggies>> createVeggies() const override;
+    virtual std::unique_ptr<Pepperoni> createPepperoni() const override;
+    virtual std::unique_ptr<Clams> createClams() const override;
 };

@@ -10,13 +10,7 @@ public:
     explicit PepperoniPizza(std::nullptr_t) = delete;
     virtual ~PepperoniPizza() = default;
 
-    void prepare() const;
-
-protected:
-    PepperoniPizza(const PepperoniPizza&) = delete;
-    PepperoniPizza(PepperoniPizza&&) = delete;
-    PepperoniPizza& operator = (const PepperoniPizza&) = delete;
-    PepperoniPizza& operator = (PepperoniPizza&&) = delete;
+    void prepare();
 
 private:
     std::unique_ptr<PizzaIngredientFactory> _ingredientFactory;

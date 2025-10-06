@@ -5,7 +5,7 @@
 
 class Pizza;
 
-class PizzaStore : NonCopyable
+class PizzaStore : public NonCopyable
 {
 public:
     virtual ~PizzaStore() = default;

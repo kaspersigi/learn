@@ -10,10 +10,4 @@ public:
     virtual ~MozzarellaCheese() = default;
 
     virtual std::string toShow() const override;
-
-protected:
-    MozzarellaCheese(const MozzarellaCheese&) = delete;
-    MozzarellaCheese(MozzarellaCheese&&) = delete;
-    MozzarellaCheese& operator = (const MozzarellaCheese&) = delete;
-    MozzarellaCheese& operator = (MozzarellaCheese&&) = delete;
 };

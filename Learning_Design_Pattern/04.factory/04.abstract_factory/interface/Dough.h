@@ -1,5 +1,6 @@
 #pragma once
 
+#include "NonCopyable.h"
 #include <string>
 
 class Dough
@@ -11,8 +12,4 @@ public:
 
 protected:
     Dough() = default;
-    Dough(const Dough&) = delete;
-    Dough(Dough&&) = delete;
-    Dough& operator = (const Dough&) = delete;
-    Dough& operator = (Dough&&) = delete;
 };

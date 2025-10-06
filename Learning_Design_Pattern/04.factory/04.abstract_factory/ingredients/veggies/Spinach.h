@@ -9,10 +9,4 @@ public:
     virtual ~Spinach() = default;
 
     virtual std::string toShow() const override;
-
-protected:
-    Spinach(const Spinach&) = delete;
-    Spinach(Spinach&&) = delete;
-    Spinach& operator = (const Spinach&) = delete;
-    Spinach& operator = (Spinach&&) = delete;
 };

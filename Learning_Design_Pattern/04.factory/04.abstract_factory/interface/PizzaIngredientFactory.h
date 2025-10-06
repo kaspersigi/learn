@@ -1,5 +1,7 @@
 #pragma once
 
+#include "NonCopyable.h"
+#include <memory>
 #include <vector>
 
 class Cheese;
@@ -9,22 +11,18 @@ class Pepperoni;
 class Sauce;
 class Veggies;
 
-class PizzaIngredientFactory
+class PizzaIngredientFactory : public NonCopyable
 {
 public:
     virtual ~PizzaIngredientFactory() = default;
 
-    virtual Cheese* createCheese() const = 0;
-    virtual Clams* createClams() const = 0;
-    virtual Dough* createDough() const = 0;
-    virtual Pepperoni* createPepperoni() const = 0;
-    virtual Sauce* createSauce() const = 0;
-    virtual std::vector<Veggies*> createVeggies() const = 0;
+    virtual std::unique_ptr<Cheese> createCheese() const = 0;
+    virtual std::unique_ptr<Clams> createClams() const = 0;
+    virtual std::unique_ptr<Dough> createDough() const = 0;
+    virtual std::unique_ptr<Pepperoni> createPepperoni() const = 0;
+    virtual std::unique_ptr<Sauce> createSauce() const = 0;
+    virtual std::vector<std::unique_ptr<Veggies>> createVeggies() const = 0;
 
 protected:
     PizzaIngredientFactory() = default;
-    PizzaIngredientFactory(const PizzaIngredientFactory&) = delete;
-    PizzaIngredientFactory(PizzaIngredientFactory&&) = delete;
-    PizzaIngredientFactory& operator = (const PizzaIngredientFactory&) = delete;
-    PizzaIngredientFactory& operator = (PizzaIngredientFactory&&) = delete;
 };

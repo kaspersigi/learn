@@ -4,7 +4,7 @@
 #include <iostream>
 #include <list>
 
-class Pizza : NonCopyable
+class Pizza : public NonCopyable
 {
 public:
     virtual ~Pizza() = default;

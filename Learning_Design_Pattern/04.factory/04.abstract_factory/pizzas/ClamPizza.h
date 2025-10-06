@@ -10,13 +10,7 @@ public:
     explicit ClamPizza(std::nullptr_t) = delete;
     virtual ~ClamPizza() = default;
 
-    void prepare() const;
-
-protected:
-    ClamPizza(const ClamPizza&) = delete;
-    ClamPizza(ClamPizza&&) = delete;
-    ClamPizza& operator = (const ClamPizza&) = delete;
-    ClamPizza& operator = (ClamPizza&&) = delete;
+    void prepare();
 
 private:
     std::unique_ptr<PizzaIngredientFactory> _ingredientFactory;

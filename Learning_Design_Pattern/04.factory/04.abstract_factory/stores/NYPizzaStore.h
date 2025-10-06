@@ -8,7 +8,7 @@ public:
     NYPizzaStore() = default;
     virtual ~NYPizzaStore() = default;
 
-    std::shared_ptr<Pizza> createPizza(std::string type) const override;
+    std::unique_ptr<Pizza> createPizza(std::string type) const override;
 
 protected:
     NYPizzaStore(const NYPizzaStore&) = delete;

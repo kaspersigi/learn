@@ -10,10 +10,4 @@ public:
     virtual ~ReggianoCheese() = default;
 
     virtual std::string toShow() const override;
-
-protected:
-    ReggianoCheese(const ReggianoCheese&) = delete;
-    ReggianoCheese(ReggianoCheese&&) = delete;
-    ReggianoCheese& operator = (const ReggianoCheese&) = delete;
-    ReggianoCheese& operator = (ReggianoCheese&&) = delete;
 };

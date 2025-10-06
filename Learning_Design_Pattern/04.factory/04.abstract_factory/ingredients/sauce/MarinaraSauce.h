@@ -10,10 +10,4 @@ public:
     virtual ~MarinaraSauce() = default;
 
     virtual std::string toShow() const override;
-
-protected:
-    MarinaraSauce(const MarinaraSauce&) = delete;
-    MarinaraSauce(MarinaraSauce&&) = delete;
-    MarinaraSauce& operator = (const MarinaraSauce&) = delete;
-    MarinaraSauce& operator = (MarinaraSauce&&) = delete;
 };

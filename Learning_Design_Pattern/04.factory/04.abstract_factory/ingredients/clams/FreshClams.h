@@ -10,10 +10,4 @@ public:
     virtual ~FreshClams() = default;
 
     virtual std::string toShow() const override;
-
-protected:
-    FreshClams(const FreshClams&) = delete;
-    FreshClams(FreshClams&&) = delete;
-    FreshClams& operator = (const FreshClams&) = delete;
-    FreshClams& operator = (FreshClams&&) = delete;
 };

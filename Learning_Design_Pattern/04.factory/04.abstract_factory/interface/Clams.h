@@ -1,8 +1,9 @@
 #pragma once
 
+#include "NonCopyable.h"
 #include <string>
 
-class Clams
+class Clams : public NonCopyable
 {
 public:
     virtual ~Clams() = default;
@@ -11,8 +12,4 @@ public:
 
 protected:
     Clams() = default;
-    Clams(const Clams&) = delete;
-    Clams(Clams&&) = delete;
-    Clams& operator = (const Clams&) = delete;
-    Clams& operator = (Clams&&) = delete;
 };

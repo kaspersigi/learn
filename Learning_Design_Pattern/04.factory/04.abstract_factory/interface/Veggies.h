@@ -1,8 +1,9 @@
 #pragma once
 
+#include "NonCopyable.h"
 #include <string>
 
-class Veggies
+class Veggies : public NonCopyable
 {
 public:
     virtual ~Veggies() = default;
@@ -11,8 +12,4 @@ public:
 
 protected:
     Veggies() = default;
-    Veggies(const Veggies&) = delete;
-    Veggies(Veggies&&) = delete;
-    Veggies& operator = (const Veggies&) = delete;
-    Veggies& operator = (Veggies&&) = delete;
 };
