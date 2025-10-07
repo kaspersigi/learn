@@ -1,10 +1,13 @@
 #include "CheesePizza.h"
+#include "../interface/PizzaIngredientFactory.h"
 #include <iostream>
 
 CheesePizza::CheesePizza(std::unique_ptr<PizzaIngredientFactory> f)
     : _ingredientFactory(std::move(f))
 {
 }
+
+CheesePizza::~CheesePizza() = default;
 
 void CheesePizza::prepare()
 {

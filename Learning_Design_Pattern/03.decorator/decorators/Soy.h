@@ -3,15 +3,17 @@
 #include "../interface/CondimentDecorator.h"
 #include <memory>
 
+class Beverage;
+
 class Soy : public CondimentDecorator
 {
 public:
     explicit Soy(std::unique_ptr<Beverage> beverage);
-    virtual ~Soy() = default;
+    ~Soy() override;
 
-    virtual std::string getDescription() const override;
-    virtual double cost() const override;
+    std::string getDescription() const override;
+    double cost() const override;
 
 private:
-    std::unique_ptr<Beverage> _beverage {};
+    std::unique_ptr<Beverage> _beverage;
 };

@@ -10,7 +10,7 @@ class Projector : public NonCopyable
 {
 public:
     Projector(std::string description, std::shared_ptr<DvdPlayer> dvdPlayer);
-    ~Projector() = default;
+    ~Projector();
 
     void on() const;
     void off() const;
@@ -19,6 +19,6 @@ public:
     std::string toShow() const;
 
 private:
-    std::string _description {};
-    std::weak_ptr<DvdPlayer> _dvdPlayer {};
+    std::string _description;
+    std::weak_ptr<DvdPlayer> _dvdPlayer;
 };

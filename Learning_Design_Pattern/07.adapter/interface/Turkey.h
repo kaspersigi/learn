@@ -9,7 +9,7 @@ class QuackBehavior;
 class Turkey : public NonCopyable
 {
 public:
-    virtual ~Turkey() = default;
+    virtual ~Turkey();
 
     void setFlyBehavior(std::shared_ptr<FlyBehavior> flyBehavior);
     void setQuackBehavior(std::shared_ptr<QuackBehavior> quackBehavior);
@@ -22,6 +22,6 @@ protected:
     Turkey(std::shared_ptr<FlyBehavior> flyBehavior, std::shared_ptr<QuackBehavior> quackBehavior);
 
 private:
-    std::shared_ptr<FlyBehavior> _flyBehavior {};
-    std::shared_ptr<QuackBehavior> _quackBehavior {};
+    std::shared_ptr<FlyBehavior> _flyBehavior;
+    std::shared_ptr<QuackBehavior> _quackBehavior;
 };

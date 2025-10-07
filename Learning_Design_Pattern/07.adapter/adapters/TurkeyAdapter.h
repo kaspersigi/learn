@@ -1,15 +1,16 @@
 #pragma once
 
 #include "../interface/Duck.h"
-#include "../interface/Turkey.h"
 #include <memory>
+
+class Turkey;
 
 class TurkeyAdapter : public Duck
 {
 public:
     explicit TurkeyAdapter(std::shared_ptr<const Turkey> turkey);
     explicit TurkeyAdapter(std::nullptr_t) = delete;
-    virtual ~TurkeyAdapter() = default;
+    virtual ~TurkeyAdapter();
 
     void performFly() const;
     void performQuack() const;
@@ -17,5 +18,5 @@ public:
     virtual void display() const override;
 
 private:
-    std::shared_ptr<const Turkey> _turkey {};
+    std::shared_ptr<const Turkey> _turkey;
 };

@@ -9,6 +9,8 @@ Duck::Duck(std::shared_ptr<FlyBehavior> flyBehavior, std::shared_ptr<QuackBehavi
 {
 }
 
+Duck::~Duck() = default;
+
 void Duck::setFlyBehavior(std::shared_ptr<FlyBehavior> flyBehavior)
 {
     _flyBehavior = flyBehavior;

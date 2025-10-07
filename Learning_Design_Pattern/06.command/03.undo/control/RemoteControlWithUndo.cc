@@ -1,5 +1,6 @@
 #include "RemoteControlWithUndo.h"
 #include "../commands/NoCommand.h"
+#include "../interface/Command.h"
 #include <algorithm>
 #include <cassert>
 
@@ -9,6 +10,8 @@ RemoteControlWithUndo::RemoteControlWithUndo()
     std::for_each(_offCommands.begin(), _offCommands.end(), [](auto& e) { e = std::make_shared<NoCommand>(); });
     std::for_each(_onCommands.begin(), _onCommands.end(), [](auto& e) { e = std::make_shared<NoCommand>(); });
 }
+
+RemoteControlWithUndo::~RemoteControlWithUndo() = default;
 
 void RemoteControlWithUndo::setCommand(int slot, std::shared_ptr<Command> onCommand, std::shared_ptr<Command> offCommand)
 {

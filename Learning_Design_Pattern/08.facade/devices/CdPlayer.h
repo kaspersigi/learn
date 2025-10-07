@@ -10,7 +10,7 @@ class CdPlayer : public NonCopyable
 {
 public:
     CdPlayer(std::string description, std::shared_ptr<Amplifier> amplifier);
-    ~CdPlayer() = default;
+    ~CdPlayer();
 
     void on() const;
     void off() const;
@@ -22,8 +22,8 @@ public:
     std::string toShow() const;
 
 private:
-    std::string _description {};
-    std::weak_ptr<Amplifier> _amplifier {};
-    std::string _title {};
-    int _currentTrack {};
+    std::string _description;
+    std::weak_ptr<Amplifier> _amplifier;
+    std::string _title;
+    int _currentTrack;
 };

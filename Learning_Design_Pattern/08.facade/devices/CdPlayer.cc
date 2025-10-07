@@ -1,4 +1,5 @@
 #include "CdPlayer.h"
+#include "Amplifier.h"
 #include <iostream>
 
 CdPlayer::CdPlayer(std::string description, std::shared_ptr<Amplifier> amplifier)
@@ -6,6 +7,8 @@ CdPlayer::CdPlayer(std::string description, std::shared_ptr<Amplifier> amplifier
     , _amplifier(amplifier)
 {
 }
+
+CdPlayer::~CdPlayer() = default;
 
 void CdPlayer::on() const { std::cout << _description << " on" << std::endl; }
 

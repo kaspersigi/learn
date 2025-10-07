@@ -1,4 +1,5 @@
 #include "DvdPlayer.h"
+#include "Amplifier.h"
 #include <iostream>
 
 DvdPlayer::DvdPlayer(std::string description, std::shared_ptr<Amplifier> amplifier)
@@ -6,6 +7,8 @@ DvdPlayer::DvdPlayer(std::string description, std::shared_ptr<Amplifier> amplifi
     , _amplifier(amplifier)
 {
 }
+
+DvdPlayer::~DvdPlayer() = default;
 
 void DvdPlayer::on() const { std::cout << _description << " on" << std::endl; }
 

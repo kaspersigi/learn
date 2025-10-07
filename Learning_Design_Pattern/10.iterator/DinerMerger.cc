@@ -1,3 +1,5 @@
+#include "DinerMerger.h"
+#include "menus/menus.h"
 #include "waitress/Waitress.h"
 
 int main(int argc, char* argv[])

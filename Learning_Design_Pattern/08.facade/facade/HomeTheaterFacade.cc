@@ -1,5 +1,12 @@
 #include "HomeTheaterFacade.h"
-#include "../devices/devices.h"
+#include "../devices/Amplifier.h"
+#include "../devices/CdPlayer.h"
+#include "../devices/DvdPlayer.h"
+#include "../devices/PopcornPopper.h"
+#include "../devices/Projector.h"
+#include "../devices/Screen.h"
+#include "../devices/TheaterLights.h"
+#include "../devices/Tuner.h"
 #include <iostream>
 
 HomeTheaterFacade::HomeTheaterFacade(const std::shared_ptr<Amplifier>& amp, const std::shared_ptr<Tuner>& tuner, const std::shared_ptr<DvdPlayer>& dvd, const std::shared_ptr<CdPlayer>& cd, const std::shared_ptr<Projector>& projector, const std::shared_ptr<TheaterLights>& lights, const std::shared_ptr<Screen>& screen, const std::shared_ptr<PopcornPopper>& popper)
@@ -13,6 +20,8 @@ HomeTheaterFacade::HomeTheaterFacade(const std::shared_ptr<Amplifier>& amp, cons
     , _popper(popper)
 {
 }
+
+HomeTheaterFacade::~HomeTheaterFacade() = default;
 
 void HomeTheaterFacade::watchMovie(std::string movie)
 {

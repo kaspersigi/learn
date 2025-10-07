@@ -1,5 +1,6 @@
 #include "DuckAdapter.h"
 #include "../flyBehaviors/flyBehaviors.h"
+#include "../interface/Duck.h"
 #include "../quackBehaviors/quackBehaviors.h"
 
 DuckAdapter::DuckAdapter(std::shared_ptr<const Duck> duck)
@@ -7,6 +8,8 @@ DuckAdapter::DuckAdapter(std::shared_ptr<const Duck> duck)
     , _duck(duck)
 {
 }
+
+DuckAdapter::~DuckAdapter() = default;
 
 void DuckAdapter::performFly() const { _duck->performFly(); }
 

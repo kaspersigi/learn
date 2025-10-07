@@ -1,14 +1,15 @@
 #pragma once
 
-#include "FlyBehavior.h"
 #include "NonCopyable.h"
-#include "QuackBehavior.h"
 #include <memory>
+
+class FlyBehavior;
+class QuackBehavior;
 
 class Duck : public NonCopyable
 {
 public:
-    virtual ~Duck() = default;
+    virtual ~Duck();
 
     void setFlyBehavior(std::unique_ptr<FlyBehavior> flyBehavior);
     void setQuackBehavior(std::unique_ptr<QuackBehavior> quackBehavior);

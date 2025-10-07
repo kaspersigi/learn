@@ -2,6 +2,8 @@
 #include "../interface/Observer.h"
 #include <algorithm>
 
+WeatherData::~WeatherData() = default;
+
 void WeatherData::registerObserver(std::shared_ptr<Observer> observer)
 {
     _observers.push_back(observer);

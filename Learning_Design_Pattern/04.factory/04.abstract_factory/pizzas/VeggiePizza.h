@@ -1,16 +1,18 @@
 #pragma once
 
 #include "../interface/Pizza.h"
-#include "../interface/PizzaIngredientFactory.h"
+#include <memory>
+
+class PizzaIngredientFactory;
 
 class VeggiePizza : public Pizza
 {
 public:
     explicit VeggiePizza(std::unique_ptr<PizzaIngredientFactory> f);
     explicit VeggiePizza(std::nullptr_t) = delete;
-    virtual ~VeggiePizza() = default;
+    ~VeggiePizza() override;
 
-    void prepare();
+    void prepare() override;
 
 private:
     std::unique_ptr<PizzaIngredientFactory> _ingredientFactory;

@@ -1,10 +1,13 @@
 #include "ForecastDisplay.h"
+#include "../interface/Subject.h"
 #include <iostream>
 
 ForecastDisplay::ForecastDisplay(std::shared_ptr<Subject> weatherData)
     : _weatherData(weatherData)
 {
 }
+
+ForecastDisplay::~ForecastDisplay() = default;
 
 void ForecastDisplay::update(float temperature, float humidity, float pressure)
 {

@@ -1,10 +1,13 @@
 #include "PepperoniPizza.h"
+#include "../interface/PizzaIngredientFactory.h"
 #include <iostream>
 
 PepperoniPizza::PepperoniPizza(std::unique_ptr<PizzaIngredientFactory> f)
     : _ingredientFactory(std::move(f))
 {
 }
+
+PepperoniPizza::~PepperoniPizza() = default;
 
 void PepperoniPizza::prepare()
 {

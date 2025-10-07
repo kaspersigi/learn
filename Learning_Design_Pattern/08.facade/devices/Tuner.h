@@ -10,7 +10,7 @@ class Tuner : public NonCopyable
 {
 public:
     Tuner(std::string description, std::shared_ptr<Amplifier> amplifier);
-    ~Tuner() = default;
+    ~Tuner();
 
     void on() const;
     void off() const;
@@ -20,7 +20,7 @@ public:
     std::string toShow() const;
 
 private:
-    std::string _description {};
-    std::weak_ptr<Amplifier> _amplifier {};
-    double _frequency {};
+    std::string _description;
+    std::weak_ptr<Amplifier> _amplifier;
+    double _frequency;
 };

@@ -10,7 +10,7 @@ class DvdPlayer : public NonCopyable
 {
 public:
     DvdPlayer(std::string description, std::shared_ptr<Amplifier> amplifier);
-    ~DvdPlayer() = default;
+    ~DvdPlayer();
 
     void on() const;
     void off() const;
@@ -24,8 +24,8 @@ public:
     void setSurroundAudio();
 
 private:
-    std::string _description {};
-    std::weak_ptr<Amplifier> _amplifier {};
-    std::string _movie {};
-    int _currentTrack {};
+    std::string _description;
+    std::weak_ptr<Amplifier> _amplifier;
+    std::string _movie;
+    int _currentTrack;
 };

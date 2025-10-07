@@ -1,5 +1,6 @@
 #include "TurkeyAdapter.h"
 #include "../flyBehaviors/flyBehaviors.h"
+#include "../interface/Turkey.h"
 #include "../quackBehaviors/quackBehaviors.h"
 
 TurkeyAdapter::TurkeyAdapter(std::shared_ptr<const Turkey> turkey)
@@ -7,6 +8,8 @@ TurkeyAdapter::TurkeyAdapter(std::shared_ptr<const Turkey> turkey)
     , _turkey(turkey)
 {
 }
+
+TurkeyAdapter::~TurkeyAdapter() = default;
 
 void TurkeyAdapter::performFly() const { _turkey->performFly(); }
 

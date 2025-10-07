@@ -1,10 +1,13 @@
 #include "ClamPizza.h"
+#include "../interface/PizzaIngredientFactory.h"
 #include <iostream>
 
 ClamPizza::ClamPizza(std::unique_ptr<PizzaIngredientFactory> f)
     : _ingredientFactory(std::move(f))
 {
 }
+
+ClamPizza::~ClamPizza() = default;
 
 void ClamPizza::prepare()
 {

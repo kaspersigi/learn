@@ -1,6 +1,6 @@
 #include "WildTurkey.h"
-#include "../flyBehaviors/flyBehaviors.h"
-#include "../quackBehaviors/quackBehaviors.h"
+#include "../flyBehaviors/FlyWithWings.h"
+#include "../quackBehaviors/Gobble.h"
 #include <iostream>
 
 WildTurkey::WildTurkey()

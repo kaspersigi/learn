@@ -12,6 +12,8 @@ Turkey::Turkey(std::shared_ptr<FlyBehavior> flyBehavior, std::shared_ptr<QuackBe
     assert(quackBehavior);
 }
 
+Turkey::~Turkey() = default;
+
 void Turkey::setFlyBehavior(std::shared_ptr<FlyBehavior> flyBehavior)
 {
     assert(flyBehavior);

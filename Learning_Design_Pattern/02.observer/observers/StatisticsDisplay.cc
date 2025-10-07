@@ -1,10 +1,13 @@
 #include "StatisticsDisplay.h"
+#include "../interface/Subject.h"
 #include <iostream>
 
 StatisticsDisplay::StatisticsDisplay(std::shared_ptr<Subject> weatherData)
     : _weatherData(weatherData)
 {
 }
+
+StatisticsDisplay::~StatisticsDisplay() = default;
 
 void StatisticsDisplay::update(float temperature, float humidity, float pressure)
 {

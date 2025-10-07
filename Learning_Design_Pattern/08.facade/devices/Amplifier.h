@@ -12,7 +12,7 @@ class Amplifier : public NonCopyable
 {
 public:
     explicit Amplifier(std::string description);
-    ~Amplifier() = default;
+    ~Amplifier();
 
     void on() const;
     void off() const;
@@ -25,8 +25,8 @@ public:
     std::string toShow() const;
 
 private:
-    std::string _description {};
-    std::weak_ptr<Tuner> _tuner {};
-    std::weak_ptr<DvdPlayer> _dvd {};
-    std::weak_ptr<CdPlayer> _cd {};
+    std::string _description;
+    std::weak_ptr<Tuner> _tuner;
+    std::weak_ptr<DvdPlayer> _dvd;
+    std::weak_ptr<CdPlayer> _cd;
 };

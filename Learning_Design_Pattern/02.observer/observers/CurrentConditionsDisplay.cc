@@ -6,6 +6,8 @@ CurrentConditionsDisplay::CurrentConditionsDisplay(std::shared_ptr<Subject> weat
 {
 }
 
+CurrentConditionsDisplay::~CurrentConditionsDisplay() = default;
+
 void CurrentConditionsDisplay::update(float temperature, float humidity, float pressure)
 {
     _temperature = temperature;

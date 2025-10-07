@@ -9,6 +9,8 @@ Amplifier::Amplifier(std::string description)
 {
 }
 
+Amplifier::~Amplifier() = default;
+
 void Amplifier::on() const { std::cout << _description << " on" << std::endl; }
 
 void Amplifier::off() const { std::cout << _description << " off" << std::endl; }

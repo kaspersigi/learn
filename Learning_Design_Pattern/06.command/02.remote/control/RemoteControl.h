@@ -1,16 +1,17 @@
 #pragma once
 
-#include "../interface/Command.h"
 #include "../interface/NonCopyable.h"
 #include <array>
 #include <memory>
 #include <string>
 
+class Command;
+
 class RemoteControl : public NonCopyable
 {
 public:
     RemoteControl();
-    ~RemoteControl() = default;
+    ~RemoteControl();
 
     void setCommand(int slot, std::shared_ptr<Command> onCommand, std::shared_ptr<Command> offCommand);
     void onButtonWasPushed(int slot) const;
@@ -19,6 +20,6 @@ public:
 
 private:
     static const int SLOTS = 7;
-    std::array<std::shared_ptr<Command>, SLOTS> _onCommands {};
-    std::array<std::shared_ptr<Command>, SLOTS> _offCommands {};
+    std::array<std::shared_ptr<Command>, SLOTS> _onCommands;
+    std::array<std::shared_ptr<Command>, SLOTS> _offCommands;
 };

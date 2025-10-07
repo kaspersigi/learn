@@ -1,10 +1,13 @@
 #include "HeatIndexDisplay.h"
+#include "../interface/Subject.h"
 #include <iostream>
 
 HeatIndexDisplay::HeatIndexDisplay(std::shared_ptr<Subject> weatherData)
     : _weatherData(weatherData)
 {
 }
+
+HeatIndexDisplay::~HeatIndexDisplay() = default;
 
 void HeatIndexDisplay::update(float temperature, float humidity, float pressure)
 {

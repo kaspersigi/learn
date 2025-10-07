@@ -1,4 +1,5 @@
 #include "Projector.h"
+#include "DvdPlayer.h"
 #include <iostream>
 
 Projector::Projector(std::string description, std::shared_ptr<DvdPlayer> dvdPlayer)
@@ -6,6 +7,8 @@ Projector::Projector(std::string description, std::shared_ptr<DvdPlayer> dvdPlay
     , _dvdPlayer(dvdPlayer)
 {
 }
+
+Projector::~Projector() = default;
 
 void Projector::on() const { std::cout << _description << " on" << std::endl; }
 

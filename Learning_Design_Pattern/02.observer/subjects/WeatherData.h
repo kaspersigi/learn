@@ -4,11 +4,13 @@
 #include <memory>
 #include <vector>
 
+class Observer;
+
 class WeatherData : public Subject
 {
 public:
     WeatherData() = default;
-    virtual ~WeatherData() = default;
+    virtual ~WeatherData();
 
     virtual void registerObserver(std::shared_ptr<Observer> observer) override;
     virtual void removeObserver(const std::shared_ptr<Observer>& observer) override;

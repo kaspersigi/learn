@@ -9,6 +9,8 @@ Duck::Duck(std::unique_ptr<FlyBehavior> flyBehavior, std::unique_ptr<QuackBehavi
 {
 }
 
+Duck::~Duck() = default;
+
 void Duck::setFlyBehavior(std::unique_ptr<FlyBehavior> flyBehavior)
 {
     _flyBehavior = std::move(flyBehavior);

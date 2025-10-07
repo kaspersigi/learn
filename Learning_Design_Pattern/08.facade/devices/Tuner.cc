@@ -1,4 +1,5 @@
 #include "Tuner.h"
+#include "Amplifier.h"
 #include <iostream>
 
 Tuner::Tuner(std::string description, std::shared_ptr<Amplifier> amplifier)
@@ -6,6 +7,8 @@ Tuner::Tuner(std::string description, std::shared_ptr<Amplifier> amplifier)
     , _amplifier(amplifier)
 {
 }
+
+Tuner::~Tuner() = default;
 
 void Tuner::on() const { std::cout << _description << " on" << std::endl; }
 
