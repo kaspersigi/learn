@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 
 class Object {
 public:
@@ -95,76 +96,38 @@ Object func(std::string& str)
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::string str("Hello World");
-    Object obj1 { str.c_str(), str.length() };
+    std::string str { "Hello World" };
+    std::cout << "--------------------" << std::endl;
+    {
+        Object* p_obj1 = new Object(str.c_str(), str.length());
+        delete p_obj1;
+        p_obj1 = nullptr;
+    }
+    std::cout << "--------------------" << std::endl;
+    {
+        auto p_obj2 = std::make_shared<Object>(str.c_str(), str.length());
+    }
     std::cout << "--------------------" << std::endl;
 
-    Object obj2 = obj1;
-    std::cout << "--------------------" << std::endl;
+    auto p_obj3 = std::make_unique<Object>(str.c_str(), str.length());
 
-    Object obj3 = func(str);
     std::cout << "--------------------" << std::endl;
-
-    Object obj4;
-    obj4 = obj1;
-    // obj4 = obj4; // 自赋值
+    {
+        std::unique_ptr<Object> p_obj4 = std::move(p_obj3);
+    }
     std::cout << "--------------------" << std::endl;
-
-    Object obj5;
-    obj5 = func(str);
-    std::cout << "--------------------" << std::endl;
-
-    return 0;
 }
 
 #if 0
-c++14
-Object::Object(const char *, std::size_t)构造函数
---------------------
-Object::Object(const Object &)拷贝构造函数
 --------------------
 Object::Object(const char *, std::size_t)构造函数
-Object::Object(Object &&)移动构造函数
-Object::~Object()析构函数
-Object::Object(Object &&)移动构造函数
 Object::~Object()析构函数
 --------------------
-Object::Object()构造函数
-Object &Object::operator=(const Object &)拷贝赋值运算符
---------------------
-Object::Object()构造函数
 Object::Object(const char *, std::size_t)构造函数
-Object::Object(Object &&)移动构造函数
 Object::~Object()析构函数
-Object &Object::operator=(Object &&)移动赋值运算符
-Object::~Object()析构函数
---------------------
-Object::~Object()析构函数
-Object::~Object()析构函数
-Object::~Object()析构函数
-Object::~Object()析构函数
-Object::~Object()析构函数
-
-c++26
-Object::Object(const char *, std::size_t)构造函数
---------------------
-Object::Object(const Object &)拷贝构造函数
 --------------------
 Object::Object(const char *, std::size_t)构造函数
 --------------------
-Object::Object()构造函数
-Object &Object::operator=(const Object &) &拷贝赋值运算符
-Object::Object(const Object &)拷贝构造函数
 Object::~Object()析构函数
 --------------------
-Object::Object()构造函数
-Object::Object(const char *, std::size_t)构造函数
-Object &Object::operator=(Object &&) &移动赋值运算符
-Object::~Object()析构函数
---------------------
-Object::~Object()析构函数
-Object::~Object()析构函数
-Object::~Object()析构函数
-Object::~Object()析构函数
-Object::~Object()析构函数
 #endif

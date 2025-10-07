@@ -7,7 +7,7 @@ CompileFlags:
     -Wall,
     -Wno-unused,
     -I../inc,
-    -Iinc
+    -Iinc,
   ]
 
   # 指定编译器路径（确保 clangd 使用与你相同的 clang++-21）

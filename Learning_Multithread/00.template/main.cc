@@ -1,7 +1,7 @@
-#include <iostream>
+#include <print>
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::cout << "Hello World!" << std::endl;
+    std::println("Hello World!");
     return 0;
 }

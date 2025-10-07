@@ -3,14 +3,10 @@ CompileFlags:
   # 添加编译器标志（从 Makefile 中提取关键项）
   Add: [
     -std=c++26,
-    --target=aarch64-pc-linux-gnu,
+    -stdlib=libc++,
     -Wall,
     -Wno-unused,
-    -nostdlib,
-    -I/home/miku/linux/linux/include,
-    -I/home/miku/linux/linux/arch/arm64/include/,
-    -I/home/miku/linux/linux/arch/arm64/include/uapi/,
-    -I/home/miku/linux/linux/arch/arm64/include/generated/,
+    -Iinc,
   ]
 
   # 指定编译器路径（确保 clangd 使用与你相同的 clang++-21）
