@@ -12,5 +12,5 @@ public:
     virtual void show() const override;
 
 private:
-    std::string _name = std::string("Object");
+    std::string _name = { "Object" };
 };

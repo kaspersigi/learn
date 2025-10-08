@@ -15,5 +15,5 @@ public:
     virtual void show() const;
 
 private:
-    std::string _name = std::string("IObject");
+    std::string _name { "IObject" };
 };

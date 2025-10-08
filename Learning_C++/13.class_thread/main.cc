@@ -4,8 +4,7 @@
 auto main(int argc, char* argv[]) -> int
 {
     pthread_t tid = pthread_self();
-    std::string s;
-    s = std::string(__PRETTY_FUNCTION__) + ": tid = " + std::to_string(tid);
+    std::string s = std::string(__PRETTY_FUNCTION__) + ": tid = " + std::to_string(tid);
     std::cout << s << std::endl;
     auto mw = std::make_shared<MyWorker>();
     auto mw_t = std::thread(&MyWorker::execute, mw, 9, std::string("Hello world!"));

@@ -19,5 +19,5 @@ public:
     void deleter();
 
 private:
-    std::string _name = std::string("Object");
+    std::string _name { "Object" };
 };

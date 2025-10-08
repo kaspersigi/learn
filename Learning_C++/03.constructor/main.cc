@@ -95,7 +95,7 @@ Object func(std::string& str)
 
 auto main(int argc, char* argv[]) -> int
 {
-    std::string str("Hello World");
+    std::string str { "Hello World" };
     Object obj1 { str.c_str(), str.length() };
     std::cout << "--------------------" << std::endl;
 
@@ -118,33 +118,6 @@ auto main(int argc, char* argv[]) -> int
 }
 
 #if 0
-c++14
-Object::Object(const char *, std::size_t)构造函数
---------------------
-Object::Object(const Object &)拷贝构造函数
---------------------
-Object::Object(const char *, std::size_t)构造函数
-Object::Object(Object &&)移动构造函数
-Object::~Object()析构函数
-Object::Object(Object &&)移动构造函数
-Object::~Object()析构函数
---------------------
-Object::Object()构造函数
-Object &Object::operator=(const Object &)拷贝赋值运算符
---------------------
-Object::Object()构造函数
-Object::Object(const char *, std::size_t)构造函数
-Object::Object(Object &&)移动构造函数
-Object::~Object()析构函数
-Object &Object::operator=(Object &&)移动赋值运算符
-Object::~Object()析构函数
---------------------
-Object::~Object()析构函数
-Object::~Object()析构函数
-Object::~Object()析构函数
-Object::~Object()析构函数
-Object::~Object()析构函数
-
 c++26
 Object::Object(const char *, std::size_t)构造函数
 --------------------

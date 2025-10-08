@@ -2,7 +2,7 @@
 
 auto main(int argc, char* argv[]) -> int
 {
-    // std::cout << "linux: " << __linux__ << std::endl; // 是否linux系统
+    std::cout << "linux: " << __linux__ << std::endl; // 是否linux系统
     std::cout << "cplusplus: " << __cplusplus << std::endl; // 编译时c++标准
     std::cout << "version: " << __VERSION__ << std::endl; // 编译时编译器版本
     std::cout << "file: " << __FILE__ << std::endl; // 文件名
