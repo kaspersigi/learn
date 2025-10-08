@@ -25,7 +25,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
-all : template module module_param export_symbol char
+all : template module module_param export_symbol char trace
 template :
 	$(MAKE) -C 00.template
 module :
@@ -36,6 +36,8 @@ export_symbol :
 	$(MAKE) -C 03.export_symbol
 char :
 	$(MAKE) -C 04.char
+trace :
+	$(MAKE) -C 05.trace
 
 format :
 	$(MAKE) -C 00.template format
@@ -43,6 +45,7 @@ format :
 	$(MAKE) -C 02.module_param format
 	$(MAKE) -C 03.export_symbol format
 	$(MAKE) -C 04.char format
+	$(MAKE) -C 05.trace format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -50,6 +53,7 @@ clean :
 	$(MAKE) -C 02.module_param clean
 	$(MAKE) -C 03.export_symbol clean
 	$(MAKE) -C 04.char clean
+	$(MAKE) -C 05.trace clean
 
 scan :
 	$(MAKE) -C 00.template scan
@@ -57,3 +61,4 @@ scan :
 	$(MAKE) -C 02.module_param scan
 	$(MAKE) -C 03.export_symbol scan
 	$(MAKE) -C 04.char scan
+	$(MAKE) -C 05.trace scan
