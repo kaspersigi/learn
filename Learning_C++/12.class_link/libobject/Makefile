@@ -3,8 +3,8 @@
 ###########################################
 
 TRG = libobject.so
-OBJ = Interface.o IObject.o Object.o Factory.o
-SRC = Interface.cc IObject.cc Object.cc Factory.cc
+OBJ = Interface.o IObject.o Object.o
+SRC = Interface.cc IObject.cc Object.cc
 LLVM = -21
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
@@ -20,7 +20,7 @@ LIBS = -lpthread
 LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
-CLANGXX_FLAGS = -stdlib=libc++
+CLANGXX_FLAGS = -stdlib=libc++ -fvisibility=hidden
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
@@ -33,8 +33,6 @@ IObject.o : IObject.cc IObject.h
 	$(CXX) IObject.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG) -fPIC
 Object.o : Object.cc Object.h
 	$(CXX) Object.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG) -fPIC
-Factory.o : Factory.cc Factory.h
-	$(CXX) Factory.cc -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG) -fPIC
 format :
 	$(FORMAT) Interface.h -style=file -i
 	$(FORMAT) Interface.cc -style=file -i
@@ -42,8 +40,6 @@ format :
 	$(FORMAT) IObject.cc -style=file -i
 	$(FORMAT) Object.h -style=file -i
 	$(FORMAT) Object.cc -style=file -i
-	$(FORMAT) Factory.h -style=file -i
-	$(FORMAT) Factory.cc -style=file -i
 clean :
 	rm -v $(TRG)
 check :

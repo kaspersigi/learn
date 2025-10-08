@@ -25,7 +25,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 
 .PHONY : all
-all : template macro regex constructor interface shared_ptr weak_ptr const function_template class_template threadpool iterator class_export class_thread class_async class_promise class_pthread async_callback print_format print path filesystem ifstream ofstream boost_regex static_local_variable singleton ftrace halrequest framecapture spdlog
+all : template macro regex constructor interface shared_ptr weak_ptr const function_template class_template threadpool iterator class_link class_export class_thread class_async class_promise class_pthread async_callback print_format print path filesystem ifstream ofstream boost_regex static_local_variable singleton ftrace halrequest framecapture spdlog
 template :
 	$(MAKE) -C 00.template
 macro :
@@ -50,44 +50,46 @@ threadpool :
 	$(MAKE) -C 10.threadpool
 iterator :
 	$(MAKE) -C 11.iterator
+class_link :
+	$(MAKE) -C 12.class_link
 class_export :
-	$(MAKE) -C 12.class_export
+	$(MAKE) -C 13.class_export
 class_thread :
-	$(MAKE) -C 13.class_thread
+	$(MAKE) -C 14.class_thread
 class_async :
-	$(MAKE) -C 14.class_async
+	$(MAKE) -C 15.class_async
 class_promise :
-	$(MAKE) -C 15.class_promise
+	$(MAKE) -C 16.class_promise
 class_pthread :
-	$(MAKE) -C 16.class_pthread
+	$(MAKE) -C 17.class_pthread
 async_callback :
-	$(MAKE) -C 17.async_callback
+	$(MAKE) -C 18.async_callback
 print_format :
-	$(MAKE) -C 18.format
+	$(MAKE) -C 19.format
 print :
-	$(MAKE) -C 19.print
+	$(MAKE) -C 20.print
 path :
-	$(MAKE) -C 20.path
+	$(MAKE) -C 21.path
 filesystem :
-	$(MAKE) -C 21.filesystem
+	$(MAKE) -C 22.filesystem
 ifstream :
-	$(MAKE) -C 22.ifstream
+	$(MAKE) -C 23.ifstream
 ofstream :
-	$(MAKE) -C 23.ofstream
+	$(MAKE) -C 24.ofstream
 boost_regex :
-	$(MAKE) -C 24.boost_regex
+	$(MAKE) -C 25.boost_regex
 static_local_variable :
-	$(MAKE) -C 25.static_local_variable
+	$(MAKE) -C 26.static_local_variable
 singleton :
-	$(MAKE) -C 26.singleton
+	$(MAKE) -C 27.singleton
 ftrace :
-	$(MAKE) -C 27.ftrace
+	$(MAKE) -C 28.ftrace
 halrequest :
-	$(MAKE) -C 28.halrequest
+	$(MAKE) -C 29.halrequest
 framecapture :
-	$(MAKE) -C 29.framecapture
+	$(MAKE) -C 30.framecapture
 spdlog :
-	$(MAKE) -C 30.spdlog
+	$(MAKE) -C 31.spdlog
 
 format :
 	$(MAKE) -C 00.template format
@@ -102,25 +104,26 @@ format :
 	$(MAKE) -C 09.class_template format
 	$(MAKE) -C 10.threadpool format
 	$(MAKE) -C 11.iterator format
-	$(MAKE) -C 12.class_export format
-	$(MAKE) -C 13.class_thread format
-	$(MAKE) -C 14.class_async format
-	$(MAKE) -C 15.class_promise format
-	$(MAKE) -C 16.class_pthread format
-	$(MAKE) -C 17.async_callback format
-	$(MAKE) -C 18.format format
-	$(MAKE) -C 19.print format
-	$(MAKE) -C 20.path format
-	$(MAKE) -C 21.filesystem format
-	$(MAKE) -C 22.ifstream format
-	$(MAKE) -C 23.ofstream format
-	$(MAKE) -C 24.boost_regex format
-	$(MAKE) -C 25.static_local_variable format
-	$(MAKE) -C 26.singleton format
-	$(MAKE) -C 27.ftrace format
-	$(MAKE) -C 28.halrequest format
-	$(MAKE) -C 29.framecapture format
-	$(MAKE) -C 30.spdlog format
+	$(MAKE) -C 12.class_link format
+	$(MAKE) -C 13.class_export format
+	$(MAKE) -C 14.class_thread format
+	$(MAKE) -C 15.class_async format
+	$(MAKE) -C 16.class_promise format
+	$(MAKE) -C 17.class_pthread format
+	$(MAKE) -C 18.async_callback format
+	$(MAKE) -C 19.format format
+	$(MAKE) -C 20.print format
+	$(MAKE) -C 21.path format
+	$(MAKE) -C 22.filesystem format
+	$(MAKE) -C 23.ifstream format
+	$(MAKE) -C 24.ofstream format
+	$(MAKE) -C 25.boost_regex format
+	$(MAKE) -C 26.static_local_variable format
+	$(MAKE) -C 27.singleton format
+	$(MAKE) -C 28.ftrace format
+	$(MAKE) -C 29.halrequest format
+	$(MAKE) -C 30.framecapture format
+	$(MAKE) -C 31.spdlog format
 
 clean :
 	$(MAKE) -C 00.template clean
@@ -135,25 +138,26 @@ clean :
 	$(MAKE) -C 09.class_template clean
 	$(MAKE) -C 10.threadpool clean
 	$(MAKE) -C 11.iterator clean
-	$(MAKE) -C 12.class_export clean
-	$(MAKE) -C 13.class_thread clean
-	$(MAKE) -C 14.class_async clean
-	$(MAKE) -C 15.class_promise clean
-	$(MAKE) -C 16.class_pthread clean
-	$(MAKE) -C 17.async_callback clean
-	$(MAKE) -C 18.format clean
-	$(MAKE) -C 19.print clean
-	$(MAKE) -C 20.path clean
-	$(MAKE) -C 21.filesystem clean
-	$(MAKE) -C 22.ifstream clean
-	$(MAKE) -C 23.ofstream clean
-	$(MAKE) -C 24.boost_regex clean
-	$(MAKE) -C 25.static_local_variable clean
-	$(MAKE) -C 26.singleton clean
-	$(MAKE) -C 27.ftrace clean
-	$(MAKE) -C 28.halrequest clean
-	$(MAKE) -C 29.framecapture clean
-	$(MAKE) -C 30.spdlog clean
+	$(MAKE) -C 12.class_link clean
+	$(MAKE) -C 13.class_export clean
+	$(MAKE) -C 14.class_thread clean
+	$(MAKE) -C 15.class_async clean
+	$(MAKE) -C 16.class_promise clean
+	$(MAKE) -C 17.class_pthread clean
+	$(MAKE) -C 18.async_callback clean
+	$(MAKE) -C 19.format clean
+	$(MAKE) -C 20.print clean
+	$(MAKE) -C 21.path clean
+	$(MAKE) -C 22.filesystem clean
+	$(MAKE) -C 23.ifstream clean
+	$(MAKE) -C 24.ofstream clean
+	$(MAKE) -C 25.boost_regex clean
+	$(MAKE) -C 26.static_local_variable clean
+	$(MAKE) -C 27.singleton clean
+	$(MAKE) -C 28.ftrace clean
+	$(MAKE) -C 29.halrequest clean
+	$(MAKE) -C 30.framecapture clean
+	$(MAKE) -C 31.spdlog clean
 
 scan :
 	$(MAKE) -C 00.template scan
@@ -168,22 +172,23 @@ scan :
 	$(MAKE) -C 09.class_template scan
 	$(MAKE) -C 10.threadpool scan
 	$(MAKE) -C 11.iterator scan
-	$(MAKE) -C 12.class_export scan
-	$(MAKE) -C 13.class_thread scan
-	$(MAKE) -C 14.class_async scan
-	$(MAKE) -C 15.class_promise scan
-	$(MAKE) -C 16.class_pthread scan
-	$(MAKE) -C 17.async_callback scan
-	$(MAKE) -C 18.format scan
-	$(MAKE) -C 19.print scan
-	$(MAKE) -C 20.path scan
-	$(MAKE) -C 21.filesystem scan
-	$(MAKE) -C 22.ifstream scan
-	$(MAKE) -C 23.ofstream scan
-	$(MAKE) -C 24.boost_regex scan
-	$(MAKE) -C 25.static_local_variable scan
-	$(MAKE) -C 26.singleton scan
-	$(MAKE) -C 27.ftrace scan
-	$(MAKE) -C 28.halrequest scan
-	$(MAKE) -C 29.framecapture scan
-	$(MAKE) -C 30.spdlog scan
+	$(MAKE) -C 12.class_link scan
+	$(MAKE) -C 13.class_export scan
+	$(MAKE) -C 14.class_thread scan
+	$(MAKE) -C 15.class_async scan
+	$(MAKE) -C 16.class_promise scan
+	$(MAKE) -C 17.class_pthread scan
+	$(MAKE) -C 18.async_callback scan
+	$(MAKE) -C 19.format scan
+	$(MAKE) -C 20.print scan
+	$(MAKE) -C 21.path scan
+	$(MAKE) -C 22.filesystem scan
+	$(MAKE) -C 23.ifstream scan
+	$(MAKE) -C 24.ofstream scan
+	$(MAKE) -C 25.boost_regex scan
+	$(MAKE) -C 26.static_local_variable scan
+	$(MAKE) -C 27.singleton scan
+	$(MAKE) -C 28.ftrace scan
+	$(MAKE) -C 29.halrequest scan
+	$(MAKE) -C 30.framecapture scan
+	$(MAKE) -C 31.spdlog scan
