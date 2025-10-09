@@ -2,7 +2,7 @@
 
 int main(int argc, char* argv[])
 {
-    printf("stdc: %d\n", __linux__); // 是否linux系统
+    printf("linux: %d\n", __linux__); // 是否linux系统
     printf("stdc: %d\n", __STDC__); // 是否ANIC C
     printf("stdc version: %ld\n", __STDC_VERSION__); // 编译时C标准
     printf("version: %s\n", __VERSION__); // 编译器版本
@@ -15,5 +15,6 @@ int main(int argc, char* argv[])
     printf("function: %s\n", __FUNCTION__); // 函数名
     printf("pretty function: %s\n", __PRETTY_FUNCTION__); // 函数签名
     printf("line: %d\n", __LINE__); // 行数
+
     return 0;
 }
