@@ -9,7 +9,8 @@ public:
     virtual ~Object();
 
 public:
-    virtual void show() const override;
+    void show() const override;
+    void print() const;
 
 private:
     std::string _name = { "Object" };
