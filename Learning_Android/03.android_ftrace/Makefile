@@ -26,12 +26,12 @@ C_FLAGS = -std=c23 -Wall -Wno-unused --sysroot=$(TOOLCHAIN)/sysroot --target=$(T
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused --sysroot=$(TOOLCHAIN)/sysroot --target=$(TARGET)
 DEBUG = -g -O0
 RELEASE = -flto -O3
-LIBS = -lpthread
+LIBS = -L $(TOOLCHAIN)/sysroot/usr/lib/$(TARGET)/$(API)/ -landroid -llog
 LLVMLIBC = /usr/lib/llvm$(LLVM)/lib/
 CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
-CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
+CLANGXX_LINK_FLAGS = -static-libstdc++
 
 .PHONY : all
 $(TRG) : $(OBJ)
