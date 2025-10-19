@@ -1,51 +1,12 @@
-# .clang-tidy
-# 适用于普通 C++ 项目（Clang + libc++），禁用 LLVM 内部规则
+# .clang-tidy —— Android 子项目专用（减少噪音，保留高信号）
 
-Checks: >
-  # === 强烈推荐：核心 bug 检测 ===
-  bugprone-*,
+Checks: "-*,clang-analyzer-*,bugprone-narrowing-conversions,performance-*,-performance-avoid-endl,-performance-no-int-to-ptr,-bugprone-unsafe-functions,-clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling"
 
-  # === 推荐：通用改进与清理 ===
-  misc-*,
+# 仅分析 Android 子项目内的头文件，避免波及其他子仓/系统头
+HeaderFilterRegex: '^/home/miku/linux/learn/Learning_Android/.*'
 
-  # === 推荐：性能优化 ===
-  performance-*,
-
-  # === 推荐：现代 C++ 最佳实践（C++11/14/17/20/23）===
-  modernize-*,
-
-  # === 推荐：深度静态分析（空指针、内存泄漏等）===
-  clang-analyzer-*,
-
-  # === 可选：C++ Core Guidelines（较严格，适合新项目）===
-  # cppcoreguidelines-*,
-
-  # === 可选：可移植性（跨平台项目建议启用）===
-  portability-*,
-
-  # === 禁用：LLVM 及其子项目内部规则（关键！）===
-  -llvm-*,
-  -llvmlibc-*,
-  -libcxx-*,
-
-  # === 禁用：其他大型项目内部规则 ===
-  -fuchsia-*,
-  -google-*,
-  -android-*,
-  -zircon-*,
-
-  # === 宽松化：避免过度打扰 ===
-  -misc-unused-parameters,          # 允许 main(argc, argv) 不使用参数
-  -readability-identifier-naming,   # 不强制命名风格
-  -modernize-use-trailing-return-type,  # 不强制 trailing return
-  -cppcoreguidelines-pro-type-reinterpret-cast,  # 允许必要时使用 reinterpret_cast
-  -cppcoreguidelines-owning-memory, # 避免与裸指针/智能指针混合使用冲突
-
-# 将警告视为错误（CI 中建议开启，本地开发可注释）
-# WarningsAsErrors: ''
-
-# 分析所有头文件（包括项目内的）
-HeaderFilterRegex: '.*'
-
-# 格式化风格跟随 .clang-format
+# 跟随项目格式
 FormatStyle: file
+
+# 本地开发不把告警当错误
+# WarningsAsErrors: ''

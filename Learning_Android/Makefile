@@ -21,7 +21,7 @@ LLVM = -21
 CC = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang
 CXX = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang++
 SCAN = scan-build$(LLVM) --use-cc=$(CC) --use-c++=$(CXX)
-TIDY = /usr/bin/clang-tidy$(LLVM)
+TIDY = /usr/bin/clang-tidy$(LLVM) -quiet
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused --sysroot=$(TOOLCHAIN)/sysroot --target=$(TARGET)
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused --sysroot=$(TOOLCHAIN)/sysroot --target=$(TARGET)

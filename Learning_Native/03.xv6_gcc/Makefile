@@ -11,7 +11,7 @@ LD = /usr/bin/i686-linux-gnu-ld
 CC = /usr/bin/i686-linux-gnu-gcc
 CXX = /usr/bin/g++
 SCAN = scan-build$(LLVM) --use-cc=/usr/bin/i686-linux-gnu-gcc
-TIDY = /usr/bin/clang-tidy$(LLVM)
+TIDY = /usr/bin/clang-tidy$(LLVM) -quiet
 LLVM = -21
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
