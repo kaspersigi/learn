@@ -10,6 +10,8 @@ AS = /usr/bin/i686-linux-gnu-as
 LD = /usr/bin/i686-linux-gnu-ld
 CC = /usr/bin/i686-linux-gnu-gcc
 CXX = /usr/bin/g++
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/i686-linux-gnu-gcc
+TIDY = /usr/bin/clang-tidy$(LLVM)
 LLVM = -21
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c2x -Wall -Wno-unused
@@ -24,6 +26,7 @@ CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
 ARCH = -m32
 KERNEL_FLAGS = -nostdinc -fno-builtin -fno-strict-aliasing -fno-omit-frame-pointer -fno-stack-protector -fno-pic -fno-pie -static
+TIDY_FLAGS = -- --target=i686-unknown-linux-gnu $(C_FLAGS) $(DEBUG)
 
 .PHONY : all
 all : ulib.o printf.o umalloc.o usys.o

@@ -24,7 +24,7 @@ RUN apt update && apt upgrade -y && \
 # ========== 3. 安装所有开发工具 + 清理缓存 ==========
 RUN apt update && apt upgrade -y && \
     apt install -y \
-        clang-21 clangd-21 clang-format-21 lldb-21 libllvmlibc-21-dev libc++-21-dev lld-21 \
+        clang-21 clangd-21 clang-format-21 clang-tidy-21 lldb-21 libllvmlibc-21-dev libc++-21-dev lld-21 \
         binutils-i686-linux-gnu binutils-riscv64-linux-gnu gcc-i686-linux-gnu \
         bsdmainutils make gdb cgdb valgrind qemu-system-arm qemu-system-misc qemu-system-x86 \
         libncurses5 libncurses-dev flex bison bc dwarves libssl-dev libelf-dev \

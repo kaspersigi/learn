@@ -12,6 +12,7 @@ ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
 SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
+TIDY = /usr/bin/clang-tidy$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
@@ -23,6 +24,7 @@ CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
+TIDY_FLAGS = -- --target=$(ARCH) $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 
 .PHONY : all
 all : algorithm android c c++ design_pattern driver multithread native opencl operating_system socket stl
@@ -92,6 +94,20 @@ scan :
 	$(MAKE) -C Learning_Operating_System scan
 	$(MAKE) -C Learning_Socket scan
 	$(MAKE) -C Learning_STL scan
+
+tidy :
+	$(MAKE) -C Learning_Algorithm tidy
+	$(MAKE) -C Learning_Android tidy
+	$(MAKE) -C Learning_C tidy
+	$(MAKE) -C Learning_C++ tidy
+	$(MAKE) -C Learning_Design_Pattern tidy
+	# $(MAKE) -C Learning_Driver tidy
+	$(MAKE) -C Learning_Multithread tidy
+	$(MAKE) -C Learning_Native tidy
+	$(MAKE) -C Learning_OpenCL tidy
+	# $(MAKE) -C Learning_Operating_System tidy
+	$(MAKE) -C Learning_Socket tidy
+	$(MAKE) -C Learning_STL tidy
 
 style :
 	clang-format -style=webkit -dump-config > .clang-format

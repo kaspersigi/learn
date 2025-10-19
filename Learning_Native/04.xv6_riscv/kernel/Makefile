@@ -11,10 +11,11 @@ LD = /usr/bin/riscv64-linux-gnu-ld
 OBJCOPY = /usr/bin/riscv64-linux-gnu-objcopy
 LLVM = -21
 CONFIG = llvm-config$(LLVM)
-ARCH = i686-unknown-linux-gnu
+ARCH = riscv64-unknown-linux-gnu
 CC = /usr/bin/clang$(LLVM) --target=riscv64-unknown-linux-gnu
-CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
+CXX = /usr/bin/clang++$(LLVM) --target=riscv64-unknown-linux-gnu
 SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
+TIDY = /usr/bin/clang-tidy$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused

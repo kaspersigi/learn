@@ -16,11 +16,11 @@ endif
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/$(PLATFORM)-x86_64
 TARGET = aarch64-linux-android
 API = 35
+LLVM = -21
 CC = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang
 CXX = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang++
 SCAN = scan-build$(LLVM) --use-cc=$(CC) --use-c++=$(CXX)
-AR = $(TOOLCHAIN)/bin/llvm-ar
-LLVM = -21
+TIDY = /usr/bin/clang-tidy$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused --sysroot=$(TOOLCHAIN)/sysroot --target=$(TARGET)
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused --sysroot=$(TOOLCHAIN)/sysroot --target=$(TARGET)
@@ -32,6 +32,7 @@ CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -static-libstdc++
+TIDY_FLAGS = -- $(C_FLAGS) $(DEBUG)
 
 .PHONY : all
 $(TRG) : $(OBJ)
@@ -43,13 +44,16 @@ backtrace.o : backtrace.c
 	$(CC) backtrace.c -c $(C_FLAGS) $(DEBUG)
 format :
 	$(FORMAT) main.c -style=file -i
-	$(FORMAT) backtrace.c -style=file -i
 	$(FORMAT) backtrace.h -style=file -i
+	$(FORMAT) backtrace.c -style=file -i
 clean :
 	rm -v $(TRG)
-check :
-	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)
 scan :
 	$(SCAN) make
+tidy :
+	$(TIDY) main.c $(TIDY_FLAGS)
+	$(TIDY) backtrace.c $(TIDY_FLAGS)
+check :
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)
 addr2line :
 	$(NDK)/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-addr2line -Cie $(TRG) 0x3e84

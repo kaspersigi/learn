@@ -5,15 +5,17 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
+VPATH = /home/miku/learn/Learning_C
 LLVM = -21
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
+SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
+TIDY = /usr/bin/clang-tidy$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
-SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
 DEBUG = -g -O0
 RELEASE = -flto -O3
 LIBS = -lpthread
@@ -22,6 +24,7 @@ CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
+TIDY_FLAGS = -- --target=$(ARCH) $(C_FLAGS) $(DEBUG)
 
 .PHONY : all
 all : template macro static_library dynamic_library dlsym open write read fopen line_buffer all_buffer mkdir opendir readdir fork vfork pipe mkfifo kill raise alarm pause signal shmget ftok shmat shmctl msgget msgsnd msgrcv semget semop one_producer_one_consumer_sem multi_producer_multi_consumer_sem pthread_create pthread_exit pthread_join pthread_detach pthread_cancel pthread_kill sigaction pthread_cleanup pthread_mutex pthread_rwlock pthread_cond one_producer_one_consumer_cond multi_producer_multi_consumer_cond perror union threadpool asm asm_call_c inline_asm syscall mmap polymorphism complex_macro class_export function_pointer mirrorrotate stringize setpriority nice pthread_setschedparam sched_setscheduler static_local_variable ftrace
@@ -366,3 +369,72 @@ scan :
 	$(MAKE) -C 64.sched_setscheduler scan
 	$(MAKE) -C 65.static_local_variable scan
 	$(MAKE) -C 66.ftrace scan
+
+tidy :
+	$(MAKE) -C 00.template tidy
+	$(MAKE) -C 01.macro tidy
+	$(MAKE) -C 02.static_library tidy
+	$(MAKE) -C 03.dynamic_library tidy
+	$(MAKE) -C 04.dlsym tidy
+	$(MAKE) -C 05.open tidy
+	$(MAKE) -C 06.write tidy
+	$(MAKE) -C 07.read tidy
+	$(MAKE) -C 08.fopen tidy
+	$(MAKE) -C 09.line_buffer tidy
+	$(MAKE) -C 10.all_buffer tidy
+	$(MAKE) -C 11.mkdir tidy
+	$(MAKE) -C 12.opendir tidy
+	$(MAKE) -C 13.readdir tidy
+	$(MAKE) -C 14.fork tidy
+	$(MAKE) -C 15.vfork tidy
+	$(MAKE) -C 16.pipe tidy
+	$(MAKE) -C 17.mkfifo tidy
+	$(MAKE) -C 18.kill tidy
+	$(MAKE) -C 19.raise tidy
+	$(MAKE) -C 20.alarm tidy
+	$(MAKE) -C 21.pause tidy
+	$(MAKE) -C 22.signal tidy
+	$(MAKE) -C 23.shmget tidy
+	$(MAKE) -C 24.ftok tidy
+	$(MAKE) -C 25.shmat tidy
+	$(MAKE) -C 26.shmctl tidy
+	$(MAKE) -C 27.msgget tidy
+	$(MAKE) -C 28.msgsnd tidy
+	$(MAKE) -C 29.msgrcv tidy
+	$(MAKE) -C 30.semget tidy
+	$(MAKE) -C 31.semop tidy
+	$(MAKE) -C 32.one_producer_one_consumer_sem tidy
+	$(MAKE) -C 33.multi_producer_multi_consumer_sem tidy
+	$(MAKE) -C 34.pthread_create tidy
+	$(MAKE) -C 35.pthread_exit tidy
+	$(MAKE) -C 36.pthread_join tidy
+	$(MAKE) -C 37.pthread_detach tidy
+	$(MAKE) -C 38.pthread_cancel tidy
+	$(MAKE) -C 39.pthread_kill tidy
+	$(MAKE) -C 40.sigaction tidy
+	$(MAKE) -C 41.pthread_cleanup tidy
+	$(MAKE) -C 42.pthread_mutex tidy
+	$(MAKE) -C 43.pthread_rwlock tidy
+	$(MAKE) -C 44.pthread_cond tidy
+	$(MAKE) -C 45.one_producer_one_consumer_cond tidy
+	$(MAKE) -C 46.multi_producer_multi_consumer_cond tidy
+	$(MAKE) -C 47.perror tidy
+	$(MAKE) -C 48.union tidy
+	$(MAKE) -C 49.threadpool tidy
+	# $(MAKE) -C 50.asm tidy
+	$(MAKE) -C 51.asm_call_c tidy
+	$(MAKE) -C 52.inline_asm tidy
+	$(MAKE) -C 53.syscall tidy
+	$(MAKE) -C 54.mmap tidy
+	$(MAKE) -C 55.polymorphism tidy
+	$(MAKE) -C 56.complex_macro tidy
+	$(MAKE) -C 57.class_export tidy
+	$(MAKE) -C 58.function_pointer tidy
+	$(MAKE) -C 59.mirrorrotate tidy
+	$(MAKE) -C 60.stringize tidy
+	$(MAKE) -C 61.setpriority tidy
+	$(MAKE) -C 62.nice tidy
+	$(MAKE) -C 63.pthread_setschedparam tidy
+	$(MAKE) -C 64.sched_setscheduler tidy
+	$(MAKE) -C 65.static_local_variable tidy
+	$(MAKE) -C 66.ftrace tidy

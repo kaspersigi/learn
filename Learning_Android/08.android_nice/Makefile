@@ -16,11 +16,11 @@ endif
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/$(PLATFORM)-x86_64
 TARGET = aarch64-linux-android
 API = 35
+LLVM = -21
 CC = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang
 CXX = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang++
 SCAN = scan-build$(LLVM) --use-cc=$(CC) --use-c++=$(CXX)
-AR = $(TOOLCHAIN)/bin/llvm-ar
-LLVM = -21
+TIDY = /usr/bin/clang-tidy$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused --sysroot=$(TOOLCHAIN)/sysroot --target=$(TARGET)
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused --sysroot=$(TOOLCHAIN)/sysroot --target=$(TARGET)
@@ -32,6 +32,7 @@ CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -static-libstdc++
+TIDY_FLAGS = -- $(C_FLAGS) $(DEBUG)
 
 .PHONY : all
 $(TRG) : $(OBJ)
@@ -42,12 +43,15 @@ nice.o : nice.c
 ftrace.o : ftrace.c
 	$(CC) ftrace.c -c $(C_FLAGS) $(DEBUG)
 format :
-	$(FORMAT) $(SRC) -style=file -i
+	$(FORMAT) nice.c -style=file -i
 	$(FORMAT) ftrace.c -style=file -i
 	$(FORMAT) ftrace.h -style=file -i
 clean :
 	rm -v $(TRG)
-check :
-	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)
 scan :
 	$(SCAN) make
+tidy :
+	$(TIDY) nice.c $(TIDY_FLAGS)
+	$(TIDY) ftrace.c $(TIDY_FLAGS)
+check :
+	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)

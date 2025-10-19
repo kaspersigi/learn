@@ -5,12 +5,14 @@
 TRG = main
 OBJ = main.o
 SRC = main.cc
+VPATH = /home/miku/learn/Learning_STL
 LLVM = -21
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
 SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
+TIDY = /usr/bin/clang-tidy$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
@@ -22,6 +24,7 @@ CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
+TIDY_FLAGS = -- --target=$(ARCH) $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 
 .PHONY : all
 all : template array vector deque list forward_list set multiset map multimap unordered_set unordered_multiset unordered_map unordered_multimap stack queue priority_queue fill fill_n count count_if find find_if for_each transform copy copy_if remove_if accumulate sort stable_sort binary_search generate replace unique minmax_element partition rotate shuffle merge set_union partial_sort nth_element adjacent_find search bind lambda function_object equal thread condition_variable async promise
@@ -296,3 +299,58 @@ scan :
 	$(MAKE) -C 50.condition_variable scan
 	$(MAKE) -C 51.async scan
 	$(MAKE) -C 52.promise scan
+
+tidy :
+	$(MAKE) -C 00.template tidy
+	$(MAKE) -C 01.array tidy
+	$(MAKE) -C 02.vector tidy
+	$(MAKE) -C 03.deque tidy
+	$(MAKE) -C 04.list tidy
+	$(MAKE) -C 05.forward_list tidy
+	$(MAKE) -C 06.set tidy
+	$(MAKE) -C 07.multiset tidy
+	$(MAKE) -C 08.map tidy
+	$(MAKE) -C 09.multimap tidy
+	$(MAKE) -C 10.unordered_set tidy
+	$(MAKE) -C 11.unordered_multiset tidy
+	$(MAKE) -C 12.unordered_map tidy
+	$(MAKE) -C 13.unordered_multimap tidy
+	$(MAKE) -C 14.stack tidy
+	$(MAKE) -C 15.queue tidy
+	$(MAKE) -C 16.priority_queue tidy
+	$(MAKE) -C 17.fill tidy
+	$(MAKE) -C 18.fill_n tidy
+	$(MAKE) -C 19.count tidy
+	$(MAKE) -C 20.count_if tidy
+	$(MAKE) -C 21.find tidy
+	$(MAKE) -C 22.find_if tidy
+	$(MAKE) -C 23.for_each tidy
+	$(MAKE) -C 24.transform tidy
+	$(MAKE) -C 25.copy tidy
+	$(MAKE) -C 26.copy_if tidy
+	$(MAKE) -C 27.remove_if tidy
+	$(MAKE) -C 28.accumulate tidy
+	$(MAKE) -C 29.sort tidy
+	$(MAKE) -C 30.stable_sort tidy
+	$(MAKE) -C 31.binary_search tidy
+	$(MAKE) -C 32.generate tidy
+	$(MAKE) -C 33.replace tidy
+	$(MAKE) -C 34.unique tidy
+	$(MAKE) -C 35.minmax_element tidy
+	$(MAKE) -C 36.partition tidy
+	$(MAKE) -C 37.rotate tidy
+	$(MAKE) -C 38.shuffle tidy
+	$(MAKE) -C 39.merge tidy
+	$(MAKE) -C 40.set_union tidy
+	$(MAKE) -C 41.partial_sort tidy
+	$(MAKE) -C 42.nth_element tidy
+	$(MAKE) -C 43.adjacent_find tidy
+	$(MAKE) -C 44.search tidy
+	$(MAKE) -C 45.bind tidy
+	$(MAKE) -C 46.lambda tidy
+	$(MAKE) -C 47.function_object tidy
+	$(MAKE) -C 48.equal tidy
+	$(MAKE) -C 49.thread tidy
+	$(MAKE) -C 50.condition_variable tidy
+	$(MAKE) -C 51.async tidy
+	$(MAKE) -C 52.promise tidy

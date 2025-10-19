@@ -17,11 +17,11 @@ endif
 TOOLCHAIN = $(NDK)/toolchains/llvm/prebuilt/$(PLATFORM)-x86_64
 TARGET = aarch64-linux-android
 API = 35
+LLVM = -21
 CC = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang
 CXX = $(TOOLCHAIN)/bin/$(TARGET)$(API)-clang++
 SCAN = scan-build$(LLVM) --use-cc=$(CC) --use-c++=$(CXX)
-AR = $(TOOLCHAIN)/bin/llvm-ar
-LLVM = -21
+TIDY = /usr/bin/clang-tidy$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused --sysroot=$(TOOLCHAIN)/sysroot --target=$(TARGET)
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused --sysroot=$(TOOLCHAIN)/sysroot --target=$(TARGET)
@@ -33,6 +33,7 @@ CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -static-libstdc++
+TIDY_FLAGS = -- $(C_FLAGS) $(DEBUG)
 
 .PHONY : all
 all : template android_c android_cpp android_ftrace android_atrace android_clog android_cpplog android_setpriority android_nice android_setschedparam android_setscheduler android_native_buf android_backtrace android_detach android_clinfo android_opencl android_dlopen
@@ -127,3 +128,22 @@ scan :
 	$(MAKE) -C 14.android_clinfo scan
 	$(MAKE) -C 15.android_opencl scan
 	$(MAKE) -C 16.android_dlopen scan
+
+tidy :
+	$(MAKE) -C 00.template tidy
+	$(MAKE) -C 01.android_c tidy
+	$(MAKE) -C 02.android_cpp tidy
+	$(MAKE) -C 03.android_ftrace tidy
+	$(MAKE) -C 04.android_atrace tidy
+	$(MAKE) -C 05.android_clog tidy
+	$(MAKE) -C 06.android_cpplog tidy
+	$(MAKE) -C 07.android_setpriority tidy
+	$(MAKE) -C 08.android_nice tidy
+	$(MAKE) -C 09.android_setschedparam tidy
+	$(MAKE) -C 10.android_setscheduler tidy
+	$(MAKE) -C 11.android_native_buf tidy
+	$(MAKE) -C 12.android_backtrace tidy
+	$(MAKE) -C 13.android_detach tidy
+	$(MAKE) -C 14.android_clinfo tidy
+	$(MAKE) -C 15.android_opencl tidy
+	$(MAKE) -C 16.android_dlopen tidy

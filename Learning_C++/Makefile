@@ -12,6 +12,7 @@ ARCH = $(shell $(CONFIG) --host-target)
 CC = /usr/bin/clang$(LLVM) --target=$(ARCH)
 CXX = /usr/bin/clang++$(LLVM) --target=$(ARCH)
 SCAN = scan-build$(LLVM) --use-cc=/usr/bin/clang$(LLVM) --use-c++=/usr/bin/clang++$(LLVM)
+TIDY = /usr/bin/clang-tidy$(LLVM)
 FORMAT = /usr/bin/clang-format$(LLVM)
 C_FLAGS = -std=c23 -Wall -Wno-unused
 CXX_FLAGS = -std=c++26 -Wall -Wno-unused
@@ -23,6 +24,7 @@ CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
+TIDY_FLAGS = -- --target=$(ARCH) $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG)
 
 .PHONY : all
 all : template macro regex constructor interface shared_ptr weak_ptr const function_template class_template threadpool iterator class_link class_export class_thread class_async class_promise class_pthread async_callback print_format print path filesystem ifstream ofstream boost_regex static_local_variable singleton ftrace halrequest framecapture spdlog
@@ -192,3 +194,37 @@ scan :
 	$(MAKE) -C 29.halrequest scan
 	$(MAKE) -C 30.framecapture scan
 	$(MAKE) -C 31.spdlog scan
+
+tidy :
+	$(MAKE) -C 00.template tidy
+	$(MAKE) -C 01.macro tidy
+	$(MAKE) -C 02.regex tidy
+	$(MAKE) -C 03.constructor tidy
+	$(MAKE) -C 04.interface tidy
+	$(MAKE) -C 05.shared_ptr tidy
+	$(MAKE) -C 06.weak_ptr tidy
+	$(MAKE) -C 07.const tidy
+	$(MAKE) -C 08.function_template tidy
+	$(MAKE) -C 09.class_template tidy
+	$(MAKE) -C 10.threadpool tidy
+	$(MAKE) -C 11.iterator tidy
+	$(MAKE) -C 12.class_link tidy
+	$(MAKE) -C 13.class_export tidy
+	$(MAKE) -C 14.class_thread tidy
+	$(MAKE) -C 15.class_async tidy
+	$(MAKE) -C 16.class_promise tidy
+	$(MAKE) -C 17.class_pthread tidy
+	$(MAKE) -C 18.async_callback tidy
+	$(MAKE) -C 19.format tidy
+	$(MAKE) -C 20.print tidy
+	$(MAKE) -C 21.path tidy
+	$(MAKE) -C 22.filesystem tidy
+	$(MAKE) -C 23.ifstream tidy
+	$(MAKE) -C 24.ofstream tidy
+	$(MAKE) -C 25.boost_regex tidy
+	$(MAKE) -C 26.static_local_variable tidy
+	$(MAKE) -C 27.singleton tidy
+	$(MAKE) -C 28.ftrace tidy
+	$(MAKE) -C 29.halrequest tidy
+	$(MAKE) -C 30.framecapture tidy
+	$(MAKE) -C 31.spdlog tidy
