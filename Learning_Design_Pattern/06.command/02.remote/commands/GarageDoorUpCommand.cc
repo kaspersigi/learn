@@ -1,10 +1,12 @@
 #include "GarageDoorUpCommand.h"
 #include <iostream>
 
-GarageDoorUpCommand::GarageDoorUpCommand(std::shared_ptr<const GarageDoor> garageDoor)
+GarageDoorUpCommand::GarageDoorUpCommand(const std::shared_ptr<const GarageDoor>& garageDoor)
     : _garageDoor(garageDoor)
 {
 }
+
+GarageDoorUpCommand::~GarageDoorUpCommand() = default;
 
 void GarageDoorUpCommand::execute() const
 {

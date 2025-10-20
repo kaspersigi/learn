@@ -6,8 +6,8 @@
 class GarageDoor : public NonCopyable
 {
 public:
-    explicit GarageDoor(const std::string location);
-    ~GarageDoor() = default;
+    explicit GarageDoor(const std::string& location);
+    virtual ~GarageDoor() = default;
 
     void up() const;
     void down() const;

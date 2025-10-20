@@ -180,10 +180,10 @@ int main(int argc, char* argv[])
                     }
 #endif
                     memset(host_buff, 0, 4096);
-                    int pos = 0;
+                    size_t pos = 0;
                     while (1) {
                         memset(read_buff, 0, buffer_size);
-                        int ret_read = recv(epoll_event_list[i].data.fd, read_buff, buffer_size, 0);
+                        size_t ret_read = recv(epoll_event_list[i].data.fd, read_buff, buffer_size, 0);
                         if (0 == ret_read) {
                             fputs("client disconnect...\n", stdout);
                             ret = epoll_ctl(epfd, EPOLL_CTL_DEL, epoll_event_list[i].data.fd, NULL);
@@ -201,7 +201,7 @@ int main(int argc, char* argv[])
 #if 1
                             // 全局变量 errno
                             if (errno == EAGAIN) {
-                                printf("server recieve %d bytes from client, content: %s\n", pos + 1, host_buff);
+                                printf("server recieve %lu bytes from client, content: %s\n", pos + 1, host_buff);
                                 break;
                             }
 #endif

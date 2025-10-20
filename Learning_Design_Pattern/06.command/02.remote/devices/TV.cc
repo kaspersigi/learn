@@ -1,7 +1,7 @@
 #include "TV.h"
 #include <iostream>
 
-TV::TV(const std::string location)
+TV::TV(const std::string& location)
     : _location(location)
 {
 }

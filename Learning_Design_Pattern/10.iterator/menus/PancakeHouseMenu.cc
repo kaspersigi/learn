@@ -9,7 +9,7 @@ PancakeHouseMenu::PancakeHouseMenu()
     addItem("Waffles", "Waffles, with your choice of blueberries or strawberries", true, 3.59);
 }
 
-void PancakeHouseMenu::addItem(std::string name, std::string description, bool vegetarian, double price)
+void PancakeHouseMenu::addItem(const std::string& name, const std::string& description, bool vegetarian, double price)
 {
     auto menuItem = std::make_shared<MenuItem>(name, description, vegetarian, price);
     _menuItems.push_back(menuItem);

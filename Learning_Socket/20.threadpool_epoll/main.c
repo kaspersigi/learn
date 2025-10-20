@@ -28,10 +28,10 @@ void* service(void* arg)
     char* host_buff = malloc(4096);
     int epfd = ((epoll_info*)arg)->epfd;
     struct epoll_event epoll_event = ((epoll_info*)arg)->epoll_event;
-    int pos = 0;
+    size_t pos = 0;
     while (1) {
         memset(read_buff, 0, buffer_size);
-        int ret_read = recv(epoll_event.data.fd, read_buff, buffer_size, 0);
+        size_t ret_read = recv(epoll_event.data.fd, read_buff, buffer_size, 0);
         if (0 == ret_read) {
             printf("client disconnect...\n");
             int ret = epoll_ctl(epfd, EPOLL_CTL_DEL, epoll_event.data.fd, NULL);

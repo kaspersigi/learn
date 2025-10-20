@@ -69,6 +69,7 @@ clean :
 scan :
 	$(SCAN) make
 tidy :
-	$(TIDY) $(SRC) $(TIDY_FLAGS) -I./inc
+	$(TIDY) opencl.c $(TIDY_FLAGS) -I./inc
+	$(TIDY) ftrace.c $(TIDY_FLAGS)
 check :
 	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)

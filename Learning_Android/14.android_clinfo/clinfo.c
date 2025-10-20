@@ -1868,7 +1868,7 @@ void device_info_time_offset(struct device_info_ret* ret,
 {
     GET_VAL(ret, loc, u64);
     if (!ret->err) {
-        time_t time = ret->value.u64 / UINT64_C(1000000000);
+        time_t time = (time_t)(ret->value.u64 / UINT64_C(1000000000));
         strbuf_append(loc->pname, &ret->str, "%" PRIu64 "ns (", ret->value.u64);
         strbuf_append_str(loc->pname, &ret->str, ctime(&time));
         /* overwrite ctime's newline with the closing parenthesis */
@@ -4597,7 +4597,7 @@ void parse_prop(const char* input, struct opt_out* output)
         if ((c == '_') || (c >= 'A' && c <= 'Z'))
             normalized[i] = c;
         else if (c >= 'a' && c <= 'z')
-            normalized[i] = 'A' + (c - 'a');
+            normalized[i] = (char)('A' + (c - 'a'));
         else if (c == '-')
             normalized[i] = '_';
         else {

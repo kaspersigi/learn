@@ -30,7 +30,7 @@ std::string Pizza::toShow() const
     value += _dough + "\n";
     value += _sauce + "\n";
 
-    std::for_each(_toppings.cbegin(), _toppings.cend(), [&](auto e) { value += e + "\n"; });
+    std::for_each(_toppings.cbegin(), _toppings.cend(), [&](auto const& e) { value += e + "\n"; });
 
     return value;
 }

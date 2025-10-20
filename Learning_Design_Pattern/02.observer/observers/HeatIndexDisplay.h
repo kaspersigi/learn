@@ -9,7 +9,7 @@ class Subject;
 class HeatIndexDisplay : public Observer, public DisplayElement
 {
 public:
-    explicit HeatIndexDisplay(std::shared_ptr<Subject> weatherData);
+    explicit HeatIndexDisplay(const std::shared_ptr<Subject>& weatherData);
     ~HeatIndexDisplay() override;
 
     virtual void update(float temperature, float humidity, float pressure) override;

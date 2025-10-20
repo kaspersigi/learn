@@ -2,7 +2,7 @@
 #include "../interface/Subject.h"
 #include <iostream>
 
-ForecastDisplay::ForecastDisplay(std::shared_ptr<Subject> weatherData)
+ForecastDisplay::ForecastDisplay(const std::shared_ptr<Subject>& weatherData)
     : _weatherData(weatherData)
 {
 }

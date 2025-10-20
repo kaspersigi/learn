@@ -26,7 +26,7 @@ void backtrace()
 {
     void* buffer[30];
     void* addr;
-    int count = _fill_backtraces_buffer(buffer, 30);
+    size_t count = _fill_backtraces_buffer(buffer, 30);
     for (int index = 0; index < count; ++index) {
         addr = buffer[index];
         Dl_info info;

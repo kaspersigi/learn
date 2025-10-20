@@ -42,8 +42,7 @@ clean :
 scan :
 	$(SCAN) make
 tidy :
-	$(TIDY) $(SRC) $(TIDY_FLAGS) -I../inc -DCL_TARGET_OPENCL_VERSION=300
-	$(TIDY) ftrace.h $(TIDY_FLAGS)
+	$(TIDY) main.c $(TIDY_FLAGS) -I../inc -DCL_TARGET_OPENCL_VERSION=300
 	$(TIDY) ftrace.c $(TIDY_FLAGS)
 check :
 	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)

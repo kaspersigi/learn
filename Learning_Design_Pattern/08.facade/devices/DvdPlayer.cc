@@ -2,8 +2,8 @@
 #include "Amplifier.h"
 #include <iostream>
 
-DvdPlayer::DvdPlayer(std::string description, std::shared_ptr<Amplifier> amplifier)
-    : _description(description)
+DvdPlayer::DvdPlayer(std::string description, const std::shared_ptr<Amplifier>& amplifier)
+    : _description(std::move(description))
     , _amplifier(amplifier)
 {
 }
@@ -18,7 +18,7 @@ void DvdPlayer::eject() const { std::cout << _description << " eject" << std::en
 
 void DvdPlayer::play(std::string movie)
 {
-    _movie = movie;
+    _movie = std::move(movie);
     std::cout << _description << " playing \"" << _movie << "\"" << std::endl;
 }
 

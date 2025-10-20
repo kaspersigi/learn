@@ -4,8 +4,8 @@
 #include <iostream>
 
 Duck::Duck(std::shared_ptr<FlyBehavior> flyBehavior, std::shared_ptr<QuackBehavior> quackBehavior)
-    : _flyBehavior(flyBehavior)
-    , _quackBehavior(quackBehavior)
+    : _flyBehavior(std::move(flyBehavior))
+    , _quackBehavior(std::move(quackBehavior))
 {
 }
 
@@ -13,12 +13,12 @@ Duck::~Duck() = default;
 
 void Duck::setFlyBehavior(std::shared_ptr<FlyBehavior> flyBehavior)
 {
-    _flyBehavior = flyBehavior;
+    _flyBehavior = std::move(flyBehavior);
 }
 
 void Duck::setQuackBehavior(std::shared_ptr<QuackBehavior> quackBehavior)
 {
-    _quackBehavior = quackBehavior;
+    _quackBehavior = std::move(quackBehavior);
 }
 
 void Duck::performFly() const

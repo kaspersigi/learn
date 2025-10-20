@@ -1,8 +1,8 @@
 #include "MenuItem.h"
 
 MenuItem::MenuItem(std::string name, std::string description, bool vegetarian, double price)
-    : _name(name)
-    , _description(description)
+    : _name(std::move(name))
+    , _description(std::move(description))
     , _vegetarian(vegetarian)
     , _price(price)
 {

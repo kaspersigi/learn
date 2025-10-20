@@ -7,7 +7,6 @@
 
 int main(int argc, char* argv[])
 {
-    int ret = 0;
     char device_name[128];
     char vendor_name[128];
 

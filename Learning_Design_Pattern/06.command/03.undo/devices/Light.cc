@@ -2,7 +2,7 @@
 #include <cassert>
 #include <iostream>
 
-Light::Light(const std::string location)
+Light::Light(const std::string& location)
     : _location(location)
 {
 }

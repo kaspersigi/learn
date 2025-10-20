@@ -9,7 +9,7 @@ class Amplifier;
 class Tuner : public NonCopyable
 {
 public:
-    Tuner(std::string description, std::shared_ptr<Amplifier> amplifier);
+    Tuner(std::string description, const std::shared_ptr<Amplifier>& amplifier);
     ~Tuner();
 
     void on() const;

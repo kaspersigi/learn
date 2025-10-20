@@ -19,9 +19,9 @@ public:
     void setStereoSound();
     void setSurroundSound();
     void setVolume(int level);
-    void setTuner(std::shared_ptr<Tuner> tuner);
-    void setDvd(std::shared_ptr<DvdPlayer> dvd);
-    void setCd(std::shared_ptr<CdPlayer> cd);
+    void setTuner(const std::shared_ptr<Tuner>& tuner);
+    void setDvd(const std::shared_ptr<DvdPlayer>& dvd);
+    void setCd(const std::shared_ptr<CdPlayer>& cd);
     std::string toShow() const;
 
 private:

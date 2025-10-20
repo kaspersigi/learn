@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
     for (int i = 0; i < 60; ++i) {
         memset(write_buff, 0, 128);
         sprintf(write_buff, "%s count: %d", write_head, i);
-        int ret_write = send(sockfd_client, write_buff, strlen(write_buff), 0);
+        size_t ret_write = send(sockfd_client, write_buff, strlen(write_buff), 0);
         if (0 == ret_write) {
             fputs("server disconnect...\n", stdout);
             break;

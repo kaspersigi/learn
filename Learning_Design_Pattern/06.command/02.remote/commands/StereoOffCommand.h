@@ -6,13 +6,11 @@
 class StereoOffCommand : public Command
 {
 public:
-    explicit StereoOffCommand(std::shared_ptr<const Stereo> stereo);
+    explicit StereoOffCommand(const std::shared_ptr<const Stereo>& stereo);
     explicit StereoOffCommand(std::nullptr_t) = delete;
+    virtual ~StereoOffCommand();
 
     void execute() const;
-
-protected:
-    virtual ~StereoOffCommand() = default;
 
 private:
     std::weak_ptr<const Stereo> _stereo {};

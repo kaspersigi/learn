@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
                     max_fd++;
                 } else if (epoll_event_list[i].events == EPOLLIN) {
                     memset(read_buff, 0, buffer_size);
-                    int ret_read = recv(epoll_event_list[i].data.fd, read_buff, buffer_size, 0);
+                    size_t ret_read = recv(epoll_event_list[i].data.fd, read_buff, buffer_size, 0);
                     if (0 == ret_read) {
                         fputs("client disconnect...\n", stdout);
                         ret = epoll_ctl(epfd, EPOLL_CTL_DEL, epoll_event_list[i].data.fd, NULL);
@@ -155,7 +155,7 @@ int main(int argc, char* argv[])
                         perror("revieve faild");
                         break;
                     } else {
-                        printf("server recieve %d bytes from client, content: %s\n", ret_read, read_buff);
+                        printf("server recieve %lu bytes from client, content: %s\n", ret_read, read_buff);
                     }
                 }
             }

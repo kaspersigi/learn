@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
     recievebuff.type = 100;
 
     // 返回值 成功则返回实际读到的字节数 失败返回-1
-    int ret = msgrcv(msqid, (void*)&recievebuff, 124, 100, 0);
+    size_t ret = msgrcv(msqid, (void*)&recievebuff, 124, 100, 0);
     printf("ret: %d\n", ret);
     printf("message: %s\n", recievebuff.voltage);
     // 对消息队列来说，写操作，其实就是将节点插入队列

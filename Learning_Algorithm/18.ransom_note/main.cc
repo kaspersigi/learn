@@ -4,7 +4,7 @@
 #include <string>
 
 #if 0
-bool can_construct(std::string ransomNote, std::string magazine)
+bool can_construct(const std::string& ransomNote, const std::string& magazine)
 {
     if (magazine.length() < ransomNote.length())
         return false;
@@ -20,7 +20,7 @@ bool can_construct(std::string ransomNote, std::string magazine)
 }
 #endif
 
-bool can_construct(std::string ransomNote, std::string magazine)
+bool can_construct(const std::string& ransomNote, const std::string& magazine)
 {
     if (magazine.length() < ransomNote.length())
         return false;

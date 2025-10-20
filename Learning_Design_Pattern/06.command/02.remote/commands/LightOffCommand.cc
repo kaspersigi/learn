@@ -1,10 +1,12 @@
 #include "LightOffCommand.h"
 #include <iostream>
 
-LightOffCommand::LightOffCommand(std::shared_ptr<const Light> light)
+LightOffCommand::LightOffCommand(const std::shared_ptr<const Light>& light)
     : _light(light)
 {
 }
+
+LightOffCommand::~LightOffCommand() = default;
 
 void LightOffCommand::execute() const
 {

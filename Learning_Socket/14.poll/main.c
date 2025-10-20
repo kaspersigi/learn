@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
             for (int i = 1; i < max_fd; ++i) {
                 if (pollfds[i].revents == POLLIN) {
                     memset(read_buff, 0, 128);
-                    int ret_read = recv(pollfds[i].fd, read_buff, 128, 0);
+                    size_t ret_read = recv(pollfds[i].fd, read_buff, 128, 0);
                     if (0 == ret_read) {
                         fputs("client disconnect...\n", stdout);
                         close(pollfds[i].fd);

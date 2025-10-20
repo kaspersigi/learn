@@ -25,6 +25,6 @@ protected:
 private:
     int main_worker() const;
     int child_worker(int value, const std::string& str) const;
-    typedef Status (*_callback)(int);
+    typedef Status (*_callback)(size_t);
     _callback _cb = nullptr;
 };

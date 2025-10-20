@@ -5,7 +5,7 @@
 #include <string>
 
 #if 0
-bool is_anagram(std::string s, std::string t)
+bool is_anagram(const std::string& s, const std::string& t)
 {
     if (s.length() != t.length())
         return false;
@@ -19,7 +19,7 @@ bool is_anagram(std::string s, std::string t)
 
 #if 1
 // 数组是最简单的哈希表，比法一，快得多
-bool is_anagram(std::string s, std::string t)
+bool is_anagram(const std::string& s, const std::string& t)
 {
     if (s.length() != t.length())
         return false;

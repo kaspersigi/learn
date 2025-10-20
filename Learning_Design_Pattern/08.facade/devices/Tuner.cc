@@ -2,8 +2,8 @@
 #include "Amplifier.h"
 #include <iostream>
 
-Tuner::Tuner(std::string description, std::shared_ptr<Amplifier> amplifier)
-    : _description(description)
+Tuner::Tuner(std::string description, const std::shared_ptr<Amplifier>& amplifier)
+    : _description(std::move(description))
     , _amplifier(amplifier)
 {
 }

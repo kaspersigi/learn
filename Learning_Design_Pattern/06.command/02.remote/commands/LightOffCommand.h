@@ -6,13 +6,11 @@
 class LightOffCommand : public Command
 {
 public:
-    explicit LightOffCommand(std::shared_ptr<const Light> light);
+    explicit LightOffCommand(const std::shared_ptr<const Light>& light);
     explicit LightOffCommand(std::nullptr_t) = delete;
+    virtual ~LightOffCommand();
 
     void execute() const;
-
-protected:
-    virtual ~LightOffCommand() = default;
 
 private:
     std::weak_ptr<const Light> _light {};

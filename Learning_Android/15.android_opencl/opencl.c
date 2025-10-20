@@ -8,10 +8,6 @@
 
 int main(int argc, char* argv[])
 {
-    int ret = 0;
-
-    sleep(10);
-
     char device_name[128];
     char vendor_name[128];
 
@@ -26,6 +22,8 @@ int main(int argc, char* argv[])
 
     if (!ftrace_init())
         return -1;
+
+    sleep(3);
 
     ftrace_duration_begin("MainThread");
 

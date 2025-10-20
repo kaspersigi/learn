@@ -1,10 +1,12 @@
 #include "HottubOnCommand.h"
 #include <iostream>
 
-HottubOnCommand::HottubOnCommand(std::shared_ptr<const Hottub> hottub)
+HottubOnCommand::HottubOnCommand(const std::shared_ptr<const Hottub>& hottub)
     : _hottub(hottub)
 {
 }
+
+HottubOnCommand::~HottubOnCommand() = default;
 
 void HottubOnCommand::execute() const
 {

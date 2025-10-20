@@ -1,10 +1,12 @@
 #include "LightOnCommand.h"
 #include <iostream>
 
-LightOnCommand::LightOnCommand(std::shared_ptr<const Light> light)
+LightOnCommand::LightOnCommand(const std::shared_ptr<const Light>& light)
     : _light(light)
 {
 }
+
+LightOnCommand::~LightOnCommand() = default;
 
 void LightOnCommand::execute() const
 {

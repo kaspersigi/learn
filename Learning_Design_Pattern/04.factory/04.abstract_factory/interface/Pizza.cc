@@ -20,7 +20,7 @@ void Pizza::box() const
 
 std::string Pizza::getName() const { return _name; }
 
-void Pizza::setName(std::string name) { _name = name; }
+void Pizza::setName(std::string name) { _name = std::move(name); }
 
 std::string Pizza::toShow() const
 {

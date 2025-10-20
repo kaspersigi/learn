@@ -6,13 +6,11 @@
 class GarageDoorDownCommand : public Command
 {
 public:
-    explicit GarageDoorDownCommand(std::shared_ptr<const GarageDoor> garageDoor);
+    explicit GarageDoorDownCommand(const std::shared_ptr<const GarageDoor>& garageDoor);
     explicit GarageDoorDownCommand(std::nullptr_t) = delete;
+    virtual ~GarageDoorDownCommand();
 
     void execute() const;
-
-protected:
-    virtual ~GarageDoorDownCommand() = default;
 
 private:
     std::weak_ptr<const GarageDoor> _garageDoor {};

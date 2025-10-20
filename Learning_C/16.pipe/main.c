@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
 
     char write_buf[] = "Hello Linux!";
     char read_buf[128] = {};
-    int ret_write = write(fd[1], write_buf, sizeof(write_buf));
+    size_t ret_write = write(fd[1], write_buf, sizeof(write_buf));
     read(fd[0], read_buf, ret_write);
     fputs(read_buf, stdout);
 

@@ -2,7 +2,7 @@
 #include <iostream>
 
 PopcornPopper::PopcornPopper(std::string description)
-    : _description(description)
+    : _description(std::move(description))
 {
 }
 

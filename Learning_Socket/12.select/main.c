@@ -88,7 +88,7 @@ int main(int argc, char* argv[])
                         FD_SET(sockfd_service, &nextfd_set);
                     } else {
                         memset(read_buff, 0, 128);
-                        int ret_read = recv(i, read_buff, 128, 0);
+                        size_t ret_read = recv(i, read_buff, 128, 0);
                         if (0 == ret_read) {
                             fputs("client disconnect...\n", stdout);
                             close(i);
@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
                             FD_CLR(i, &nextfd_set);
                             break;
                         } else {
-                            printf("server recieve %d charactors from client, content: %s\n", ret_read, read_buff);
+                            printf("server recieve %lu charactors from client, content: %s\n", ret_read, read_buff);
                             FD_SET(i, &nextfd_set);
                         }
                     }

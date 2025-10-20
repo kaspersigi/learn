@@ -23,14 +23,14 @@ CLANG_FLAGS = -nostdlib
 CLANG_LINK_FLAGS = /usr/lib/llvm$(LLVM)/lib/libllvmlibc.a -static
 CLANGXX_FLAGS = -stdlib=libc++
 CLANGXX_LINK_FLAGS = -nostdlib++ -lc++
-TIDY_FLAGS = -- --target=$(ARCH) $(C_FLAGS) $(DEBUG) -I./inc -I../inc
+TIDY_FLAGS = -- --target=$(ARCH) $(C_FLAGS) $(DEBUG) -I./inc -I../inc -DCL_TARGET_OPENCL_VERSION=300
 
 .PHONY : all
 $(TRG) : $(OBJ)
 	$(CC) $(OBJ) -o $(TRG) $(LIBS)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG) -I./inc -I../inc
+	$(CC) $(SRC) -c $(C_FLAGS) $(DEBUG) -I./inc -I../inc -DCL_TARGET_OPENCL_VERSION=300
 format :
 	$(FORMAT) ../inc/CL/cl.h -style=file -i
 	$(FORMAT) ../inc/CL/cl_d3d10.h -style=file -i

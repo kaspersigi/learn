@@ -105,7 +105,7 @@ void ThreadPool::_manager()
     while (!is_close()) {
         std::this_thread::sleep_for(std::chrono::seconds(3));
         _mutex.lock();
-        int task_size = _task_queue.size();
+        size_t task_size = _task_queue.size();
         int alive_num = _alive_num;
         int busy_num = _busy_num;
         _mutex.unlock();

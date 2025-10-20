@@ -6,7 +6,7 @@
 class Light : public NonCopyable
 {
 public:
-    explicit Light(const std::string location);
+    explicit Light(const std::string& location);
     ~Light() = default;
 
     void on() const;

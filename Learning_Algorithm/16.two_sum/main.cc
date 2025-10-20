@@ -3,9 +3,9 @@
 #include <unordered_map>
 #include <vector>
 
-std::vector<int> two_sum(std::vector<int>& nums, int target)
+std::vector<size_t> two_sum(std::vector<int>& nums, int target)
 {
-    std::vector<int> answer {};
+    std::vector<size_t> answer {};
     std::unordered_map<int, size_t> mi {};
     for (size_t i = 0; i < nums.size(); ++i) {
         auto it = mi.find(target - nums[i]);

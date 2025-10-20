@@ -11,7 +11,7 @@ class RemoteControl : public NonCopyable
 {
 public:
     RemoteControl();
-    ~RemoteControl();
+    virtual ~RemoteControl();
 
     void setCommand(int slot, std::shared_ptr<Command> onCommand, std::shared_ptr<Command> offCommand);
     void onButtonWasPushed(int slot) const;

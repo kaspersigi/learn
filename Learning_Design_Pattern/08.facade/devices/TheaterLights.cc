@@ -2,7 +2,7 @@
 #include <iostream>
 
 TheaterLights::TheaterLights(std::string description)
-    : _description(description)
+    : _description(std::move(description))
 {
 }
 

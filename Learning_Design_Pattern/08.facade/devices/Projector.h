@@ -9,7 +9,7 @@ class DvdPlayer;
 class Projector : public NonCopyable
 {
 public:
-    Projector(std::string description, std::shared_ptr<DvdPlayer> dvdPlayer);
+    Projector(std::string description, const std::shared_ptr<DvdPlayer>& dvdPlayer);
     ~Projector();
 
     void on() const;

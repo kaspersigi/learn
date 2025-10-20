@@ -166,7 +166,7 @@ void example_algorithms()
     }
 
     // ✅ count
-    int zeros = std::count(data.begin(), data.end(), 0);
+    size_t zeros = std::count(data.begin(), data.end(), 0);
     std::println("Count of 0: {}", zeros);
 
     // ✅ remove_if —— 移除偶数（注意：不改变 size，返回新逻辑结尾）

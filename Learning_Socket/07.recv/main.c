@@ -88,8 +88,8 @@ int main(int argc, char* argv[])
     }
     fputs("server connect succeed...\n", stdout);
     char read_buff[128] = {};
-    int ret = recv(sockfd_service, read_buff, 128, 0);
-    printf("server recieve %d charactors, content: %s\n", ret, read_buff);
+    size_t ret = recv(sockfd_service, read_buff, 128, 0);
+    printf("server recieve %lu charactors, content: %s\n", ret, read_buff);
     close(sockfd_service);
     close(sockfd_listen);
 

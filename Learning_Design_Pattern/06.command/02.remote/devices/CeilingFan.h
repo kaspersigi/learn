@@ -6,13 +6,15 @@
 class CeilingFan : public NonCopyable
 {
 public:
-    explicit CeilingFan(const std::string location);
-    ~CeilingFan() = default;
+    explicit CeilingFan(const std::string& location);
+    virtual ~CeilingFan() = default;
 
-    enum Level { DOWN,
+    enum class Level : std::uint8_t {
+        DOWN,
         LOW,
         MEDIUM,
-        HIGH };
+        HIGH,
+    };
 
     void low() const;
     void medium() const;

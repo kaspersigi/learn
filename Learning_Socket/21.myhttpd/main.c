@@ -43,7 +43,7 @@ int read_line(int sockfd_service, char* buf, int size)
     char last = '\0';
     int pos = 0;
     for (int i = 0; i < size; ++i) {
-        int ret = recv(sockfd_service, &ch, 1, 0);
+        size_t ret = recv(sockfd_service, &ch, 1, 0);
         if (ret == 0) {
             printf("client disconnect...\n");
             break;
@@ -123,15 +123,21 @@ void cannot_execute(int sockfd_service)
 void headers(int sockfd_service)
 {
     char buf[buffer_size];
-    memset(buf, 0, buffer_size);
+    buf[0] = '\0'; // 或 memset(buf, 0, sizeof(buf));
 
-    strcpy(buf, "HTTP/1.1 200 OK\r\n");
+    strncpy(buf, "HTTP/1.1 200 OK\r\n", sizeof(buf) - 1);
+    buf[sizeof(buf) - 1] = '\0';
     send(sockfd_service, buf, strlen(buf), 0);
-    strcpy(buf, server_string);
+
+    strncpy(buf, server_string, sizeof(buf) - 1);
+    buf[sizeof(buf) - 1] = '\0';
     send(sockfd_service, buf, strlen(buf), 0);
-    sprintf(buf, "Content-Type: text/html\r\n");
+
+    snprintf(buf, sizeof(buf), "Content-Type: text/html\r\n");
     send(sockfd_service, buf, strlen(buf), 0);
-    strcpy(buf, "\r\n");
+
+    strncpy(buf, "\r\n", sizeof(buf) - 1);
+    buf[sizeof(buf) - 1] = '\0';
     send(sockfd_service, buf, strlen(buf), 0);
 }
 

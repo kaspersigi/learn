@@ -1,7 +1,7 @@
 #include "CurrentConditionsDisplay.h"
 #include <iostream>
 
-CurrentConditionsDisplay::CurrentConditionsDisplay(std::shared_ptr<Subject> weatherData)
+CurrentConditionsDisplay::CurrentConditionsDisplay(const std::shared_ptr<Subject>& weatherData)
     : _weatherData(weatherData)
 {
 }

@@ -38,7 +38,7 @@ void HomeTheaterFacade::watchMovie(std::string movie)
         _amp.lock()->setSurroundSound();
         _amp.lock()->setVolume(5);
         _dvd.lock()->on();
-        _dvd.lock()->play(movie);
+        _dvd.lock()->play(std::move(movie));
     }
 }
 
@@ -67,7 +67,7 @@ void HomeTheaterFacade::listenToCd(std::string cdTitle)
         _amp.lock()->setCd(_cd.lock());
         _amp.lock()->setStereoSound();
         _cd.lock()->on();
-        _cd.lock()->play(cdTitle);
+        _cd.lock()->play(std::move(cdTitle));
     }
 }
 

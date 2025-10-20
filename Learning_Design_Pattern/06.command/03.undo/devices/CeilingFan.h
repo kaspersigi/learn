@@ -2,17 +2,20 @@
 
 #include "../interface/NonCopyable.h"
 #include <string>
+#include <sys/types.h>
 
 class CeilingFan : public NonCopyable
 {
 public:
-    explicit CeilingFan(const std::string location);
+    explicit CeilingFan(const std::string& location);
     ~CeilingFan() = default;
 
-    enum Level { DOWN,
+    enum class Level : u_int8_t {
+        DOWN,
         LOW,
         MEDIUM,
-        HIGH };
+        HIGH,
+    };
 
     void low() const;
     void medium() const;

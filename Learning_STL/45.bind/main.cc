@@ -15,7 +15,7 @@ int main()
     // 绑定 divisor=5，生成新谓词
     auto is_div_by_5 = std::bind(is_divisible_by, std::placeholders::_1, 5);
 
-    int count = std::count_if(v.begin(), v.end(), is_div_by_5);
+    size_t count = std::count_if(v.begin(), v.end(), is_div_by_5);
     std::cout << "Divisible by 5: " << count << "\n"; // 6
 
     // 用 std::function 存储

@@ -5,7 +5,7 @@
 #include <iostream>
 
 Amplifier::Amplifier(std::string description)
-    : _description(description)
+    : _description(std::move(description))
 {
 }
 
@@ -21,21 +21,21 @@ void Amplifier::setSurroundSound() { std::cout << _description << " surround sou
 
 void Amplifier::setVolume(int level) { std::cout << _description << " setting volume to " << level << std::endl; }
 
-void Amplifier::setTuner(std::shared_ptr<Tuner> tuner)
+void Amplifier::setTuner(const std::shared_ptr<Tuner>& tuner)
 {
     _tuner = tuner;
     if (_tuner.use_count())
         std::cout << _description << " setting tuner to " << _tuner.lock()->toShow() << std::endl;
 }
 
-void Amplifier::setDvd(std::shared_ptr<DvdPlayer> dvd)
+void Amplifier::setDvd(const std::shared_ptr<DvdPlayer>& dvd)
 {
     _dvd = dvd;
     if (_dvd.use_count())
         std::cout << _description << " setting DVD player to " << _dvd.lock()->toShow() << std::endl;
 }
 
-void Amplifier::setCd(std::shared_ptr<CdPlayer> cd)
+void Amplifier::setCd(const std::shared_ptr<CdPlayer>& cd)
 {
     _cd = cd;
     if (_cd.use_count())

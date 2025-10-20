@@ -1,10 +1,12 @@
 #include "LivingroomLightOnCommand.h"
 #include <iostream>
 
-LivingroomLightOnCommand::LivingroomLightOnCommand(std::shared_ptr<const Light> light)
+LivingroomLightOnCommand::LivingroomLightOnCommand(const std::shared_ptr<const Light>& light)
     : _light(light)
 {
 }
+
+LivingroomLightOnCommand::~LivingroomLightOnCommand() = default;
 
 void LivingroomLightOnCommand::execute() const
 {

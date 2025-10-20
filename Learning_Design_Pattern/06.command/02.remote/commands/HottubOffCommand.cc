@@ -1,10 +1,12 @@
 #include "HottubOffCommand.h"
 #include <iostream>
 
-HottubOffCommand::HottubOffCommand(std::shared_ptr<const Hottub> hottub)
+HottubOffCommand::HottubOffCommand(const std::shared_ptr<const Hottub>& hottub)
     : _hottub(hottub)
 {
 }
+
+HottubOffCommand::~HottubOffCommand() = default;
 
 void HottubOffCommand::execute() const
 {

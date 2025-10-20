@@ -7,7 +7,7 @@ void Pizza::prepare() const
     std::cout << "Tossing dough..." << std::endl;
     std::cout << "Adding sauce..." << std::endl;
     std::cout << "Adding toppings: " << std::endl;
-    std::for_each(_toppings.cbegin(), _toppings.cend(), [&](auto e) { std::cout << "   " << e << std::endl; });
+    std::for_each(_toppings.cbegin(), _toppings.cend(), [&](auto const& e) { std::cout << "   " << e << std::endl; });
 }
 
 void Pizza::Pizza::bake() const
@@ -34,7 +34,7 @@ std::string Pizza::toShow() const
     value += _dough + "\n";
     value += _sauce + "\n";
 
-    std::for_each(_toppings.cbegin(), _toppings.cend(), [&](auto e) { value += e + "\n"; });
+    std::for_each(_toppings.cbegin(), _toppings.cend(), [&](auto const& e) { value += e + "\n"; });
 
     return value;
 }

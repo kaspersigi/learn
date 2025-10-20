@@ -87,8 +87,8 @@ int main(int argc, char* argv[])
     connect(sockfd_client, (struct sockaddr*)&sock_server, sizeof(sock_server));
     fputs("client connect succeed...\n", stdout);
     char write_buff[] = "Hello server, I am client!";
-    int ret = send(sockfd_client, write_buff, sizeof(write_buff), 0);
-    printf("client send %d charactors, content: %s\n", ret, write_buff);
+    size_t ret = send(sockfd_client, write_buff, sizeof(write_buff), 0);
+    printf("client send %lu charactors, content: %s\n", ret, write_buff);
     close(sockfd_client);
 
     return 0;

@@ -2,7 +2,7 @@
 #include <cassert>
 #include <iostream>
 
-Stereo::Stereo(const std::string location)
+Stereo::Stereo(const std::string& location)
     : _location(location)
 {
 }

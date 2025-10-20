@@ -5,7 +5,7 @@
 
 TurkeyAdapter::TurkeyAdapter(std::shared_ptr<const Turkey> turkey)
     : Duck(std::make_shared<FlyWithWings>(), std::make_shared<Quack>())
-    , _turkey(turkey)
+    , _turkey(std::move(turkey))
 {
 }
 

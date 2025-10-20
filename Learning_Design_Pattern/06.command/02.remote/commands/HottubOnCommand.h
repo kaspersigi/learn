@@ -6,13 +6,11 @@
 class HottubOnCommand : public Command
 {
 public:
-    explicit HottubOnCommand(std::shared_ptr<const Hottub> hottub);
+    explicit HottubOnCommand(const std::shared_ptr<const Hottub>& hottub);
     explicit HottubOnCommand(std::nullptr_t) = delete;
+    virtual ~HottubOnCommand();
 
     void execute() const;
-
-protected:
-    virtual ~HottubOnCommand() = default;
 
 private:
     std::weak_ptr<const Hottub> _hottub {};

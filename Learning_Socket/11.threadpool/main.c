@@ -24,7 +24,7 @@ void* service(void* arg)
     char read_buff[BUFFER_SIZE] = {};
     while (1) {
         memset(read_buff, 0, BUFFER_SIZE);
-        int ret_read = recv(sockfd_service, read_buff, BUFFER_SIZE, 0);
+        size_t ret_read = recv(sockfd_service, read_buff, BUFFER_SIZE, 0);
         if (0 == ret_read) {
             fputs("client disconnect...\n", stdout);
             break;

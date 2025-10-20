@@ -2,8 +2,8 @@
 #include "Amplifier.h"
 #include <iostream>
 
-CdPlayer::CdPlayer(std::string description, std::shared_ptr<Amplifier> amplifier)
-    : _description(description)
+CdPlayer::CdPlayer(std::string description, const std::shared_ptr<Amplifier>& amplifier)
+    : _description(std::move(description))
     , _amplifier(amplifier)
 {
 }
@@ -18,7 +18,7 @@ void CdPlayer::eject() const { std::cout << _description << " eject" << std::end
 
 void CdPlayer::play(std::string title)
 {
-    _title = title;
+    _title = std::move(title);
     std::cout << _description << " playing \"" << _title << "\"" << std::endl;
 }
 

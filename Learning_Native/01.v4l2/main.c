@@ -22,7 +22,7 @@ const int PIX_HEIGHT = 1080;
 // 用户层缓冲区保存结构体
 typedef struct buf_type {
     void* start;
-    int length;
+    size_t length;
 } buf_type;
 
 /**
@@ -53,7 +53,7 @@ int stream_on(int fd);
  * @param usr_buf 用户空间缓存
  * @return 返回图像帧的索引index，读取失败返回-1
  */
-int write_frame(int fd, buf_type* usr_buf);
+size_t write_frame(int fd, buf_type* usr_buf);
 
 /**
  * @brief stream_off 关闭视频流
@@ -320,7 +320,7 @@ int stream_on(int fd)
     return 0;
 }
 
-int write_frame(int fd, buf_type* usr_buf)
+size_t write_frame(int fd, buf_type* usr_buf)
 {
     struct v4l2_buffer v4l2_buf;
     v4l2_buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;

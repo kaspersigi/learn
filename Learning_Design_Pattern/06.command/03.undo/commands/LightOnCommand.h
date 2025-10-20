@@ -6,9 +6,9 @@
 class LightOnCommand : public Command
 {
 public:
-    virtual ~LightOnCommand() = default;
-    explicit LightOnCommand(std::shared_ptr<const Light> light);
+    explicit LightOnCommand(const std::shared_ptr<const Light>& light);
     explicit LightOnCommand(std::nullptr_t) = delete;
+    virtual ~LightOnCommand();
 
     void execute() const;
     void undo() const;

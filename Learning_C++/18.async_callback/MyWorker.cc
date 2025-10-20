@@ -5,7 +5,6 @@
 #include <thread>
 
 MyWorker::MyWorker()
-    : _cb(&MyWorker::callback)
 {
 }
 

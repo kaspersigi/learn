@@ -2,7 +2,7 @@
 #include "../interface/Subject.h"
 #include <iostream>
 
-HeatIndexDisplay::HeatIndexDisplay(std::shared_ptr<Subject> weatherData)
+HeatIndexDisplay::HeatIndexDisplay(const std::shared_ptr<Subject>& weatherData)
     : _weatherData(weatherData)
 {
 }

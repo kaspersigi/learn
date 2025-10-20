@@ -6,8 +6,8 @@
 class TV : public NonCopyable
 {
 public:
-    explicit TV(const std::string location);
-    ~TV() = default;
+    explicit TV(const std::string& location);
+    virtual ~TV() = default;
 
     void on() const;
     void off() const;

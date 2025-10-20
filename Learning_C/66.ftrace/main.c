@@ -3,7 +3,6 @@
 
 int main(int argc, char* argv[])
 {
-    int ret = 0;
     if (!ftrace_init())
         return -1;
 

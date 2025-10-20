@@ -1,10 +1,12 @@
 #include "StereoOnWithCDCommand.h"
 #include <iostream>
 
-StereoOnWithCDCommand::StereoOnWithCDCommand(std::shared_ptr<const Stereo> stereo)
+StereoOnWithCDCommand::StereoOnWithCDCommand(const std::shared_ptr<const Stereo>& stereo)
     : _stereo(stereo)
 {
 }
+
+StereoOnWithCDCommand::~StereoOnWithCDCommand() = default;
 
 void StereoOnWithCDCommand::execute() const
 {

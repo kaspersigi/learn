@@ -15,8 +15,8 @@ RemoteControl::~RemoteControl() = default;
 void RemoteControl::setCommand(int slot, std::shared_ptr<Command> onCommand, std::shared_ptr<Command> offCommand)
 {
     assert(slot <= SLOTS);
-    _onCommands[slot] = onCommand;
-    _offCommands[slot] = offCommand;
+    _onCommands[slot] = std::move(onCommand);
+    _offCommands[slot] = std::move(offCommand);
 }
 
 void RemoteControl::onButtonWasPushed(int slot) const

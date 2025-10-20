@@ -1,29 +1,24 @@
 #include "Turkey.h"
 #include "../interface/FlyBehavior.h"
 #include "../interface/QuackBehavior.h"
-#include <cassert>
 #include <iostream>
 
 Turkey::Turkey(std::shared_ptr<FlyBehavior> flyBehavior, std::shared_ptr<QuackBehavior> quackBehavior)
-    : _flyBehavior(flyBehavior)
-    , _quackBehavior(quackBehavior)
+    : _flyBehavior(std::move(flyBehavior))
+    , _quackBehavior(std::move(quackBehavior))
 {
-    assert(flyBehavior);
-    assert(quackBehavior);
 }
 
 Turkey::~Turkey() = default;
 
 void Turkey::setFlyBehavior(std::shared_ptr<FlyBehavior> flyBehavior)
 {
-    assert(flyBehavior);
-    _flyBehavior = flyBehavior;
+    _flyBehavior = std::move(flyBehavior);
 }
 
 void Turkey::setQuackBehavior(std::shared_ptr<QuackBehavior> quackBehavior)
 {
-    assert(quackBehavior);
-    _quackBehavior = quackBehavior;
+    _quackBehavior = std::move(quackBehavior);
 }
 
 void Turkey::performFly() const

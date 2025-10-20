@@ -1,7 +1,7 @@
 #include "GarageDoor.h"
 #include <iostream>
 
-GarageDoor::GarageDoor(const std::string location)
+GarageDoor::GarageDoor(const std::string& location)
     : _location(location)
 {
 }

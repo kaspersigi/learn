@@ -1,10 +1,12 @@
 #include "CeilingFanOnCommand.h"
 #include <iostream>
 
-CeilingFanOnCommand::CeilingFanOnCommand(std::shared_ptr<const CeilingFan> ceilingFan)
+CeilingFanOnCommand::CeilingFanOnCommand(const std::shared_ptr<const CeilingFan>& ceilingFan)
 {
     _ceilingFan = std::shared_ptr<const CeilingFan>(ceilingFan);
 }
+
+CeilingFanOnCommand::~CeilingFanOnCommand() = default;
 
 void CeilingFanOnCommand::execute() const
 {

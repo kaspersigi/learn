@@ -39,14 +39,13 @@ void* func(void* arg)
 
 int main(int argc, char* argv[])
 {
-    int ret = 0;
     if (!ftrace_init())
         return -1;
     ftrace_duration_begin("MainThread");
 
     LOGI("main thread nice = %d -- lzz", nice(0));
     pthread_t tid;
-    ret = pthread_create(&tid, NULL, func, NULL);
+    int ret = pthread_create(&tid, NULL, func, NULL);
     if (0 != ret) {
         LOGE("create new thread failed! -- lzz");
         return -1;

@@ -1,10 +1,12 @@
 #include "StereoOffCommand.h"
 #include <iostream>
 
-StereoOffCommand::StereoOffCommand(std::shared_ptr<const Stereo> stereo)
+StereoOffCommand::StereoOffCommand(const std::shared_ptr<const Stereo>& stereo)
     : _stereo(stereo)
 {
 }
+
+StereoOffCommand::~StereoOffCommand() = default;
 
 void StereoOffCommand::execute() const
 {

@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
     // int ret_write = fwrite(write_buff, 1, 12, fp);
 
     char read_buff[128] = {};
-    int ret_read = fread(read_buff, 1, 128, fp);
+    size_t ret_read = fread(read_buff, 1, 128, fp);
     for (int i = 0; i < ret_read; ++i)
         fputc(read_buff[i], stdout);
 

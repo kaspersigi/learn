@@ -197,7 +197,7 @@ void example_algorithms()
     }
 
     // ✅ count
-    int zeros = std::count(v.begin(), v.end(), 0);
+    size_t zeros = std::count(v.begin(), v.end(), 0);
     std::println("0 的个数: {}", zeros);
 
     // ✅ remove_if —— 移除偶数（注意：返回新逻辑结尾）

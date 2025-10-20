@@ -13,12 +13,12 @@ class WaitressImpl;
 class Waitress
 {
 public:
-    Waitress(std::shared_ptr<PancakeHouseMenu> pancakeHouseMenu, std::shared_ptr<DinerMenu> dinerMenu);
+    Waitress(const std::shared_ptr<PancakeHouseMenu>& pancakeHouseMenu, const std::shared_ptr<DinerMenu>& dinerMenu);
     ~Waitress();
 
     void printMenu() const;
     void printVegetarianMenu() const;
-    bool isItemVegetarian(std::string name) const;
+    bool isItemVegetarian(const std::string& name) const;
 
 private:
     std::unique_ptr<WaitressImpl> _impl;

@@ -6,7 +6,7 @@
 
 #if 0
 // 超时，count效率太差
-int four_sum_count(std::vector<int>& nums1, std::vector<int>& nums2, std::vector<int>& nums3, std::vector<int>& nums4)
+size_t four_sum_count(std::vector<int>& nums1, std::vector<int>& nums2, std::vector<int>& nums3, std::vector<int>& nums4)
 {
     size_t answer {};
     std::unordered_multiset<int> si1 {};
@@ -25,7 +25,7 @@ int four_sum_count(std::vector<int>& nums1, std::vector<int>& nums2, std::vector
 #endif
 
 #if 1
-int four_sum_count(std::vector<int>& nums1, std::vector<int>& nums2, std::vector<int>& nums3, std::vector<int>& nums4)
+size_t four_sum_count(std::vector<int>& nums1, std::vector<int>& nums2, std::vector<int>& nums3, std::vector<int>& nums4)
 {
     size_t answer {};
     size_t length { nums1.size() };

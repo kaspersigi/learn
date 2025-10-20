@@ -8,9 +8,9 @@ class SimpleRemoteControl : public NonCopyable
 {
 public:
     SimpleRemoteControl();
-    ~SimpleRemoteControl();
+    virtual ~SimpleRemoteControl();
 
-    void setCommand(std::shared_ptr<const Command> command);
+    void setCommand(const std::shared_ptr<const Command>& command);
     void buttonWasPressed() const;
 
 private:

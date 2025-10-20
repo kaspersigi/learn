@@ -6,7 +6,7 @@ int main(int argc, char* argv[])
 {
     int fd;
     char read_buf[128] = {};
-    int write_ret, read_ret;
+    size_t write_ret, read_ret;
     fd = open("./a.txt", O_RDONLY);
     // open()返回值为文件inode号，即文件标识符
     if (fd < 0) {

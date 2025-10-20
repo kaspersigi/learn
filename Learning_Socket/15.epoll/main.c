@@ -137,7 +137,7 @@ int main(int argc, char* argv[])
                     max_fd++;
                 } else if (epoll_event_list[i].events == EPOLLIN) {
                     memset(read_buff, 0, 128);
-                    int ret_read = recv(epoll_event_list[i].data.fd, read_buff, 128, 0);
+                    size_t ret_read = recv(epoll_event_list[i].data.fd, read_buff, 128, 0);
                     if (0 == ret_read) {
                         fputs("client disconnect...\n", stdout);
                         ret = epoll_ctl(epfd, EPOLL_CTL_DEL, epoll_event_list[i].data.fd, NULL);

@@ -6,8 +6,8 @@
 class Stereo : public NonCopyable
 {
 public:
-    explicit Stereo(const std::string location);
-    ~Stereo() = default;
+    explicit Stereo(const std::string& location);
+    virtual ~Stereo() = default;
 
     void on() const;
     void off() const;

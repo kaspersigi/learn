@@ -9,7 +9,7 @@ class Amplifier;
 class CdPlayer : public NonCopyable
 {
 public:
-    CdPlayer(std::string description, std::shared_ptr<Amplifier> amplifier);
+    CdPlayer(std::string description, const std::shared_ptr<Amplifier>& amplifier);
     ~CdPlayer();
 
     void on() const;

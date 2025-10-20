@@ -6,8 +6,8 @@
 class WaitressImpl {
 public:
     WaitressImpl(std::shared_ptr<PancakeHouseMenu> pancakeHouseMenu, std::shared_ptr<DinerMenu> dinerMenu)
-        : _pancakeHouseMenu(pancakeHouseMenu)
-        , _dinerMenu(dinerMenu)
+        : _pancakeHouseMenu(std::move(pancakeHouseMenu))
+        , _dinerMenu(std::move(dinerMenu))
     {
     }
 
@@ -47,7 +47,7 @@ public:
         }
     }
 
-    bool isItemVegetarian(std::string name) const
+    bool isItemVegetarian(const std::string& name) const
     {
         auto breakfastIterator = _pancakeHouseMenu->createIterator();
         while (breakfastIterator->hasNext()) {
@@ -86,7 +86,7 @@ private:
     std::shared_ptr<DinerMenu> _dinerMenu;
 };
 
-Waitress::Waitress(std::shared_ptr<PancakeHouseMenu> pancakeHouseMenu, std::shared_ptr<DinerMenu> dinerMenu)
+Waitress::Waitress(const std::shared_ptr<PancakeHouseMenu>& pancakeHouseMenu, const std::shared_ptr<DinerMenu>& dinerMenu)
     : _impl(std::make_unique<WaitressImpl>(pancakeHouseMenu, dinerMenu))
 {
 }
@@ -103,7 +103,7 @@ void Waitress::printVegetarianMenu() const
     _impl->printVegetarianMenu();
 }
 
-bool Waitress::isItemVegetarian(std::string name) const
+bool Waitress::isItemVegetarian(const std::string& name) const
 {
     return _impl->isItemVegetarian(name);
 }

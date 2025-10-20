@@ -2,15 +2,18 @@
 
 #include "../interface/NonCopyable.h"
 #include <string>
+#include <sys/types.h>
 
 class Hottub : public NonCopyable
 {
 public:
     Hottub() = default;
-    ~Hottub() = default;
+    virtual ~Hottub() = default;
 
-    enum State { OFF,
-        ON };
+    enum class State : u_int8_t {
+        OFF,
+        ON,
+    };
 
     void on() const;
     void off() const;

@@ -20,12 +20,12 @@ eg2:
 
 #if 0
 // 非递归 闭区间版本[]
-int binary_search(std::vector<int>& nums, int target)
+size_t binary_search(std::vector<int>& nums, int target)
 {
-    int left {};
-    int right = nums.size() - 1;
+    size_t left {};
+    size_t right = nums.size() - 1;
     while (left <= right) {
-        int middle = left + (right - left) / 2; // 防止int溢出
+        size_t middle = left + (right - left) / 2; // 防止int溢出
         if (target < nums[middle])
             right = middle - 1;
         else if (target > nums[middle])
@@ -39,12 +39,12 @@ int binary_search(std::vector<int>& nums, int target)
 
 #if 0
 // 非递归 左闭右开版本[)
-int binary_search(std::vector<int>& nums, int target)
+size_t binary_search(std::vector<int>& nums, int target)
 {
-    int left {};
-    int right = nums.size();
+    size_t left {};
+    size_t right = nums.size();
     while (left < right) {
-        int middle = left + (right - left) / 2; // 防止int溢出
+        size_t middle = left + (right - left) / 2; // 防止int溢出
         if (target < nums[middle])
             right = middle;
         else if (target > nums[middle])
@@ -58,10 +58,10 @@ int binary_search(std::vector<int>& nums, int target)
 
 #if 1
 // 递归 闭区间版本[]
-int binary_search(std::vector<int>& nums, int target, int left, int right)
+size_t binary_search(std::vector<int>& nums, int target, size_t left, size_t right)
 {
     if (left <= right) {
-        int middle = left + (right - left) / 2; // 防止int溢出
+        size_t middle = left + (right - left) / 2; // 防止int溢出
         if (target < nums[middle])
             return binary_search(nums, target, left, middle - 1);
         else if (target > nums[middle])
@@ -75,10 +75,10 @@ int binary_search(std::vector<int>& nums, int target, int left, int right)
 
 #if 0
 // 递归 左闭右开版本[)
-int binary_search(std::vector<int>& nums, int target, int left, int right)
+size_t binary_search(std::vector<int>& nums, int target, size_t left, size_t right)
 {
     if (left < right) {
-        int middle = left + (right - left) / 2; // 防止int溢出
+        size_t middle = left + (right - left) / 2; // 防止int溢出
         if (target < nums[middle])
             return binary_search(nums, target, left, middle);
         else if (target > nums[middle])

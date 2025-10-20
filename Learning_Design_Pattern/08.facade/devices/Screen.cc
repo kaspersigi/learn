@@ -2,7 +2,7 @@
 #include <iostream>
 
 Screen::Screen(std::string description)
-    : _description(description)
+    : _description(std::move(description))
 {
 }
 

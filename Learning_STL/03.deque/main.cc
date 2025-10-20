@@ -197,7 +197,7 @@ void example_algorithms()
     }
 
     // ✅ count
-    int zeros = std::count(dq.begin(), dq.end(), 0);
+    size_t zeros = std::count(dq.begin(), dq.end(), 0);
     std::println("0 的个数: {}", zeros);
 
     // ✅ remove_if + erase（惯用法）

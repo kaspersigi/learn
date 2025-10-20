@@ -6,8 +6,8 @@ public:
     Object();
     explicit Object(const char* ptr, std::size_t length = 0);
     Object(const Object& obj);
-    Object(Object&& obj);
-    Object& operator=(const Object& obj) & noexcept;
+    Object(Object&& obj) noexcept;
+    Object& operator=(const Object& obj);
     Object& operator=(Object&& obj) & noexcept;
     ~Object();
 
@@ -42,7 +42,7 @@ Object::Object(const Object& obj)
     }
 }
 
-Object::Object(Object&& obj)
+Object::Object(Object&& obj) noexcept
     : _ptr(obj._ptr)
     , _length(obj._length)
 {
@@ -51,7 +51,7 @@ Object::Object(Object&& obj)
     obj._length = 0;
 }
 
-Object& Object::operator=(const Object& obj) & noexcept
+Object& Object::operator=(const Object& obj)
 {
     std::cout << __PRETTY_FUNCTION__ << "拷贝赋值运算符" << std::endl;
     if (this == &obj) // 自赋值检查

@@ -1,7 +1,7 @@
 #include "CeilingFan.h"
 #include <iostream>
 
-CeilingFan::CeilingFan(const std::string location)
+CeilingFan::CeilingFan(const std::string& location)
     : _location(location)
 {
 }

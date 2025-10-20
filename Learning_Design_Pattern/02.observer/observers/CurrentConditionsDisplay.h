@@ -9,7 +9,7 @@ class Subject;
 class CurrentConditionsDisplay : public Observer, public DisplayElement
 {
 public:
-    explicit CurrentConditionsDisplay(std::shared_ptr<Subject> weatherData);
+    explicit CurrentConditionsDisplay(const std::shared_ptr<Subject>& weatherData);
     ~CurrentConditionsDisplay() override;
 
     virtual void update(float temperature, float humidity, float pressure) override;

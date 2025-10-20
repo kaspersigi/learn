@@ -24,7 +24,7 @@ void* service(void* arg)
     char read_buff[BUFFER_SIZE] = {};
     while (1) {
         memset(read_buff, 0, BUFFER_SIZE);
-        int ret_read = recv(sockfd_service, read_buff, BUFFER_SIZE, 0);
+        size_t ret_read = recv(sockfd_service, read_buff, BUFFER_SIZE, 0);
         if (0 == ret_read) {
             fputs("client disconnect...\n", stdout);
             break;
@@ -32,7 +32,7 @@ void* service(void* arg)
             fputs("server read failed...\n", stderr);
             break;
         } else {
-            printf("server recieve %d charactors from client %s, content: %s\n", ret_read, client_ip, read_buff);
+            printf("server recieve %lu charactors from client %s, content: %s\n", ret_read, client_ip, read_buff);
         }
     }
     printf("%s: %s, pid: %d, tid: %lx, child thread is closing..\n", __PRETTY_FUNCTION__, "child thread", getpid(), pthread_self());

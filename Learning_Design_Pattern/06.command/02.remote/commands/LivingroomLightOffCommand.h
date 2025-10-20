@@ -6,9 +6,9 @@
 class LivingroomLightOffCommand : public Command
 {
 public:
-    explicit LivingroomLightOffCommand(std::shared_ptr<const Light> light);
+    explicit LivingroomLightOffCommand(const std::shared_ptr<const Light>& light);
     explicit LivingroomLightOffCommand(std::nullptr_t) = delete;
-    virtual ~LivingroomLightOffCommand() = default;
+    virtual ~LivingroomLightOffCommand();
 
     void execute() const;
 

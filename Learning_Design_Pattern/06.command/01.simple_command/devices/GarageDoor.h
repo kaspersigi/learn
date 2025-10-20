@@ -6,7 +6,7 @@ class GarageDoor : public NonCopyable
 {
 public:
     GarageDoor() = default;
-    ~GarageDoor() = default;
+    virtual ~GarageDoor() = default;
 
     void up() const;
     void down() const;

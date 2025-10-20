@@ -2,8 +2,8 @@
 #include "DvdPlayer.h"
 #include <iostream>
 
-Projector::Projector(std::string description, std::shared_ptr<DvdPlayer> dvdPlayer)
-    : _description(description)
+Projector::Projector(std::string description, const std::shared_ptr<DvdPlayer>& dvdPlayer)
+    : _description(std::move(description))
     , _dvdPlayer(dvdPlayer)
 {
 }

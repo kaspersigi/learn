@@ -1,7 +1,7 @@
 #include "PancakeHouseMenuIterator.h"
 
 PancakeHouseMenuIterator::PancakeHouseMenuIterator(std::vector<std::shared_ptr<MenuItem>> items)
-    : _items(items)
+    : _items(std::move(items))
 {
 }
 

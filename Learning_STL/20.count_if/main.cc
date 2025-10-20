@@ -7,7 +7,7 @@ int main()
     std::vector<int> v = { 1, 2, 3, 4, 5, 6, 7, 8 };
 
     // Lambda 谓词：判断是否为偶数
-    int even_count = std::count_if(v.begin(), v.end(), [](int x) {
+    size_t even_count = std::count_if(v.begin(), v.end(), [](int x) {
         return x % 2 == 0;
     });
 
