@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
             perror("send faild");
             return -1;
         } else {
-            printf("client send %d bytes, content: %s\n", ret_write, write_buff);
+            printf("client send %lu bytes, content: %s\n", ret_write, write_buff);
         }
         sleep(1);
     }

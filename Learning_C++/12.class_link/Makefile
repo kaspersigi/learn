@@ -43,5 +43,6 @@ scan :
 	$(SCAN) make
 tidy :
 	$(TIDY) $(SRC) $(TIDY_FLAGS)
+	$(MAKE) -C libobject tidy
 check :
 	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)

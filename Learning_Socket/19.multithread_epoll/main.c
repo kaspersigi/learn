@@ -46,7 +46,7 @@ void* service(void* arg)
             break;
         } else if (ret_read < 0) {
             if (errno == EAGAIN) {
-                printf("server recieve %d bytes from client, content: %s\n", pos + 1, host_buff);
+                printf("server recieve %lu bytes from client, content: %s\n", pos + 1, host_buff);
                 break;
             }
             perror("revieve faild");

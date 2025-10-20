@@ -32,7 +32,7 @@ void* service(void* arg)
             fputs("server read failed...\n", stderr);
             break;
         } else {
-            printf("server recieve %d charactors from client %s, content: %s\n", ret_read, client_ip, read_buff);
+            printf("server recieve %lu charactors from client %s, content: %s\n", ret_read, client_ip, read_buff);
         }
     }
     printf("%s: %s, pid: %d, tid: %lx, child thread is closing..\n", __PRETTY_FUNCTION__, "child thread", getpid(), pthread_self());

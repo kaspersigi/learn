@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     // start read
     read_ret = read(fd, read_buf, 128);
 
-    printf("read_ret = %d\n", read_ret);
+    printf("read_ret = %lu\n", read_ret);
     printf("%s\n", read_buf);
     close(fd);
 

@@ -151,7 +151,7 @@ int main(int argc, char* argv[])
                         perror("revieve faild");
                         break;
                     } else {
-                        printf("server recieve %d charactors from client, content: %s\n", ret_read, read_buff);
+                        printf("server recieve %lu charactors from client, content: %s\n", ret_read, read_buff);
                     }
                 }
             }

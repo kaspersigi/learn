@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
     printf("open a.txt success, fd = %d\n", fd);
     write_ret = write(fd, buf, sizeof(buf));
     // write()返回值为实际写入内核的字节数
-    printf("write_ret = %d\n", write_ret);
+    printf("write_ret = %lu\n", write_ret);
     close(fd);
 
     return 0;
