@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IObject.h"
+class IObject;
 
 #ifdef __cplusplus
 extern "C" {

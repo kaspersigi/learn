@@ -30,7 +30,7 @@ $(TRG) : $(OBJ)
 	$(CXX) $(OBJ) -o $(TRG) $(CLANGXX_LINK_FLAGS)
 	rm -v $(OBJ)
 $(OBJ) : $(SRC)
-	$(CXX) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG) -I.
+	$(CXX) $(SRC) -c $(CXX_FLAGS) $(CLANGXX_FLAGS) $(DEBUG) -I./inc
 format :
 	$(FORMAT) $(SRC) -style=file -i
 clean :
@@ -38,6 +38,6 @@ clean :
 scan :
 	$(SCAN) make
 tidy :
-	$(TIDY) $(SRC) $(TIDY_FLAGS) -I.
+	$(TIDY) $(SRC) $(TIDY_FLAGS) -I./inc
 check :
 	valgrind --tool=memcheck --leak-check=full --show-reachable=yes --error-limit=no ./$(TRG)
