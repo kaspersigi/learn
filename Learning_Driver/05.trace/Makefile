@@ -21,7 +21,7 @@ all :
 	rm -fv *.o *.mod.c *.symvers *.order *.mod .[!.]* ..[!.]*
 format :
 	$(FORMAT) $(SRC) -style=file -i
-	$(FORMAT) include/trace/events/mychar.h -style=file -i
+	$(FORMAT) include/trace/events/mytrace.h -style=file -i
 clean :
 	rm -v $(MOD) compile_commands.json
 install : $(MOD)

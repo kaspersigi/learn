@@ -4,28 +4,32 @@
 #include <linux/init.h>
 #include <linux/module.h>
 #include <linux/uaccess.h>
-#include <linux/version.h>      // 用于内核版本判断
+#include <linux/version.h> // 用于内核版本判断
 
 // 启用 trace event 定义（必须在 include trace 头文件前定义）
 #define CREATE_TRACE_POINTS
-#include <trace/events/mychar.h>
+#include <trace/events/mytrace.h>
+
+// 记录总写入读取次数
+static atomic_t write_ops = ATOMIC_INIT(0);
+static atomic_t read_ops = ATOMIC_INIT(0);
 
 // 全局内核缓冲区，大小为 512 字节，初始化为 0
 static char hello_buffer[512] = { 0 };
 
 // 设备数量（次设备号范围）
-#define CHARDEV_NUM     6
+#define CHARDEV_NUM 6
 // 设备类和设备节点基础名称
-#define CHARDEV_NAME    "hello_world"
+#define CHARDEV_NAME "hello_world"
 
 // 设备管理结构体，用于统一管理设备号、cdev、class、device 等资源
 struct dev {
-    dev_t devno;                // 完整设备号（主+次）
-    int major;                  // 主设备号
-    int minor;                  // 起始次设备号
-    struct cdev *cdev;          // 字符设备结构
-    struct class *class;        // 设备类（用于 sysfs 和 udev）
-    struct device *device;      // 设备实例（用于 /dev 节点）
+    dev_t devno; // 完整设备号（主+次）
+    int major; // 主设备号
+    int minor; // 起始次设备号
+    struct cdev* cdev; // 字符设备结构
+    struct class* class; // 设备类（用于 sysfs 和 udev）
+    struct device* device; // 设备实例（用于 /dev 节点）
 };
 
 // 全局设备实例
@@ -39,31 +43,31 @@ static struct dev mydev = {
 };
 
 // 设备打开回调函数
-static int hello_open(struct inode *inode, struct file *fp)
+static int hello_open(struct inode* inode, struct file* fp)
 {
     printk(KERN_INFO "char module: %s open success!\n", CHARDEV_NAME);
     return 0;
 }
 
 // 设备关闭回调函数
-static int hello_release(struct inode *inode, struct file *fp)
+static int hello_release(struct inode* inode, struct file* fp)
 {
     printk(KERN_INFO "char module: %s release success!\n", CHARDEV_NAME);
     return 0;
 }
 
 // 设备读取回调函数
-static ssize_t hello_read(struct file *fp, char __user *buf, size_t size, loff_t *pos)
+static ssize_t hello_read(struct file* fp, char __user* buf, size_t size, loff_t* pos)
 {
-    unsigned long p = *pos;          // 当前文件偏移
-    unsigned int count = size;       // 用户请求读取的字节数
+    unsigned long p = *pos; // 当前文件偏移
+    unsigned int count = size; // 用户请求读取的字节数
 
     // 记录函数入口（Begin）
-    trace_char_slice('B', "hello_read");
+    trace_duration('B', "hello_read");
 
     // 情况1：已读到缓冲区末尾（EOF）
     if (p >= sizeof(hello_buffer)) {
-        trace_char_slice('E', "EOF");   // 明确标记 EOF 退出
+        trace_duration('E', "hello_read"); // 明确标记 EOF 退出
         return 0;
     }
 
@@ -74,30 +78,33 @@ static ssize_t hello_read(struct file *fp, char __user *buf, size_t size, loff_t
     // 将内核缓冲区数据拷贝到用户空间
     if (copy_to_user(buf, hello_buffer + p, count) != 0) {
         printk(KERN_ERR "read error: copy_to_user failed!\n");
-        trace_char_slice('E', "error"); // 标记错误退出
+        trace_duration('E', "hello_read"); // 标记错误退出
         return -EFAULT;
     }
 
     // 更新文件偏移
     *pos += count;
 
+    atomic_inc(&read_ops);
+    trace_counter(atomic_read(&read_ops), "read_counts");
+
     // 记录正常退出（End）
-    trace_char_slice('E', "success");
+    trace_duration('E', "hello_read");
     return count;
 }
 
 // 设备写入回调函数
-static ssize_t hello_write(struct file *fp, const char __user *buf, size_t size, loff_t *pos)
+static ssize_t hello_write(struct file* fp, const char __user* buf, size_t size, loff_t* pos)
 {
-    unsigned long p = *pos;          // 当前文件偏移
-    unsigned int count = size;       // 用户请求写入的字节数
+    unsigned long p = *pos; // 当前文件偏移
+    unsigned int count = size; // 用户请求写入的字节数
 
     // 记录函数入口（Begin）
-    trace_char_slice('B', "hello_write");
+    trace_duration('B', "hello_write");
 
     // 情况1：缓冲区已满，无法继续写入
     if (p >= sizeof(hello_buffer)) {
-        trace_char_slice('E', "full");  // 明确标记“缓冲区满”退出
+        trace_duration('E', "hello_write"); // 明确标记“缓冲区满”退出
         return -ENOSPC;
     }
 
@@ -109,15 +116,18 @@ static ssize_t hello_write(struct file *fp, const char __user *buf, size_t size,
     // 注意：buf 是用户缓冲区起始地址，不应加偏移；偏移由 hello_buffer + p 处理
     if (copy_from_user(hello_buffer + p, buf, count) != 0) {
         printk(KERN_ERR "write error: copy_from_user failed!\n");
-        trace_char_slice('E', "error"); // 标记错误退出
+        trace_duration('E', "hello_write"); // 标记错误退出
         return -EFAULT;
     }
 
     // 更新文件偏移
     *pos += count;
 
+    atomic_inc(&write_ops);
+    trace_counter(atomic_read(&write_ops), "write_counts");
+
     // 记录正常退出（End）
-    trace_char_slice('E', "success");
+    trace_duration('E', "hello_write");
     return count;
 }
 
@@ -178,7 +188,7 @@ static int __init hello_init(void)
     // 创建 CHARDEV_NUM 个设备节点（/dev/hello_world0, hello_world1, ...）
     for (unsigned int i = 0; i < CHARDEV_NUM; ++i) {
         dev_t devno = MKDEV(mydev.major, mydev.minor + i);
-        struct device *dev = device_create(mydev.class, NULL, devno, NULL, "%s%u", CHARDEV_NAME, i);
+        struct device* dev = device_create(mydev.class, NULL, devno, NULL, "%s%u", CHARDEV_NAME, i);
         if (IS_ERR(dev)) {
             printk(KERN_ERR "Failed to create %s%u\n", CHARDEV_NAME, i);
             // 简化处理：不回滚已创建设备（实际项目中建议清理）
