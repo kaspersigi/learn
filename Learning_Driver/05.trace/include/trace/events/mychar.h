@@ -2,6 +2,10 @@
 #undef TRACE_SYSTEM
 #define TRACE_SYSTEM mychar
 
+// echo 1 > /sys/kernel/debug/tracing/events/mychar/enable
+// echo > /sys/kernel/debug/tracing/trace
+// cat /sys/kernel/debug/tracing/trace
+
 #include <linux/tracepoint.h>
 
 TRACE_EVENT(char_slice,
