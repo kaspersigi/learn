@@ -1,4 +1,4 @@
-/* include/trace/events/mychar.h */
+/* include/trace/events/mytrace.h */
 #undef TRACE_SYSTEM
 #define TRACE_SYSTEM mytrace
 
