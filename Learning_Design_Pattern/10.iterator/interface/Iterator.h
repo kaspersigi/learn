@@ -3,8 +3,8 @@
 #include "NonCopyable.h"
 #include <memory>
 
-template<class T> class Iterator : public NonCopyable
-{
+template <class T>
+class Iterator : public NonCopyable {
 public:
     virtual ~Iterator() = default;
 

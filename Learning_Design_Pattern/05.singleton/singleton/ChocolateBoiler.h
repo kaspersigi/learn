@@ -2,8 +2,7 @@
 
 #include "NonCopyable.h"
 
-class ChocolateBoiler : public NonCopyable
-{
+class ChocolateBoiler : public NonCopyable {
 public:
     static ChocolateBoiler& getInstance();
 

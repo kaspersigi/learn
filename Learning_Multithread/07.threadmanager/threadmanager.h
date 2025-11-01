@@ -30,8 +30,7 @@
 #include <utility>
 #include <vector>
 
-class ThreadManager
-{
+class ThreadManager {
 public:
     // 任务优先级枚举：高优先级任务会被插入队列头部，优先执行
     enum class Priority {
@@ -59,9 +58,9 @@ public:
 
     // 禁用拷贝与移动语义：线程池是独占资源，不可复制或转移
     ThreadManager(const ThreadManager&) = delete;
-    ThreadManager& operator = (const ThreadManager&) = delete;
+    ThreadManager& operator=(const ThreadManager&) = delete;
     ThreadManager(ThreadManager&&) = delete;
-    ThreadManager& operator = (ThreadManager&&) = delete;
+    ThreadManager& operator=(ThreadManager&&) = delete;
 
     // 注册一个任务家族（Job Family）
     // 任务家族用于对任务分组管理，可独立同步、设置顺序性、统计性能
@@ -90,7 +89,7 @@ public:
     //   true: 任务成功入队
     //   false: 任务被拒绝（家族不存在、队列满、序列号无效等）
     [[nodiscard]] bool PostJob(Handle h,
-        JobFunc && job,
+        JobFunc&& job,
         std::uint64_t sequence = 0,
         Priority prio = Priority::Default,
         std::chrono::steady_clock::time_point deadline = {},
@@ -156,7 +155,7 @@ private:
     void WorkerLoop();
     // 在已持有 m_mtx 锁的前提下，将任务加入主队列（根据优先级决定插入位置）
     // 仅内部调用，外部不可直接访问
-    void EnqueueUnderLock(QItem && it);
+    void EnqueueUnderLock(QItem&& it);
 
     // 成员变量区 —— 所有成员均在线程安全保护下访问（通过 m_mtx）
 

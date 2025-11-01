@@ -3,8 +3,7 @@
 #include "../interface/Menu.h"
 #include <vector>
 
-class PancakeHouseMenuIterator : public Iterator<MenuItem>
-{
+class PancakeHouseMenuIterator : public Iterator<MenuItem> {
 public:
     explicit PancakeHouseMenuIterator(std::vector<std::shared_ptr<MenuItem>> items);
     virtual ~PancakeHouseMenuIterator() = default;

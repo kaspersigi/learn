@@ -2,8 +2,7 @@
 
 #include "../interface/CaffeineBeverageWithHook.h"
 
-class TeaWithHook : public CaffeineBeverageWithHook
-{
+class TeaWithHook : public CaffeineBeverageWithHook {
 public:
     TeaWithHook() = default;
     virtual ~TeaWithHook() = default;

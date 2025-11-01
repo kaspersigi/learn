@@ -2,8 +2,7 @@
 
 #include "../interface/QuackBehavior.h"
 
-class Squeak : public QuackBehavior
-{
+class Squeak : public QuackBehavior {
 public:
     Squeak() = default;
     virtual ~Squeak() = default;

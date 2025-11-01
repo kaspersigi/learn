@@ -5,8 +5,7 @@
 
 class Observer;
 
-class Subject : public NonCopyable
-{
+class Subject : public NonCopyable {
 public:
     virtual ~Subject() = default;
 

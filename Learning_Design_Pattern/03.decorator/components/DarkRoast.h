@@ -2,8 +2,7 @@
 
 #include "../interface/Beverage.h"
 
-class DarkRoast : public Beverage
-{
+class DarkRoast : public Beverage {
 public:
     DarkRoast();
     virtual ~DarkRoast() = default;

@@ -2,8 +2,7 @@
 
 #include "NonCopyable.h"
 
-class DisplayElement : public NonCopyable
-{
+class DisplayElement : public NonCopyable {
 public:
     virtual ~DisplayElement() = default;
 

@@ -7,8 +7,7 @@
 
 class Command;
 
-class RemoteControl : public NonCopyable
-{
+class RemoteControl : public NonCopyable {
 public:
     RemoteControl();
     virtual ~RemoteControl();

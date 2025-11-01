@@ -2,8 +2,7 @@
 
 #include "NonCopyable.h"
 
-class CaffeineBeverage : public NonCopyable
-{
+class CaffeineBeverage : public NonCopyable {
 public:
     CaffeineBeverage() = default;
 

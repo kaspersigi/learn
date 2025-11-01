@@ -5,8 +5,7 @@
 #include "NonCopyable.h"
 #include <memory>
 
-class Menu : public NonCopyable
-{
+class Menu : public NonCopyable {
 public:
     virtual ~Menu() = default;
 

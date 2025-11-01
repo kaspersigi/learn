@@ -3,8 +3,7 @@
 #include "Interface.h"
 #include <string>
 
-class IObject : public Interface
-{
+class IObject : public Interface {
 public:
     virtual ~IObject();
 

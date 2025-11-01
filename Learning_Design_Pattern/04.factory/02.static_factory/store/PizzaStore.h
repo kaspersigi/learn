@@ -4,8 +4,7 @@
 #include "../interface/Pizza.h"
 #include <memory>
 
-class PizzaStore : public NonCopyable
-{
+class PizzaStore : public NonCopyable {
 public:
     explicit PizzaStore() = default;
     ~PizzaStore() = default;

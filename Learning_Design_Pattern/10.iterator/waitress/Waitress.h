@@ -6,12 +6,11 @@
 class PancakeHouseMenu;
 class DinerMenu;
 class MenuItem;
-template<typename T>
-    class Iterator;
+template <typename T>
+class Iterator;
 class WaitressImpl;
 
-class Waitress
-{
+class Waitress {
 public:
     Waitress(const std::shared_ptr<PancakeHouseMenu>& pancakeHouseMenu, const std::shared_ptr<DinerMenu>& dinerMenu);
     ~Waitress();

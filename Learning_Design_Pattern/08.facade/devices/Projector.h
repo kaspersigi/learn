@@ -6,8 +6,7 @@
 
 class DvdPlayer;
 
-class Projector : public NonCopyable
-{
+class Projector : public NonCopyable {
 public:
     Projector(std::string description, const std::shared_ptr<DvdPlayer>& dvdPlayer);
     ~Projector();

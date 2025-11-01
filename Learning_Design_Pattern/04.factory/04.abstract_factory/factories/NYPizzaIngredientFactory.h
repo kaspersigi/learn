@@ -3,8 +3,7 @@
 #include "../interface/PizzaIngredientFactory.h"
 #include <memory>
 
-class NYPizzaIngredientFactory : public PizzaIngredientFactory
-{
+class NYPizzaIngredientFactory : public PizzaIngredientFactory {
 public:
     NYPizzaIngredientFactory() = default;
     virtual ~NYPizzaIngredientFactory() = default;

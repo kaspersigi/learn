@@ -2,8 +2,7 @@
 
 #include "NonCopyable.h"
 
-class QuackBehavior : public NonCopyable
-{
+class QuackBehavior : public NonCopyable {
 public:
     virtual ~QuackBehavior() = default;
 

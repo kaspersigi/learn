@@ -3,8 +3,7 @@
 #include "../interface/NonCopyable.h"
 #include <string>
 
-class CeilingFan : public NonCopyable
-{
+class CeilingFan : public NonCopyable {
 public:
     explicit CeilingFan(const std::string& location);
     virtual ~CeilingFan() = default;

@@ -2,8 +2,7 @@
 
 #include "../../interface/Veggies.h"
 
-class Garlic : public Veggies
-{
+class Garlic : public Veggies {
 public:
     Garlic() = default;
     virtual ~Garlic() = default;

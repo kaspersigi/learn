@@ -4,8 +4,7 @@
 #include <string>
 #include <sys/types.h>
 
-class Hottub : public NonCopyable
-{
+class Hottub : public NonCopyable {
 public:
     Hottub() = default;
     virtual ~Hottub() = default;

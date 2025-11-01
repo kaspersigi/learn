@@ -11,8 +11,7 @@
 #include <memory>
 #include <vector>
 
-class Pizza : public NonCopyable
-{
+class Pizza : public NonCopyable {
 public:
     virtual ~Pizza();
 

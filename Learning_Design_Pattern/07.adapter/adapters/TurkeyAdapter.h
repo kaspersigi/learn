@@ -5,8 +5,7 @@
 
 class Turkey;
 
-class TurkeyAdapter : public Duck
-{
+class TurkeyAdapter : public Duck {
 public:
     explicit TurkeyAdapter(std::shared_ptr<const Turkey> turkey);
     explicit TurkeyAdapter(std::nullptr_t) = delete;

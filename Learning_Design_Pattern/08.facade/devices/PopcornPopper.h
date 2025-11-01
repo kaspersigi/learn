@@ -3,8 +3,7 @@
 #include "../interface/NonCopyable.h"
 #include <string>
 
-class PopcornPopper : public NonCopyable
-{
+class PopcornPopper : public NonCopyable {
 public:
     explicit PopcornPopper(std::string description);
     ~PopcornPopper() = default;

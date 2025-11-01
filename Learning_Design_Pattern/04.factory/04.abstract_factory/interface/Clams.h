@@ -3,8 +3,7 @@
 #include "NonCopyable.h"
 #include <string>
 
-class Clams : public NonCopyable
-{
+class Clams : public NonCopyable {
 public:
     virtual ~Clams() = default;
 

@@ -2,8 +2,7 @@
 
 #include "../interface/Pizza.h"
 
-class ChicagoStyleVeggiePizza : public Pizza
-{
+class ChicagoStyleVeggiePizza : public Pizza {
 public:
     ChicagoStyleVeggiePizza();
     virtual ~ChicagoStyleVeggiePizza() = default;

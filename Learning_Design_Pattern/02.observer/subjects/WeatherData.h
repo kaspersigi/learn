@@ -6,8 +6,7 @@
 
 class Observer;
 
-class WeatherData : public Subject
-{
+class WeatherData : public Subject {
 public:
     WeatherData() = default;
     virtual ~WeatherData();

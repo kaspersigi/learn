@@ -3,8 +3,7 @@
 #include "NonCopyable.h"
 #include <string>
 
-class Dough
-{
+class Dough {
 public:
     virtual ~Dough() = default;
 

@@ -4,8 +4,7 @@
 #include <string>
 #include <sys/types.h>
 
-class CeilingFan : public NonCopyable
-{
+class CeilingFan : public NonCopyable {
 public:
     explicit CeilingFan(const std::string& location);
     ~CeilingFan() = default;

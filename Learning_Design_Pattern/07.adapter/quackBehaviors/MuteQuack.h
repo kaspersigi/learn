@@ -2,8 +2,7 @@
 
 #include "../interface/QuackBehavior.h"
 
-class MuteQuack : public QuackBehavior
-{
+class MuteQuack : public QuackBehavior {
 public:
     MuteQuack() = default;
     virtual ~MuteQuack() = default;

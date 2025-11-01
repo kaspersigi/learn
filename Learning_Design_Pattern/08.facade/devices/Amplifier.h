@@ -8,8 +8,7 @@ class Tuner;
 class DvdPlayer;
 class CdPlayer;
 
-class Amplifier : public NonCopyable
-{
+class Amplifier : public NonCopyable {
 public:
     explicit Amplifier(std::string description);
     ~Amplifier();

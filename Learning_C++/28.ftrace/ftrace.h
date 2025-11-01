@@ -3,8 +3,7 @@
 #include <mutex>
 #include <string>
 
-class Ftrace
-{
+class Ftrace {
 public:
     // Duration Events (B/E or X)
     static size_t ftrace_duration_begin(const std::string& message);

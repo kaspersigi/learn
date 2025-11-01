@@ -4,8 +4,7 @@
 #include <string>
 #include <vector>
 
-class PancakeHouseMenu : public Menu
-{
+class PancakeHouseMenu : public Menu {
 public:
     PancakeHouseMenu();
     virtual ~PancakeHouseMenu() = default;

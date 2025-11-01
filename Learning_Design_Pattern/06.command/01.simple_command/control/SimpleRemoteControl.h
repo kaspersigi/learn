@@ -4,8 +4,7 @@
 
 class Command;
 
-class SimpleRemoteControl : public NonCopyable
-{
+class SimpleRemoteControl : public NonCopyable {
 public:
     SimpleRemoteControl();
     virtual ~SimpleRemoteControl();

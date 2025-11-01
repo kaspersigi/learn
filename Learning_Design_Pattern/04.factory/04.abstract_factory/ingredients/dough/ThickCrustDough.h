@@ -3,8 +3,7 @@
 #include "../../interface/Dough.h"
 #include <string>
 
-class ThickCrustDough : public Dough
-{
+class ThickCrustDough : public Dough {
 public:
     ThickCrustDough() = default;
     virtual ~ThickCrustDough() = default;

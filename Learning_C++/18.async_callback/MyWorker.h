@@ -7,8 +7,7 @@ enum class Status {
     Error = false,
 };
 
-class MyWorker
-{
+class MyWorker {
 public:
     MyWorker();
     ~MyWorker();
@@ -19,8 +18,8 @@ public:
 protected:
     MyWorker(const MyWorker&) = delete;
     MyWorker(MyWorker&&) = delete;
-    MyWorker& operator = (const MyWorker&) = delete;
-    MyWorker& operator = (MyWorker&&) = delete;
+    MyWorker& operator=(const MyWorker&) = delete;
+    MyWorker& operator=(MyWorker&&) = delete;
 
 private:
     int main_worker() const;

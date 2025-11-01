@@ -2,8 +2,7 @@
 
 #include "../interface/QuackBehavior.h"
 
-class Gobble : public QuackBehavior
-{
+class Gobble : public QuackBehavior {
 public:
     Gobble() = default;
     virtual ~Gobble() = default;

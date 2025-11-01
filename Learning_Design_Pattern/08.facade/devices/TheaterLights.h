@@ -3,8 +3,7 @@
 #include "../interface/NonCopyable.h"
 #include <string>
 
-class TheaterLights : public NonCopyable
-{
+class TheaterLights : public NonCopyable {
 public:
     explicit TheaterLights(std::string description);
     ~TheaterLights() = default;

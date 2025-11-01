@@ -2,8 +2,7 @@
 
 #include "../../interface/Veggies.h"
 
-class BlackOlives : public Veggies
-{
+class BlackOlives : public Veggies {
 public:
     BlackOlives() = default;
     virtual ~BlackOlives() = default;

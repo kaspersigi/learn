@@ -2,8 +2,7 @@
 
 #include "../interface/QuackBehavior.h"
 
-class FakeQuack : public QuackBehavior
-{
+class FakeQuack : public QuackBehavior {
 public:
     FakeQuack() = default;
     virtual ~FakeQuack() = default;

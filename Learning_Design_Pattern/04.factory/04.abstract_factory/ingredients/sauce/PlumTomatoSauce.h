@@ -3,8 +3,7 @@
 #include "../../interface/Sauce.h"
 #include <string>
 
-class PlumTomatoSauce : public Sauce
-{
+class PlumTomatoSauce : public Sauce {
 public:
     PlumTomatoSauce() = default;
     virtual ~PlumTomatoSauce() = default;

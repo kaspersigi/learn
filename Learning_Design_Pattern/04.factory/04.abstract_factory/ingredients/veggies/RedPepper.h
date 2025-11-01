@@ -2,8 +2,7 @@
 
 #include "../../interface/Veggies.h"
 
-class RedPepper : public Veggies
-{
+class RedPepper : public Veggies {
 public:
     RedPepper() = default;
     virtual ~RedPepper() = default;

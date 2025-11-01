@@ -6,8 +6,7 @@
 
 class Subject;
 
-class CurrentConditionsDisplay : public Observer, public DisplayElement
-{
+class CurrentConditionsDisplay : public Observer, public DisplayElement {
 public:
     explicit CurrentConditionsDisplay(const std::shared_ptr<Subject>& weatherData);
     ~CurrentConditionsDisplay() override;

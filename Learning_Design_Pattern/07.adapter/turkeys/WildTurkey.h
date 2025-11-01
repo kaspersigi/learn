@@ -2,8 +2,7 @@
 
 #include "../interface/Turkey.h"
 
-class WildTurkey : public Turkey
-{
+class WildTurkey : public Turkey {
 public:
     WildTurkey();
     virtual ~WildTurkey() = default;

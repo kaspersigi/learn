@@ -5,8 +5,7 @@
 
 class Duck;
 
-class DuckAdapter : public Turkey
-{
+class DuckAdapter : public Turkey {
 public:
     explicit DuckAdapter(std::shared_ptr<const Duck> duck);
     virtual ~DuckAdapter();

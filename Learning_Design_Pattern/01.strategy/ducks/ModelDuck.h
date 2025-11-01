@@ -2,8 +2,7 @@
 
 #include "../interface/Duck.h"
 
-class ModelDuck : public Duck
-{
+class ModelDuck : public Duck {
 public:
     ModelDuck();
     virtual ~ModelDuck() = default;

@@ -8,8 +8,7 @@ extern "C" {
 #include <pthread.h>
 }
 
-class MyWorker
-{
+class MyWorker {
 public:
     MyWorker() = default;
     ~MyWorker() = default;
@@ -19,8 +18,8 @@ public:
 protected:
     MyWorker(const MyWorker&) = delete;
     MyWorker(MyWorker&&) = delete;
-    MyWorker& operator = (const MyWorker&) = delete;
-    MyWorker& operator = (MyWorker&&) = delete;
+    MyWorker& operator=(const MyWorker&) = delete;
+    MyWorker& operator=(MyWorker&&) = delete;
 
 private:
     int main_worker() const;

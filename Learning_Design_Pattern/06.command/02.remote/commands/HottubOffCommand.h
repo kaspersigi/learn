@@ -3,8 +3,7 @@
 #include "../interface/Command.h"
 #include <memory>
 
-class HottubOffCommand : public Command
-{
+class HottubOffCommand : public Command {
 public:
     explicit HottubOffCommand(const std::shared_ptr<const Hottub>& hottub);
     explicit HottubOffCommand(std::nullptr_t) = delete;

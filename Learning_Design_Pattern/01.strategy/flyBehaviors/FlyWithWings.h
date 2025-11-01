@@ -2,8 +2,7 @@
 
 #include "../interface/FlyBehavior.h"
 
-class FlyWithWings : public FlyBehavior
-{
+class FlyWithWings : public FlyBehavior {
 public:
     FlyWithWings() = default;
     virtual ~FlyWithWings() = default;

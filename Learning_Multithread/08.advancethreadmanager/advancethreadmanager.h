@@ -34,8 +34,7 @@
 #include <utility>
 #include <vector>
 
-class AdvanceThreadManager
-{
+class AdvanceThreadManager {
 public:
     // 任务优先级枚举：高优先级任务插入队列头部，优先执行
     enum class Priority {
@@ -68,9 +67,9 @@ public:
 
     // 禁用拷贝与移动语义：线程池是独占资源，不可复制或转移
     AdvanceThreadManager(const AdvanceThreadManager&) = delete;
-    AdvanceThreadManager& operator = (const AdvanceThreadManager&) = delete;
+    AdvanceThreadManager& operator=(const AdvanceThreadManager&) = delete;
     AdvanceThreadManager(AdvanceThreadManager&&) = delete;
-    AdvanceThreadManager& operator = (AdvanceThreadManager&&) = delete;
+    AdvanceThreadManager& operator=(AdvanceThreadManager&&) = delete;
 
     // 注册一个任务家族（Job Family）
     // 任务家族用于对任务分组管理，可独立同步、设置顺序性、统计性能
@@ -99,7 +98,7 @@ public:
     //   true: 任务成功入队
     //   false: 任务被拒绝（家族不存在、队列满、序列号无效等）
     [[nodiscard]] bool PostJob(Handle h,
-        JobFunc && job,
+        JobFunc&& job,
         std::uint64_t sequence = 0,
         Priority prio = Priority::Default,
         std::chrono::steady_clock::time_point deadline = {},
@@ -170,13 +169,13 @@ private:
 
     // 尝试获取一个任务（先本地，后窃取）
     // 返回 true 表示成功获取，job 被填充；false 表示无任务
-    bool TryGetJob(QItem & job, std::size_t workerId);
+    bool TryGetJob(QItem& job, std::size_t workerId);
 
     // 将任务入队（根据家族是否有序，决定分发策略）
-    void Enqueue(QItem && it, Handle h_for_ordered_dispatch);
+    void Enqueue(QItem&& it, Handle h_for_ordered_dispatch);
 
     // 将任务插入指定队列（根据优先级决定插入位置）
-    void EnqueueTo(std::deque<QItem> & q, QItem && it);
+    void EnqueueTo(std::deque<QItem>& q, QItem&& it);
 
 private:
     // 成员变量区 —— 所有成员均在线程安全保护下访问

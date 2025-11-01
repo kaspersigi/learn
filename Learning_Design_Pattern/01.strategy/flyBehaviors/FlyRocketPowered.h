@@ -2,8 +2,7 @@
 
 #include "../interface/FlyBehavior.h"
 
-class FlyRocketPowered : public FlyBehavior
-{
+class FlyRocketPowered : public FlyBehavior {
 public:
     FlyRocketPowered() = default;
     virtual ~FlyRocketPowered() = default;

@@ -5,8 +5,7 @@
 
 class Beverage;
 
-class Mocha : public CondimentDecorator
-{
+class Mocha : public CondimentDecorator {
 public:
     explicit Mocha(std::unique_ptr<Beverage> beverage);
     ~Mocha() override;

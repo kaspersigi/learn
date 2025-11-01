@@ -2,8 +2,7 @@
 
 #include "NonCopyable.h"
 
-class FlyBehavior : public NonCopyable
-{
+class FlyBehavior : public NonCopyable {
 public:
     virtual ~FlyBehavior() = default;
 

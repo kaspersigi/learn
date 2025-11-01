@@ -7,8 +7,7 @@
 
 class Command;
 
-class RemoteControlWithUndo : public NonCopyable
-{
+class RemoteControlWithUndo : public NonCopyable {
 public:
     RemoteControlWithUndo();
     ~RemoteControlWithUndo();

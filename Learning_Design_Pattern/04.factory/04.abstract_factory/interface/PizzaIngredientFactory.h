@@ -11,8 +11,7 @@ class Pepperoni;
 class Sauce;
 class Veggies;
 
-class PizzaIngredientFactory : public NonCopyable
-{
+class PizzaIngredientFactory : public NonCopyable {
 public:
     virtual ~PizzaIngredientFactory() = default;
 

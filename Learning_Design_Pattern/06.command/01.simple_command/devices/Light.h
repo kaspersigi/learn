@@ -2,8 +2,7 @@
 
 #include "../interface/NonCopyable.h"
 
-class Light : public NonCopyable
-{
+class Light : public NonCopyable {
 public:
     Light() = default;
     virtual ~Light() = default;

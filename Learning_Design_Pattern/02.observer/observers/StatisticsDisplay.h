@@ -6,8 +6,7 @@
 
 class Subject;
 
-class StatisticsDisplay : public Observer, public DisplayElement
-{
+class StatisticsDisplay : public Observer, public DisplayElement {
 public:
     explicit StatisticsDisplay(const std::shared_ptr<Subject>& weatherData);
     ~StatisticsDisplay() override;

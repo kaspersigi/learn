@@ -13,8 +13,7 @@ class TheaterLights;
 class Screen;
 class PopcornPopper;
 
-class HomeTheaterFacade : public NonCopyable
-{
+class HomeTheaterFacade : public NonCopyable {
 public:
     HomeTheaterFacade(const std::shared_ptr<Amplifier>& amp, const std::shared_ptr<Tuner>& tuner, const std::shared_ptr<DvdPlayer>& dvd, const std::shared_ptr<CdPlayer>& cd, const std::shared_ptr<Projector>& projector, const std::shared_ptr<TheaterLights>& lights, const std::shared_ptr<Screen>& screen, const std::shared_ptr<PopcornPopper>& popper);
     ~HomeTheaterFacade();

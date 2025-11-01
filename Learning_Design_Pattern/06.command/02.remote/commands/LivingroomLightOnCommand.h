@@ -3,8 +3,7 @@
 #include "../interface/Command.h"
 #include <memory>
 
-class LivingroomLightOnCommand : public Command
-{
+class LivingroomLightOnCommand : public Command {
 public:
     explicit LivingroomLightOnCommand(const std::shared_ptr<const Light>& light);
     explicit LivingroomLightOnCommand(std::nullptr_t) = delete;

@@ -4,8 +4,7 @@
 #include <memory>
 #include <string>
 
-class IObject : public Interface
-{
+class IObject : public Interface {
 protected:
     IObject();
     virtual ~IObject();

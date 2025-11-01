@@ -3,8 +3,7 @@
 #include "../../interface/Cheese.h"
 #include <string>
 
-class ParmesanCheese : public Cheese
-{
+class ParmesanCheese : public Cheese {
 public:
     ParmesanCheese() = default;
     virtual ~ParmesanCheese() = default;

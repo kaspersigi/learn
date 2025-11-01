@@ -3,8 +3,7 @@
 #include "../../interface/Clams.h"
 #include <string>
 
-class FreshClams : public Clams
-{
+class FreshClams : public Clams {
 public:
     FreshClams() = default;
     virtual ~FreshClams() = default;

@@ -5,8 +5,7 @@
 
 class Beverage;
 
-class Soy : public CondimentDecorator
-{
+class Soy : public CondimentDecorator {
 public:
     explicit Soy(std::unique_ptr<Beverage> beverage);
     ~Soy() override;

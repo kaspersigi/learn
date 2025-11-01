@@ -3,8 +3,7 @@
 #include "NonCopyable.h"
 #include <string>
 
-class Cheese : public NonCopyable
-{
+class Cheese : public NonCopyable {
 public:
     virtual ~Cheese() = default;
 

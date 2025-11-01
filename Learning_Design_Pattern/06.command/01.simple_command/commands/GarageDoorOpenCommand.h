@@ -3,8 +3,7 @@
 #include "../interface/Command.h"
 #include <memory>
 
-class GarageDoorOpenCommand : public Command
-{
+class GarageDoorOpenCommand : public Command {
 public:
     explicit GarageDoorOpenCommand(const std::shared_ptr<const GarageDoor>& garageDoor);
     explicit GarageDoorOpenCommand(std::nullptr_t) = delete;

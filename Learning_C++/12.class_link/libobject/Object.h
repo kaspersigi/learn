@@ -2,8 +2,7 @@
 
 #include "IObject.h"
 
-class Object : public IObject
-{
+class Object : public IObject {
 public:
     Object();
     virtual ~Object();

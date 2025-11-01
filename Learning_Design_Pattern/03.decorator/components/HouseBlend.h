@@ -2,8 +2,7 @@
 
 #include "../interface/Beverage.h"
 
-class HouseBlend : public Beverage
-{
+class HouseBlend : public Beverage {
 public:
     HouseBlend();
     virtual ~HouseBlend() = default;

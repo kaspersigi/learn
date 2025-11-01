@@ -6,8 +6,7 @@
 class FlyBehavior;
 class QuackBehavior;
 
-class Duck : public NonCopyable
-{
+class Duck : public NonCopyable {
 public:
     virtual ~Duck();
 

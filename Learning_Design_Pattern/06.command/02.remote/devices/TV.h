@@ -3,8 +3,7 @@
 #include "../interface/NonCopyable.h"
 #include <string>
 
-class TV : public NonCopyable
-{
+class TV : public NonCopyable {
 public:
     explicit TV(const std::string& location);
     virtual ~TV() = default;

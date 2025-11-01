@@ -3,8 +3,7 @@
 #include "NonCopyable.h"
 #include <string>
 
-class MenuItem : public NonCopyable
-{
+class MenuItem : public NonCopyable {
 public:
     MenuItem(std::string name, std::string description, bool vegetarian, double price);
     virtual ~MenuItem() = default;

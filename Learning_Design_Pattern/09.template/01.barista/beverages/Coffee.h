@@ -2,8 +2,7 @@
 
 #include "../interface/CaffeineBeverage.h"
 
-class Coffee : public CaffeineBeverage
-{
+class Coffee : public CaffeineBeverage {
 public:
     Coffee() = default;
     virtual ~Coffee() = default;

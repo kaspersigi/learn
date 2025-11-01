@@ -3,8 +3,7 @@
 #include "../interface/Command.h"
 #include <memory>
 
-class LightOnCommand : public Command
-{
+class LightOnCommand : public Command {
 public:
     explicit LightOnCommand(const std::shared_ptr<const Light>& light);
     explicit LightOnCommand(std::nullptr_t) = delete;

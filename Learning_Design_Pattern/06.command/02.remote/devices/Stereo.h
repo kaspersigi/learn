@@ -3,8 +3,7 @@
 #include "../interface/NonCopyable.h"
 #include <string>
 
-class Stereo : public NonCopyable
-{
+class Stereo : public NonCopyable {
 public:
     explicit Stereo(const std::string& location);
     virtual ~Stereo() = default;

@@ -2,8 +2,7 @@
 
 #include "../interface/FlyBehavior.h"
 
-class FlyNoWay : public FlyBehavior
-{
+class FlyNoWay : public FlyBehavior {
 public:
     FlyNoWay() = default;
     virtual ~FlyNoWay() = default;

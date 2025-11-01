@@ -2,8 +2,7 @@
 
 #include "Beverage.h"
 
-class CondimentDecorator : public Beverage
-{
+class CondimentDecorator : public Beverage {
 public:
     virtual ~CondimentDecorator() = default;
 

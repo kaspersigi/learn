@@ -3,8 +3,7 @@
 #include "../interface/NonCopyable.h"
 #include <string>
 
-class Screen : public NonCopyable
-{
+class Screen : public NonCopyable {
 public:
     explicit Screen(std::string description);
     ~Screen() = default;

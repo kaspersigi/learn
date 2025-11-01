@@ -2,8 +2,7 @@
 
 #include "../interface/PizzaStore.h"
 
-class NYPizzaStore : public PizzaStore
-{
+class NYPizzaStore : public PizzaStore {
 public:
     NYPizzaStore() = default;
     virtual ~NYPizzaStore() = default;
@@ -13,6 +12,6 @@ public:
 protected:
     NYPizzaStore(const NYPizzaStore&) = delete;
     NYPizzaStore(NYPizzaStore&&) = delete;
-    NYPizzaStore& operator = (const NYPizzaStore&) = delete;
-    NYPizzaStore& operator = (NYPizzaStore&&) = delete;
+    NYPizzaStore& operator=(const NYPizzaStore&) = delete;
+    NYPizzaStore& operator=(NYPizzaStore&&) = delete;
 };

@@ -2,8 +2,7 @@
 
 #include "../interface/Beverage.h"
 
-class Decaf : public Beverage
-{
+class Decaf : public Beverage {
 public:
     Decaf();
     virtual ~Decaf() = default;

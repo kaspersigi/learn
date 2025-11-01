@@ -5,8 +5,7 @@
 
 class Beverage;
 
-class Whip : public CondimentDecorator
-{
+class Whip : public CondimentDecorator {
 public:
     explicit Whip(std::unique_ptr<Beverage> beverage);
     ~Whip() override;

@@ -3,8 +3,7 @@
 #include "../interface/Command.h"
 #include <memory>
 
-class StereoOnWithCDCommand : public Command
-{
+class StereoOnWithCDCommand : public Command {
 public:
     explicit StereoOnWithCDCommand(const std::shared_ptr<const Stereo>& stereo);
     explicit StereoOnWithCDCommand(std::nullptr_t) = delete;

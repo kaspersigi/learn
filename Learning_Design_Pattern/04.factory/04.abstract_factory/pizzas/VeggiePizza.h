@@ -5,8 +5,7 @@
 
 class PizzaIngredientFactory;
 
-class VeggiePizza : public Pizza
-{
+class VeggiePizza : public Pizza {
 public:
     explicit VeggiePizza(std::unique_ptr<PizzaIngredientFactory> f);
     explicit VeggiePizza(std::nullptr_t) = delete;

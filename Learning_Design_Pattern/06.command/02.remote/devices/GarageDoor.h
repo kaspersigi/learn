@@ -3,8 +3,7 @@
 #include "../interface/NonCopyable.h"
 #include <string>
 
-class GarageDoor : public NonCopyable
-{
+class GarageDoor : public NonCopyable {
 public:
     explicit GarageDoor(const std::string& location);
     virtual ~GarageDoor() = default;

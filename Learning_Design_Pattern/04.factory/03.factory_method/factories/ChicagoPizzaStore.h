@@ -2,8 +2,7 @@
 
 #include "../interface/PizzaStore.h"
 
-class ChicagoPizzaStore : public PizzaStore
-{
+class ChicagoPizzaStore : public PizzaStore {
 public:
     ChicagoPizzaStore() = default;
     virtual ~ChicagoPizzaStore() = default;

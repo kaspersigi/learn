@@ -2,8 +2,7 @@
 
 #include "../interface/NonCopyable.h"
 
-class GarageDoor : public NonCopyable
-{
+class GarageDoor : public NonCopyable {
 public:
     GarageDoor() = default;
     virtual ~GarageDoor() = default;

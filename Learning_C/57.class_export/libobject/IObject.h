@@ -2,8 +2,7 @@
 
 #include <iostream>
 
-class IObject
-{
+class IObject {
 public:
     virtual ~IObject();
 
@@ -11,8 +10,8 @@ protected:
     IObject();
     IObject(const IObject&) = delete;
     IObject(IObject&&) = delete;
-    IObject& operator = (const IObject&) = delete;
-    IObject& operator = (IObject&&) = delete;
+    IObject& operator=(const IObject&) = delete;
+    IObject& operator=(IObject&&) = delete;
 
 public:
     static IObject* Instance();
