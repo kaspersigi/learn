@@ -61,8 +61,8 @@ git clone git@github.com:kaspersigi/learn.git
 # git clone https://github.com/kaspersigi/learn.git
 git clone git@github.com:kaspersigi/perf_tools.git
 # git clone https://github.com/kaspersigi/perf_tools.git
-git clone git@github.com:kaspersigi/CAMERA.LA.5.0.r1-03800-pakala.0-1.git
-# git clone https://github.com/kaspersigi/CAMERA.LA.5.0.r1-03800-pakala.0-1.git
+git clone git@github.com:kaspersigi/CAMERA.LA.5.0.r1-07900-pakala.0-1.git
+# git clone https://github.com/kaspersigi/CAMERA.LA.5.0.r1-07900-pakala.0-1.git
 git clone git@github.com:kaspersigi/Camera.git
 # git clone https://github.com/kaspersigi/Camera.git
 git clone git@github.com:kaspersigi/Camera2.git
@@ -73,6 +73,8 @@ git clone git@github.com:kaspersigi/MyCamera.git
 # git clone https://github.com/kaspersigi/MyCamera.git
 git clone git@github.com:kaspersigi/NoUI.git
 # git clone https://github.com/kaspersigi/NoUI.git
+git clone git@github.com:kaspersigi/libcamera.git
+# git clone https://github.com/kaspersigi/libcamera.git
 # git clone --single-branch -b oppo/sm8750_v_15.0.1_find_x8_ultra --depth 1 git@github.com:oppo-source/android_kernel_oppo_sm8750.git
 # git clone --single-branch -b oppo/sm8750_v_15.0.1_find_x8_ultra --depth 1 https://github.com/oppo-source/android_kernel_oppo_sm8750.git
 # git clone --single-branch -b nanopi6-v6.1.y --depth 1 git@github.com:friendlyarm/kernel-rockchip.git
