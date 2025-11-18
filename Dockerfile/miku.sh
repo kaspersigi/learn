@@ -82,7 +82,8 @@ git clone git@github.com:kaspersigi/libcamera.git
 # git clone --single-branch -b nanopi6-v6.1.y --depth 1 git@github.com:friendlyarm/kernel-rockchip.git
 # git clone --single-branch -b nanopi6-v6.1.y --depth 1 https://github.com/friendlyarm/kernel-rockchip.git
 # git clone --single-branch -b linux-rolling-stable --depth 1 git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
-git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+# git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+git clone --single-branch -b linux-rolling-stable --depth 1 https://mirrors.ustc.edu.cn/linux.git
 # git clone --single-branch -b v1.7.0 --depth 1 git@github.com:raspberrypi/rpicam-apps.git
 # git clone --single-branch -b v1.7.0 --depth 1 https://github.com/raspberrypi/rpicam-apps.git
 # git clone --single-branch -b v0.5.0+rpt20250429 --depth 1 git@github.com:raspberrypi/libcamera.git
