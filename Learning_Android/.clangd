@@ -7,12 +7,12 @@ CompileFlags:
     -stdlib=libc++,
     -Wall,
     -Wno-unused,
-    -I/home/miku/linux/android-ndk-r27d/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include,
-    -I/home/miku/linux/android-ndk-r27d/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include,
-    -I/home/miku/linux/android-ndk-r27d/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include,
-    -I/home/miku/linux/android-ndk-r27d/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include,
-    -I/home/miku/linux/android-ndk-r27d/toolchains/llvm/prebuilt/windows-x86_64/lib/clang/18/include,
-    -I/home/miku/linux/android-ndk-r27d/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/18/include,
+    -I/mnt/develop/android-ndk-r27d/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include,
+    -I/mnt/develop/android-ndk-r27d/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include,
+    -I/mnt/develop/android-ndk-r27d/toolchains/llvm/prebuilt/darwin-x86_64/sysroot/usr/include,
+    -I/mnt/develop/android-ndk-r27d/toolchains/llvm/prebuilt/linux-x86_64/lib/clang/18/include,
+    -I/mnt/develop/android-ndk-r27d/toolchains/llvm/prebuilt/windows-x86_64/lib/clang/18/include,
+    -I/mnt/develop/android-ndk-r27d/toolchains/llvm/prebuilt/darwin-x86_64/lib/clang/18/include,
   ]
 
   # 指定编译器路径（确保 clangd 使用与你相同的 clang++-21）

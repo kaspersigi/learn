@@ -5,7 +5,7 @@
 TRG = main
 OBJ = main.o
 SRC = main.cc
-VPATH = /home/miku/learn
+VPATH = /mnt/develop/linux/learn
 LLVM = -21
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)

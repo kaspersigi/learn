@@ -6,7 +6,7 @@ obj-m := $(TRG).o
 ccflags-y += -I$(src)/include
 else
 PWD := $(shell pwd)
-KDIR := ~/linux/linux
+KDIR := /mnt/develop/linux/linux
 LLVM := -21
 ARCH := arm64
 C_FLAGS := LLVM=$(LLVM) ARCH=$(ARCH)

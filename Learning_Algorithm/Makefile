@@ -5,7 +5,7 @@
 TRG = main
 OBJ = main.o
 SRC = main.cc
-VPATH = /home/miku/learn/Learning_Algorithm
+VPATH = /mnt/develop/linux/learn/Learning_Algorithm
 LLVM = -21
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)

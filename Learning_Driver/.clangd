@@ -7,10 +7,10 @@ CompileFlags:
     -Wall,
     -Wno-unused,
     -nostdlib,
-    -I/home/miku/linux/linux/include,
-    -I/home/miku/linux/linux/arch/arm64/include/,
-    -I/home/miku/linux/linux/arch/arm64/include/uapi/,
-    -I/home/miku/linux/linux/arch/arm64/include/generated/,
+    -I/mnt/develop/linux/linux/include,
+    -I/mnt/develop/linux/linux/arch/arm64/include/,
+    -I/mnt/develop/linux/linux/arch/arm64/include/uapi/,
+    -I/mnt/develop/linux/linux/arch/arm64/include/generated/,
   ]
 
   # 指定编译器路径（确保 clangd 使用与你相同的 clang++-21）

@@ -5,7 +5,7 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
-VPATH = /home/miku/learn/Learning_Native
+VPATH = /mnt/develop/linux/learn/Learning_Native
 LLVM = -21
 CONFIG = llvm-config$(LLVM)
 ARCH = $(shell $(CONFIG) --host-target)

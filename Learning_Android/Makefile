@@ -5,7 +5,7 @@
 TRG = main
 OBJ = main.o
 SRC = main.c
-VPATH = /home/miku/learn/Learning_Android
+VPATH = /mnt/develop/linux/learn/Learning_Android
 NDK = /mnt/develop/android-ndk-r27d
 ARCH = $(shell uname -m)
 PLATFORM = darwin
