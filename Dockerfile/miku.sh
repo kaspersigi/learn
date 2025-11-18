@@ -9,6 +9,7 @@ USER_PATH="/mnt/c/Users/$USER"
 TEMP_PATH="/mnt/c/Users/Public/Downloads"
 ADB_PATH="$USER_PATH/Downloads/platform-tools"
 KEY_PATH="$TOP_PATH/key"
+DEVELOP_PATH="/mnt/develop"
 PLATFORM="darwin"
 ARCH=$(uname -m)
 if [ "$ARCH" = "x86_64" ]; then
@@ -41,9 +42,10 @@ ssh -T -p 443 git@github.com
 
 cp .wslconfig $USER_PATH
 cp .vimrc ~
-mkdir -p ~/linux/virt
-unzip $TEMP_PATH/android-ndk-r27d-$PLATFORM.zip -d ~/linux
-chmod -R a+x ~/linux/android-ndk-r27d
+mkdir -p $DEVELOP_PATH/linux
+cp -R $TOP_PATH/virt $DEVELOP_PATH/linux/
+unzip $TEMP_PATH/android-ndk-r27d-$PLATFORM.zip -d $DEVELOP_PATH
+chmod -R a+x $DEVELOP_PATH/android-ndk-r27d
 rm -rf $TEMP_PATH/android-ndk-r27d-$PLATFORM.zip
 
 echo "# Android Debug Bridge" >> ~/.bashrc
@@ -56,7 +58,7 @@ rm -rf $ADB_PATH
 unzip $TEMP_PATH/platform-tools-latest-windows.zip -d $USER_PATH/Downloads
 rm -rf $TEMP_PATH/platform-tools-latest-windows.zip
 
-cd ~/linux
+cd $DEVELOP_PATH/linux
 git clone git@github.com:kaspersigi/learn.git
 # git clone https://github.com/kaspersigi/learn.git
 git clone git@github.com:kaspersigi/perf_tools.git
@@ -87,7 +89,7 @@ git clone --single-branch -b linux-rolling-stable --depth 1 https://git.kernel.o
 # git clone --single-branch -b v0.5.0+rpt20250429 --depth 1 https://github.com/raspberrypi/libcamera.git
 # git clone --single-branch -b v0.5.1 --depth 1 https://git.libcamera.org/libcamera/libcamera.git
 
-cd ~/linux/linux
+cd $DEVELOP_PATH/linux/linux
 time make distclean ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- LLVM=$LLVM
 wget https://gitlab.com/buildroot.org/buildroot/-/raw/master/board/qemu/aarch64-virt/linux.config
 mv linux.config .config

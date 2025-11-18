@@ -5,7 +5,7 @@
 TRG = clog
 OBJ = clog.o
 SRC = clog.c
-NDK = $(HOME)/linux/android-ndk-r27d
+NDK = /mnt/develop/android-ndk-r27d
 ARCH = $(shell uname -m)
 PLATFORM = darwin
 ifeq ($(ARCH), x86_64)

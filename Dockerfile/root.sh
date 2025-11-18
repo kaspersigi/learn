@@ -9,6 +9,7 @@ BOCHS_VERSION="3.0"
 BOCHS_PATH="$TOP_PATH/bochs-$BOCHS_VERSION"
 VALGRIND_VERSION="3.25.1"
 VALGRIND_PATH="$TOP_PATH/valgrind-$VALGRIND_VERSION"
+DEVELOP_PATH="/mnt/develop"
 PLATFORM="darwin"
 ARCH=$(uname -m)
 if [ "$ARCH" = "x86_64" ]; then
@@ -72,6 +73,14 @@ if [ -e "$VALGRIND_PATH" ]; then
     make install
 else
     echo "install valgrind failed"
+fi
+
+if [ -e "$DEVELOP_PATH" ]; then
+    echo "$DEVELOP_PATH exists"
+else
+    echo "$DEVELOP_PATH not found"
+    mkdir -p $DEVELOP_PATH
+    chown -R miku:miku $DEVELOP_PATH
 fi
 
 su miku
