@@ -55,8 +55,8 @@ echo "alias adb='adb.exe'" >> ~/.bashrc
 source ~/.bashrc
 $ADB_PATH/adb.exe kill-server
 rm -rf $ADB_PATH
-unzip $TEMP_PATH/platform-tools-latest-windows.zip -d $USER_PATH/Downloads
-rm -rf $TEMP_PATH/platform-tools-latest-windows.zip
+unzip $TEMP_PATH/platform-tools-r35.0.2-windows.zip -d $USER_PATH/Downloads
+rm -rf $TEMP_PATH/platform-tools-r35.0.2-windows.zip
 
 cd $DEVELOP_PATH/linux
 git clone git@github.com:kaspersigi/learn.git

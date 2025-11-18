@@ -49,8 +49,20 @@ source /etc/default/locale
 update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format$LLVM 100
 update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd$LLVM 100
 
-wget -P $TEMP_PATH https://dl.google.com/android/repository/android-ndk-r27d-$PLATFORM.zip
-wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools-latest-windows.zip
+if [ -e "$TEMP_PATH/android-ndk-r27d-$PLATFORM.zip" ]; then
+    echo "NDK exists"
+else
+    echo "NDK not found"
+    wget -P $TEMP_PATH https://dl.google.com/android/repository/android-ndk-r27d-$PLATFORM.zip
+fi
+
+if [ -e "$TEMP_PATH/platform-tools-r35.0.2-windows.zip" ]; then
+    echo "ADB exists"
+else
+    echo "ADB not found"
+    wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools-r35.0.2-windows.zip
+fi
+
 # systrace
 # wget -P $TEMP_PATH https://dl.google.com/android/repository/platform-tools_r33.0.0-$PLATFORM.zip
 
