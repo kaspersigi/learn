@@ -35,7 +35,9 @@ RUN apt update && apt upgrade -y && \
     && apt autoremove -y && apt clean && rm -rf /var/lib/apt/lists/*
 
 # ========== 4. 安装 code-server ==========
-RUN curl -fsSL https://code-server.dev/install.sh | sh
+RUN curl -fsSL https://code-server.dev/install.sh | sh \
+    mkdir -p /mnt/develop \
+    chown -R miku:miku /mnt/develop
 
 # ========== 5. 配置 miku 用户环境 ==========
 USER miku
@@ -47,7 +49,7 @@ RUN git config --global pull.rebase false \
     && ssh-keyscan github.com > ~/.ssh/known_hosts \
     && echo -e "Host github.com\n    Hostname ssh.github.com\n    Port 443\n    User git" > ~/.ssh/config \
     && chmod 644 ~/.ssh/config \
-    && mkdir -p share linux
+    && mkdir -p share /mnt/develop/linux
 
 # ========== 6. 创建 miku.sh ==========
 RUN printf '%s\n' \
@@ -82,8 +84,8 @@ RUN printf '%s\n' \
     'PASSWORD="$PASSWORD" code-server --bind-addr 0.0.0.0:8888 --auth password /home/miku &' \
     '' \
     'echo ">>> [miku.sh] Initialization complete. code-server running in background."' \
-    > /home/miku/miku.sh \
-    && chmod +x /home/miku/miku.sh
+    > /mnt/develop/miku.sh \
+    && chmod +x /mnt/develop/miku.sh
 
 # ========== 7. 切回 root ==========
 USER root
@@ -95,7 +97,7 @@ RUN printf '%s\n' \
     '/usr/sbin/sshd -D &' \
     '' \
     'echo ">>> [start.sh] Switching to user miku and running miku.sh..."' \
-    'su - miku -c "/home/miku/miku.sh"' \
+    'su - miku -c "/mnt/develop/miku.sh"' \
     '' \
     'echo ">>> [start.sh] All services started. Container running..."' \
     'wait' \
