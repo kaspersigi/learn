@@ -35,9 +35,9 @@ RUN apt update && apt upgrade -y && \
     && apt autoremove -y && apt clean && rm -rf /var/lib/apt/lists/*
 
 # ========== 4. 安装 code-server ==========
-RUN curl -fsSL https://code-server.dev/install.sh | sh \
-    mkdir -p /mnt/develop \
-    chown -R miku:miku /mnt/develop
+RUN mkdir -p /mnt/develop \
+    && chown -R miku:miku /mnt/develop \
+    && curl -fsSL https://code-server.dev/install.sh | sh
 
 # ========== 5. 配置 miku 用户环境 ==========
 USER miku
@@ -97,7 +97,7 @@ RUN printf '%s\n' \
     '/usr/sbin/sshd -D &' \
     '' \
     'echo ">>> [start.sh] Switching to user miku and running miku.sh..."' \
-    'su - miku -c "/mnt/develop/miku.sh"' \
+    'su - miku -c "cd /mnt/develop && ./miku.sh"' \
     '' \
     'echo ">>> [start.sh] All services started. Container running..."' \
     'wait' \
