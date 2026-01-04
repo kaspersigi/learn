@@ -74,9 +74,9 @@ RUN printf '%s\n' \
     'fi' \
     '' \
     '# Download and extract NDK if not exist' \
-    'if [ ! -d "linux/android-ndk-r27d" ]; then' \
+    'if [ ! -d "android-ndk-r27d" ]; then' \
     '    echo ">>> Downloading Android NDK r27d..."' \
-    '    cd linux && wget -q https://dl.google.com/android/repository/android-ndk-r27d-linux.zip && unzip -q android-ndk-r27d-linux.zip && rm android-ndk-r27d-linux.zip' \
+    '    wget -q https://dl.google.com/android/repository/android-ndk-r27d-windows.zip && unzip -q android-ndk-r27d-windows.zip -d /mnt/develop && rm android-ndk-r27d-windows.zip' \
     '    echo ">>> Android NDK installed."' \
     'fi' \
     '' \
