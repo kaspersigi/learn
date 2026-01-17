@@ -63,8 +63,8 @@ git clone git@github.com:kaspersigi/learn.git
 # git clone https://github.com/kaspersigi/learn.git
 git clone git@github.com:kaspersigi/perf_tools.git
 # git clone https://github.com/kaspersigi/perf_tools.git
-git clone git@github.com:kaspersigi/nativetest.git
-# git clone https://github.com/kaspersigi/nativetest.git
+git clone git@github.com:kaspersigi/nativehal.git
+# git clone https://github.com/kaspersigi/nativehal.git
 git clone git@github.com:kaspersigi/CAMERA.LA.5.0.r1-07900-pakala.0-1.git
 # git clone https://github.com/kaspersigi/CAMERA.LA.5.0.r1-07900-pakala.0-1.git
 git clone git@github.com:kaspersigi/Camera.git
