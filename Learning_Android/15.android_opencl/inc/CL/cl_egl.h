@@ -46,8 +46,7 @@ extern "C" {
  * cl_khr_egl_image
  ***************************************************************/
 #define cl_khr_egl_image 1
-#define CL_KHR_EGL_IMAGE_EXTENSION_NAME \
-    "cl_khr_egl_image"
+#define CL_KHR_EGL_IMAGE_EXTENSION_NAME "cl_khr_egl_image"
 
 #define CL_KHR_EGL_IMAGE_EXTENSION_VERSION CL_MAKE_VERSION(1, 0, 0)
 
@@ -69,67 +68,40 @@ typedef void* CLeglDisplayKHR;
 /* properties passed to clCreateFromEGLImageKHR */
 typedef intptr_t cl_egl_image_properties_khr;
 
-typedef cl_mem CL_API_CALL
-clCreateFromEGLImageKHR_t(
-    cl_context context,
-    CLeglDisplayKHR egldisplay,
-    CLeglImageKHR eglimage,
-    cl_mem_flags flags,
+typedef cl_mem CL_API_CALL clCreateFromEGLImageKHR_t(cl_context context, CLeglDisplayKHR egldisplay,
+    CLeglImageKHR eglimage, cl_mem_flags flags,
     const cl_egl_image_properties_khr* properties,
     cl_int* errcode_ret);
 
-typedef clCreateFromEGLImageKHR_t*
-    clCreateFromEGLImageKHR_fn CL_API_SUFFIX__VERSION_1_0;
+typedef clCreateFromEGLImageKHR_t* clCreateFromEGLImageKHR_fn CL_API_SUFFIX__VERSION_1_0;
 
-typedef cl_int CL_API_CALL
-clEnqueueAcquireEGLObjectsKHR_t(
-    cl_command_queue command_queue,
-    cl_uint num_objects,
-    const cl_mem* mem_objects,
-    cl_uint num_events_in_wait_list,
-    const cl_event* event_wait_list,
-    cl_event* event);
+typedef cl_int CL_API_CALL clEnqueueAcquireEGLObjectsKHR_t(cl_command_queue command_queue, cl_uint num_objects,
+    const cl_mem* mem_objects, cl_uint num_events_in_wait_list,
+    const cl_event* event_wait_list, cl_event* event);
 
-typedef clEnqueueAcquireEGLObjectsKHR_t*
-    clEnqueueAcquireEGLObjectsKHR_fn CL_API_SUFFIX__VERSION_1_0;
+typedef clEnqueueAcquireEGLObjectsKHR_t* clEnqueueAcquireEGLObjectsKHR_fn CL_API_SUFFIX__VERSION_1_0;
 
-typedef cl_int CL_API_CALL
-clEnqueueReleaseEGLObjectsKHR_t(
-    cl_command_queue command_queue,
-    cl_uint num_objects,
-    const cl_mem* mem_objects,
-    cl_uint num_events_in_wait_list,
-    const cl_event* event_wait_list,
-    cl_event* event);
+typedef cl_int CL_API_CALL clEnqueueReleaseEGLObjectsKHR_t(cl_command_queue command_queue, cl_uint num_objects,
+    const cl_mem* mem_objects, cl_uint num_events_in_wait_list,
+    const cl_event* event_wait_list, cl_event* event);
 
-typedef clEnqueueReleaseEGLObjectsKHR_t*
-    clEnqueueReleaseEGLObjectsKHR_fn CL_API_SUFFIX__VERSION_1_0;
+typedef clEnqueueReleaseEGLObjectsKHR_t* clEnqueueReleaseEGLObjectsKHR_fn CL_API_SUFFIX__VERSION_1_0;
 
 #if !defined(CL_NO_ICD_DISPATCH_EXTENSION_PROTOTYPES)
 
-extern CL_API_ENTRY cl_mem CL_API_CALL
-clCreateFromEGLImageKHR(
-    cl_context context,
-    CLeglDisplayKHR egldisplay,
-    CLeglImageKHR eglimage,
-    cl_mem_flags flags,
+extern CL_API_ENTRY cl_mem CL_API_CALL clCreateFromEGLImageKHR(cl_context context, CLeglDisplayKHR egldisplay,
+    CLeglImageKHR eglimage, cl_mem_flags flags,
     const cl_egl_image_properties_khr* properties,
     cl_int* errcode_ret) CL_API_SUFFIX__VERSION_1_0;
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clEnqueueAcquireEGLObjectsKHR(
-    cl_command_queue command_queue,
-    cl_uint num_objects,
-    const cl_mem* mem_objects,
+extern CL_API_ENTRY cl_int CL_API_CALL clEnqueueAcquireEGLObjectsKHR(cl_command_queue command_queue,
+    cl_uint num_objects, const cl_mem* mem_objects,
     cl_uint num_events_in_wait_list,
     const cl_event* event_wait_list,
     cl_event* event) CL_API_SUFFIX__VERSION_1_0;
 
-extern CL_API_ENTRY cl_int CL_API_CALL
-clEnqueueReleaseEGLObjectsKHR(
-    cl_command_queue command_queue,
-    cl_uint num_objects,
-    const cl_mem* mem_objects,
+extern CL_API_ENTRY cl_int CL_API_CALL clEnqueueReleaseEGLObjectsKHR(cl_command_queue command_queue,
+    cl_uint num_objects, const cl_mem* mem_objects,
     cl_uint num_events_in_wait_list,
     const cl_event* event_wait_list,
     cl_event* event) CL_API_SUFFIX__VERSION_1_0;
@@ -140,8 +112,7 @@ clEnqueueReleaseEGLObjectsKHR(
  * cl_khr_egl_event
  ***************************************************************/
 #define cl_khr_egl_event 1
-#define CL_KHR_EGL_EVENT_EXTENSION_NAME \
-    "cl_khr_egl_event"
+#define CL_KHR_EGL_EVENT_EXTENSION_NAME "cl_khr_egl_event"
 
 #define CL_KHR_EGL_EVENT_EXTENSION_VERSION CL_MAKE_VERSION(1, 0, 0)
 
@@ -151,22 +122,14 @@ clEnqueueReleaseEGLObjectsKHR(
 /* CLeglSyncKHR is an opaque handle to an EGLSync object */
 typedef void* CLeglSyncKHR;
 
-typedef cl_event CL_API_CALL
-clCreateEventFromEGLSyncKHR_t(
-    cl_context context,
-    CLeglSyncKHR sync,
-    CLeglDisplayKHR display,
-    cl_int* errcode_ret);
+typedef cl_event CL_API_CALL clCreateEventFromEGLSyncKHR_t(cl_context context, CLeglSyncKHR sync,
+    CLeglDisplayKHR display, cl_int* errcode_ret);
 
-typedef clCreateEventFromEGLSyncKHR_t*
-    clCreateEventFromEGLSyncKHR_fn CL_API_SUFFIX__VERSION_1_0;
+typedef clCreateEventFromEGLSyncKHR_t* clCreateEventFromEGLSyncKHR_fn CL_API_SUFFIX__VERSION_1_0;
 
 #if !defined(CL_NO_ICD_DISPATCH_EXTENSION_PROTOTYPES)
 
-extern CL_API_ENTRY cl_event CL_API_CALL
-clCreateEventFromEGLSyncKHR(
-    cl_context context,
-    CLeglSyncKHR sync,
+extern CL_API_ENTRY cl_event CL_API_CALL clCreateEventFromEGLSyncKHR(cl_context context, CLeglSyncKHR sync,
     CLeglDisplayKHR display,
     cl_int* errcode_ret) CL_API_SUFFIX__VERSION_1_0;
 

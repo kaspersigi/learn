@@ -12,10 +12,20 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ *
+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+ * All Rights Reserved.
+ * Confidential and Proprietary - Qualcomm Technologies, Inc.
  ******************************************************************************/
 
 #ifndef OPENCL_CL_ICD_H
 #define OPENCL_CL_ICD_H
+
+/* Qualcomm Additons - Begin */
+#include <CL/cl_ext_qcom.h>
+#include <CL/cl_ext_qcom_private_internal.h>
+/* Qualcomm Additons - End */
 
 #include <CL/cl.h>
 #include <CL/cl_egl.h>
@@ -175,8 +185,7 @@ typedef struct _cl_icd_dispatch {
     clEnqueueMigrateMemObjects_t* clEnqueueMigrateMemObjects;
     clEnqueueMarkerWithWaitList_t* clEnqueueMarkerWithWaitList;
     clEnqueueBarrierWithWaitList_t* clEnqueueBarrierWithWaitList;
-    clGetExtensionFunctionAddressForPlatform_t*
-        clGetExtensionFunctionAddressForPlatform;
+    clGetExtensionFunctionAddressForPlatform_t* clGetExtensionFunctionAddressForPlatform;
     clCreateFromGLTexture_t* clCreateFromGLTexture;
 #else
     void* clCreateSubDevices;
@@ -206,12 +215,9 @@ typedef struct _cl_icd_dispatch {
     clCreateFromDX9MediaSurfaceKHR_t* clCreateFromDX9MediaSurfaceKHR;
     clEnqueueAcquireD3D11ObjectsKHR_t* clEnqueueAcquireD3D11ObjectsKHR;
     clEnqueueReleaseD3D11ObjectsKHR_t* clEnqueueReleaseD3D11ObjectsKHR;
-    clGetDeviceIDsFromDX9MediaAdapterKHR_t*
-        clGetDeviceIDsFromDX9MediaAdapterKHR;
-    clEnqueueAcquireDX9MediaSurfacesKHR_t*
-        clEnqueueAcquireDX9MediaSurfacesKHR;
-    clEnqueueReleaseDX9MediaSurfacesKHR_t*
-        clEnqueueReleaseDX9MediaSurfacesKHR;
+    clGetDeviceIDsFromDX9MediaAdapterKHR_t* clGetDeviceIDsFromDX9MediaAdapterKHR;
+    clEnqueueAcquireDX9MediaSurfacesKHR_t* clEnqueueAcquireDX9MediaSurfacesKHR;
+    clEnqueueReleaseDX9MediaSurfacesKHR_t* clEnqueueReleaseDX9MediaSurfacesKHR;
 #else
     void* clGetDeviceIDsFromD3D11KHR;
     void* clCreateFromD3D11BufferKHR;
@@ -267,6 +273,10 @@ typedef struct _cl_icd_dispatch {
     /* cl_khr_sub_groups */
     clGetKernelSubGroupInfoKHR_t* clGetKernelSubGroupInfoKHR;
 
+    /* Qualcomm Additions*/
+    /* cl_khr_suggested_local_work_size */
+    clGetKernelSuggestedLocalWorkSizeKHR_t* clGetKernelSuggestedLocalWorkSizeKHR;
+
     /* OpenCL 2.1 */
 #ifdef CL_VERSION_2_1
     clCloneKernel_t* clCloneKernel;
@@ -306,6 +316,44 @@ typedef struct _cl_icd_dispatch {
     void* clSetContextDestructorCallback;
 #endif
 
+    /* Qualcomm Additons - Begin */
+    /* Qualcomm Extensions*/
+    clCreateBufferFromImageQCOM_t* clCreateBufferFromImageQCOM;
+    clGetPerfMonitorGroupInfoQCOM_t* clGetPerfMonitorGroupInfoQCOM;
+    clGetPerfMonitorCounterInfoQCOM_t* clGetPerfMonitorCounterInfoQCOM;
+    clCreatePerfMonitorQCOM_t* clCreatePerfMonitorQCOM;
+    clRetainPerfMonitorQCOM_t* clRetainPerfMonitorQCOM;
+    clReleasePerfMonitorQCOM_t* clReleasePerfMonitorQCOM;
+    clEnqueueBeginPerfMonitorQCOM_t* clEnqueueBeginPerfMonitorQCOM;
+    clEnqueueEndPerfMonitorQCOM_t* clEnqueueEndPerfMonitorQCOM;
+    clEnqueueReadPerfMonitorQCOM_t* clEnqueueReadPerfMonitorQCOM;
+    clGetPerfMonitorInfoQCOM_t* clGetPerfMonitorInfoQCOM;
+    clEnqueueXNDRangeKernelQCOM_t* clEnqueueXNDRangeKernelQCOM;
+    clGetImageRequirementsInfoEXT_t* clGetImageRequirementsInfoEXT;
+    clCreateSemaphoreWithPropertiesKHR_t* clCreateSemaphoreWithPropertiesKHR;
+    clEnqueueWaitSemaphoresKHR_t* clEnqueueWaitSemaphoresKHR;
+    clEnqueueSignalSemaphoresKHR_t* clEnqueueSignalSemaphoresKHR;
+    clGetSemaphoreInfoKHR_t* clGetSemaphoreInfoKHR;
+    clReleaseSemaphoreKHR_t* clReleaseSemaphoreKHR;
+    clRetainSemaphoreKHR_t* clRetainSemaphoreKHR;
+    clGetSemaphoreHandleForTypeKHR_t* clGetSemaphoreHandleForTypeKHR;
+    clEnqueueAcquireExternalMemObjectsKHR_t* clEnqueueAcquireExternalMemObjectsKHR;
+    clEnqueueReleaseExternalMemObjectsKHR_t* clEnqueueReleaseExternalMemObjectsKHR;
+    clReImportSemaphoreSyncFdKHR_t* clReImportSemaphoreSyncFdKHR;
+    clGetDeviceImageInfoQCOM_t* clGetDeviceImageInfoQCOM;
+    clQueryImageInfoQCOM_t* clQueryImageInfoQCOM;
+    clCreateFromEGLImageIMG_t* clCreateFromEGLImageIMG;
+    clNewRecordingQCOM_t* clNewRecordingQCOM;
+    clEndRecordingQCOM_t* clEndRecordingQCOM;
+    clReleaseRecordingQCOM_t* clReleaseRecordingQCOM;
+    clRetainRecordingQCOM_t* clRetainRecordingQCOM;
+    clEnqueueRecordingQCOM_t* clEnqueueRecordingQCOM;
+    clEnqueueRecordingSVMQCOM_t* clEnqueueRecordingSVMQCOM;
+    clSetPerfHintQCOM_t* clSetPerfHintQCOM;
+    clDataExtensionQCOM_t* clDataExtensionQCOM;
+    clGetMLInterfaceQCOM_t* clGetMLInterfaceQCOM;
+    clQueryMLInterfaceVersionsQCOM_t* clQueryMLInterfaceVersionsQCOM;
+    /* Qualcomm Additons - End */
 } cl_icd_dispatch;
 
 #ifdef __cplusplus

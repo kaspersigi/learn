@@ -14,6 +14,15 @@
  * limitations under the License.
  *
  * OpenCL is a trademark of Apple Inc. used under license by Khronos.
+ *
+ *
+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+ * All Rights Reserved.
+ * Confidential and Proprietary - Qualcomm Technologies, Inc.
+ *
+ * Not a Contribution.
+ * Apache license notifications and license are retained
+ * for attribution purposes only.
  */
 
 #ifndef OPENCL_CL_FUNCTION_TYPES_H_
@@ -1180,5 +1189,225 @@ typedef clCreateImageWithProperties_t*
     clCreateImageWithProperties_fn CL_API_SUFFIX__VERSION_3_0;
 
 #endif /* CL_VERSION_3_0 */
+
+/* Qualcomm Additons - Begin */
+typedef cl_mem CL_API_CALL clCreateBufferFromImageQCOM_t(
+    cl_mem image,
+    cl_mem_flags flags,
+    cl_int* errcode_ret);
+typedef clCreateBufferFromImageQCOM_t* clCreateBufferFromImageQCOM_fn;
+
+typedef cl_int CL_API_CALL clGetPerfMonitorGroupInfoQCOM_t(
+    cl_device_id device,
+    cl_perf_monitor_group_id_qcom group,
+    cl_perf_monitor_group_info_qcom param_name,
+    size_t param_value_size,
+    void* param_value,
+    size_t* param_value_size_ret);
+typedef clGetPerfMonitorGroupInfoQCOM_t* clGetPerfMonitorGroupInfoQCOM_fn;
+
+typedef cl_int CL_API_CALL clGetPerfMonitorCounterInfoQCOM_t(
+    cl_device_id device,
+    cl_perf_monitor_counter_id_qcom counter,
+    cl_perf_monitor_counter_info_qcom param_name,
+    size_t param_value_size,
+    void* param_value,
+    size_t* param_value_size_ret);
+typedef clGetPerfMonitorCounterInfoQCOM_t* clGetPerfMonitorCounterInfoQCOM_fn;
+
+typedef cl_perf_monitor_qcom CL_API_CALL clCreatePerfMonitorQCOM_t(
+    cl_context context,
+    cl_device_id device,
+    cl_int num_counters,
+    cl_perf_monitor_counter_id_qcom* counter_list,
+    cl_int* errcode_ret);
+typedef clCreatePerfMonitorQCOM_t* clCreatePerfMonitorQCOM_fn;
+
+typedef cl_int CL_API_CALL clRetainPerfMonitorQCOM_t(
+    cl_perf_monitor_qcom recording);
+typedef clRetainPerfMonitorQCOM_t* clRetainPerfMonitorQCOM_fn;
+
+typedef cl_int CL_API_CALL clReleasePerfMonitorQCOM_t(
+    cl_perf_monitor_qcom recording);
+typedef clReleasePerfMonitorQCOM_t* clReleasePerfMonitorQCOM_fn;
+
+typedef cl_int CL_API_CALL clEnqueueBeginPerfMonitorQCOM_t(
+    cl_command_queue command_queue,
+    cl_perf_monitor_qcom monitor,
+    cl_uint num_events_in_wait_list,
+    const cl_event* event_wait_list,
+    cl_event* event);
+typedef clEnqueueBeginPerfMonitorQCOM_t* clEnqueueBeginPerfMonitorQCOM_fn;
+
+typedef cl_int CL_API_CALL clEnqueueEndPerfMonitorQCOM_t(
+    cl_command_queue command_queue,
+    cl_perf_monitor_qcom monitor,
+    cl_uint num_events_in_wait_list,
+    const cl_event* event_wait_list,
+    cl_event* event);
+typedef clEnqueueEndPerfMonitorQCOM_t* clEnqueueEndPerfMonitorQCOM_fn;
+
+typedef cl_int CL_API_CALL clEnqueueReadPerfMonitorQCOM_t(
+    cl_command_queue command_queue,
+    cl_perf_monitor_qcom monitor,
+    cl_bool blocking_read,
+    void* ptr,
+    cl_uint num_events_in_wait_list,
+    const cl_event* event_wait_list,
+    cl_event* event);
+typedef clEnqueueReadPerfMonitorQCOM_t* clEnqueueReadPerfMonitorQCOM_fn;
+
+typedef cl_int CL_API_CALL clGetPerfMonitorInfoQCOM_t(
+    cl_perf_monitor_qcom monitor,
+    cl_perf_monitor_info_qcom param_name,
+    size_t param_value_size,
+    void* param_value,
+    size_t* param_value_size_ret);
+typedef clGetPerfMonitorInfoQCOM_t* clGetPerfMonitorInfoQCOM_fn;
+
+typedef cl_int CL_API_CALL clGetDeviceImageInfoQCOM_t(
+    cl_device_id device,
+    size_t image_width,
+    size_t image_height,
+    const cl_image_format* image_format,
+    cl_image_pitch_info_qcom param_name,
+    size_t param_value_size,
+    void* param_value,
+    size_t* param_value_size_ret);
+typedef clGetDeviceImageInfoQCOM_t* clGetDeviceImageInfoQCOM_fn;
+
+typedef cl_int CL_API_CALL clQueryImageInfoQCOM_t(
+    cl_device_id device,
+    cl_mem_flags flags,
+    const cl_image_format* image_format,
+    const cl_image_desc* image_desc,
+    cl_extended_image_info_qcom param_name,
+    size_t param_value_size,
+    void* param_value,
+    size_t* param_value_size_ret);
+typedef clQueryImageInfoQCOM_t* clQueryImageInfoQCOM_fn;
+
+typedef cl_mem CL_API_CALL clCreateFromEGLImageIMG_t(
+    cl_context context,
+    cl_mem_flags flags,
+    CLeglImageIMG image,
+    CLeglDisplayIMG display,
+    cl_int* errcode_ret);
+typedef clCreateFromEGLImageIMG_t* clCreateFromEGLImageIMG_fn;
+
+typedef cl_recording_qcom CL_API_CALL clNewRecordingQCOM_t(
+    cl_command_queue command_queue,
+    cl_int* errcode_ret);
+typedef clNewRecordingQCOM_t* clNewRecordingQCOM_fn;
+
+typedef cl_int CL_API_CALL clEndRecordingQCOM_t(
+    cl_recording_qcom);
+typedef clEndRecordingQCOM_t* clEndRecordingQCOM_fn;
+
+typedef cl_int CL_API_CALL clReleaseRecordingQCOM_t(
+    cl_recording_qcom);
+typedef clReleaseRecordingQCOM_t* clReleaseRecordingQCOM_fn;
+
+typedef cl_int CL_API_CALL clRetainRecordingQCOM_t(
+    cl_recording_qcom);
+typedef clRetainRecordingQCOM_t* clRetainRecordingQCOM_fn;
+
+typedef cl_int CL_API_CALL clEnqueueRecordingQCOM_t(
+    cl_command_queue /** command_queue */,
+    cl_recording_qcom /** recording */,
+
+    size_t /** number of recorded args being updated */,
+    const cl_array_arg_qcom* /** recorded arg to update */,
+    size_t /** Number of global offsets to update */,
+    const cl_offset_qcom* /** Array  offsets to update */,
+
+    size_t /** number of global workgroups being updated */,
+    const cl_workgroup_qcom* /** global work group array */,
+
+    size_t /** number of local workgroups being updated */,
+    const cl_workgroup_qcom* /** local work size array */,
+
+    cl_uint /** num_events_in_wait_list */,
+    const cl_event* /** event_wait_list */,
+    cl_event* /** event */);
+typedef clEnqueueRecordingQCOM_t* clEnqueueRecordingQCOM_fn;
+
+typedef cl_int CL_API_CALL clEnqueueRecordingSVMQCOM_t(cl_command_queue /** command_queue */,
+    cl_recording_qcom /** recording */,
+    size_t /** number of recorded args being updated */,
+    const cl_array_arg_qcom* /** recorded arg to update */,
+    size_t /** number of recorded SVM args being updated */,
+    const cl_array_arg_qcom* /** recorded SVM arg to update */,
+    size_t /** Number of global offsets to update */,
+    const cl_offset_qcom* /** Array  offsets to update */,
+    size_t /** number of global workgroups being updated */,
+    const cl_workgroup_qcom* /** global work group array */,
+    size_t /** number of local workgroups being updated */,
+    const cl_workgroup_qcom* /** local work size array */,
+    size_t /** Number of non argument kernel parameters */,
+    const cl_array_kernel_exec_info_qcom* /** Array of non argument kernel parameters to update */,
+    cl_uint /** num_events_in_wait_list */,
+    const cl_event* /** event_wait_list */,
+    cl_event* /** event */);
+typedef clEnqueueRecordingSVMQCOM_t* clEnqueueRecordingSVMQCOM_fn;
+
+typedef cl_int CL_API_CALL clSetPerfHintQCOM_t(
+    cl_context context,
+    cl_perf_hint perf_hint);
+typedef clSetPerfHintQCOM_t* clSetPerfHintQCOM_fn;
+
+typedef cl_int CL_API_CALL clEnqueueXNDRangeKernelQCOM_t(
+    cl_command_queue command_queue,
+    cl_kernel kernel,
+    cl_uint work_dim,
+    size_t const* global_work_offset,
+    size_t const* global_work_size,
+    size_t const* local_work_size,
+    const void** xIBData,
+    const cl_uint* xIBSizes,
+    cl_event* event);
+typedef clEnqueueXNDRangeKernelQCOM_t* clEnqueueXNDRangeKernelQCOM_fn;
+
+typedef cl_int CL_API_CALL_clGetImageRequirementsInfoEXT_t(
+    cl_context context,
+    const cl_mem_properties* properties,
+    cl_mem_flags flags,
+    const cl_image_format* image_format,
+    const cl_image_desc* image_desc,
+    cl_image_requirements_info_ext param_name,
+    size_t param_value_size,
+    void* param_value,
+    size_t* param_value_size_ret);
+typedef CL_API_CALL_clGetImageRequirementsInfoEXT_t* CL_API_CALL_clGetImageRequirementsInfoEXT_fn;
+
+typedef void* CL_API_CALL clDataExtensionQCOM_t(
+    cl_context context,
+    cl_uint num_devices,
+    cl_device_id const* device_list,
+    cl_command_queue queue,
+    cl_uint num_data,
+    size_t const* lengths,
+    const void** data,
+    cl_int* statuses,
+    cl_int* errcode_ret);
+typedef clDataExtensionQCOM_t* clDataExtensionQCOM_fn;
+
+typedef cl_int CL_API_CALL clEventWaitForSubmissionQCOM_t(
+    cl_event event);
+typedef clEventWaitForSubmissionQCOM_t* clEventWaitForSubmissionQCOM_fn;
+
+typedef cl_int CL_API_CALL clGetMLInterfaceQCOM_t(
+    void* pInterface,
+    cl_int majorVersion,
+    cl_int minorVersion);
+typedef clGetMLInterfaceQCOM_t* clGetMLInterfaceQCOM_fn;
+
+typedef cl_int CL_API_CALL clQueryMLInterfaceVersionsQCOM_t(
+    cl_int* pMajorVersions,
+    cl_int* pMinorVersions,
+    cl_uint numVersions,
+    cl_uint* pNumVersionsRet);
+typedef clQueryMLInterfaceVersionsQCOM_t* clQueryMLInterfaceVersionsQCOM_fn;
+/* Qualcomm Additons - End */
 
 #endif /* OPENCL_CL_FUNCTION_TYPES_H_ */

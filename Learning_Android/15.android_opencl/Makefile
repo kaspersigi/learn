@@ -43,24 +43,22 @@ opencl.o : opencl.c
 ftrace.o : ftrace.c
 	$(CC) ftrace.c -c $(C_FLAGS) $(DEBUG)
 format :
-	$(FORMAT) inc/CL/cl.h -style=file -i
-	$(FORMAT) inc/CL/cl_d3d10.h -style=file -i
-	$(FORMAT) inc/CL/cl_d3d11.h -style=file -i
-	$(FORMAT) inc/CL/cl_dx9_media_sharing.h -style=file -i
-	$(FORMAT) inc/CL/cl_dx9_media_sharing_intel.h -style=file -i
+	$(FORMAT) inc/CL/cl2.hpp -style=file -i
 	$(FORMAT) inc/CL/cl_egl.h -style=file -i
 	$(FORMAT) inc/CL/cl_ext.h -style=file -i
-	$(FORMAT) inc/CL/cl_ext_intel.h -style=file -i
+	$(FORMAT) inc/CL/cl_ext_qcom.h -style=file -i
 	$(FORMAT) inc/CL/cl_function_types.h -style=file -i
-	$(FORMAT) inc/CL/cl_gl.h -style=file -i
 	$(FORMAT) inc/CL/cl_gl_ext.h -style=file -i
+	$(FORMAT) inc/CL/cl_gl.h -style=file -i
+	$(FORMAT) inc/CL/cl.h -style=file -i
 	$(FORMAT) inc/CL/cl_half.h -style=file -i
+	$(FORMAT) inc/CL/cl.hpp -style=file -i
 	$(FORMAT) inc/CL/cl_icd.h -style=file -i
 	$(FORMAT) inc/CL/cl_layer.h -style=file -i
 	$(FORMAT) inc/CL/cl_platform.h -style=file -i
-	$(FORMAT) inc/CL/cl_va_api_media_sharing_intel.h -style=file -i
 	$(FORMAT) inc/CL/cl_version.h -style=file -i
 	$(FORMAT) inc/CL/opencl.h -style=file -i
+	$(FORMAT) inc/CL/opencl.hpp -style=file -i
 	$(FORMAT) ftrace.c -style=file -i
 	$(FORMAT) ftrace.h -style=file -i
 	$(FORMAT) opencl.c -style=file -i
